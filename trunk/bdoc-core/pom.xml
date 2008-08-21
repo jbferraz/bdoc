@@ -119,7 +119,7 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.0-beta-7</version>
 				<configuration>
-					<tagBase>https://bdddoc4j.googlecode.com/svn/tags</tagBase>
+					<tagBase>https://bdoc.googlecode.com/svn/tags</tagBase>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 				</configuration>
 			</plugin>

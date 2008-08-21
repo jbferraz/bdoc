@@ -3,14 +3,14 @@
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-core</artifactId>
 	<packaging>jar</packaging>
-	<version>0.7.0</version>
+	<version>0.7.1-SNAPSHOT</version>
 	<name>Behaviour Documentation - Core</name>
 	<description>The Core of BDoc</description>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-core-0.7.0</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-core-0.7.0</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/tags/bdoc-core-0.7.0</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk</url>
 	</scm>
 
 	<organization>

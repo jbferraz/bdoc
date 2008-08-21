@@ -36,9 +36,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 /**
- * @goal gen.story.ref
+ * @goal init
  * @author Per Otto Bergum Christensen
- * 
  */
 public class StoryRefGeneratorMojo extends AbstractMojo {
 

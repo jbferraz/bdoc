@@ -82,6 +82,7 @@
 					<storyRefAnnotationClassName>bdddoc4j.core.doc.Ref</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
 				</configuration>
+<!--				
 				<executions>
 					<execution>
 						<phase>install</phase>
@@ -90,6 +91,7 @@
 						</goals>
 					</execution>
 				</executions>
+-->				
 			</plugin>
 
 			<plugin>

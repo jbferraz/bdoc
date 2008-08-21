@@ -24,8 +24,6 @@
 
 package bdddoc4j.plugin;
 
-import static org.apache.commons.beanutils.PropertyUtils.getSimpleProperty;
-
 import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;

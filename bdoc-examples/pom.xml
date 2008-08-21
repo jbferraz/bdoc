@@ -18,16 +18,15 @@
 			</plugin>
 
 			<plugin>
-				<groupId>bdddoc4j.mojo</groupId>
-				<artifactId>maven-bdddoc4j-plugin</artifactId>
-				<version>0.5.3</version>
+				<groupId>com.googlecode.bdoc</groupId>
+				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>0.7.0</version>
 				<configuration>
 					<storyRefAnnotationClassName>
 						bdddoc4j.examples.Ref
 					</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
 				</configuration>
-<!--
 				<executions>
 					<execution>
 						<phase>install</phase>
@@ -36,7 +35,6 @@
 						</goals>
 					</execution>
 				</executions>
--->
 			</plugin>
 
 			<plugin>

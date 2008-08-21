@@ -1,13 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>bdddoc4j</groupId>
-	<artifactId>bdddoc4j-examples</artifactId>
+	<groupId>com.googlecode.bdoc</groupId>
+	<artifactId>bdoc-examples</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>bdddoc4j-examples</name>
-	<url>http://maven.apache.org</url>
+	<name>Behaviour Documentation - Examples</name>
 
 	<build>
 		<plugins>
@@ -30,6 +27,7 @@
 					</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
 				</configuration>
+<!--
 				<executions>
 					<execution>
 						<phase>install</phase>
@@ -38,6 +36,7 @@
 						</goals>
 					</execution>
 				</executions>
+-->
 			</plugin>
 
 			<plugin>

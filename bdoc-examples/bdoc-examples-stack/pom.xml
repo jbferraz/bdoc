@@ -8,7 +8,6 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-examples-stack</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
@@ -28,7 +27,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.7.0</version>
+				<version>0.7.1</version>
 				<configuration>
 					<storyRefAnnotationClassName>bdddoc4j.examples.Ref</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>

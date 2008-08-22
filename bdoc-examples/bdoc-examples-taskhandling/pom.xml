@@ -25,7 +25,7 @@
 				<artifactId>maven-bdoc-plugin</artifactId>
 				<version>0.7.1</version>
 				<configuration>
-					<storyRefAnnotationClassName>bdddoc4j.examples.Ref</storyRefAnnotationClassName>
+					<storyRefAnnotationClassName>com.googlecode.bdoc.examples.taskhandling.Ref</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
 				</configuration>
 				<executions>

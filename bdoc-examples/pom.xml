@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
+
+	<parent>
+		  <groupId>com.googlecode.bdoc</groupId>
+		  <artifactId>bdoc-base</artifactId>
+		  <version>0.7.0</version>
+	</parent>
+
   <modelVersion>4.0.0</modelVersion>
   <name>BDoc Examples - Parent POM</name>
   <description>Examples on how BDoc works</description>
@@ -56,4 +63,5 @@
 	 <module>bdoc-examples-stack</module>
      <module>bdoc-examples-taskhandling</module>
   </modules>
+   
 </project>

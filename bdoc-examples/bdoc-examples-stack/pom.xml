@@ -1,4 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<artifactId>bdoc-examples</artifactId>
+		<groupId>com.googlecode.bdoc</groupId>
+		<version>0.7.0</version>
+	</parent>
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-examples-stack</artifactId>
@@ -22,9 +30,7 @@
 				<artifactId>maven-bdoc-plugin</artifactId>
 				<version>0.7.0</version>
 				<configuration>
-					<storyRefAnnotationClassName>
-						bdddoc4j.examples.Ref
-					</storyRefAnnotationClassName>
+					<storyRefAnnotationClassName>bdddoc4j.examples.Ref</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
 				</configuration>
 				<executions>
@@ -72,12 +78,8 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<excludes>
-								<exclude>
-									**/*IntegrationTest.java
-								</exclude>
-								<exclude>
-									**/IntegrationTest*.java
-								</exclude>
+								<exclude>**/*IntegrationTest.java</exclude>
+								<exclude>**/IntegrationTest*.java</exclude>
 							</excludes>
 						</configuration>
 					</plugin>
@@ -92,12 +94,8 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<includes>
-								<include>
-									**/*IntegrationTest.java
-								</include>
-								<include>
-									**/IntegrationTest*.java
-								</include>
+								<include>**/*IntegrationTest.java</include>
+								<include>**/IntegrationTest*.java</include>
 							</includes>
 							<excludes></excludes>
 						</configuration>
@@ -110,20 +108,11 @@
 		<pluginRepository>
 			<id>perottobc-release</id>
 			<name>Local Maven repository of releases</name>
-			<url>
-				http://perottobc-repository.googlecode.com/svn/maven2/releases
-			</url>
+			<url>http://perottobc-repository.googlecode.com/svn/maven2/releases</url>
 		</pluginRepository>
 	</pluginRepositories>
 
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
-
 
 </project>

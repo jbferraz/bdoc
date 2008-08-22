@@ -5,11 +5,63 @@
     <version>0.7.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>15</groupId>
   <artifactId>bdoc-examples-taskhandling</artifactId>
   <name>BDoc Examples - Task handling</name>
   <version>1.0-SNAPSHOT</version>
-  <url>http://maven.apache.org</url>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.googlecode.bdoc</groupId>
+				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>0.7.1</version>
+				<configuration>
+					<storyRefAnnotationClassName>bdddoc4j.examples.Ref</storyRefAnnotationClassName>
+					<logDirectory>bddlog</logDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>doc</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>com.google.code.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.2.5</version>
+				<configuration>
+					<header>src/main/etc/header.txt</header>
+					<excludes>
+						<exclude>target/**</exclude>
+						<exclude>bddlog/**</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+  
+  
   <dependencies>
   </dependencies>
 </project>

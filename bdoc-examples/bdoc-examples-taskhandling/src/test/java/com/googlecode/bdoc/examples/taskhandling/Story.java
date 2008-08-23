@@ -29,7 +29,7 @@ package com.googlecode.bdoc.examples.taskhandling;
  */
 public enum Story {
 
-	TASKTRACKING(1, "As an executive officer", "I want to create a new task", "so that I can keep track of my tasks");
+	TASKTRACKING(1, "As an executive officer", "I want to manage tasks", "so that I can keep track");
 
 	private Integer id;
 	private String[] narrative;

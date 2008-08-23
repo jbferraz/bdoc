@@ -26,10 +26,28 @@ package com.googlecode.bdoc.examples.taskhandling;
 
 public class Task {
 
+	private TaskList taskList;
 	private String description;
+	boolean open;
 
-	public Task(String description) {
+	public Task(String description, TaskList taskList) {
 		this.description = description;
+		this.taskList = taskList;
+		this.open = false;
 	}
 
+	public void open() {
+		if (taskList.hasOpenTasks()) {
+			throw new IllegalStateException();
+		}
+		open = true;
+	}
+
+	public boolean isOpen() {
+		return open;
+	}
+
+	public String getDescription() {
+		return description;
+	}
 }

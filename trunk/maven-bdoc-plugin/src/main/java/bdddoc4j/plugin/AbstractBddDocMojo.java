@@ -46,11 +46,12 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 	 * @readonly
 	 */
 	private MavenProject project;
+	
 	/**
 	 * @parameter
-	 * @required
 	 */
 	protected File logDirectory;
+	
 	/**
 	 * @component
 	 * @required
@@ -86,6 +87,10 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 	protected MavenProject getProject() {
 		return project;
 	}
+	
+	public void setProject(MavenProject project) {
+		this.project = project;
+	}
 
 	@Override
 	protected String getOutputDirectory() {
@@ -96,5 +101,7 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 	protected SiteRenderer getSiteRenderer() {
 		return siteRenderer;
 	}
+	
+	
 
 }

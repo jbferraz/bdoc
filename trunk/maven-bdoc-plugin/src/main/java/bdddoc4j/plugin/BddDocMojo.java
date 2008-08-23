@@ -32,6 +32,7 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;
@@ -66,7 +67,6 @@ public class BddDocMojo extends AbstractBddDocMojo {
 
 	/**
 	 * @parameter
-	 * @required
 	 */
 	private String storyRefAnnotationClassName;
 
@@ -79,8 +79,8 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void executeInternal() throws Exception {
-		ClassLoader classLoader = createClassLoader();
+	void executeInternal() throws Exception {
+		ClassLoader classLoader = getClassLoader();
 		Object bddDocReport = classLoader.loadClass(bddDocReportClassName).newInstance();
 
 		setSimpleProperty(bddDocReport, "projectName", getProject().getName());
@@ -88,15 +88,19 @@ public class BddDocMojo extends AbstractBddDocMojo {
 		setSimpleProperty(bddDocReport, "classLoader", classLoader);
 		setSimpleProperty(bddDocReport, "testClassDirectory", testClassDirectory);
 		setSimpleProperty(bddDocReport, "testAnnotation", classLoader.loadClass(testAnnotationClassName));
-		setSimpleProperty(bddDocReport, "storyRefAnnotation", classLoader.loadClass(storyRefAnnotationClassName));
+		if (null != storyRefAnnotationClassName) {
+			setSimpleProperty(bddDocReport, "storyRefAnnotation", classLoader.loadClass(storyRefAnnotationClassName));
+		}
 
 		invokeMethod(bddDocReport, "run", null);
 
-		writeFile(getSimpleProperty(bddDocReport, "xml"), logDirectory, "bddDoc." + new Date().getTime() + ".xml");
+		if (null != logDirectory) {
+			writeFile(getSimpleProperty(bddDocReport, "xml"), logDirectory, "bddDoc." + new Date().getTime() + ".xml");
+		}
 		writeReport(String.valueOf(getSimpleProperty(bddDocReport, "html")));
 	}
 
-	private ClassLoader createClassLoader() throws Exception {
+	protected ClassLoader getClassLoader() throws Exception {
 
 		return new URLClassLoader(new URL[0], getClass().getClassLoader()) {
 			{
@@ -117,5 +121,21 @@ public class BddDocMojo extends AbstractBddDocMojo {
 
 	public String getName(Locale arg0) {
 		return "bdoc";
+	}
+
+	public void setBddDocReportClassName(String bddDocReportClassName) {
+		this.bddDocReportClassName = bddDocReportClassName;
+	}
+
+	public void setTestAnnotationClassName(String testAnnotationClassName) {
+		this.testAnnotationClassName = testAnnotationClassName;
+	}
+
+	public void setTestClassDirectory(File testClassDirectory) {
+		this.testClassDirectory = testClassDirectory;
+	}
+
+	public void setLogDirectory(File file) {
+		this.logDirectory = file;
 	}
 }

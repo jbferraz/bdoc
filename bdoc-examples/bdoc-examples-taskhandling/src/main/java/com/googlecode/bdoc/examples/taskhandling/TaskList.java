@@ -44,9 +44,9 @@ public class TaskList {
 		return task;
 	}
 
-	public boolean hasOpenTasks() {
+	public boolean hasTasksInProgress() {
 		for (Task newTask : tasks) {
-			if (newTask.isOpen()) {
+			if (newTask.isInProgress()) {
 				return true;
 			}
 		}

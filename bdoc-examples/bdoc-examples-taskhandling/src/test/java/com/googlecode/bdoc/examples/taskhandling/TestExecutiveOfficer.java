@@ -32,38 +32,44 @@ import org.junit.Test;
 @Ref(Story.TASKTRACKING)
 public class TestExecutiveOfficer {
 
-	private ExecutiveOfficer executiveOfficer;
+	private ExecutiveOfficer bob;
 
 	@Before
 	public void setupExecutiveOfficer() {
-		executiveOfficer = new ExecutiveOfficer("Bob");
+		bob = new ExecutiveOfficer("Bob");
 	}
 
 	@Test
-	public void givenAnEmptyTaskListForAnExecutiveOfficerWhenTheOfficerCreatesANewTaskThenEnsureItIsFoundInHisOrHerTaskList() {
-		Task task = executiveOfficer.createTask("Register salesorder");
-		assertTrue(executiveOfficer.getTaskList().contains(task));
+	public void givenAnExecutiveOfficerWithNoTasksAssignedWhenTheOfficerCreatesANewTaskThenEnsureItIsAssignedToTheOfficer() {
+		Task task = bob.createTask("Register salesorder");
+		assertTrue(bob.isAssignedTo(task));
 	}
 
 	@Test
-	public void shouldBeAbleToOpenATask() {
-		Task task = executiveOfficer.createTask("Register salesorder");
-		executiveOfficer.openTask(task);
-		assertTrue(task.isOpen());
+	public void shouldBeAbleToStartATaskAssigned() {
+		Task task = bob.createTask("Register salesorder");
+		bob.start(task);
+		assertTrue(task.isInProgress());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldNotBeAbleToStartATaskAssignedToOthers() {
+		ExecutiveOfficer sally = new ExecutiveOfficer("sally");
+		Task task = sally.createTask("Pay salary");
+		bob.start(task);
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void shouldOnlyBeAbleToOpenOneTaskAtTheTime() {
-		Task task1 = executiveOfficer.createTask("Register salesorder");
-		executiveOfficer.openTask(task1);
+	public void shouldOnlyBeAbleToStartOneTaskAtTheTime() {
+		Task task1 = bob.createTask("Register salesorder");
+		bob.start(task1);
 
-		Task task2 = executiveOfficer.createTask("Register payment");
-		executiveOfficer.openTask(task2);
+		Task task2 = bob.createTask("Register payment");
+		bob.start(task2);
 	}
 
 	@Test
 	public void aNewExecutiveOfficerShouldNotHaveAnyTasksInHisOrHerTaskList() {
-		assertTrue(executiveOfficer.getTaskList().getList().isEmpty());
+		assertTrue(bob.getTaskList().getList().isEmpty());
 	}
-
 }

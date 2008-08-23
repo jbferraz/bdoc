@@ -56,6 +56,13 @@ public class TestBddDoc {
 	}
 
 	@Test
+	public void shouldRunWithAStoryRefAnnotation() {
+		bddDoc = new BddDoc(org.junit.Test.class, null);
+		bddDoc.addBehaviourFrom(TestExampleAnnotatedMethods.class);
+		bddDoc.addBehaviourFrom(TestExampleAnnotatedClass.class);
+	}
+
+	@Test
 	public void givenATestclassWhenTheTestclassIsAnnotatedWithAReferenceToAStoryThenEnsureTheStoryIsCreated() {
 		assertTrue(bddDoc.getUserstories().contains(new UserStory(ExStory.STORY3)));
 	}

@@ -75,7 +75,8 @@ public class BddDoc {
 	 */
 	public void addBehaviourFrom(Class<? extends Object> testClass) {
 		UserStory userStory = null;
-		if (testClass.isAnnotationPresent(storyRefAnnotation)) {
+
+		if ((null != storyRefAnnotation) && (testClass.isAnnotationPresent(storyRefAnnotation))) {
 			userStory = userStory(testClass.getAnnotation(storyRefAnnotation));
 		}
 
@@ -85,7 +86,7 @@ public class BddDoc {
 				continue;
 			}
 
-			if (testMethod.isAnnotationPresent(storyRefAnnotation)) {
+			if ((null != storyRefAnnotation) && (testMethod.isAnnotationPresent(storyRefAnnotation))) {
 				userStory = userStory(testMethod.getAnnotation(storyRefAnnotation));
 			}
 
@@ -103,7 +104,8 @@ public class BddDoc {
 	 * Gets the camelCaseSentence from the testmethod, removing 'test' if JUnit
 	 * 3 is used
 	 * 
-	 * @param testMethod that specifies the test
+	 * @param testMethod
+	 *            that specifies the test
 	 * @return camelCaseSentence describeing behaviour
 	 */
 	private String getCamelCaseSentence(Method testMethod) {

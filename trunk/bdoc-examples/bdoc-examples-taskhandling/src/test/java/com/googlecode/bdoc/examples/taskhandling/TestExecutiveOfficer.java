@@ -39,20 +39,20 @@ public class TestExecutiveOfficer {
 		bob = new ExecutiveOfficer("Bob");
 	}
 
-	@Test
+	@Test // Scenario - given[]When[]Then[]
 	public void givenAnExecutiveOfficerWithNoTasksAssignedWhenTheOfficerCreatesANewTaskThenEnsureItIsAssignedToTheOfficer() {
 		Task task = bob.createTask("Register salesorder");
 		assertTrue(bob.isAssignedTo(task));
 	}
 
-	@Test
+	@Test // Specification - should[]
 	public void shouldBeAbleToStartATaskAssigned() {
 		Task task = bob.createTask("Register salesorder");
 		bob.start(task);
 		assertTrue(task.isInProgress());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class) 
 	public void shouldNotBeAbleToStartATaskAssignedToOthers() {
 		ExecutiveOfficer sally = new ExecutiveOfficer("sally");
 		Task task = sally.createTask("Pay salary");
@@ -68,7 +68,7 @@ public class TestExecutiveOfficer {
 		bob.start(task2);
 	}
 
-	@Test
+	@Test // Statement - []
 	public void aNewExecutiveOfficerShouldNotHaveAnyTasksInHisOrHerTaskList() {
 		assertTrue(bob.getTaskList().getList().isEmpty());
 	}

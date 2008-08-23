@@ -35,16 +35,27 @@ public class ExecutiveOfficer {
 	}
 
 	public Task createTask(String description) {
-		Task task = new Task(description, taskList);
-		taskList.addTask(task);
-		return task;
+		return new Task(description, taskList);
 	}
 
 	public TaskList getTaskList() {
 		return taskList;
 	}
 
-	public void openTask(Task task) {
-		task.open();
+	public void start(Task task) {
+
+		if (taskList.hasTasksInProgress()) {
+			throw new IllegalStateException("There are already tasks in progress");
+		}
+
+		if (taskList.contains(task)) {
+			task.start();
+		} else {
+			throw new IllegalArgumentException("Task [" + task + "] is not assigned to [" + name + "]");
+		}
+	}
+
+	public boolean isAssignedTo(Task task) {
+		return taskList.contains(task);
 	}
 }

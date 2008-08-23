@@ -26,25 +26,21 @@ package com.googlecode.bdoc.examples.taskhandling;
 
 public class Task {
 
-	private TaskList taskList;
+	boolean inProgress;
 	private String description;
-	boolean open;
 
 	public Task(String description, TaskList taskList) {
+		this.inProgress = false;
 		this.description = description;
-		this.taskList = taskList;
-		this.open = false;
+		taskList.addTask(this);
 	}
 
-	public void open() {
-		if (taskList.hasOpenTasks()) {
-			throw new IllegalStateException();
-		}
-		open = true;
+	public void start() {
+		inProgress = true;
 	}
 
-	public boolean isOpen() {
-		return open;
+	public boolean isInProgress() {
+		return inProgress;
 	}
 
 	public String getDescription() {

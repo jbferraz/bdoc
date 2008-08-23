@@ -25,16 +25,27 @@
 package com.googlecode.bdoc.examples.taskhandling;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 
 @Ref(Story.TASKTRACKING)
 public class TestTaskList {
 
 	@Test
-	public void shouldTellIfItHasOpenTasks() {
+	public void shouldTellIfItHasTasksInProgress() {
 		TaskList taskList = new TaskList();
-		taskList.addTask(new Task("The task", taskList)).open();
-		assertTrue(taskList.hasOpenTasks());
+		Task task = new Task("The task", taskList);
+		task.start();
+		assertTrue(taskList.hasTasksInProgress());
 	}
 
+	@Test
+	public void shouldNotHaveAnyTasksWhenNew() {
+		assertTrue(new TaskList().getList().isEmpty());
+	}
+
+	@Test
+	public void shouldNotHaveAnyTasksInProgressWhenNew() {
+		assertFalse(new TaskList().hasTasksInProgress());
+	}
 }

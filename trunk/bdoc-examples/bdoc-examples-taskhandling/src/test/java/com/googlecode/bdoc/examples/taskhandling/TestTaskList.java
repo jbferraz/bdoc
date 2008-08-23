@@ -25,45 +25,16 @@
 package com.googlecode.bdoc.examples.taskhandling;
 
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Before;
 import org.junit.Test;
 
 @Ref(Story.TASKTRACKING)
-public class TestExecutiveOfficer {
-
-	private ExecutiveOfficer executiveOfficer;
-
-	@Before
-	public void setupExecutiveOfficer() {
-		executiveOfficer = new ExecutiveOfficer("Bob");
-	}
+public class TestTaskList {
 
 	@Test
-	public void givenAnEmptyTaskListForAnExecutiveOfficerWhenTheOfficerCreatesANewTaskThenEnsureItIsFoundInHisOrHerTaskList() {
-		Task task = executiveOfficer.createTask("Register salesorder");
-		assertTrue(executiveOfficer.getTaskList().contains(task));
-	}
-
-	@Test
-	public void shouldBeAbleToOpenATask() {
-		Task task = executiveOfficer.createTask("Register salesorder");
-		executiveOfficer.openTask(task);
-		assertTrue(task.isOpen());
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void shouldOnlyBeAbleToOpenOneTaskAtTheTime() {
-		Task task1 = executiveOfficer.createTask("Register salesorder");
-		executiveOfficer.openTask(task1);
-
-		Task task2 = executiveOfficer.createTask("Register payment");
-		executiveOfficer.openTask(task2);
-	}
-
-	@Test
-	public void aNewExecutiveOfficerShouldNotHaveAnyTasksInHisOrHerTaskList() {
-		assertTrue(executiveOfficer.getTaskList().getList().isEmpty());
+	public void shouldTellIfItHasOpenTasks() {
+		TaskList taskList = new TaskList();
+		taskList.addTask(new Task("The task", taskList)).open();
+		assertTrue(taskList.hasOpenTasks());
 	}
 
 }

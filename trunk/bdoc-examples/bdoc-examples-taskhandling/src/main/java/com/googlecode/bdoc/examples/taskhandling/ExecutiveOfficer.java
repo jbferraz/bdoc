@@ -35,12 +35,16 @@ public class ExecutiveOfficer {
 	}
 
 	public Task createTask(String description) {
-		Task task = new Task(description);
-		taskList.addNewTask(task);
+		Task task = new Task(description, taskList);
+		taskList.addTask(task);
 		return task;
 	}
 
 	public TaskList getTaskList() {
 		return taskList;
+	}
+
+	public void openTask(Task task) {
+		task.open();
 	}
 }

@@ -29,17 +29,31 @@ import java.util.List;
 
 public class TaskList {
 
-	private List<Task> newTasks;
+	private List<Task> tasks;
 
 	public TaskList() {
-		this.newTasks = new ArrayList<Task>();
+		this.tasks = new ArrayList<Task>();
 	}
 
-	public List<Task> getNewTasks() {
-		return newTasks;
+	public List<Task> getList() {
+		return tasks;
 	}
 
-	public void addNewTask(Task task) {
-		newTasks.add(task);
+	public Task addTask(Task task) {
+		tasks.add(task);
+		return task;
+	}
+
+	public boolean hasOpenTasks() {
+		for (Task newTask : tasks) {
+			if (newTask.isOpen()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean contains(Task task) {
+		return tasks.contains(task);
 	}
 }

@@ -32,7 +32,6 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;

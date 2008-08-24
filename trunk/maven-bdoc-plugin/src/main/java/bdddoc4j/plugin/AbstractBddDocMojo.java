@@ -82,6 +82,11 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	protected void logMessage(String msg) {
+		getLog().info(msg);
+	}
+	
 
 	@Override
 	protected MavenProject getProject() {

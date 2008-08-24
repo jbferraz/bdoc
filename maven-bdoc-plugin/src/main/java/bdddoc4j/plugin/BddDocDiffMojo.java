@@ -39,6 +39,13 @@ import bdddoc4j.plugin.diff.DiffExecutorImpl;
  */
 public class BddDocDiffMojo extends AbstractBddDocMojo {
 
+	static final String DIFF_IS_FOUND = "Diff is found";
+
+	static final String NO_DIFF_IS_FOUND = "No diff is found";
+
+	static final String LOG_DIRECTORY_NOT_SPECIFIED = "Logdirectory not configured for plugin. "
+			+ "Example of config: <configuration> <logDirectory>bddlog</logDirectory><configuration>";
+
 	/**
 	 * @parameter expression="${old}"
 	 */
@@ -51,6 +58,15 @@ public class BddDocDiffMojo extends AbstractBddDocMojo {
 	private String newBddDocFileName;
 
 	protected void executeReport(Locale arg0) throws MavenReportException {
+		executeInternal();
+	}
+
+	void executeInternal() {
+		if (null == logDirectory) {
+			logMessage(LOG_DIRECTORY_NOT_SPECIFIED);
+			return;
+		}
+
 		DiffExecutorImpl diffExecutor = new DiffExecutorImpl(logDirectory);
 
 		DiffReport result = null;
@@ -64,11 +80,11 @@ public class BddDocDiffMojo extends AbstractBddDocMojo {
 		}
 
 		if (result.diffExists()) {
-			getLog().info("Diff is found");
+			logMessage(DIFF_IS_FOUND);
 			writeReport(result.getHtml());
 
 		} else {
-			getLog().info("No diff is found");
+			logMessage(NO_DIFF_IS_FOUND);
 		}
 	}
 

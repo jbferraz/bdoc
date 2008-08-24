@@ -38,7 +38,6 @@ import bdddoc4j.core.report.BddDocReport;
 public class TestBddDocMojo {
 
 	private BddDocMojo bddDocMojo;
-	private String basedirPath;
 	private boolean writeFileRun;
 
 	@Before

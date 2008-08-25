@@ -44,6 +44,14 @@ public class TestExecutiveOfficer {
 		Task task = bob.createTask("Register salesorder");
 		assertTrue(bob.isAssignedTo(task));
 	}
+	
+	@Test
+	public void givenATaskStartedByAnExecutiveOfficerWhenTheOfficerClosesTheTaskThenEnsureItIsRemovedFromTheTaskList() {
+		Task task = bob.createTask("Register salesorder");
+		bob.start(task);
+		bob.close( task );
+		assertTrue(bob.getTaskList().getList().isEmpty());		
+	}
 
 	@Test // Specification - should[]
 	public void shouldBeAbleToStartATaskAssigned() {

@@ -77,7 +77,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.7.1</version>
+				<version>0.7.5</version>
 				<configuration>
 					<storyRefAnnotationClassName>bdddoc4j.core.doc.Ref</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>

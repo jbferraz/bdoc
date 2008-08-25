@@ -42,7 +42,7 @@ public class TestBddDiffMojo {
 
 		BddDocDiffMojo bddDiffMojo = new BddDocDiffMojo() {
 			@Override
-			protected void logMessage(String msg) {
+			protected void errorMessage(String msg) {
 				message = msg;
 			}
 		};

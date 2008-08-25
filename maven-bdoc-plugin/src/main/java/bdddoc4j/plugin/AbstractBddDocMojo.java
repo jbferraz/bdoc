@@ -86,6 +86,10 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 	protected void logMessage(String msg) {
 		getLog().info(msg);
 	}
+
+	protected void errorMessage(String msg) {
+		getLog().error(msg);
+	}
 	
 
 	@Override

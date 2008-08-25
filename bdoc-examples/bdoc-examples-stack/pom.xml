@@ -27,7 +27,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.7.1</version>
+				<version>${maven.bdoc.plugin.version}</version>
 				<configuration>
 					<storyRefAnnotationClassName>bdddoc4j.examples.Ref</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
@@ -103,15 +103,5 @@
 			</build>
 		</profile>
 	</profiles>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>perottobc-release</id>
-			<name>Local Maven repository of releases</name>
-			<url>http://perottobc-repository.googlecode.com/svn/maven2/releases</url>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<dependencies>
-	</dependencies>
 
 </project>

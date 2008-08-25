@@ -23,7 +23,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.7.2</version>
+				<version>${maven.bdoc.plugin.version}</version>
 				<configuration>
 					<storyRefAnnotationClassName>com.googlecode.bdoc.examples.taskhandling.Ref</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>

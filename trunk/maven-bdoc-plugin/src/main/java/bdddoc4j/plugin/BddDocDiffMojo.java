@@ -63,7 +63,7 @@ public class BddDocDiffMojo extends AbstractBddDocMojo {
 
 	void executeInternal() {
 		if (null == logDirectory) {
-			logMessage(LOG_DIRECTORY_NOT_SPECIFIED);
+			errorMessage(LOG_DIRECTORY_NOT_SPECIFIED);
 			return;
 		}
 

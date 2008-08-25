@@ -58,4 +58,8 @@ public class ExecutiveOfficer {
 	public boolean isAssignedTo(Task task) {
 		return taskList.contains(task);
 	}
+
+	public void close(Task task) {
+		taskList.getList().remove(task);
+	}
 }

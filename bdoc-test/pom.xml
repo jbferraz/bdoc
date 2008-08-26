@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+
+	<parent>
+		  <groupId>com.googlecode.bdoc</groupId>
+		  <artifactId>bdoc-base</artifactId>
+		  <version>0.7.0</version>
+	</parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <name>BDoc Test - Parent POM</name>
+  <description>Tests that make sure BDoc works</description>
+  <url>http://bdoc.googlecode.com</url>
+  <inceptionYear>2008</inceptionYear>
+
+  <artifactId>bdoc-test</artifactId>
+  <version>0.7.0</version>
+  <packaging>pom</packaging>
+  
+  <modules>
+    <module>bdoc-test-no-config</module>
+    <module>bdoc-test-log-config</module>
+  </modules>
+   
+</project>

@@ -1,8 +1,10 @@
-BDoc currently supports:
+BDoc currently supports the following technologies:
  * Maven 2 
- * Java 5 
+ * Java 5  
  * JUnit 3 
  * JUnit 4 
  * TestNG
+
+Languages:
  * English - given[]When[]Then[], should[] 
  * Norwegian - gitt[]Naar[]Saa[], skal[]

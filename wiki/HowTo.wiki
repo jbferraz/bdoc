@@ -1,5 +1,5 @@
  ==doc - 30 seconds introduction=
-To give bdoc a testrun on your project place the following configuration in your pom.xml:
+ To give bdoc a testrun on your project place the following configuration in your pom.xml:
 {{{
   	<build>
 		<plugins>

@@ -1,4 +1,8 @@
 BDoc currently supports:
  * Maven 2 
- * Java 5 and up
- * JUnit 3 and up
+ * Java 5 
+ * JUnit 3 
+ * JUnit 4 
+ * TestNG
+ * English - given[]When[]Then[], should[] 
+ * Norwegian - gitt[]Naar[]Saa[], skal[]

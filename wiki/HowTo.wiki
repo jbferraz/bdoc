@@ -47,3 +47,6 @@ mvn bdoc:diff
   * Add, delete og change on or more tests in your project
   * Run _mvn clean bdoc:doc_ - a new bdoc-snaphot will be stored in your _logDirectory_
   * run _mvn bdoc:diff_ again - a diff-report will be generated in your ./target/site/ directory.
+
+ ===Next===
+More doc will come, for example projects these can be found at http://bdoc.googlecode.com/svn/trunk/bdoc-examples.

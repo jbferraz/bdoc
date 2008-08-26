@@ -1,0 +1,50 @@
+=Howto=
+ ==doc - 30 seconds introduction=
+ BDoc supports Java 1.5 (and higher), Maven 2 and Junit 3/4. To give it a testrun place the following configuration in your pom.xml:
+{{{
+  	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.googlecode.bdoc</groupId>
+				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>0.7.5</version>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>perottobc-release</id>
+			<url>http://perottobc-repository.googlecode.com/svn/maven2/releases</url>
+		</pluginRepository>
+	</pluginRepositories>
+}}}
+ BDoc is not currently deployd to the central maven repository, so until the 1.0 is released you need a reference to the repo of Mr Per Otto Bergum Christensen. Your could also build the project locally from the source at http://bdoc.googlecode.com/svn/trunk.
+
+ With the above configuration in place run the following command:
+{{{
+mvn bdoc:doc
+}}}
+ Your bdoc.html is now generated in the ./target/site/ directory of your project. Check  it out and see what your testcode communicates. 
+
+ ==diff - 30 more seconds=
+ BDoc also comes with a diff, so that the developer can see the difference in the bdoc between versions. In order for this to work, bdoc needs to be configured with a _logDirectory_, where it can store snapshot of bdocs. The diff will work on the two latest versions of bdocs, and present the result as an html-report. To enable this feature add the configuration-element shown below:
+{{{
+	<plugin>
+		<groupId>com.googlecode.bdoc</groupId>
+		<artifactId>maven-bdoc-plugin</artifactId>
+		<version>${maven.bdoc.plugin.version}</version>
+		<configuration>
+			<logDirectory>bddlog</logDirectory>
+		</configuration>
+	</plugin>	
+}}}
+ With the above configuration in place run the following command:
+{{{
+mvn bdoc:diff
+}}}
+ The plugin will probably tell you that no diff is found. To see some results do the following:
+  * Run _mvn bdoc:doc_ - a bdoc-snaphot will be stored in your _logDirectory_
+  * Add, delete og change on or more tests in your project
+  * Run _mvn clean bdoc:doc_ - a new bdoc-snaphot will be stored in your _logDirectory_
+  * run _mvn bdoc:diff_ again - a diff-report will be generated in your ./target/site/ directory.

@@ -1,5 +1,5 @@
  ==doc - 30 seconds introduction=
- BDoc supports Java 1.5 (and higher), Maven 2 and Junit 3/4. To give it a testrun place the following configuration in your pom.xml:
+To give bdoc a testrun on your project place the following configuration in your pom.xml:
 {{{
   	<build>
 		<plugins>

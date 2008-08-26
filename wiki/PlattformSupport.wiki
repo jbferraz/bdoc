@@ -8,3 +8,5 @@ BDoc currently supports the following technologies:
 Languages:
  * English - given[]When[]Then[], should[] 
  * Norwegian - gitt[]Naar[]Saa[], skal[]
+
+Language support is added up on request.

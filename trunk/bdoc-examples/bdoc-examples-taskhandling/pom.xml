@@ -1,13 +1,14 @@
-<?xml version="1.0"?><project>
-  <parent>
-    <artifactId>bdoc-examples</artifactId>
-    <groupId>com.googlecode.bdoc</groupId>
-    <version>0.7.0</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>bdoc-examples-taskhandling</artifactId>
-  <name>BDoc Examples - Task handling</name>
-  <version>1.0-SNAPSHOT</version>
+<?xml version="1.0"?>
+<project>
+	<parent>
+		<artifactId>bdoc-examples</artifactId>
+		<groupId>com.googlecode.bdoc</groupId>
+		<version>0.7.0</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>bdoc-examples-taskhandling</artifactId>
+	<name>BDoc Examples - Task handling</name>
+	<version>1.0-SNAPSHOT</version>
 
 	<build>
 		<plugins>
@@ -20,25 +21,25 @@
 				</configuration>
 			</plugin>
 
-	<plugin>
-		<groupId>com.googlecode.bdoc</groupId>
-		<artifactId>maven-bdoc-plugin</artifactId>
-		<version>${maven.bdoc.plugin.version}</version>
-		<configuration>
-			<storyRefAnnotationClassName>com.googlecode.bdoc.examples.taskhandling.Ref</storyRefAnnotationClassName>
-			<logDirectory>bddlog</logDirectory>
-		</configuration>
-		<executions>
-			<execution>
-				<phase>install</phase>
-				<goals>
-					<goal>doc</goal>
-				</goals>
-			</execution>
-		</executions>
-	</plugin>
+			<plugin>
+				<groupId>com.googlecode.bdoc</groupId>
+				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>${maven.bdoc.plugin.version}</version>
+				<configuration>
+					<storyRefAnnotationClassName>com.googlecode.bdoc.examples.taskhandling.Ref</storyRefAnnotationClassName>
+					<logDirectory>bddlog</logDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>doc</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-	<plugin>
+			<plugin>
 				<groupId>com.google.code.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
 				<version>1.2.5</version>
@@ -59,5 +60,5 @@
 			</plugin>
 
 		</plugins>
-	</build>  
+	</build>
 </project>

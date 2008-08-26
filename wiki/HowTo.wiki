@@ -49,4 +49,4 @@ mvn bdoc:diff
   * run _mvn bdoc:diff_ again - a diff-report will be generated in your ./target/site/ directory.
 
  ===Next===
-More doc will come, for example projects these can be found at http://bdoc.googlecode.com/svn/trunk/bdoc-examples.
+ More doc will come, in the meanwhile, you could take a look at the example projects found at http://bdoc.googlecode.com/svn/trunk/bdoc-examples.

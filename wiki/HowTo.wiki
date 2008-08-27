@@ -48,5 +48,8 @@ mvn bdoc:diff
   * Run _mvn clean bdoc:doc_ - a new bdoc-snaphot will be stored in your _logDirectory_
   * run _mvn bdoc:diff_ again - a diff-report will be generated in your ./target/site/ directory, look it up to see the changes in behaviour.
 
+ ===doc userstories - 2 minute tutorial===
+As shown by
+
  ===Next===
  More doc will come, in the meanwhile, you could take a look at the example projects found at http://bdoc.googlecode.com/svn/trunk/bdoc-examples. For info about checkout http://code.google.com/p/bdoc/source/checkout

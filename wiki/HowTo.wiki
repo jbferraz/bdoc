@@ -85,6 +85,48 @@ public @interface Ref {
 }
 }}}
 
+ It is not necessary to handcode these classes, the following command will do the job for you:
+{{{
+mvn bdoc:generate
+}}}
+The result will describe the result
+{{{
+C:\googlecode\bdoc-base\bdoc-test\bdoc-test-no-config>mvn bdoc:generate
+[INFO] Scanning for projects...
+[INFO] Searching repository for plugin with prefix: 'bdoc'.
+[INFO] ------------------------------------------------------------------------
+[INFO] Building bdoc-test-no-config
+[INFO]    task-segment: [bdoc:generate]
+[INFO] ------------------------------------------------------------------------
+[INFO] [bdoc:generate]
+[INFO] No package is set with option -DjavaPackage=<package>, will use: com.googlecode.bdoc.test.no.config
+[INFO] ------------------------------------------------------------------------
+[INFO] Result: SUCCESS
+File created: C:\googlecode\bdoc-base\bdoc-test\bdoc-test-no-config\src\test\java\com\googlecode\bdoc\test\no\config\Ref.java
+File created: C:\googlecode\bdoc-base\bdoc-test\bdoc-test-no-config\src\test\java\com\googlecode\bdoc\test\no\config\Story.java
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1 second
+[INFO] Finished at: Wed Aug 27 22:45:36 CEST 2008
+[INFO] Final Memory: 5M/9M
+[INFO] ------------------------------------------------------------------------
+}}}
+
+
+{{{
+@Ref(Story.STACK)
+public class TestStack {
+
+   .. .
+	@Test
+	public void givenAnEmptyStackWhenOneValueIsPushedThenTheStackShouldNotBeEmpty() {
+		stack.push("1");
+		assertFalse(stack.isEmpty());
+	}
+}}} 
+
 
  ===Next===
  More doc will come, in the meanwhile, you could take a look at the example projects found at http://bdoc.googlecode.com/svn/trunk/bdoc-examples. For info about checkout http://code.google.com/p/bdoc/source/checkout

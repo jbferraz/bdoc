@@ -127,9 +127,7 @@ File created: C:\googlecode\bdoc-base\bdoc-test\bdoc-test-no-config\src\test\jav
 </plugin>
 }}}
 
-
-
-testclasses or testmethods can be associated with userstories, which then will be documented in the bdoc.html
+ Testclasses and/or testmethods can now be associated with userstories, which then will be documented in the bdoc.html
 {{{
 @Ref(Story.STACK)
 public class TestStack {
@@ -141,8 +139,3 @@ public class TestStack {
 		assertFalse(stack.isEmpty());
 	}
 }}} 
-
-
-
- ===Next===
- More doc will come, in the meanwhile, you could take a look at the example projects found at http://bdoc.googlecode.com/svn/trunk/bdoc-examples. For info about checkout http://code.google.com/p/bdoc/source/checkout

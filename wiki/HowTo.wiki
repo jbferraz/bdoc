@@ -49,7 +49,9 @@ mvn bdoc:diff
   * run _mvn bdoc:diff_ again - a diff-report will be generated in your ./target/site/ directory, look it up to see the changes in behaviour.
 
  ===doc userstories - 2 minute tutorial===
- In order to doc userstories with behaviour they must be defined and referenced by the tests. User stories are defined in a java class, below is an example
+ In order to doc userstories with behaviour they must be defined and referenced by the tests. 
+
+ User stories are defined in a java enum, shown by an example below. There is no interface to implement, but the the id() and narrative() methods are required.
 {{{
 public enum Story {
 
@@ -70,6 +72,16 @@ public enum Story {
 	public String[] narrative() {
 		return narrative;
 	}
+}
+}}}
+
+ The 
+{{{
+@Retention(RetentionPolicy.RUNTIME)
+@Target( { ElementType.METHOD, ElementType.TYPE })
+public @interface Ref {
+
+	Story value();
 }
 }}}
 

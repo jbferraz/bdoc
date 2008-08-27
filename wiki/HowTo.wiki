@@ -121,7 +121,9 @@ File created: C:\googlecode\bdoc-base\bdoc-test\bdoc-test-no-config\src\test\jav
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>maven-bdoc-plugin</artifactId>
 	<version>${maven.bdoc.plugin.version}</version>
-	<configuration>			          <storyRefAnnotationClassName>com.googlecode.bdoc.test.no.config.Ref</storyRefAnnot
+	<configuration>
+		<storyRefAnnotationClassName>bdddoc4j.examples.Ref</storyRefAnnotationClassName>
+		<logDirectory>bddlog</logDirectory>
 	</configuration>
 	<executions>
 		<execution>

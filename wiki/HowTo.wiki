@@ -75,7 +75,7 @@ public enum Story {
 }
 }}}
 
- The tests are referencing the user stories with an annotation, shown with an example below.  
+ The tests are referencing the user stories with an annotation, which also needs to be implemented. An example of the annotation is shown below.  
 {{{
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.METHOD, ElementType.TYPE })

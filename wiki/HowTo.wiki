@@ -51,7 +51,7 @@ mvn bdoc:diff
  ===doc userstories - 2 minute tutorial===
  In order to doc userstories with behaviour they must be defined and referenced by the tests. 
 
- User stories are defined in a java enum, shown by an example below. There is no interface to implement, but the the id() and narrative() methods are required.
+ User stories are defined in a java enum, shown by the example below. There is no interface to implement, but the the id() and narrative() methods are required.
 {{{
 public enum Story {
 

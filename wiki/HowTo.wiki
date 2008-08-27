@@ -85,6 +85,7 @@ public @interface Ref {
 }
 }}}
 
+
  It is not necessary to handcode these classes, the following command will do the job for you:
 {{{
 mvn bdoc:generate
@@ -114,7 +115,7 @@ File created: C:\googlecode\bdoc-base\bdoc-test\bdoc-test-no-config\src\test\jav
 [INFO] ------------------------------------------------------------------------
 }}}
 
-
+ With the Ref-annotation and the Story-enum in place the testclasses or testmethods can be associated with userstories, which then will be documented in the bdoc.html
 {{{
 @Ref(Story.STACK)
 public class TestStack {
@@ -126,6 +127,7 @@ public class TestStack {
 		assertFalse(stack.isEmpty());
 	}
 }}} 
+
 
 
  ===Next===

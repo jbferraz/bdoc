@@ -4,7 +4,7 @@
 	<parent>
 		  <groupId>com.googlecode.bdoc</groupId>
 		  <artifactId>bdoc-base</artifactId>
-		  <version>0.7.0</version>
+		  <version>1.0.0-SNAPSHOT</version>
 	</parent>
 
   <modelVersion>4.0.0</modelVersion>
@@ -15,7 +15,7 @@
 
   <groupId>com.googlecode.bdoc</groupId>
   <artifactId>bdoc-examples</artifactId>
-  <version>0.7.0</version>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   
 	<licenses>

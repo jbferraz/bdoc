@@ -89,7 +89,7 @@ public @interface Ref {
 {{{
 mvn bdoc:generate
 }}}
-The result will describe the result
+ The result will describe what files have been generated:
 {{{
 C:\googlecode\bdoc-base\bdoc-test\bdoc-test-no-config>mvn bdoc:generate
 [INFO] Scanning for projects...

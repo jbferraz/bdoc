@@ -115,7 +115,21 @@ File created: C:\googlecode\bdoc-base\bdoc-test\bdoc-test-no-config\src\test\jav
 [INFO] ------------------------------------------------------------------------
 }}}
 
- With the Ref-annotation and the Story-enum in place the testclasses or testmethods can be associated with userstories, which then will be documented in the bdoc.html
+ With the Ref-annotation and the Story-enum in place the Ref-annotation must be configured for the plugin, see example below:
+{{{
+			<plugin>
+				<groupId>com.googlecode.bdoc</groupId>
+				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>${maven.bdoc.plugin.version}</version>
+				<configuration>
+					<storyRefAnnotationClassName>bdddoc4j.examples.Ref</storyRefAnnotationClassName>
+				</configuration>
+			</plugin>
+}}}
+
+
+
+testclasses or testmethods can be associated with userstories, which then will be documented in the bdoc.html
 {{{
 @Ref(Story.STACK)
 public class TestStack {

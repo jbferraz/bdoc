@@ -117,14 +117,21 @@ File created: C:\googlecode\bdoc-base\bdoc-test\bdoc-test-no-config\src\test\jav
 
  With the Ref-annotation and the Story-enum in place the Ref-annotation must be configured for the plugin, see example below:
 {{{
-			<plugin>
-				<groupId>com.googlecode.bdoc</groupId>
-				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>${maven.bdoc.plugin.version}</version>
-				<configuration>
-					<storyRefAnnotationClassName>com.googlecode.bdoc.test.no.config.Ref</storyRefAnnotationClassName>
-				</configuration>
-			</plugin>
+<plugin>
+	<groupId>com.googlecode.bdoc</groupId>
+	<artifactId>maven-bdoc-plugin</artifactId>
+	<version>${maven.bdoc.plugin.version}</version>
+	<configuration>			          <storyRefAnnotationClassName>com.googlecode.bdoc.test.no.config.Ref</storyRefAnnot
+	</configuration>
+	<executions>
+		<execution>
+			<phase>install</phase>
+			<goals>
+				<goal>doc</goal>
+			</goals>
+		</execution>
+	</executions>
+</plugin>
 }}}
 
 

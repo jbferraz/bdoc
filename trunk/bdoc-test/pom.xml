@@ -20,7 +20,6 @@
   <modules>
     <module>bdoc-test-no-config</module>
     <module>bdoc-test-log-config</module>
-    <module>bdoc-test-generate</module>
   </modules>
    
 </project>

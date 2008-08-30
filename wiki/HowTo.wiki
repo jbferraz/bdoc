@@ -6,7 +6,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.7.6</version>
+				<version>0.7.7</version>
 			</plugin>
 		</plugins>
 	</build>

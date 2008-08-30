@@ -34,39 +34,51 @@ import bdddoc4j.core.util.CamelCaseToSentenceTranslator;
  * @author Per Otto Bergum Christensen
  */
 public class TestCamelCaseToSentenceTranslator {
-	
+
 	@Test
-	public void shouldChangeTheFirstCharacterToUpperCase()
-	{
-		String result = CamelCaseToSentenceTranslator.translate( "a");
-		assertEquals( 'A', result.charAt(0) );		
+	public void shouldAddASpaceInFrontOfANumber() {
+		assertEquals("Should be 200$", CamelCaseToSentenceTranslator.translate("shouldBe200$"));
+		assertEquals("Should be 300$", CamelCaseToSentenceTranslator.translate("shouldBe300$"));
 	}
 
 	@Test
-	public void shouldInsertSpaceBeforeEachCharInUppercase()
-	{
-		String result1 = CamelCaseToSentenceTranslator.translate( "aB");
-		assertEquals( 3, result1.length() );
-		assertEquals( ' ', result1.charAt(1));
+	public void shouldNotAddASpaceInBetweenNumbers() {
+		assertEquals("Should be 555$", CamelCaseToSentenceTranslator.translate("shouldBe555$"));
 	}
-	
+
 	@Test
-	public void shouldChangeEachCharInUppercaseToLowerCase()
-	{
-		String result = CamelCaseToSentenceTranslator.translate( "aB");
-		assertEquals( 'b', result.charAt(2) );		
+	public void shouldAddASpaceInAfterNumbers() {
+		assertEquals("Should be 799 horses", CamelCaseToSentenceTranslator.translate("shouldBe799Horses"));
+		assertEquals("Should be 799 horses and 10 pigs", CamelCaseToSentenceTranslator.translate("shouldBe799HorsesAnd10Pigs"));
 	}
-	
+
 	@Test
-	public void givenACamelCasedDescriptionWhenTranslatedItShouldFormASentenceWithSpaceBetweenTheWords()
-	{
-		String sentence = CamelCaseToSentenceTranslator.translate( "givenASentenceWhenTranslatedEnsureItIsCorrect");
-		assertEquals("Given a sentence when translated ensure it is correct", sentence );
-	}	
-	
+	public void shouldChangeTheFirstCharacterToUpperCase() {
+		String result = CamelCaseToSentenceTranslator.translate("a");
+		assertEquals('A', result.charAt(0));
+	}
+
 	@Test
-	public void shouldLeaveTheFirstCharUnmodifiedIfItIsInUpperCase()
-	{
-		assertEquals("Given", CamelCaseToSentenceTranslator.translate( "Given") );		
+	public void shouldInsertSpaceBeforeEachCharInUppercase() {
+		String result1 = CamelCaseToSentenceTranslator.translate("aB");
+		assertEquals(3, result1.length());
+		assertEquals(' ', result1.charAt(1));
+	}
+
+	@Test
+	public void shouldChangeEachCharInUppercaseToLowerCase() {
+		String result = CamelCaseToSentenceTranslator.translate("aB");
+		assertEquals('b', result.charAt(2));
+	}
+
+	@Test
+	public void givenACamelCasedDescriptionWhenTranslatedItShouldFormASentenceWithSpaceBetweenTheWords() {
+		String sentence = CamelCaseToSentenceTranslator.translate("givenASentenceWhenTranslatedEnsureItIsCorrect");
+		assertEquals("Given a sentence when translated ensure it is correct", sentence);
+	}
+
+	@Test
+	public void shouldLeaveTheFirstCharUnmodifiedIfItIsInUpperCase() {
+		assertEquals("Given", CamelCaseToSentenceTranslator.translate("Given"));
 	}
 }

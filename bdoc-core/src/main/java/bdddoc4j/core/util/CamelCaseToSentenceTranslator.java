@@ -48,7 +48,26 @@ public class CamelCaseToSentenceTranslator {
 			}
 		}
 
-		return sentence.toString().trim();
+		StringBuilder sentenceWithNumberFormatted = new StringBuilder();
+
+		boolean lastCharIsNumber = false;
+		for (int i = 0; i < sentence.length(); i++) {
+
+			char c = sentence.charAt(i);
+			
+			if (number(c) && !lastCharIsNumber) {
+				sentenceWithNumberFormatted.append(" ");
+				lastCharIsNumber = true;
+			} else {
+				lastCharIsNumber = number(c);
+			}
+			sentenceWithNumberFormatted.append(c);
+		}
+
+		return sentenceWithNumberFormatted.toString().trim();
 	}
 
+	private static boolean number(char c) {
+		return "0123456789".contains(String.valueOf(c));
+	}
 }

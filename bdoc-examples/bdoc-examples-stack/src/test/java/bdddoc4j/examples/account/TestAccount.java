@@ -24,12 +24,23 @@
 
 package bdddoc4j.examples.account;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class TestAccount {
 
 	@Test
 	public void givenIHave200$InMyAccountWhenIAskToWithdraw20$ThenIShouldBeGiven20$AndMyBalanceShouldBe180$() {
-
+		Account account = new Account(200);
+		int cashGiven = account.withdraw(20);
+		assertEquals(20, cashGiven);
+		assertEquals(180, account.balance());
 	}
+	
+//	@Test( expected=Illeagal .class);
+//	public void shouldOnlyWithDrawAmountLessOrEqualToBalance()
+//	{
+//		
+//	}
+
 }

@@ -165,7 +165,7 @@
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-core</artifactId>
-			<version>0.7.1</version>
+			<version>0.7.2</version>
 			<scope>compile</scope>
 		</dependency>
 

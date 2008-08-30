@@ -1,17 +1,18 @@
-<?xml version="1.0"?><project>
-  <parent>
-    <artifactId>bdoc-test</artifactId>
-    <groupId>com.googlecode.bdoc</groupId>
-    <version>1.0.0-SNAPSHOT</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.googlecode.bdoc</groupId>
-  <artifactId>bdoc-test-no-config</artifactId>
-  <name>bdoc-test-no-config</name>
-  <version>1.0-SNAPSHOT</version>
-  <url>http://maven.apache.org</url>
+<?xml version="1.0"?>
+<project>
+	<parent>
+		<artifactId>bdoc-test</artifactId>
+		<groupId>com.googlecode.bdoc</groupId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.googlecode.bdoc</groupId>
+	<artifactId>bdoc-test-no-config</artifactId>
+	<name>bdoc-test-no-config</name>
+	<version>1.0-SNAPSHOT</version>
+	<url>http://maven.apache.org</url>
 
-  	<build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
@@ -22,21 +23,12 @@
 						<phase>install</phase>
 						<goals>
 							<goal>doc</goal>
-							<goal>diff</goal>							
+							<goal>diff</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>	
+			</plugin>
 
 		</plugins>
 	</build>
-		
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
 </project>

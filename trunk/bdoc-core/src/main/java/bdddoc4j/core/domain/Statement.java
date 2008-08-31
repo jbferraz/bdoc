@@ -24,6 +24,8 @@
 
 package bdddoc4j.core.domain;
 
+import java.util.Locale;
+
 import bdddoc4j.core.util.CamelCaseToSentenceTranslator;
 
 /**
@@ -40,14 +42,17 @@ public class Statement {
 		sentence = CamelCaseToSentenceTranslator.translate(camelCaseSentence);
 	}
 
+	public Statement(String camelCaseSentence, Locale locale) {
+		sentence = CamelCaseToSentenceTranslator.translate(camelCaseSentence, locale);
+	}
+
 	public String getSentence() {
 		return sentence;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		return (obj instanceof Statement) && ((Statement) obj).sentence.equals(sentence);
-	}	
-	
+	}
 
 }

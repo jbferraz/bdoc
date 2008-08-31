@@ -27,6 +27,7 @@ package bdddoc4j.core.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang.Validate;
 
@@ -36,14 +37,20 @@ import bdddoc4j.core.util.SentenceToLineSplit;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class Scenario  {
+public class Scenario {
 
 	public enum Pattern {
-		NO("gitt", "Naar", "Saa"), EN("given", "When", "Then");
-		private String[] template;
+		NO(new Locale("no"), "gitt", "Naar", "Saa"), EN(Locale.ENGLISH, "given", "When", "Then");
+		private final String[] template;
+		private final Locale locale;
 
-		private Pattern(String... template) {
+		private Pattern(Locale locale, String... template) {
 			this.template = template;
+			this.locale = locale;
+		}
+
+		public Locale locale() {
+			return locale;
 		}
 
 		public static boolean match(String camelCaseSentence) {
@@ -69,7 +76,7 @@ public class Scenario  {
 		Validate.notNull(pattern, "pattern not found for " + camelCaseSentence);
 
 		for (String ln : SentenceToLineSplit.split(camelCaseSentence, pattern.template[1], pattern.template[2])) {
-			line.add(CamelCaseToSentenceTranslator.translate(ln));
+			line.add(CamelCaseToSentenceTranslator.translate(ln, pattern.locale()));
 		}
 	}
 

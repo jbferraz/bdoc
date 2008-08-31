@@ -29,12 +29,14 @@ package bdddoc4j.examples;
  */
 public enum Story {
 
-	STACK(1, "As a developer", "I want to push objects to a stack", "so that objects can be poped last in first out");
+	STACK(1, "As a developer", "I want to push objects to a stack", "so that objects can be poped last in first out"), 
+	DEPOSIT_AND_WITHDRAW_FUNDS( 2, "As an Account Holder", "I want to deposit funds to an Account",
+			"So that I can withdraw them later");
 
 	private Integer id;
 	private String[] narrative;
 
-	Story(Integer id, String ... narrative ) {
+	Story(Integer id, String... narrative) {
 		this.id = id;
 		this.narrative = narrative;
 	}

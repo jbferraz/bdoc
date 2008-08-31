@@ -22,25 +22,30 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.examples.account;
+package com.googlecode.bdoc.examples.account;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
-
-public class TestAccount {
-
-	@Test
-	public void givenIHave200$InMyAccountWhenIAskToWithdraw20$ThenIShouldBeGiven20$AndMyBalanceShouldBe180$() {
-		Account account = new Account(200);
-		int cashGiven = account.withdraw(20);
-		assertEquals(20, cashGiven);
-		assertEquals(180, account.balance());
-	}
+public class Account {
+	private int balance;
 	
-//	@Test( expected=Illeagal .class);
-//	public void shouldOnlyWithDrawAmountLessOrEqualToBalance()
-//	{
-//		
-//	}
+	public Account(int initialBalance) {		
+		this.balance = initialBalance;
+	}
+
+	public int withdraw(int amount) {
+		int newBalance = balance - amount;
+		if (newBalance < 0) {
+			throw new IllegalStateException("Account cannot be overdrawn");
+		}
+		balance = newBalance;
+		return amount;
+	}
+
+	public int balance() {
+		return balance;
+	}
+
+	public void deposit(int amount) {
+		balance = balance + amount;
+	}
 
 }

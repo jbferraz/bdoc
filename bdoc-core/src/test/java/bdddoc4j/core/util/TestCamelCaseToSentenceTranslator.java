@@ -26,14 +26,26 @@ package bdddoc4j.core.util;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import java.util.Locale;
 
-import bdddoc4j.core.util.CamelCaseToSentenceTranslator;
+import org.junit.Test;
 
 /**
  * @author Per Otto Bergum Christensen
  */
 public class TestCamelCaseToSentenceTranslator {
+
+	@Test
+	public void shouldTranselateTheEnglishIToUperCase() {
+		assertEquals("Given that I have this and I have that", CamelCaseToSentenceTranslator.translate(
+				"givenThatIHaveThisAndIHaveThat", Locale.ENGLISH));
+	}
+
+	@Test
+	public void shouldNotTranselateTheEnglishIToUperCaseForNorwegian() {
+		assertEquals("Gitt at jeg har 20 kroner i banken", CamelCaseToSentenceTranslator.translate(
+				"gittAtJegHar20KronerIBanken", new Locale("no")));
+	}
 
 	@Test
 	public void shouldAddASpaceInFrontOfANumber() {

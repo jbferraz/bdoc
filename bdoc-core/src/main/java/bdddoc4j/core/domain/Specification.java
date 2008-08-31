@@ -24,6 +24,7 @@
 
 package bdddoc4j.core.domain;
 
+import java.util.Locale;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -31,20 +32,30 @@ package bdddoc4j.core.domain;
 public class Specification extends Statement {
 
 	public enum Pattern {
-		NO("skal"), EN("should");
-		private String prefix;
+		NO(new Locale("no"), "skal"), EN(Locale.ENGLISH, "should");
+		private final String prefix;
+		private final Locale locale;
 
-		private Pattern(String prefix) {
+		private Pattern(Locale locale, String prefix) {
 			this.prefix = prefix;
+			this.locale = locale;
+		}
+
+		public Locale locale() {
+			return locale;
 		}
 
 		public static boolean match(String camelCaseSentence) {
+			return (null != find(camelCaseSentence));
+		}
+
+		public static Pattern find(String camelCaseSentence) {
 			for (Pattern pattern : Pattern.values()) {
 				if (camelCaseSentence.startsWith(pattern.prefix)) {
-					return true;
+					return pattern;
 				}
 			}
-			return false;
+			return null;
 		}
 	}
 
@@ -57,15 +68,20 @@ public class Specification extends Statement {
 	 *             if camelCaseSentence isn't accepted as a specification
 	 */
 	public Specification(String camelCaseSentence) {
-		super(camelCaseSentence);
-		if (!Pattern.match(camelCaseSentence)) {
+		super(camelCaseSentence, validatedPattern(Pattern.find(camelCaseSentence), camelCaseSentence).locale());
+	}
+
+	static Pattern validatedPattern(Pattern pattern, String camelCaseSentence) {
+		if (null == pattern) {
 			throw new IllegalArgumentException("Not accepted as a specification: " + camelCaseSentence);
-		}	
+		}
+		return pattern;
+
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		return (obj instanceof Specification) && ((Specification) obj).sentence.equals(sentence);
-	}	
+	}
 
 }

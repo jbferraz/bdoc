@@ -24,6 +24,8 @@
 
 package bdddoc4j.core.util;
 
+import java.util.Locale;
+
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -54,7 +56,7 @@ public class CamelCaseToSentenceTranslator {
 		for (int i = 0; i < sentence.length(); i++) {
 
 			char c = sentence.charAt(i);
-			
+
 			if (number(c) && !lastCharIsNumber) {
 				sentenceWithNumberFormatted.append(" ");
 				lastCharIsNumber = true;
@@ -69,5 +71,16 @@ public class CamelCaseToSentenceTranslator {
 
 	private static boolean number(char c) {
 		return "0123456789".contains(String.valueOf(c));
+	}
+
+	public static String translate(String camelCaseSentence, Locale locale) {
+		String sentence = translate(camelCaseSentence);
+
+		if (Locale.ENGLISH.equals(locale)) {
+			return sentence.replaceAll(" i ", " I ");
+		}
+
+		return sentence;
+
 	}
 }

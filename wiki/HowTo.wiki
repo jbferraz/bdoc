@@ -28,11 +28,12 @@ mvn bdoc:doc
 
 Default support is for JUnit3 and JUnit4, for TestNG you need to configure this:
 {{{
-				<groupId>com.googlecode.bdoc</groupId>
-				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>${maven.bdoc.plugin.version}</version>
-				<configuration>					<testAnnotationClassName>org.junit.Test</testAnnotationClassName>
-				</configuration>
+<groupId>com.googlecode.bdoc</groupId>
+<artifactId>maven-bdoc-plugin</artifactId>
+<version>${maven.bdoc.plugin.version}</version>
+<configuration>
+	<testAnnotationClassName>org.junit.Test</testAnnotationClassName>
+</configuration>
 }}}
 
  ===diff - 30 more seconds===

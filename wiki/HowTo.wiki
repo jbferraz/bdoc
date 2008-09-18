@@ -26,7 +26,7 @@ mvn bdoc:doc
 }}}
  Your bdoc.html is now generated in the ./target/site/ directory of your project. Check  it out and see what your testcode communicates. 
 
- Default support is for JUnit3 and JUnit4, for TestNG you need to configure this:
+ Default support is for JUnit3 and JUnit4, for TestNG you need to configure the property _testAnnotationClassName_:
 {{{
 <groupId>com.googlecode.bdoc</groupId>
 <artifactId>maven-bdoc-plugin</artifactId>

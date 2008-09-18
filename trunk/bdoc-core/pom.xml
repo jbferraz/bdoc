@@ -15,7 +15,7 @@
 
 	<organization>
 		<name>Per Otto Bergum Christensen</name>
-		<url>http://blog.perottobc.com</url>
+		<url>http://blog.perottobergumchristensen.com/</url>
 	</organization>
 
 	<licenses>
@@ -32,7 +32,7 @@
 			<name>Per Otto Bergum Christensen</name>
 			<email>perottobc@gmail.com</email>
 			<organization>Per Otto Bergum Christensen</organization>
-			<organizationUrl>http://blog.perottobc.com</organizationUrl>
+			<organizationUrl>http://blog.perottobergumchristensen.com/</organizationUrl>
 			<timezone>-5</timezone>
 			<roles>
 				<role>project administrator</role>

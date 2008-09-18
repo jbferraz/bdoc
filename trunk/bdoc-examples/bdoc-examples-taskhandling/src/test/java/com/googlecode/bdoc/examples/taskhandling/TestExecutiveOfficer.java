@@ -32,33 +32,39 @@ import org.junit.Test;
 @Ref(Story.TASKTRACKING)
 public class TestExecutiveOfficer {
 
-	private ExecutiveOfficer bob;
+private ExecutiveOfficer bob;
 
-	@Before
-	public void setupExecutiveOfficer() {
-		bob = new ExecutiveOfficer("Bob");
-	}
+@Before
+public void setupExecutiveOfficer() {
+	bob = new ExecutiveOfficer("Bob");
+}
 
-	@Test // Scenario - given[]When[]Then[]
-	public void givenAnExecutiveOfficerWithNoTasksAssignedWhenTheOfficerCreatesANewTaskThenEnsureItIsAssignedToTheOfficer() {
-		Task task = bob.createTask("Register salesorder");
-		assertTrue(bob.isAssignedTo(task));
-	}
-	
-	@Test
-	public void givenATaskStartedByAnExecutiveOfficerWhenTheOfficerClosesTheTaskThenEnsureItIsRemovedFromTheTaskList() {
-		Task task = bob.createTask("Register salesorder");
-		bob.start(task);
-		bob.close( task );
-		assertTrue(bob.getTaskList().getList().isEmpty());		
-	}
+@Test // Scenario - given[]When[]Then[]
+public void givenAnOfficerWithNoTasksWhenTheOfficerCreatesANewTaskThenEnsureItIsAssignedToTheOfficer() {
+	Task task = bob.createTask("Register salesorder");
+	assertTrue(bob.isAssignedTo(task));
+}
 
-	@Test // Specification - should[]
-	public void shouldBeAbleToStartATaskAssigned() {
-		Task task = bob.createTask("Register salesorder");
-		bob.start(task);
-		assertTrue(task.isInProgress());
-	}
+@Test // Specification - should[]
+public void shouldBeAbleToStartATaskAssigned() {
+	Task task = bob.createTask("Register salesorder");
+	bob.start(task);
+	assertTrue(task.isInProgress());
+}
+
+@Test // Statement - []
+public void aNewExecutiveOfficerShouldNotHaveAnyTasksInHisOrHerTaskList() {
+	assertTrue(bob.getTaskList().getList().isEmpty());
+}
+
+
+@Test
+public void givenATaskStartedByAnExecutiveOfficerWhenTheOfficerClosesTheTaskThenEnsureItIsRemovedFromTheTaskList() {
+	Task task = bob.createTask("Register salesorder");
+	bob.start(task);
+	bob.close( task );
+	assertTrue(bob.getTaskList().getList().isEmpty());		
+}	
 
 	@Test(expected = IllegalArgumentException.class) 
 	public void shouldNotBeAbleToStartATaskAssignedToOthers() {
@@ -76,8 +82,4 @@ public class TestExecutiveOfficer {
 		bob.start(task2);
 	}
 
-	@Test // Statement - []
-	public void aNewExecutiveOfficerShouldNotHaveAnyTasksInHisOrHerTaskList() {
-		assertTrue(bob.getTaskList().getList().isEmpty());
-	}
 }

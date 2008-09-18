@@ -25,11 +25,12 @@
 package com.googlecode.bdoc.examples.taskhandling;
 
 /**
- * Example generated 
+ * Example generated
  */
 public enum Story {
 
-	TASKTRACKING(1, "As an executive officer", "I want to manage tasks", "so that I can keep track");
+	TASKTRACKING(1, "As an executive officer", "I want to manage tasks", "so that I can keep track"), 
+	TASKTRACKING_DEMO(2,"As an executive officer", "I want to manage tasks", "so that I can keep track");
 
 	private Integer id;
 	private String[] narrative;

@@ -36,7 +36,7 @@ import bdddoc4j.core.domain.Scenario;
 import bdddoc4j.core.domain.Specification;
 import bdddoc4j.core.domain.Statement;
 
-@Ref(Story.DIFF_OF_BDDDOCS)
+@Ref(Story.DIFF_OF_BDOCS)
 public class TestPackageDiff {
 
 	private static final String ANOTHER_STATEMENT = "anotherStatement";

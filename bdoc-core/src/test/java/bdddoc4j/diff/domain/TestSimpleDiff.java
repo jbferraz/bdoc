@@ -34,7 +34,7 @@ import org.junit.Test;
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
 
-@Ref(Story.DIFF_OF_BDDDOCS)
+@Ref(Story.DIFF_OF_BDOCS)
 public class TestSimpleDiff {
 
 	private List<String> list1 = new ArrayList<String>();

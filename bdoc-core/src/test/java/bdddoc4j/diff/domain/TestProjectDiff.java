@@ -31,7 +31,7 @@ import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
 import bdddoc4j.core.domain.Project;
 
-@Ref(Story.DIFF_OF_BDDDOCS)
+@Ref(Story.DIFF_OF_BDOCS)
 public class TestProjectDiff {
 
 	private Project oldVersion = new Project("name1", "version1");

@@ -33,7 +33,7 @@ import org.junit.Test;
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
 
-@Ref(Story.CREATE_BDDDOC_FROM_CODE)
+@Ref(Story.CREATE_BDOC_FROM_CODE)
 public class TestClassBehaviour {
 
 	private ClassBehaviour classBehaviour;

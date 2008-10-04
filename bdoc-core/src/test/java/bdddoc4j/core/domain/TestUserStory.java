@@ -34,7 +34,7 @@ import bdddoc4j.core.doc.Story;
 import bdddoc4j.core.domain.TestBddDoc.TestExampleAnnotatedMethods;
 import bdddoc4j.core.testdata.ExStory;
 
-@Ref(Story.CREATE_BDDDOC_FROM_CODE)
+@Ref(Story.CREATE_BDOC_FROM_CODE)
 public class TestUserStory {
 
 	private static final String STATMENT_ABOUT_IT = "statmentAboutIt";

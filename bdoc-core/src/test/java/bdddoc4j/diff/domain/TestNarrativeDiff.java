@@ -32,7 +32,7 @@ import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
 import bdddoc4j.core.domain.UserStoryDescription.Narrative;
 
-@Ref(Story.DIFF_OF_BDDDOCS)
+@Ref(Story.DIFF_OF_BDOCS)
 public class TestNarrativeDiff {
 
 	private final Narrative oldVersion = new Narrative("role1", "action1", "benefit1");

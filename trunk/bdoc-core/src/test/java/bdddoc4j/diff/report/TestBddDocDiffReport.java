@@ -37,7 +37,7 @@ import bdddoc4j.core.doc.Story;
 import bdddoc4j.core.report.XmlReport;
 import bdddoc4j.diff.domain.BddUserStoryDiffDocTestdataHelper;
 
-@Ref(Story.DIFF_OF_BDDDOCS)
+@Ref(Story.DIFF_OF_BDOCS)
 public class TestBddDocDiffReport {
 
 	@Test

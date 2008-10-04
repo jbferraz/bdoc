@@ -43,7 +43,7 @@ import bdddoc4j.core.testdata.TestClassWithExStory2Reference;
 /**
  * @author Per Otto Bergum Christensen
  */
-@Ref(Story.CREATE_BDDDOC_FROM_CODE)
+@Ref(Story.CREATE_BDOC_FROM_CODE)
 public class TestBddDoc {
 
 	private BddDoc bddDoc;

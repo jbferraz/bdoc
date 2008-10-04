@@ -38,7 +38,7 @@ import bdddoc4j.core.testdata.ExReference;
 import bdddoc4j.core.testdata.ExStory;
 import bdddoc4j.diff.domain.BddUserStoryDiffDocTestdataHelper.TestWithOnlyGeneralBehaviour;
 
-@Ref(Story.DIFF_OF_BDDDOCS)
+@Ref(Story.DIFF_OF_BDOCS)
 public class TestBddDocDiff {
 
 	private final BddDoc emptyBddDoc = BddUserStoryDiffDocTestdataHelper.getEmptyBddDoc();

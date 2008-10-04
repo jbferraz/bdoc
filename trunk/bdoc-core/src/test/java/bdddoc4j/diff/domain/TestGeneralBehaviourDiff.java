@@ -35,7 +35,7 @@ import bdddoc4j.core.doc.Story;
 import bdddoc4j.core.domain.GeneralBehaviour;
 import bdddoc4j.core.domain.Package;
 
-@Ref(Story.DIFF_OF_BDDDOCS)
+@Ref(Story.DIFF_OF_BDOCS)
 public class TestGeneralBehaviourDiff {
 
 	private static final String SHOULD_JUST_BEHAVE = "shouldJustBehave";

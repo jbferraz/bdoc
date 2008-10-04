@@ -34,7 +34,7 @@ import org.junit.Test;
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
 
-@Ref(Story.DIFF_OF_BDDDOCS)
+@Ref(Story.DIFF_OF_BDOCS)
 public class TestTimeDiff {
 
 	private Calendar time1 = Calendar.getInstance();

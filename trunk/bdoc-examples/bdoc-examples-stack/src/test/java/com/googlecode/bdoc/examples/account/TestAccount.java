@@ -31,17 +31,17 @@ import org.junit.Test;
 import bdddoc4j.examples.Ref;
 import bdddoc4j.examples.Story;
 
-//@Ref(Story.DEPOSIT_AND_WITHDRAW_FUNDS)
+@Ref(Story.DEPOSIT_AND_WITHDRAW_FUNDS)
 public class TestAccount {
 
-//	@Test
-//	public void givenIHave200$InMyAccountWhenIAskToWithdraw20$ThenIShouldBeGiven20$AndMyBalanceShouldBe180$() {
-//		Account account = new Account(200);
-//		int cashGiven = account.withdraw(20);
-//		assertEquals(20, cashGiven);
-//		assertEquals(180, account.balance());
-//	}
-//
+	@Test
+	public void givenIHave200$InMyAccountWhenIAskToWithdraw20$ThenIShouldBeGiven20$AndMyBalanceShouldBe180$() {
+		Account account = new Account(200);
+		int cashGiven = account.withdraw(20);
+		assertEquals(20, cashGiven);
+		assertEquals(180, account.balance());
+	}
+
 	@Test
 	public void shouldAddDepositToBalance() {
 		Account account = new Account(0);

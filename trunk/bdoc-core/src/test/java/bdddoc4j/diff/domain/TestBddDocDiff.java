@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.Project;
 import bdddoc4j.core.testdata.ExReference;
 import bdddoc4j.core.testdata.ExStory;
@@ -41,9 +41,9 @@ import bdddoc4j.diff.domain.BddUserStoryDiffDocTestdataHelper.TestWithOnlyGenera
 @Ref(Story.DIFF_OF_BDOCS)
 public class TestBddDocDiff {
 
-	private final BddDoc emptyBddDoc = BddUserStoryDiffDocTestdataHelper.getEmptyBddDoc();
-	private final BddDoc bddDocWithGeneralBehaviourAndAStory = BddUserStoryDiffDocTestdataHelper.getBddDocWithGeneralBehaviourAndAStory();
-	private final BddDoc bddDocWithUpdatedStory = BddUserStoryDiffDocTestdataHelper.getBddDocWithUpdatedStory();
+	private final BDoc emptyBddDoc = BddUserStoryDiffDocTestdataHelper.getEmptyBddDoc();
+	private final BDoc bddDocWithGeneralBehaviourAndAStory = BddUserStoryDiffDocTestdataHelper.getBddDocWithGeneralBehaviourAndAStory();
+	private final BDoc bddDocWithUpdatedStory = BddUserStoryDiffDocTestdataHelper.getBddDocWithUpdatedStory();
 
 	@Test
 	public void shouldIdentifyNewStories() {
@@ -69,10 +69,10 @@ public class TestBddDocDiff {
 
 	@Test
 	public void shouldReportDiffForChangedGeneralBehaviour() {
-		BddDoc bddDocV1 = new BddDoc(org.junit.Test.class, ExReference.class);
+		BDoc bddDocV1 = new BDoc(org.junit.Test.class, ExReference.class);
 		bddDocV1.setProject(new Project("name", "1"));
 
-		BddDoc bddDocV2 = new BddDoc(org.junit.Test.class, ExReference.class);
+		BDoc bddDocV2 = new BDoc(org.junit.Test.class, ExReference.class);
 		bddDocV2.setProject(new Project("name", "1"));
 
 		bddDocV2.addBehaviourFrom(TestWithOnlyGeneralBehaviour.class);

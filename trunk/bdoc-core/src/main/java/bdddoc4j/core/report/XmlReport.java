@@ -24,7 +24,7 @@
 
 package bdddoc4j.core.report;
 
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.ClassBehaviour;
 import bdddoc4j.core.domain.GeneralBehaviour;
 import bdddoc4j.core.domain.Package;
@@ -38,9 +38,9 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class XmlReport {
 
-	private BddDoc bddDoc;
+	private BDoc bddDoc;
 
-	public XmlReport(BddDoc bddDoc) {
+	public XmlReport(BDoc bddDoc) {
 		this.bddDoc = bddDoc;
 	}
 
@@ -56,7 +56,7 @@ public class XmlReport {
 	}
 
 	public static void addAlias(XStream xstream) {
-		xstream.alias("bddDoc", BddDoc.class);
+		xstream.alias("bddDoc", BDoc.class);
 		xstream.alias("userStory", UserStory.class);
 		xstream.alias("scenario", Scenario.class);
 		xstream.alias("classBehaviour", ClassBehaviour.class);
@@ -69,7 +69,7 @@ public class XmlReport {
 		xstream.addImplicitCollection(Scenario.class, "line");
 	}
 
-	public static BddDoc createBddDoc(String xml) {
-		return (BddDoc) xStream().fromXML(xml);
+	public static BDoc createBddDoc(String xml) {
+		return (BDoc) xStream().fromXML(xml);
 	}
 }

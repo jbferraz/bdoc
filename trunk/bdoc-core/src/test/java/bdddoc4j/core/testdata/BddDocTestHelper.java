@@ -26,7 +26,7 @@ package bdddoc4j.core.testdata;
 
 import org.junit.Test;
 
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.Project;
 
 /**
@@ -39,8 +39,8 @@ public class BddDocTestHelper {
 	private BddDocTestHelper() {
 	}
 
-	public static BddDoc bddDocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour() {
-		BddDoc bddDoc = new BddDoc(org.junit.Test.class, ExReference.class);
+	public static BDoc bddDocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour() {
+		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
 		bddDoc.setProject(new Project("Testproject", "1.0"));
 		bddDoc.addBehaviourFrom(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class);
 		bddDoc.addBehaviourFrom(TestClassWithFourSpecifications.class);

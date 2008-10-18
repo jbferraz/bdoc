@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.Project;
 import bdddoc4j.core.util.ClassUtil;
 
@@ -72,7 +72,7 @@ public class BddDocReport {
 	}
 
 	public void run() throws ClassNotFoundException, IOException {
-		BddDoc bddDoc = new BddDoc(testAnnotation, storyRefAnnotation);
+		BDoc bddDoc = new BDoc(testAnnotation, storyRefAnnotation);
 		bddDoc.setProject(new Project(projectName, projectVersion));
 
 		List<String> classes = new ClassUtil(testClassDirectory).find();

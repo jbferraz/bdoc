@@ -26,7 +26,7 @@ package bdddoc4j.diff.domain;
 
 import org.junit.Test;
 
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.ClassBehaviour;
 import bdddoc4j.core.domain.Project;
 import bdddoc4j.core.domain.Scenario;
@@ -39,12 +39,12 @@ import bdddoc4j.diff.domain.testpackageremoved.TestClassRepresentsTestsThatAreRe
 
 public class BddUserStoryDiffDocTestdataHelper {
 
-	private final BddDoc emptyBddDoc = new BddDoc(org.junit.Test.class, ExReference.class);
+	private final BDoc emptyBddDoc = new BDoc(org.junit.Test.class, ExReference.class);
 	{
 		emptyBddDoc.setProject(new Project("emptyproject", "version1"));
 	}
-	private final BddDoc bddDocWithGeneralBehaviourAndAStory = new BddDoc(org.junit.Test.class, ExReference.class);
-	private final BddDoc bddDocWithUpdatedStory = new BddDoc(org.junit.Test.class, ExReference.class);
+	private final BDoc bddDocWithGeneralBehaviourAndAStory = new BDoc(org.junit.Test.class, ExReference.class);
+	private final BDoc bddDocWithUpdatedStory = new BDoc(org.junit.Test.class, ExReference.class);
 
 	{
 		bddDocWithGeneralBehaviourAndAStory.setProject(new Project("test-project", "version1"));
@@ -179,15 +179,15 @@ public class BddUserStoryDiffDocTestdataHelper {
 		}
 	}
 
-	public static BddDoc getEmptyBddDoc() {
+	public static BDoc getEmptyBddDoc() {
 		return instance().emptyBddDoc;
 	}
 
-	public static BddDoc getBddDocWithGeneralBehaviourAndAStory() {
+	public static BDoc getBddDocWithGeneralBehaviourAndAStory() {
 		return instance().bddDocWithGeneralBehaviourAndAStory;
 	}
 
-	public static BddDoc getBddDocWithUpdatedStory() {
+	public static BDoc getBddDocWithUpdatedStory() {
 		return instance().bddDocWithUpdatedStory;
 	}
 

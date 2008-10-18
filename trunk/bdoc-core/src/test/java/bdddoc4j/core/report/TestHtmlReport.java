@@ -35,7 +35,7 @@ import org.junit.Test;
 
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.ClassSpecifications;
 import bdddoc4j.core.domain.Scenario;
 import bdddoc4j.core.domain.Specification;
@@ -50,7 +50,7 @@ import bdddoc4j.core.testdata.BddDocTestHelper;
 public class TestHtmlReport {
 
 	private String html;
-	private BddDoc bddDoc;
+	private BDoc bddDoc;
 
 	public TestHtmlReport() throws IOException {
 		bddDoc = BddDocTestHelper.bddDocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour();

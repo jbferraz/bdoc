@@ -24,7 +24,7 @@
 
 package bdddoc4j.diff.domain;
 
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.Project;
 import bdddoc4j.core.testdata.ExReference;
 import bdddoc4j.core.testdata.TestWithGeneralBehaviour;
@@ -33,8 +33,8 @@ import bdddoc4j.diff.domain.testpackageremoved.TestClassRepresentsGeneralBehavio
 
 public class BddGeneralBehaviourDiffDocTestdataHelper {
 
-	private final BddDoc oldBddDoc = new BddDoc(org.junit.Test.class, ExReference.class);
-	private final BddDoc newBddDoc = new BddDoc(org.junit.Test.class, ExReference.class);
+	private final BDoc oldBddDoc = new BDoc(org.junit.Test.class, ExReference.class);
+	private final BDoc newBddDoc = new BDoc(org.junit.Test.class, ExReference.class);
 
 	{
 		Project project = new Project("test-project", "version1");

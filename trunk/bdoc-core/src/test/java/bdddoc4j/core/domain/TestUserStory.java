@@ -31,7 +31,7 @@ import org.junit.Test;
 
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
-import bdddoc4j.core.domain.TestBddDoc.TestExampleAnnotatedMethods;
+import bdddoc4j.core.domain.TestBDoc.TestExampleAnnotatedMethods;
 import bdddoc4j.core.testdata.ExStory;
 
 @Ref(Story.CREATE_BDOC_FROM_CODE)

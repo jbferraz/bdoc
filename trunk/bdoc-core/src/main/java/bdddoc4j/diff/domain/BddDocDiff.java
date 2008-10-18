@@ -30,7 +30,7 @@ import java.util.List;
 
 import org.apache.commons.lang.Validate;
 
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.UserStory;
 
 public class BddDocDiff {
@@ -40,7 +40,7 @@ public class BddDocDiff {
 	private final ListDiff<UserStory, UserStoryDiff> userStories;
 	private final GeneralBehaviourDiff generalBehaviourDiff;
 
-	public BddDocDiff(BddDoc oldVersion, BddDoc newVersion) {
+	public BddDocDiff(BDoc oldVersion, BDoc newVersion) {
 		Validate.notNull(oldVersion, "oldVersion");
 		Validate.notNull(newVersion, "newVersion");
 		generalBehaviourDiff = new GeneralBehaviourDiff(oldVersion.getGeneralBehaviour(), newVersion.getGeneralBehaviour());

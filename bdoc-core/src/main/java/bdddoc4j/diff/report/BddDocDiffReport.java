@@ -24,7 +24,7 @@
 
 package bdddoc4j.diff.report;
 
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.report.XmlReport;
 import bdddoc4j.diff.domain.BddDocDiff;
 import bdddoc4j.diff.domain.ClassBehaviourDiff;
@@ -39,8 +39,8 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 public class BddDocDiffReport {
 
 	public DiffReport execute(String oldXmlVersion, String newXmlVersion) {
-		BddDoc oldVersion = XmlReport.createBddDoc(oldXmlVersion);
-		BddDoc newVersion = XmlReport.createBddDoc(newXmlVersion);
+		BDoc oldVersion = XmlReport.createBddDoc(oldXmlVersion);
+		BDoc newVersion = XmlReport.createBddDoc(newXmlVersion);
 
 		BddDocDiff bddDocDiff = new BddDocDiff(oldVersion, newVersion);
 

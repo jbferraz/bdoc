@@ -28,7 +28,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -40,7 +40,7 @@ public class HtmlReport {
 	private Map<String, Object> model;
 	private Configuration cfg;
 
-	public HtmlReport(BddDoc bddDoc) {
+	public HtmlReport(BDoc bddDoc) {
 		cfg = new Configuration();
 		cfg.setTemplateLoader(new ClassTemplateLoader(HtmlReport.class, ""));
 		cfg.setObjectWrapper(new DefaultObjectWrapper());

@@ -36,7 +36,7 @@ import org.junit.Test;
 
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
-import bdddoc4j.core.domain.BddDoc;
+import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.testdata.BddDocTestHelper;
 
 /**
@@ -46,7 +46,7 @@ import bdddoc4j.core.testdata.BddDocTestHelper;
 public class TestXmlReport {
 
 	private String xml;
-	private BddDoc bddDoc;
+	private BDoc bddDoc;
 
 	@Before
 	public void setupTestdata() throws IOException {

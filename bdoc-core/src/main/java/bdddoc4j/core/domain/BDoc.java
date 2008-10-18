@@ -39,7 +39,7 @@ import org.apache.commons.lang.Validate;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class BddDoc {
+public class BDoc {
 
 	private static final String TEST_METHOD_PREFIX = "test";
 	protected transient Class<? extends Annotation> testAnnotation;
@@ -53,7 +53,7 @@ public class BddDoc {
 	/**
 	 * Constructor - for extensions
 	 */
-	protected BddDoc() {
+	protected BDoc() {
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class BddDoc {
 	 * @param storyRefAnnotation
 	 *            marks method as something with a reference to story
 	 */
-	public BddDoc(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> storyRefAnnotation) {
+	public BDoc(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> storyRefAnnotation) {
 		this.testAnnotation = testAnnotation;
 		this.storyRefAnnotation = storyRefAnnotation;
 	}
@@ -80,24 +80,47 @@ public class BddDoc {
 			userStory = userStory(testClass.getAnnotation(storyRefAnnotation));
 		}
 
-		for (Method testMethod : testClass.getMethods()) {
+		for (Method method : testClass.getMethods()) {
 
-			if (!testMethod.isAnnotationPresent(testAnnotation) && !testMethod.getName().startsWith(TEST_METHOD_PREFIX)) {
-				continue;
-			}
+			if (test(method)) {
 
-			if ((null != storyRefAnnotation) && (testMethod.isAnnotationPresent(storyRefAnnotation))) {
-				userStory = userStory(testMethod.getAnnotation(storyRefAnnotation));
-			}
+				if ((null != storyRefAnnotation) && (method.isAnnotationPresent(storyRefAnnotation))) {
+					userStory = userStory(method.getAnnotation(storyRefAnnotation));
+				}
 
-			String camelCaseSentence = getCamelCaseSentence(testMethod);
-
-			if (null != userStory) {
-				userStory.addBehaviour(testClass, camelCaseSentence);
-			} else {
-				generalBehaviour.addBehaviour(testClass, camelCaseSentence);
+				if (null != userStory) {
+					userStory.addBehaviour(testClass, camelCaseSentence(method));
+				} else {
+					generalBehaviour.addBehaviour(testClass, camelCaseSentence(method));
+				}
 			}
 		}
+	}
+
+	/**
+	 * Tells if the metod is a testMethod
+	 * 
+	 * @param method
+	 *            to check
+	 * @return true if method is a test
+	 */
+	private boolean test(Method method) {
+		if ((null != testAnnotation) && method.isAnnotationPresent(testAnnotation)) {
+			return true;
+		}
+
+		Annotation[] annotations = method.getAnnotations();
+		for (Annotation annotation : annotations) {
+			String name = annotation.annotationType().getName();
+			if (name.endsWith(".Test")) {
+				return true;
+			}
+		}
+
+		if (method.getName().startsWith(TEST_METHOD_PREFIX)) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -108,7 +131,7 @@ public class BddDoc {
 	 *            that specifies the test
 	 * @return camelCaseSentence describeing behaviour
 	 */
-	private String getCamelCaseSentence(Method testMethod) {
+	private String camelCaseSentence(Method testMethod) {
 		String camelCaseSentence = testMethod.getName();
 		if (camelCaseSentence.startsWith(TEST_METHOD_PREFIX)) {
 			camelCaseSentence = camelCaseSentence.substring(TEST_METHOD_PREFIX.length());
@@ -195,7 +218,7 @@ public class BddDoc {
 
 	@Override
 	public boolean equals(Object obj) {
-		return (obj instanceof BddDoc) && ((BddDoc) obj).docTime.equals(docTime) && ((BddDoc) obj).project.equals(project);
+		return (obj instanceof BDoc) && ((BDoc) obj).docTime.equals(docTime) && ((BDoc) obj).project.equals(project);
 	}
 
 }

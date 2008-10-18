@@ -6,7 +6,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.7.8</version>
+				<version>0.7.9</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -26,15 +26,7 @@ mvn bdoc:doc
 }}}
  Your bdoc.html is now generated in the ./target/site/ directory of your project. Check  it out and see what your testcode communicates. 
 
- Default support is for JUnit3 and JUnit4, for TestNG you need to configure the property _testAnnotationClassName_:
-{{{
-<groupId>com.googlecode.bdoc</groupId>
-<artifactId>maven-bdoc-plugin</artifactId>
-<version>${maven.bdoc.plugin.version}</version>
-<configuration>
-	<testAnnotationClassName>org.junit.Test</testAnnotationClassName>
-</configuration>
-}}}
+ Default support is for JUnit3 and JUnit4 and TestNG. 
 
  ===diff - 30 more seconds===
  BDoc also comes with a diff, so that the developer can see the difference in the bdoc between versions. In order for this to work, bdoc needs to be configured with a _logDirectory_, where it can store snapshot of bdocs. The diff will work on the two latest versions of bdocs, and present the result as an html-report. To enable this feature add the configuration-element shown below:

@@ -1,3 +1,3 @@
 _18 October 2008_
 
- Version 0.7.9 is released with [http://testng.org/doc/ TestNG] Support without configuration. Now every testmethod annontated with _Test_ will be extracted as behaviour. It doesn't matter if the annotation is _org.junit.Test_ or _org.testng.annotations.Test_. BDoc will also extract any testmethod starting with 'test', supporting JUnit3.
+ Version 0.7.9 is released with direct [http://testng.org/doc/ TestNG] support, specific test annotation configuration is no longer neccecery. Now every testmethod annontated with _Test_ will be extracted as behaviour. It doesn't matter if the annotation is _org.junit.Test_ or _org.testng.annotations.Test_. BDoc will also extract any testmethod starting with 'test', supporting JUnit3.

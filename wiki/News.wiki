@@ -1,5 +1,5 @@
 _08 November 2008 - Release 0.7.10_
- Version 0.7.10 is release with support for direct reference to the class under test. This could be usefull if you want to name your test differently, for example ???IntegrationTest. For an example look at: http://code.google.com/p/just-blaze-ds/source/browse/trunk/blaze-poc-web/src/test/java/com/moneytalks/blaze/poc/NotebookServiceImplIntegrationTest.java
+ Version 0.7.10 is release with support for direct reference to the class under test. This could be usefull if you want to name your test differently, for example ???IntegrationTest. For an example look at: http://code.google.com/p/just-blaze-ds/source/browse/trunk/blaze-poc-web/src/test/java/com/moneytalks/blaze/poc/NotebookServiceImplIntegrationTest.java .Note how the RefClass annotation references the class under test.
 
 
 _18 October 2008 - Release 0.7.9_

@@ -24,6 +24,9 @@
 
 package bdddoc4j.core.domain;
 
+import static org.apache.commons.beanutils.MethodUtils.invokeMethod;
+
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,8 +46,35 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	private List<Statement> statements = new ArrayList<Statement>();
 
 	public ClassBehaviour(Class<? extends Object> testClass) {
+		this.className = retreiveClassName(testClass);
+	}
 
-		String name = testClass.getName();
+	/**
+	 * Retreives the name of the class under test
+	 * 
+	 * @param testClass
+	 *            with tests
+	 * @return name of class under test
+	 */
+	private String retreiveClassName(Class<? extends Object> testClass) {
+
+		String name = null;
+
+		Annotation[] annotations = testClass.getAnnotations();
+		for (Annotation annotation : annotations) {
+			if (annotation.annotationType().getName().endsWith("RefClass")) {
+				try {
+					name = String.valueOf(invokeMethod(annotation, "value", null));
+					break;
+				} catch (Exception e) {
+					throw new IllegalStateException(e);
+				}
+			}
+		}
+
+		if (null == name) {
+			name = testClass.getName();
+		}
 
 		if (name.contains(".")) {
 			String[] splitOnDot = name.split("\\.");
@@ -61,7 +91,7 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 			name = splitOnTestPrefix[splitOnTestPrefix.length - 1];
 		}
 
-		this.className = name;
+		return name;
 	}
 
 	public void addBehaviour(String camelCaseSentence) {

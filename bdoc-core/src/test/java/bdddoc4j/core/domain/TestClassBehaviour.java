@@ -32,6 +32,7 @@ import org.junit.Test;
 
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
+import bdddoc4j.core.testdata.RefClass;
 
 @Ref(Story.CREATE_BDOC_FROM_CODE)
 public class TestClassBehaviour {
@@ -41,6 +42,12 @@ public class TestClassBehaviour {
 	@Before
 	public void resetGlobalTestdata() {
 		classBehaviour = new ClassBehaviour(TestSomeClass.class);
+	}
+
+	@Test
+	public void givenThatATestClassIsAnnotatedWithRefClassWhenTheClassNameIsExtractedThenEnsureTheClassNameIsAsSpecifiedByTheClassRefAnnotation() {
+		classBehaviour = new ClassBehaviour(TestClassThatHasAnnotationToAnotherClass.class);
+		assertEquals( "AnotherClass",  classBehaviour.getClassName() );
 	}
 
 	@Test
@@ -82,6 +89,10 @@ public class TestClassBehaviour {
 	}
 
 	public class TestSomeClass {
+	}
+
+	@RefClass(AnotherClass.class)
+	public class TestClassThatHasAnnotationToAnotherClass {
 	}
 
 	public class AnotherClass {

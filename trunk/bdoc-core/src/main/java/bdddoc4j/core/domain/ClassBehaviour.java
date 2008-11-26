@@ -30,6 +30,8 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Describes behaviour for a Class.
  * 
@@ -86,9 +88,12 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 			name = splitOnInnerClass[splitOnInnerClass.length - 1];
 		}
 
-		if (name.contains("Test")) {
-			String[] splitOnTestPrefix = name.split("Test");
-			name = splitOnTestPrefix[splitOnTestPrefix.length - 1];
+		if (name.endsWith("Test")) {
+			name = StringUtils.removeEnd(name, "Test");
+		} else {
+			if (name.startsWith("Test")) {
+				name = StringUtils.removeStart(name, "Test");
+			}
 		}
 
 		return name;

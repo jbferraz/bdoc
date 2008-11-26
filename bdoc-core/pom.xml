@@ -8,9 +8,9 @@
 	<description>The Core of BDoc</description>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/trunk</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc-core</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc-core/</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk/bdoc-core/</url>
 	</scm>
 
 	<organization>

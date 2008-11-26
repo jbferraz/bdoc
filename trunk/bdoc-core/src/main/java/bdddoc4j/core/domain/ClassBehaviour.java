@@ -39,6 +39,8 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 
+	private static final String TEST = "Test";
+
 	private String className;
 
 	private List<Scenario> scenarios = new ArrayList<Scenario>();
@@ -60,43 +62,55 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	 */
 	private String retreiveClassName(Class<? extends Object> testClass) {
 
-		String name = null;
-
 		Annotation[] annotations = testClass.getAnnotations();
 		for (Annotation annotation : annotations) {
 			if (annotation.annotationType().getName().endsWith("RefClass")) {
 				try {
-					name = String.valueOf(invokeMethod(annotation, "value", null));
-					break;
+					String className = String.valueOf(invokeMethod(annotation, "value", null));
+					return removePackageAndParentClassName(className);
 				} catch (Exception e) {
 					throw new IllegalStateException(e);
 				}
 			}
 		}
 
-		if (null == name) {
-			name = testClass.getName();
+		String className = removePackageAndParentClassName(testClass.getName());
+
+		if (className.equalsIgnoreCase(TEST)) {
+			return className;
 		}
 
-		if (name.contains(".")) {
-			String[] splitOnDot = name.split("\\.");
-			name = splitOnDot[splitOnDot.length - 1];
-		}
-
-		if (name.contains("$")) {
-			String[] splitOnInnerClass = name.split("\\$");
-			name = splitOnInnerClass[splitOnInnerClass.length - 1];
-		}
-
-		if (name.endsWith("Test")) {
-			name = StringUtils.removeEnd(name, "Test");
+		if (className.endsWith(TEST)) {
+			return StringUtils.removeEnd(className, TEST);
 		} else {
-			if (name.startsWith("Test")) {
-				name = StringUtils.removeStart(name, "Test");
+			if (className.startsWith(TEST)) {
+				return StringUtils.removeStart(className, TEST);
 			}
 		}
 
-		return name;
+		return className;
+	}
+
+	/**
+	 * Removes the package and parent className from a fullClassName. Ex:
+	 * com.bdoc.MyClass$SubClass => SubClass
+	 * 
+	 * @param name
+	 *            to strip
+	 * @return just the className
+	 */
+	private String removePackageAndParentClassName(String fullClassName) {
+		String className = fullClassName;
+		if (className.contains(".")) {
+			String[] splitOnDot = className.split("\\.");
+			className = splitOnDot[splitOnDot.length - 1];
+		}
+
+		if (className.contains("$")) {
+			String[] splitOnInnerClass = className.split("\\$");
+			className = splitOnInnerClass[splitOnInnerClass.length - 1];
+		}
+		return className;
 	}
 
 	public void addBehaviour(String camelCaseSentence) {

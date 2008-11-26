@@ -46,14 +46,26 @@ public class TestClassBehaviour {
 	}
 
 	@Test
-	public void givenThatATestClassIsAnnotatedWithRefClassWhenTheClassNameIsExtractedThenEnsureTheClassNameIsAsSpecifiedByTheClassRefAnnotation() {
+	public void givenThatATestClassIsAnnotatedWithRefClassWithValueAnotherClassWhenTheClassNameIsExtractedThenEnsureTheClassNameIsAnotherClass() {
 		classBehaviour = new ClassBehaviour(TestClassThatHasAnnotationToAnotherClass.class);
 		assertEquals("AnotherClass", classBehaviour.getClassName());
 	}
 
 	@Test
+	public void givenThatATestClassIsAnnotatedWithRefClassWithValueTestTestWhenTheClassNameIsExtractedThenEnsureTheClassNameIsTestTest() {
+		classBehaviour = new ClassBehaviour(TestClassThatHasAnnotationToTestTest.class);
+		assertEquals("TestTest", classBehaviour.getClassName());
+	}
+
+	@Test
 	public void shouldTranslateTheTestClassNameWithValueTestTestToTest() {
 		classBehaviour = new ClassBehaviour(TestTest.class);
+		assertEquals("Test", classBehaviour.getClassName());
+	}
+
+	@Test
+	public void shouldTranslateTheTestClassNameWithValueTestToTest() {
+		classBehaviour = new ClassBehaviour(Test.class);
 		assertEquals("Test", classBehaviour.getClassName());
 	}
 
@@ -100,6 +112,10 @@ public class TestClassBehaviour {
 
 	@RefClass(AnotherClass.class)
 	public class TestClassThatHasAnnotationToAnotherClass {
+	}
+
+	@RefClass(TestTest.class)
+	public class TestClassThatHasAnnotationToTestTest {
 	}
 
 	public class AnotherClass {

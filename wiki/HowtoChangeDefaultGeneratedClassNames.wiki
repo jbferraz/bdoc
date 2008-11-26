@@ -2,7 +2,6 @@ BDoc uses the name of the test class to figure out which class it tests. The log
    * YourClassTest => YourClass
    * TestYourClass => YourClass
    * TestTest => Test
-
 If you don't want BDoc to set a default class name you can specify this with an annotation as shown below
 {{{
 	@RefClass(YourClass.class)
@@ -19,4 +18,3 @@ The RefClass annotation does not exist, you have to make it, preferably in the s
 		Class<? extends Object> value();
 	}
 }}}
-

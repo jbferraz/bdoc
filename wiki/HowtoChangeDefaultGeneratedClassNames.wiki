@@ -1,4 +1,4 @@
-BDoc uses the name of the test class to figure out which class it tests. The logic is simple:
+BDoc uses the name of the test class to figure out which class it tests, and uses this in the BDoc report. The logic is simple:
    * YourClassTest => YourClass
    * TestYourClass => YourClass
    * TestTest => Test

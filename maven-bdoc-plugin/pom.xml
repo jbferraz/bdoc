@@ -7,9 +7,9 @@
 	<name>Behaviour Documentation - Maven plugin</name>
 	
 	<scm>
-		<connection>scm:svn:https://bdddoc4j.googlecode.com/svn/tags/maven-bdoc-plugin-0.7.0</connection>
-		<developerConnection>scm:svn:https://bdddoc4j.googlecode.com/svn/tags/maven-bdoc-plugin-0.7.0</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/tags/maven-bdoc-plugin-0.7.0</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/maven-bdoc-plugin</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/maven-bdoc-plugin</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk/maven-bdoc-plugin</url>
 	</scm>
 
 	<organization>
@@ -165,7 +165,7 @@
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-core</artifactId>
-			<version>0.7.6</version>
+			<version>0.7.8</version>
 			<scope>compile</scope>
 		</dependency>
 

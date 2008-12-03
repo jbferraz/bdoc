@@ -1,4 +1,4 @@
-If there are certain parts of your code you wan't BDoc do exclude or include you can configure this "Ant-style". In the example below the directory _com/googlecode/bdoc/examples/excluded/**_ with all its testclasses and subdirectories will be excluded. The underlying implementation is done with ant, so any pattern that works in an ant include or exclude should work in BDoc as well.
+If there are certain parts of your code you wan't BDoc do exclude or include you can configure this "Ant-style". In the example below the directory _com/googlecode/bdoc/examples/excluded/**_ with all its testclasses and subdirectories will be excluded. The underlying implementation is done with the ant-api, so any pattern that works with ant should work in BDoc as well.
 
 {{{
 <plugin>

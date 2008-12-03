@@ -1,0 +1,548 @@
+<!--
+
+    The MIT License
+	
+	Copyright (c) 2008 Per Otto Bergum Christensen
+	
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+	
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+	
+-->
+
+<bddDoc>
+  <project>
+    <name>bdddoc4j</name>
+    <version>1.0-SNAPSHOT</version>
+  </project>
+  <docTime>
+    <time>1208896089343</time>
+    <timezone>Europe/Berlin</timezone>
+  </docTime>
+  <userStories>
+    <userStory>
+      <id>1</id>
+      <title>Create bdddoc from code</title>
+      <narrative>
+        <role>As a developer</role>
+        <action>I want to implement a userstory</action>
+        <benefit>so that a bddDoc can be extracted from the code</benefit>
+      </narrative>
+      <scenarios>
+        <scenario>
+          <line>Given a testclass</line>
+          <line>When the testclass is annotated with a reference to a story</line>
+          <line>Then ensure the story is created</line>
+        </scenario>
+        <scenario>
+          <line>Given a testclass</line>
+          <line>When a testmethod is annotated with a reference to a story</line>
+          <line>Then ensure the story is created</line>
+        </scenario>
+        <scenario>
+          <line>Given a testclass</line>
+          <line>When a testmethod describing behaviour is marked as a scenario</line>
+          <line>Then ensure the scenario is created</line>
+        </scenario>
+        <scenario>
+          <line>Given a testclass</line>
+          <line>When a testmethod describing behaviour is marked as a specification</line>
+          <line>Then ensure the specification is created</line>
+        </scenario>
+        <scenario>
+          <line>Given a testmethod marked as behaviour</line>
+          <line>When the testmethod is annotated with a reference to a userstory</line>
+          <line>Then ensure the created behaviour is added to that userstory</line>
+        </scenario>
+        <scenario>
+          <line>Given a testclass annotated with a reference to a story</line>
+          <line>When a testmethod describing behaviour is not annotated with a reference to a story</line>
+          <line>Then ensure the created behaviour is added to the userstory for the testclass</line>
+        </scenario>
+        <scenario>
+          <line>Given a test class with no reference to a story</line>
+          <line>When bdddoc is generated</line>
+          <line>Then the specified behaviour should not be added to any stories</line>
+        </scenario>
+        <scenario>
+          <line>Given a test class with no reference to a story</line>
+          <line>When bdddoc is generated</line>
+          <line>Then the specified behaviour should be added to general behaviour</line>
+        </scenario>
+      </scenarios>
+      <specifications>
+        <class>
+          <className>BddDoc</className>
+          <specifications>
+            <specification>
+              <sentence>Should create the distinct number of user stories</sentence>
+            </specification>
+            <specification>
+              <sentence>Should only evaluate methods annotated as a junit test</sentence>
+            </specification>
+            <specification>
+              <sentence>Should ignore classes that are not tests</sentence>
+            </specification>
+            <specification>
+              <sentence>Should handle story references that does not implement user story description directly</sentence>
+            </specification>
+            <specification>
+              <sentence>Should be able to get an added user story</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>ClassBehaviour</className>
+          <specifications>
+            <specification>
+              <sentence>Should translate test class names with prefix test to the name of the class under test and remove package</sentence>
+            </specification>
+            <specification>
+              <sentence>Should not translate test class names that does not start with test</sentence>
+            </specification>
+            <specification>
+              <sentence>Should return empty list of specifications for a new class behviour</sentence>
+            </specification>
+          </specifications>
+        </class>
+      </specifications>
+    </userStory>
+    <userStory>
+      <id>7</id>
+      <title>Diff of bdddocs</title>
+      <narrative>
+        <role>As a developer in the project</role>
+        <action>I want to diff to versions of a bddDoc</action>
+        <benefit>so that I can see the difference between the two versions</benefit>
+      </narrative>
+      <scenarios>
+        <scenario>
+          <line>Given two bdd docs</line>
+          <line>When a diff is executed</line>
+          <line>Then each new scenario should be identified</line>
+        </scenario>
+        <scenario>
+          <line>Given two bdd docs</line>
+          <line>When a diff is executed</line>
+          <line>Then each deleted scenario should be identified</line>
+        </scenario>
+        <scenario>
+          <line>Given two bdd docs</line>
+          <line>When a diff is executed</line>
+          <line>Then each new specification should be identified</line>
+        </scenario>
+        <scenario>
+          <line>Given two bdd docs</line>
+          <line>When a diff is executed</line>
+          <line>Then each deleted specification should be identified</line>
+        </scenario>
+      </scenarios>
+      <specifications/>
+    </userStory>
+    <userStory>
+      <id>6</id>
+      <title>Story reference code generator</title>
+      <narrative>
+        <role>As a developer in the project</role>
+        <action>I want to generate an example of the story and ref class</action>
+        <benefit>so that I can start using it in the code</benefit>
+      </narrative>
+      <scenarios/>
+      <specifications>
+        <class>
+          <className>StoryRefCodeGenerator</className>
+          <specifications>
+            <specification>
+              <sentence>Should generate the directory for the package of the generated java files</sentence>
+            </specification>
+            <specification>
+              <sentence>Should generate a ref java annotation source file in the test directory with the given java package</sentence>
+            </specification>
+            <specification>
+              <sentence>Should generate a story enum soure file in the test directory with the given java package</sentence>
+            </specification>
+            <specification>
+              <sentence>Should report that a story java file exists before writing a new</sentence>
+            </specification>
+            <specification>
+              <sentence>Should give error if a ref java file exists before writing a new</sentence>
+            </specification>
+            <specification>
+              <sentence>Should generate story java file with the given package</sentence>
+            </specification>
+            <specification>
+              <sentence>Should generate ref java file with the given package</sentence>
+            </specification>
+          </specifications>
+        </class>
+      </specifications>
+    </userStory>
+    <userStory>
+      <id>3</id>
+      <title>Html report</title>
+      <narrative>
+        <role>As a stakeholder in the project</role>
+        <action>I want to generated Bdd as htmlDoc</action>
+        <benefit>so that it opens in a browser</benefit>
+      </narrative>
+      <scenarios/>
+      <specifications>
+        <class>
+          <className>HtmlReport</className>
+          <specifications>
+            <specification>
+              <sentence>Should contain name of the project name in the title and header</sentence>
+            </specification>
+            <specification>
+              <sentence>Should present the narrative of the story</sentence>
+            </specification>
+            <specification>
+              <sentence>Should present the scenarios of the story</sentence>
+            </specification>
+            <specification>
+              <sentence>Should present the specifications associated with the story</sentence>
+            </specification>
+            <specification>
+              <sentence>Should present the name of the class with the specifications</sentence>
+            </specification>
+          </specifications>
+        </class>
+      </specifications>
+    </userStory>
+    <userStory>
+      <id>2</id>
+      <title>Xml report</title>
+      <narrative>
+        <role>As a developer in the project</role>
+        <action>I want to open the bddDoc</action>
+        <benefit>so that it opens in an XML editor</benefit>
+      </narrative>
+      <scenarios/>
+      <specifications>
+        <class>
+          <className>XmlReport</className>
+          <specifications>
+            <specification>
+              <sentence>Should contain name of the application</sentence>
+            </specification>
+            <specification>
+              <sentence>Should contain stories</sentence>
+            </specification>
+            <specification>
+              <sentence>Should contain stories with scenarios</sentence>
+            </specification>
+            <specification>
+              <sentence>Should contain stories with specifications</sentence>
+            </specification>
+            <specification>
+              <sentence>Should present a scenario as three lines</sentence>
+            </specification>
+          </specifications>
+        </class>
+      </specifications>
+    </userStory>
+  </userStories>
+  <generalBehaviour>
+    <packages>
+      <package>
+        <id>bdddoc4j.core.domain</id>
+        <class>
+          <className>ExampleAnnotatedClass</className>
+          <scenarios>
+            <scenario>
+              <line>Given a scenario for story3</line>
+              <line>When</line>
+              <line>Then</line>
+            </scenario>
+          </scenarios>
+        </class>
+        <class>
+          <className>ExampleAnnotatedMethods</className>
+          <scenarios>
+            <scenario>
+              <line>Given</line>
+              <line>When</line>
+              <line>Then</line>
+            </scenario>
+          </scenarios>
+          <specifications>
+            <specification>
+              <sentence>Should behave like that</sentence>
+            </specification>
+            <specification>
+              <sentence>Should behave like this if that</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>ExampleNoStories</className>
+          <scenarios>
+            <scenario>
+              <line>Given something</line>
+              <line>When an action</line>
+              <line>Then verify result</line>
+            </scenario>
+          </scenarios>
+          <specifications>
+            <specification>
+              <sentence>Should verify the important stuff</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>Example1</className>
+          <scenarios>
+            <scenario>
+              <line>Given something</line>
+              <line>When an action</line>
+              <line>Then verify result</line>
+            </scenario>
+          </scenarios>
+          <specifications>
+            <specification>
+              <sentence>Should verify the important stuff</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>Example2</className>
+          <scenarios>
+            <scenario>
+              <line>Given</line>
+              <line>When</line>
+              <line>Then</line>
+            </scenario>
+          </scenarios>
+          <specifications>
+            <specification>
+              <sentence>Should do this</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>GeneralBehaviour</className>
+          <scenarios>
+            <scenario>
+              <line>Given a general behaviour</line>
+              <line>When two test classes of the same package is added</line>
+              <line>Then verify that one package is created</line>
+            </scenario>
+          </scenarios>
+          <specifications>
+            <specification>
+              <sentence>Should return behaviour for a test class when a test is added</sentence>
+            </specification>
+            <specification>
+              <sentence>Should return behaviour with a specification for a test class when a specification is added</sentence>
+            </specification>
+            <specification>
+              <sentence>Should return behaviour with a scenario for a test class when a scenario is added</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>Scenario</className>
+          <specifications>
+            <specification>
+              <sentence>Should accept sentence as a scenario in both norwegian and english</sentence>
+            </specification>
+            <specification>
+              <sentence>Should not accept a sentence as a scenario if it does not the match the scenario pattern</sentence>
+            </specification>
+            <specification>
+              <sentence>Should translate camel case sentence to given when then</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>Specification</className>
+          <specifications>
+            <specification>
+              <sentence>Should accept sentence as a spesification in both norwegian and english</sentence>
+            </specification>
+            <specification>
+              <sentence>Should not accept a sentence as a spesification if it does not match the specification pattern</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>UserStory</className>
+          <specifications>
+            <specification>
+              <sentence>Should be able to add a specification and retreive a class behaviour</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>UserStoryDescriptionWrapper</className>
+          <specifications>
+            <specification>
+              <sentence>Should return the id value</sentence>
+            </specification>
+            <specification>
+              <sentence>Should return the translated story name to a title</sentence>
+            </specification>
+            <specification>
+              <sentence>Should return the narrative object</sentence>
+            </specification>
+          </specifications>
+        </class>
+      </package>
+      <package>
+        <id>bdddoc4j.core.report</id>
+        <class>
+          <className>BddDocMacroHelper</className>
+          <specifications>
+            <specification>
+              <sentence>Should transform a full classname to just the name of the class</sentence>
+            </specification>
+          </specifications>
+        </class>
+      </package>
+      <package>
+        <id>bdddoc4j.core.testdata</id>
+        <class>
+          <className>ClassWithExStory2Reference</className>
+          <scenarios>
+            <scenario>
+              <line>Given</line>
+              <line>When</line>
+              <line>Then1</line>
+            </scenario>
+          </scenarios>
+        </class>
+        <class>
+          <className>ClassWithFourSpecifications</className>
+          <specifications>
+            <specification>
+              <sentence>Should do that1</sentence>
+            </specification>
+            <specification>
+              <sentence>Should do that2</sentence>
+            </specification>
+            <specification>
+              <sentence>Should do that3</sentence>
+            </specification>
+            <specification>
+              <sentence>Should do that4</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>ClassWithThreeScenarios</className>
+          <scenarios>
+            <scenario>
+              <line>Given</line>
+              <line>When</line>
+              <line>Then1</line>
+            </scenario>
+            <scenario>
+              <line>Given</line>
+              <line>When</line>
+              <line>Then2</line>
+            </scenario>
+            <scenario>
+              <line>Given</line>
+              <line>When</line>
+              <line>Then3</line>
+            </scenario>
+          </scenarios>
+        </class>
+      </package>
+      <package>
+        <id>bdddoc4j.core.util</id>
+        <class>
+          <className>CamelCaseToSentenceTranslator</className>
+          <scenarios>
+            <scenario>
+              <line>Given a camel cased description</line>
+              <line>When translated it should form a sentence with space between the words</line>
+            </scenario>
+          </scenarios>
+          <specifications>
+            <specification>
+              <sentence>Should change the first character to upper case</sentence>
+            </specification>
+            <specification>
+              <sentence>Should insert space before each char in uppercase</sentence>
+            </specification>
+            <specification>
+              <sentence>Should change each char in uppercase to lower case</sentence>
+            </specification>
+            <specification>
+              <sentence>Should leave the first char unmodified if it is in upper case</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>ClassUtil</className>
+          <specifications>
+            <specification>
+              <sentence>Should verify that testdata directory is present</sentence>
+            </specification>
+            <specification>
+              <sentence>Should find all java classes in a directory</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>ConstantNameToSentenceTranslator</className>
+          <specifications>
+            <specification>
+              <sentence>Should transform all letters to lower case except the first</sentence>
+            </specification>
+            <specification>
+              <sentence>Should transform all underscore to space</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>Select</className>
+          <specifications>
+            <specification>
+              <sentence>Should find an identical object inn a list and return it</sentence>
+            </specification>
+            <specification>
+              <sentence>Should throw an exception if an identical object is not found</sentence>
+            </specification>
+          </specifications>
+        </class>
+        <class>
+          <className>SentenceToLineSplit</className>
+          <scenarios>
+            <scenario>
+              <line>Given a sentence</line>
+              <line>When split with a set of seperators</line>
+              <line>Then each seperator should result in a new line</line>
+            </scenario>
+          </scenarios>
+          <specifications>
+            <specification>
+              <sentence>Should split a string of two words into two strings when the seperator is found in the sentence</sentence>
+            </specification>
+            <specification>
+              <sentence>Should split a string of three words into three strings when the two seperator is found in the sentence</sentence>
+            </specification>
+            <specification>
+              <sentence>Should not split a string if the seperator is not found in the sentence</sentence>
+            </specification>
+          </specifications>
+        </class>
+      </package>
+    </packages>
+  </generalBehaviour>
+</bddDoc>

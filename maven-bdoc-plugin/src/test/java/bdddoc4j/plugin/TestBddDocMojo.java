@@ -24,16 +24,14 @@
 
 package bdddoc4j.plugin;
 
-import java.io.File;
-
-import org.apache.maven.project.MavenProject;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
+import org.apache.maven.project.MavenProject;
 import org.junit.Before;
 import org.junit.Test;
-
-import bdddoc4j.core.report.BddDocReport;
 
 public class TestBddDocMojo {
 
@@ -62,7 +60,6 @@ public class TestBddDocMojo {
 
 		MavenProject project = new MavenProject();
 		bddDocMojo.setProject(project);
-		bddDocMojo.setBddDocReportClassName(BddDocReport.class.getName());
 		bddDocMojo.setTestAnnotationClassName(Test.class.getName());
 		bddDocMojo.setTestClassDirectory(new File("target/test-classes"));
 	}

@@ -24,16 +24,14 @@
 
 package bdddoc4j.core.util;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.List;
 
-import junit.framework.AssertionFailedError;
-
+import org.junit.Before;
 import org.junit.Test;
-
-import bdddoc4j.core.util.ClassUtil;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -42,6 +40,14 @@ public class TestClassUtil {
 
 	private static String basedirPath;
 
+	private ClassUtil classUtil;
+
+	@Before
+	public void setup() {
+		classUtil = new ClassUtil();
+		classUtil.setBaseDir(testClassesDirectory());
+	}
+
 	@Test
 	public void shouldVerifyThatTestdataDirectoryIsPresent() {
 		assertTrue(testClassesDirectory().exists());
@@ -49,17 +55,30 @@ public class TestClassUtil {
 
 	@Test
 	public void shouldFindAllJavaClassesInADirectory() {
-		List<String> classes = new ClassUtil(testClassesDirectory()).find();
-		assertThatListContains(classes, "integrationtestclasses.SomeClass");
-		assertThatListContains(classes, "integrationtestclasses.subpackage.AnotherClass");
-		assertThatListContains(classes, "integrationtestclasses.subpackage.SomeOtherClass");
+		List<String> classes = classUtil.find();
+		assertTrue(classes.contains("integrationtestclasses.SomeClass"));
+		assertTrue(classes.contains("integrationtestclasses.subpackage.AnotherClass"));
+		assertTrue(classes.contains("integrationtestclasses.subpackage.SomeOtherClass"));
 	}
 
-	private void assertThatListContains(List<String> classes, String string) {
+	@Test
+	public void shouldOnlyAcceptFilesThatIsIncludedWithAntFilePattern() {
+		classUtil.setIncludes(new String[] { "integrationtestclasses/SomeClass.class" });
 
-		if (!classes.contains(string)) {
-			throw new AssertionFailedError("<" + string + "> not found in <" + classes + ">");
-		}
+		List<String> classes = classUtil.find();
+		assertTrue(classes.contains("integrationtestclasses.SomeClass"));
+		assertFalse(classes.contains("integrationtestclasses.subpackage.AnotherClass"));
+	}
+
+	@Test
+	public void shouldOnlyAcceptFilesThatIsIncludedWithAntFilePatternAndDontMatchTheAntExcludeFilePatterns() {
+
+		classUtil.setIncludes(new String[] { "integrationtestclasses/" });
+		classUtil.setExcludes(new String[] { "integrationtestclasses/subpackage/" });
+
+		List<String> classes = classUtil.find();
+		assertTrue(classes.contains("integrationtestclasses.SomeClass"));
+		assertFalse(classes.contains("integrationtestclasses.subpackage.AnotherClass"));
 	}
 
 	private File testClassesDirectory() {

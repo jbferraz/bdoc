@@ -28,6 +28,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tools.ant.DirectoryScanner;
+
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -35,40 +37,32 @@ public class ClassUtil {
 
 	private static final String CLASS_POSTFIX = ".class";
 
-	private File dir;
-
 	private List<String> result;
 
-	/**
-	 * Constructor
-	 * @param dir to look for .class-files
-	 */
-	public ClassUtil(File dir) {
-		this.dir = dir;
+	DirectoryScanner ds = new DirectoryScanner();
+
+	public void setBaseDir( File baseDir ) {
+		ds.setBasedir(baseDir);
 	}
 
 	public List<String> find() {
+
 		result = new ArrayList<String>();
-		visitAllDirsAndFiles(dir);
-		return result;
-	}
+		
+		ds.scan();
 
-	private void visitAllDirsAndFiles(File file) {
-		process(file);
-
-		if (file.isDirectory()) {
-			String[] children = file.list();
-			for (int i = 0; i < children.length; i++) {
-				visitAllDirsAndFiles(new File(file, children[i]));
-			}
+		for (String includedFile : ds.getIncludedFiles()) {
+			process(new File(ds.getBasedir(), includedFile));
 		}
+	
+		return result;
 	}
 
 	private void process(File file) {
 		if (file.isFile() && file.getName().endsWith(CLASS_POSTFIX)) {
 			String absoluteFilePath = file.getAbsolutePath();
 
-			String relativeFilePath = absoluteFilePath.substring(dir.getAbsolutePath().length() + 1);
+			String relativeFilePath = absoluteFilePath.substring(ds.getBasedir().getAbsolutePath().length() + 1);
 
 			String relativeFilePathWithoutPrefix = relativeFilePath.substring(0, relativeFilePath.indexOf(CLASS_POSTFIX));
 
@@ -76,5 +70,19 @@ public class ClassUtil {
 
 			result.add(className);
 		}
+	}
+
+	/**
+	 * @param includes array of ant file patterns to include
+	 */
+	public void setIncludes(String[] includes) {
+		ds.setIncludes(includes);
+	}
+
+	/**
+	 * @param excludes array of ant file patterns to exclude
+	 */
+	public void setExcludes(String[] excludes) {
+		ds.setExcludes(excludes);
 	}
 }

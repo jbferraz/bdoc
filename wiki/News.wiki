@@ -1,4 +1,4 @@
-  _04 December 2008 - Release 0.7.14_
+_04 December 2008 - Release 0.7.14_
  Version 0.7.14 is released with functionality for specifying include/exclude configuration for the plugin. This was asked for in Issue3. Read more on [HowToExcludeAndIncludeTestsForBDoc].
 
 _26 November 2008 - Release 0.7.12_

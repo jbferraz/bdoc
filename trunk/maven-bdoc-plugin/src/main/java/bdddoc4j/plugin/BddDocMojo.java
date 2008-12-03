@@ -24,17 +24,16 @@
 
 package bdddoc4j.plugin;
 
-import static org.apache.commons.beanutils.MethodUtils.invokeMethod;
-import static org.apache.commons.beanutils.PropertyUtils.getSimpleProperty;
-import static org.apache.commons.beanutils.PropertyUtils.setSimpleProperty;
-
 import java.io.File;
+import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Date;
 import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;
+
+import bdddoc4j.core.report.BddDocReport;
 
 /**
  * @goal doc
@@ -53,12 +52,6 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	private File testClassDirectory;
 
 	/**
-	 * @parameter default-value="bdddoc4j.core.report.BddDocReport"
-	 * @required
-	 */
-	private String bddDocReportClassName;
-
-	/**
 	 * @parameter default-value="org.junit.Test"
 	 * @required
 	 */
@@ -68,6 +61,21 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	 * @parameter
 	 */
 	private String storyRefAnnotationClassName;
+
+	/**
+	 * Specifies files, which are included in the check. By default, all files
+	 * are included.
+	 * 
+	 * @parameter
+	 */
+	protected String[] includes = new String[0];
+	/**
+	 * Specifies files, which are excluded in the check. By default, no files
+	 * are excluded.
+	 * 
+	 * @parameter
+	 */
+	protected String[] excludes = new String[0];
 
 	protected void executeReport(Locale arg0) throws MavenReportException {
 		try {
@@ -80,23 +88,26 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	@SuppressWarnings("unchecked")
 	void executeInternal() throws Exception {
 		ClassLoader classLoader = getClassLoader();
-		Object bddDocReport = classLoader.loadClass(bddDocReportClassName).newInstance();
+		BddDocReport bddDocReport = new BddDocReport();
 
-		setSimpleProperty(bddDocReport, "projectName", getProject().getName());
-		setSimpleProperty(bddDocReport, "projectVersion", getProject().getVersion());
-		setSimpleProperty(bddDocReport, "classLoader", classLoader);
-		setSimpleProperty(bddDocReport, "testClassDirectory", testClassDirectory);
-		setSimpleProperty(bddDocReport, "testAnnotation", classLoader.loadClass(testAnnotationClassName));
+		bddDocReport.setProjectName(getProject().getName());
+		bddDocReport.setProjectVersion(getProject().getVersion());
+		bddDocReport.setClassLoader(classLoader);
+		bddDocReport.setTestClassDirectory(testClassDirectory);
+		bddDocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
+		bddDocReport.setIncludesFilePattern(includes);
+		bddDocReport.setExcludesFilePattern(excludes);
+
 		if (null != storyRefAnnotationClassName) {
-			setSimpleProperty(bddDocReport, "storyRefAnnotation", classLoader.loadClass(storyRefAnnotationClassName));
+			bddDocReport.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
 		}
 
-		invokeMethod(bddDocReport, "run", null);
+		bddDocReport.run();
 
 		if (null != logDirectory) {
-			writeFile(getSimpleProperty(bddDocReport, "xml"), logDirectory, "bddDoc." + new Date().getTime() + ".xml");
+			writeFile(bddDocReport.getXml(), logDirectory, "bddDoc." + new Date().getTime() + ".xml");
 		}
-		writeReport(String.valueOf(getSimpleProperty(bddDocReport, "html")));
+		writeReport(bddDocReport.getHtml());
 	}
 
 	protected ClassLoader getClassLoader() throws Exception {
@@ -120,10 +131,6 @@ public class BddDocMojo extends AbstractBddDocMojo {
 
 	public String getName(Locale arg0) {
 		return "bdoc";
-	}
-
-	public void setBddDocReportClassName(String bddDocReportClassName) {
-		this.bddDocReportClassName = bddDocReportClassName;
 	}
 
 	public void setTestAnnotationClassName(String testAnnotationClassName) {

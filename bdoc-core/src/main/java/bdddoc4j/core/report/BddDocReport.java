@@ -34,15 +34,16 @@ import bdddoc4j.core.domain.Project;
 import bdddoc4j.core.util.ClassUtil;
 
 public class BddDocReport {
+	
+	private ClassUtil classUtil = new ClassUtil();
 
 	private String projectName;
 	private String projectVersion;
-	private File testClassDirectory;
 	private ClassLoader classLoader;
 	private Class<? extends Annotation> storyRefAnnotation;
 	private Class<? extends Annotation> testAnnotation;
 	private String html, xml;
-
+	
 	public BddDocReport() {
 		super();
 	}
@@ -56,7 +57,15 @@ public class BddDocReport {
 	}
 
 	public void setTestClassDirectory(File testClassDirectory) {
-		this.testClassDirectory = testClassDirectory;
+		classUtil.setBaseDir(testClassDirectory);
+	}
+	
+	public void setIncludesFilePattern(String[] includesFilePattern) {
+		classUtil.setIncludes(includesFilePattern);
+	}
+
+	public void setExcludesFilePattern(String[] excludesFilePattern) {
+		classUtil.setExcludes(excludesFilePattern);
 	}
 
 	public void setClassLoader(ClassLoader classLoader) {
@@ -75,7 +84,7 @@ public class BddDocReport {
 		BDoc bddDoc = new BDoc(testAnnotation, storyRefAnnotation);
 		bddDoc.setProject(new Project(projectName, projectVersion));
 
-		List<String> classes = new ClassUtil(testClassDirectory).find();
+		List<String> classes = classUtil.find();
 		for (String className : classes) {
 			bddDoc.addBehaviourFrom(classLoader.loadClass(className));
 		}

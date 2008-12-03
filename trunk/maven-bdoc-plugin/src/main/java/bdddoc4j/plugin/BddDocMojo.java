@@ -68,14 +68,14 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	 * 
 	 * @parameter
 	 */
-	protected String[] includes = new String[0];
+	protected String[] includes;
 	/**
 	 * Specifies files, which are excluded in the check. By default, no files
 	 * are excluded.
 	 * 
 	 * @parameter
 	 */
-	protected String[] excludes = new String[0];
+	protected String[] excludes;
 
 	protected void executeReport(Locale arg0) throws MavenReportException {
 		try {

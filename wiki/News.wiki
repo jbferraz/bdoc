@@ -2,7 +2,7 @@
  Version 0.7.14 is released with functionality for specifying include/exclude configuration for the plugin. This was asked for in Issue3. Read more on HowToExcludeAndIncludeTestsForBDoc.
 
 _26 November 2008 - Release 0.7.12_
- Version 0.7.12 is released with a bugfix for how class names is generated in the BDoc report ( Issue2 ). Documentation on the subject on HowtoChangeDefaultGeneratedClassNames is also added.
+ Version 0.7.12 is released with a bugfix for how class names is generated in the BDoc report, Issue2. Documentation on the subject on HowtoChangeDefaultGeneratedClassNames is also added.
 
 _08 November 2008 - Release 0.7.10_
  Version 0.7.10 is released with support for direct reference to the class under test. This could be usefull if you want to name your test differently, for example YourClassIntegrationTest. 

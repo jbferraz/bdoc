@@ -1,0 +1,23 @@
+If there are certain parts of your code you wan't BDoc do exclude you can configure this "Ant-style". Best shown with an example:
+
+{{{
+			<plugin>
+				<groupId>com.googlecode.bdoc</groupId>
+				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>${maven.bdoc.plugin.version}</version>
+				<configuration>
+					<storyRefAnnotationClassName>com.googlecode.bdoc.examples.taskhandling.Ref</storyRefAnnotationClassName>
+					<logDirectory>bddlog</logDirectory>
+					
+					<excludes>
+						<exclude>com/googlecode/bdoc/examples/excluded/**</exclude>
+					</excludes>
+					
+					<includes>
+						<include>com/googlecode/bdoc/examples/taskhandling/**</include>
+					</includes>
+					
+				</configuration>
+			</plugin>
+
+}}}

@@ -1,3 +1,6 @@
+  _04 December 2008 - Release 0.7.14_
+ Version 0.7.14 is released with functionality for specifying include/exclude configuration for the plugin. Read more on .
+
 _26 November 2008 - Release 0.7.12_
  Version 0.7.12 is released with a bugfix for how class names is generated in the BDoc report (Issue2). Documentation on the subject on HowtoChangeDefaultGeneratedClassNames is also added.
 

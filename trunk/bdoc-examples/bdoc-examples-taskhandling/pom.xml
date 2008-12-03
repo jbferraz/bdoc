@@ -28,6 +28,15 @@
 				<configuration>
 					<storyRefAnnotationClassName>com.googlecode.bdoc.examples.taskhandling.Ref</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
+					
+					<excludes>
+						<exclude>com/googlecode/bdoc/examples/excluded/**</exclude>
+					</excludes>
+					
+					<includes>
+						<include>com/googlecode/bdoc/examples/taskhandling/**</include>
+					</includes>
+					
 				</configuration>
 				<executions>
 					<execution>

@@ -45,7 +45,10 @@ public enum Story {
 	DIFF_OF_BDOCS(7, "As a developer in the project", "I want to diff to versions of a BDoc",
 			"so that I can see the difference between the two versions"),
 
-	HTML_DIFF_REPORT(8, "As a stakeholder in the project", "I want to generated BDocDiff as html", "so that it opens in a browser");
+	HTML_DIFF_REPORT(8, "As a stakeholder in the project", "I want to generated BDocDiff as html", "so that it opens in a browser"),
+	
+	ADVANCED_SCENARIO_SPECIFICATION (9, "As a developer in the project", "I want to write a scenario as a series of given when then methods", "so that I can use more than one line to describe the behaviour")
+	;
 
 	private Integer id;
 	private String[] narrative;

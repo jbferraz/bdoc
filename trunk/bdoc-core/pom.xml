@@ -112,7 +112,7 @@
 						<exclude>bdddoc4j/diff/domain/testpackageremoved/**</exclude>
 						<exclude>bdddoc4j/diff/domain/subpackage/**</exclude>
 						<exclude>bdddoc4j/diff/domain/added/**</exclude>
-						
+						<exclude>bdddoc4j/integrationtestclasses/**</exclude>
 						<exclude>**/testdata/**</exclude>
 						<exclude>**/*$*.class</exclude>						
 					</excludes>

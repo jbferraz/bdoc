@@ -41,20 +41,19 @@ import bdddoc4j.core.doc.Story;
 public class TestSourceClassBehaviourParser {
 
 	@Test
-	public void shouldComposeScenarioFromTestConstructedWithGivenWhenThenMethods() throws IOException {
+	public void shouldComposeScenarioFromTestConstructedWithGivenWhenThenAsPartOfTheMethodBlock() throws IOException {
 		String stackJava = FileUtils.readFileToString(new File("src/test/java/integrationtestclasses/stack/StackBehavior.java"));
 
 		String[] testMethods = new String[] { "shouldPopSecondPushedValueFirst" };
 		SourceClassBehaviourParser sourceClassBehaviourParser = new SourceClassBehaviourParser(stackJava, testMethods);
 
-		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
-		scenarioParts.add( new Scenario.Part("givenAStackWithTwoPushedValues") );
-		scenarioParts.add( new Scenario.Part("whenPopIsCalled") );
-		scenarioParts.add( new Scenario.Part("thenTheLastItemPushedShouldBeReturned") );
-		scenarioParts.add( new Scenario.Part("thenTheValueShouldNotRemainInTheStack") );
+		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
+		expectedScenarioParts.add( new Scenario.Part("givenAStackWithTwoPushedValues") );
+		expectedScenarioParts.add( new Scenario.Part("whenPopIsCalled") );
+		expectedScenarioParts.add( new Scenario.Part("thenTheLastItemPushedShouldBeReturned") );
+		expectedScenarioParts.add( new Scenario.Part("thenTheValueShouldNotRemainInTheStack") );
 		
-		Scenario expectedScenario = new Scenario( scenarioParts );
-		assertEquals(expectedScenario , sourceClassBehaviourParser.getScenarios().get(0) );
+		assertEquals(new Scenario( expectedScenarioParts ) , sourceClassBehaviourParser.getScenarios().get(0) );
 	}
 	
 	//test at en metode uten et scenario ikke gir feil

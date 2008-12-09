@@ -28,110 +28,111 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
+
 /**
- * This class was written by Micael Vesterlund as a suggestion to how BDoc could be extended, to support a different way of structure the Javacode, when specifing a scenario. 
- * It is now used as testdata by bdddoc4j.core.domain.TestSourceClassBehaviourParser.java , as a specification for BDoc on the user story "adcanced scenario specification "
- *
- * @Author Micael Vesterlund,  micael.vesterlund@gmail.com
+ * This class was written as a suggestion to how BDoc could be extended, to
+ * support a different way of structure the Javacode, when specifing a scenario.
+ * It is now used as testdata by
+ * bdddoc4j.core.domain.TestSourceClassBehaviourParser.java , as a specification
+ * for BDoc on the user story "adcanced scenario specification "
+ * 
+ * @Author Micael Vesterlund, micael.vesterlund@gmail.com
  */
 public class StackBehavior {
 
-    private Stack<String> stack;
+	private Stack<String> stack;
 
-    private static final String VALUE_1 = "1";
-    private static final String VALUE_2 = "2";
+	private static final String VALUE_1 = "1";
+	private static final String VALUE_2 = "2";
 
-    // GIVENS
-    private void givenAnEmptyStack() {
-        stack = new Stack<String>();
-    }
+	// GIVENS
+	private void givenAnEmptyStack() {
+		stack = new Stack<String>();
+	}
 
-    private void givenAStackWithOnePushedValue(String value) {
-        stack = new Stack<String>();
-        stack.push(value);
-    }
+	private void givenAStackWithOnePushedValue(String value) {
+		stack = new Stack<String>();
+		stack.push(value);
+	}
 
-    private void givenAStackWithTwoPushedValues(String value1, String value2) {
-        stack = new Stack<String>();
-        stack.push(value1);
-        stack.push(value2);
-    }
+	private void givenAStackWithTwoPushedValues(String value1, String value2) {
+		stack = new Stack<String>();
+		stack.push(value1);
+		stack.push(value2);
+	}
 
-    // WHENS
-    private void whenNullIsPushed() {
-        stack.push(null);
-    }
+	// WHENS
+	private void whenNullIsPushed() {
+		stack.push(null);
+	}
 
-    private String whenPopIsCalled() {
-        return stack.pop();
-    }
+	private String whenPopIsCalled() {
+		return stack.pop();
+	}
 
-    private String whenPeekIsCalled() {
-        return stack.peek();
-    }
+	private String whenPeekIsCalled() {
+		return stack.peek();
+	}
 
-    // THENS
-    private void thenAnExceptionShouldBeThrown() {
-    }
+	// THENS
+	private void thenAnExceptionShouldBeThrown() {
+	}
 
-    private void thenThatObjectShouldBeReturned(String pushed, String poped) {
-        assertThat(pushed, equalTo(poped));
-    }
+	private void thenThatObjectShouldBeReturned(String pushed, String poped) {
+		assertThat(pushed, equalTo(poped));
+	}
 
-    private void thenTheLastItemPushedShouldBeReturned(String pushed,
-        String poped) {
-        assertThat(pushed, equalTo(poped));
-    }
+	private void thenTheLastItemPushedShouldBeReturned(String pushed, String poped) {
+		assertThat(pushed, equalTo(poped));
+	}
 
-    private void thenTheValueShouldRemainInTheStack(int sizeBefore,
-        int sizeAfter) {
-        assertThat(sizeAfter, equalTo(sizeBefore));
-    }
+	private void thenTheValueShouldRemainInTheStack(int sizeBefore, int sizeAfter) {
+		assertThat(sizeAfter, equalTo(sizeBefore));
+	}
 
-    private void thenTheValueShouldNotRemainInTheStack(int sizeBefore,
-        int sizeAfter) {
-        assertThat(sizeAfter, equalTo(sizeBefore - 1));
-    }
+	private void thenTheValueShouldNotRemainInTheStack(int sizeBefore, int sizeAfter) {
+		assertThat(sizeAfter, equalTo(sizeBefore - 1));
+	}
 
-    // TESTS
-    @Test(expected = Exception.class)
-    public void shouldThrowExceptionUponNullPush() {
-        givenAnEmptyStack();
-        whenNullIsPushed();
-        thenAnExceptionShouldBeThrown();
-    }
+	// TESTS
+	@Test(expected = Exception.class)
+	public void shouldThrowExceptionUponNullPush() {
+		givenAnEmptyStack();
+		whenNullIsPushed();
+		thenAnExceptionShouldBeThrown();
+	}
 
-    @Test(expected = Exception.class)
-    public void shouldThrowExceptionUponPopWithoutPush() {
-        givenAnEmptyStack();
-        whenPopIsCalled();
-        thenAnExceptionShouldBeThrown();
-    }
+	@Test(expected = Exception.class)
+	public void shouldThrowExceptionUponPopWithoutPush() {
+		givenAnEmptyStack();
+		whenPopIsCalled();
+		thenAnExceptionShouldBeThrown();
+	}
 
-    @Test
-    public void shouldPopPushedValue() {
-        givenAStackWithOnePushedValue(VALUE_1);
-        String poped = whenPopIsCalled();
-        thenThatObjectShouldBeReturned(VALUE_1, poped);
-    }
+	@Test
+	public void shouldPopPushedValue() {
+		givenAStackWithOnePushedValue(VALUE_1);
+		String poped = whenPopIsCalled();
+		thenThatObjectShouldBeReturned(VALUE_1, poped);
+	}
 
-    @Test
-    public void shouldPopSecondPushedValueFirst() {
-        givenAStackWithTwoPushedValues(VALUE_1, VALUE_2);
-        int sizeBefore = stack.size();
-        String poped = whenPopIsCalled();
-        int sizeAfter = stack.size();
-        thenTheLastItemPushedShouldBeReturned(VALUE_2, poped);
-        thenTheValueShouldNotRemainInTheStack(sizeBefore, sizeAfter);
-    }
+	@Test
+	public void shouldPopSecondPushedValueFirst() {
+		givenAStackWithTwoPushedValues(VALUE_1, VALUE_2);
+		int sizeBefore = stack.size();
+		String poped = whenPopIsCalled();
+		int sizeAfter = stack.size();
+		thenTheLastItemPushedShouldBeReturned(VALUE_2, poped);
+		thenTheValueShouldNotRemainInTheStack(sizeBefore, sizeAfter);
+	}
 
-    @Test
-    public void shouldLeaveValueOnStackAfterPeep() {
-        givenAStackWithOnePushedValue(VALUE_1);
-        int sizeBefore = stack.size();
-        String peeked = whenPeekIsCalled();
-        int sizeAfter = stack.size();
-        thenThatObjectShouldBeReturned(VALUE_1, peeked);
-        thenTheValueShouldRemainInTheStack(sizeBefore, sizeAfter);
-    }
+	@Test
+	public void shouldLeaveValueOnStackAfterPeep() {
+		givenAStackWithOnePushedValue(VALUE_1);
+		int sizeBefore = stack.size();
+		String peeked = whenPeekIsCalled();
+		int sizeAfter = stack.size();
+		thenThatObjectShouldBeReturned(VALUE_1, peeked);
+		thenTheValueShouldRemainInTheStack(sizeBefore, sizeAfter);
+	}
 }

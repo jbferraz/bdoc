@@ -33,32 +33,30 @@ import org.apache.tools.ant.DirectoryScanner;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class ClassUtil {
+public class ClassesDirectory {
 
 	private static final String CLASS_POSTFIX = ".class";
 
-	private List<String> result;
-
 	DirectoryScanner ds = new DirectoryScanner();
 
-	public void setBaseDir( File baseDir ) {
+	public void setBaseDir(File baseDir) {
 		ds.setBasedir(baseDir);
 	}
 
-	public List<String> find() {
+	public List<String> classes() {
 
-		result = new ArrayList<String>();
-		
+		List<String> result = new ArrayList<String>();
+
 		ds.scan();
 
 		for (String includedFile : ds.getIncludedFiles()) {
-			process(new File(ds.getBasedir(), includedFile));
+			process(new File(ds.getBasedir(), includedFile), result);
 		}
-	
+
 		return result;
 	}
 
-	private void process(File file) {
+	private void process(File file, List<String> result) {
 		if (file.isFile() && file.getName().endsWith(CLASS_POSTFIX)) {
 			String absoluteFilePath = file.getAbsolutePath();
 
@@ -73,14 +71,16 @@ public class ClassUtil {
 	}
 
 	/**
-	 * @param includes array of ant file patterns to include
+	 * @param includes
+	 *            array of ant file patterns to include
 	 */
 	public void setIncludes(String[] includes) {
 		ds.setIncludes(includes);
 	}
 
 	/**
-	 * @param excludes array of ant file patterns to exclude
+	 * @param excludes
+	 *            array of ant file patterns to exclude
 	 */
 	public void setExcludes(String[] excludes) {
 		ds.setExcludes(excludes);

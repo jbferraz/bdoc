@@ -36,6 +36,8 @@ import java.util.List;
 
 import org.apache.commons.lang.Validate;
 
+import bdddoc4j.core.util.ClassesDirectory;
+
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -219,6 +221,13 @@ public class BDoc {
 	@Override
 	public boolean equals(Object obj) {
 		return (obj instanceof BDoc) && ((BDoc) obj).docTime.equals(docTime) && ((BDoc) obj).project.equals(project);
+	}
+
+	public void addBehaviourFrom(ClassesDirectory javaClassesDirectory, ClassLoader classLoader) throws ClassNotFoundException {
+		List<String> classes = javaClassesDirectory.classes();
+		for (String className : classes) {
+			addBehaviourFrom(classLoader.loadClass(className));
+		}		
 	}
 
 }

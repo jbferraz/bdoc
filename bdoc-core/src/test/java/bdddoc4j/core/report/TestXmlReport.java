@@ -24,7 +24,7 @@
 
 package bdddoc4j.core.report;
 
-import static bdddoc4j.core.CustomAssert.assertXpathEvaluatesTo;
+import static bdddoc4j.core.XmlCustomAssert.assertXpathEvaluatesTo;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;

@@ -24,15 +24,34 @@
 
 package bdddoc4j.core;
 
+import org.apache.commons.lang.Validate;
 import org.custommonkey.xmlunit.XMLAssert;
+import org.custommonkey.xmlunit.XMLUnit;
 
 import bdddoc4j.core.util.SysProp;
 
-public class CustomAssert {
+public class XmlCustomAssert {
 
-	private CustomAssert() {
+	private XmlCustomAssert() {
 
 	}
+	
+	public static void assertXPathContains(String expected, String xpath, String xml) {
+		Validate.notNull(expected, "expected");
+		Validate.notNull(xpath, "xpath");
+		Validate.notNull(xml, "xml");
+		
+		String result = null;
+		try {
+			result = XMLUnit.newXpathEngine().evaluate(xpath, XMLUnit.buildControlDocument(xml));
+			if (result.contains(expected)) {
+				return;
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		throw new AssertionError("XPath [" + xpath + "] gives [" + result + "] which was expected to contain [" + expected + "]");
+	}	
 
 	public static void assertXpathEvaluatesTo(String expectedValue, String xpath, String xml) {
 		try {

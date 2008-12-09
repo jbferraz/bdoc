@@ -27,15 +27,14 @@ package bdddoc4j.core.report;
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.util.List;
 
 import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.Project;
-import bdddoc4j.core.util.ClassUtil;
+import bdddoc4j.core.util.ClassesDirectory;
 
-public class BddDocReport {
+public class BDocReport {
 	
-	private ClassUtil classUtil = new ClassUtil();
+	private ClassesDirectory classesDirectory = new ClassesDirectory();
 
 	private String projectName;
 	private String projectVersion;
@@ -44,7 +43,7 @@ public class BddDocReport {
 	private Class<? extends Annotation> testAnnotation;
 	private String html, xml;
 	
-	public BddDocReport() {
+	public BDocReport() {
 		super();
 	}
 
@@ -57,15 +56,15 @@ public class BddDocReport {
 	}
 
 	public void setTestClassDirectory(File testClassDirectory) {
-		classUtil.setBaseDir(testClassDirectory);
+		classesDirectory.setBaseDir(testClassDirectory);
 	}
 	
 	public void setIncludesFilePattern(String[] includesFilePattern) {
-		classUtil.setIncludes(includesFilePattern);
+		classesDirectory.setIncludes(includesFilePattern);
 	}
 
 	public void setExcludesFilePattern(String[] excludesFilePattern) {
-		classUtil.setExcludes(excludesFilePattern);
+		classesDirectory.setExcludes(excludesFilePattern);
 	}
 
 	public void setClassLoader(ClassLoader classLoader) {
@@ -83,12 +82,8 @@ public class BddDocReport {
 	public void run() throws ClassNotFoundException, IOException {
 		BDoc bddDoc = new BDoc(testAnnotation, storyRefAnnotation);
 		bddDoc.setProject(new Project(projectName, projectVersion));
-
-		List<String> classes = classUtil.find();
-		for (String className : classes) {
-			bddDoc.addBehaviourFrom(classLoader.loadClass(className));
-		}
-
+		bddDoc.addBehaviourFrom(classesDirectory, classLoader );
+		
 		xml = new XmlReport(bddDoc).xml();
 		html = new HtmlReport(bddDoc).html();
 	}

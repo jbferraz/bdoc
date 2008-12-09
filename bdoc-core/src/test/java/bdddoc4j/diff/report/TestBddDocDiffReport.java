@@ -24,7 +24,7 @@
 
 package bdddoc4j.diff.report;
 
-import static bdddoc4j.core.CustomAssert.assertXpathEvaluatesTo;
+import static bdddoc4j.core.XmlCustomAssert.assertXpathEvaluatesTo;
 
 import java.io.File;
 import java.io.IOException;

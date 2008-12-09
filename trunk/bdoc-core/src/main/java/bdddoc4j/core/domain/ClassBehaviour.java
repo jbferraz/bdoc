@@ -184,4 +184,8 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	public boolean hasStatements() {
 		return !statements.isEmpty();
 	}
+
+	public void addScenario(Scenario scenario) {
+		scenarios.add(scenario);
+	}
 }

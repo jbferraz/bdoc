@@ -26,6 +26,7 @@ package bdddoc4j.core.domain;
 
 import static bdddoc4j.core.util.Select.from;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class BDoc {
 	 * @param testClass
 	 *            that describes behaviour with testmethods
 	 */
-	public void addBehaviourFrom(Class<? extends Object> testClass) {
+	public void addBehaviourFrom(TestClass testClass, File testSrcDir) {
 		UserStory userStory = null;
 
 		if ((null != storyRefAnnotation) && (testClass.isAnnotationPresent(storyRefAnnotation))) {
@@ -85,15 +86,22 @@ public class BDoc {
 		for (Method method : testClass.getMethods()) {
 
 			if (test(method)) {
-
 				if ((null != storyRefAnnotation) && (method.isAnnotationPresent(storyRefAnnotation))) {
 					userStory = userStory(method.getAnnotation(storyRefAnnotation));
 				}
 
+				ClassBehaviour classBehaviour = null;
 				if (null != userStory) {
-					userStory.addBehaviour(testClass, camelCaseSentence(method));
+					classBehaviour = userStory.addBehaviour(testClass.clazz(), camelCaseSentence(method));
 				} else {
-					generalBehaviour.addBehaviour(testClass, camelCaseSentence(method));
+					classBehaviour = generalBehaviour.addBehaviour(testClass.clazz(), camelCaseSentence(method));
+				}
+
+				if (testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks()) {
+					Scenario scenario = testClass.getScenarioFromTestMethodBlock(method.getName(), testSrcDir);
+					if (null != scenario) {
+						classBehaviour.addScenario(scenario);
+					}
 				}
 			}
 		}
@@ -223,11 +231,11 @@ public class BDoc {
 		return (obj instanceof BDoc) && ((BDoc) obj).docTime.equals(docTime) && ((BDoc) obj).project.equals(project);
 	}
 
-	public void addBehaviourFrom(ClassesDirectory javaClassesDirectory, ClassLoader classLoader) throws ClassNotFoundException {
-		List<String> classes = javaClassesDirectory.classes();
+	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, File testSrcDir) throws ClassNotFoundException {
+		List<String> classes = testClassesDirectory.classes();
 		for (String className : classes) {
-			addBehaviourFrom(classLoader.loadClass(className));
-		}		
+			addBehaviourFrom(new TestClass(classLoader.loadClass(className)), testSrcDir );
+		}
 	}
 
 }

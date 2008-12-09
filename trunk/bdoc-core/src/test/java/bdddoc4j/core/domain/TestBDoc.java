@@ -35,6 +35,7 @@ import org.junit.Test;
 
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
+import bdddoc4j.core.testdata.BddDocTestHelper;
 import bdddoc4j.core.testdata.ExReference;
 import bdddoc4j.core.testdata.ExReference2;
 import bdddoc4j.core.testdata.ExStory;
@@ -51,39 +52,36 @@ public class TestBDoc {
 	@Before
 	public void resetBddDoc() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.addBehaviourFrom(TestExampleAnnotatedMethods.class);
-		bddDoc.addBehaviourFrom(TestExampleAnnotatedClass.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedMethods.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BddDocTestHelper.SRC_TEST_JAVA);
 	}
 
 	@Test
 	public void shouldRunWithAStoryRefAnnotation() {
 		bddDoc = new BDoc(org.junit.Test.class, null);
-		bddDoc.addBehaviourFrom(TestExampleAnnotatedMethods.class);
-		bddDoc.addBehaviourFrom(TestExampleAnnotatedClass.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedMethods.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BddDocTestHelper.SRC_TEST_JAVA);
 	}
-
+	
 	@Test
 	public void givenATestclassWhenTheTestclassIsAnnotatedWithAReferenceToAStoryThenEnsureTheStoryIsCreated() {
-		assertTrue(bddDoc.getUserstories().contains(
-				new UserStory(ExStory.STORY3)));
+		assertTrue(bddDoc.getUserstories().contains(new UserStory(ExStory.STORY3)));
 	}
 
 	@Test
 	public void shouldCreateTheDistinctNumberOfUserStories() {
-		bddDoc.addBehaviourFrom(TestExampleAnnotatedClass.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BddDocTestHelper.SRC_TEST_JAVA);
 		assertEquals(3, bddDoc.getUserstories().size());
 	}
 
 	@Test
 	public void givenATestclassWhenATestmethodIsAnnotatedWithAReferenceToAStoryThenEnsureTheStoryIsCreated() {
-		assertTrue(bddDoc.getUserstories().contains(
-				new UserStory(ExStory.STORY1)));
+		assertTrue(bddDoc.getUserstories().contains(new UserStory(ExStory.STORY1)));
 	}
 
 	@Test
 	public void shouldExtractBehaviourFromMetodsAnnotatedAsAJunitTest() {
-		ClassBehaviour classBehaviour = bddDoc.userStoryFor(ExStory.STORY3)
-				.classBehaviourFor(TestExampleAnnotatedClass.class);
+		ClassBehaviour classBehaviour = bddDoc.userStoryFor(ExStory.STORY3).classBehaviourFor(TestExampleAnnotatedClass.class);
 		assertEquals(0, classBehaviour.getSpecifications().size());
 		assertEquals(1, classBehaviour.getScenarios().size());
 	}
@@ -91,70 +89,60 @@ public class TestBDoc {
 	@Test
 	public void shouldExtractBehaviourFromMetodsAnnotatedWithAnAnnotationClassCalledTest() {
 		BDoc bdoc = new BDoc(null, null);
-		bdoc.addBehaviourFrom(TestTestsAnnotatedWithTest.class);
-		Specification specification = bdoc.getGeneralBehaviour().getPackages().get(0)
-				.getClassSpecifications().get(0).getSpecifications().get(0);
-		
-		assertEquals(new Specification("shouldBePickedUpByBDoc"), specification );
+		bdoc.addBehaviourFrom(new TestClass(TestTestsAnnotatedWithTest.class), BddDocTestHelper.SRC_TEST_JAVA);
+		Specification specification = bdoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
+				.get(0);
+
+		assertEquals(new Specification("shouldBePickedUpByBDoc"), specification);
 	}
 
 	@Test
 	public void shouldExtractBehaviourFromMetodsStartingWithTheWordTest() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.addBehaviourFrom(TestExampleJunit3GeneralBehaviour.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleJunit3.class), BddDocTestHelper.SRC_TEST_JAVA);
 
-		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0)
-				.getClassSpecifications().get(0).getSpecifications().contains(
-						new Specification("shouldShowThatJUnit3IsSupported")));
+		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
+				new Specification("shouldShowThatJUnit3IsSupported")));
 
-		List<Scenario> scenarios = bddDoc.getGeneralBehaviour().getPackages()
-				.get(0).getScenarios();
-		assertTrue(scenarios
-				.contains(new Scenario(
-						"givenAJunit3TestWhenBddDocIsRunThenEnsureTheJUnit3TestIsExtracted")));
+		List<Scenario> scenarios = bddDoc.getGeneralBehaviour().getPackages().get(0).getScenarios();
+		assertTrue(scenarios.contains(new Scenario("givenAJunit3TestWhenBddDocIsRunThenEnsureTheJUnit3TestIsExtracted")));
 	}
 
 	@Test
 	public void givenATestclassWhenATestmethodDescribingBehaviourIsMarkedAsAScenarioThenEnsureTheScenarioIsCreated() {
 		UserStory story1 = bddDoc.userStoryFor(ExStory.STORY1);
-		assertTrue(story1.getScenarios()
-				.contains(new Scenario("givenWhenThen")));
+		assertTrue(story1.getScenarios().contains(new Scenario("givenWhenThen")));
 	}
 
 	@Test
 	public void givenATestclassWhenATestmethodDescribingBehaviourIsMarkedAsASpecificationThenEnsureTheSpecificationIsCreated() {
-		ClassBehaviour behaviour = bddDoc.userStoryFor(ExStory.STORY1)
-				.classBehaviourFor(TestExampleAnnotatedMethods.class);
-		assertTrue(behaviour.getSpecifications().contains(
-				new Specification("shouldBehaveLikeThat")));
+		ClassBehaviour behaviour = bddDoc.userStoryFor(ExStory.STORY1).classBehaviourFor(TestExampleAnnotatedMethods.class);
+		assertTrue(behaviour.getSpecifications().contains(new Specification("shouldBehaveLikeThat")));
 	}
 
 	@Test
 	public void givenATestmethodMarkedAsBehaviourWhenTheTestmethodIsAnnotatedWithAReferenceToAUserstoryThenEnsureTheCreatedBehaviourIsAddedToThatUserstory() {
-		ClassBehaviour behaviour = bddDoc.userStoryFor(ExStory.STORY2)
-				.classBehaviourFor(TestExampleAnnotatedMethods.class);
-		assertTrue(behaviour.getSpecifications().contains(
-				new Specification("shouldBehaveLikeThisIfThat")));
+		ClassBehaviour behaviour = bddDoc.userStoryFor(ExStory.STORY2).classBehaviourFor(TestExampleAnnotatedMethods.class);
+		assertTrue(behaviour.getSpecifications().contains(new Specification("shouldBehaveLikeThisIfThat")));
 	}
 
 	@Test
 	public void givenATestclassAnnotatedWithAReferenceToAStoryWhenATestmethodDescribingBehaviourIsNotAnnotatedWithAReferenceToAStoryThenEnsureTheCreatedBehaviourIsAddedToTheUserstoryForTheTestclass() {
 		UserStory story3 = bddDoc.userStoryFor(ExStory.STORY3);
-		assertTrue(story3.getScenarios().contains(
-				new Scenario("givenAScenarioForStory3WhenThen")));
+		assertTrue(story3.getScenarios().contains(new Scenario("givenAScenarioForStory3WhenThen")));
 	}
 
 	@Test
 	public void shouldIgnoreClassesThatAreNotTests() {
 		bddDoc = new BDoc(org.junit.Test.class, Ref.class);
-		bddDoc.addBehaviourFrom(Ref.class);
+		bddDoc.addBehaviourFrom(new TestClass(Ref.class), BddDocTestHelper.SRC_TEST_JAVA);
 		assertEquals(0, bddDoc.getUserstories().size());
 	}
 
 	@Test
 	public void shouldHandleStoryReferencesThatDoesNotImplementUserStoryDescriptionDirectly() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference2.class);
-		bddDoc.addBehaviourFrom(TestClassWithExStory2Reference.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestClassWithExStory2Reference.class), BddDocTestHelper.SRC_TEST_JAVA);
 		assertEquals("Test story", bddDoc.getUserstories().get(0).getTitle());
 	}
 
@@ -166,29 +154,25 @@ public class TestBDoc {
 	@Test
 	public void givenATestClassWithNoReferenceToAStoryWhenBdddocIsGeneratedThenTheSpecifiedBehaviourShouldNotBeAddedToAnyStories() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.addBehaviourFrom(TestExampleNoStories.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BddDocTestHelper.SRC_TEST_JAVA);
 		assertEquals(0, bddDoc.getUserstories().size());
 	}
 
 	@Test
 	public void givenATestClassWithNoReferenceToAStoryWhenBdddocIsGeneratedThenTheSpecifiedBehaviourShouldBeAddedToGeneralBehaviour() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.addBehaviourFrom(TestExampleNoStories.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BddDocTestHelper.SRC_TEST_JAVA);
 
-		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0)
-				.getClassSpecifications().get(0).getSpecifications().contains(
-						new Specification("shouldVerifyTheImportantStuff")));
-		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0)
-				.getScenarios().contains(
-						new Scenario(
-								"givenSomethingWhenAnActionThenVerifyResult")));
+		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
+				new Specification("shouldVerifyTheImportantStuff")));
+		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0).getScenarios().contains(
+				new Scenario("givenSomethingWhenAnActionThenVerifyResult")));
 
 	}
 
 	@Test
 	public void shouldFindPackageOfAddedTestClassWithBehaviour() {
-		assertTrue(bddDoc.userStoryFor(ExStory.STORY1).getPackages().contains(
-				Package.forClass(TestExampleAnnotatedClass.class)));
+		assertTrue(bddDoc.userStoryFor(ExStory.STORY1).getPackages().contains(Package.forClass(TestExampleAnnotatedClass.class)));
 	}
 
 	/**
@@ -217,7 +201,7 @@ public class TestBDoc {
 	/**
 	 * Testdata
 	 */
-	public class TestExampleJunit3GeneralBehaviour {
+	public class TestExampleJunit3 {
 		public void testShouldShowThatJUnit3IsSupported() {
 		}
 

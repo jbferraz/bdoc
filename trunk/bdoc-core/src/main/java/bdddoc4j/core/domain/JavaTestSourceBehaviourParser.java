@@ -24,50 +24,26 @@
 
 package bdddoc4j.core.domain;
 
-import static bdddoc4j.core.util.Select.from;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class GeneralBehaviour {
+import bdddoc4j.core.domain.Scenario.Part;
+import bdddoc4j.core.util.JavaCodeUtil;
 
-	private final List<Package> packages = new ArrayList<Package>();
+public class JavaTestSourceBehaviourParser {
 
-	public ClassBehaviour classBehaviourFor(Class<? extends Object> testClass) {
-		return from(packages).equalTo(Package.forClass(testClass)).getBehaviourFor(testClass);
+	private String javaSource;
+
+	public JavaTestSourceBehaviourParser(String javaSource) {
+		this.javaSource = javaSource;
 	}
 
-	public ClassBehaviour addBehaviour(Class<? extends Object> testClass, String camelCaseSentence) {
-
-		Package classPackage = Package.forClass(testClass);
-		if (packages.contains(classPackage)) {
-			classPackage = from(packages).equalTo(classPackage);
-		} else {
-			packages.add(classPackage);
+	public Scenario getScenario(String testMethodName) {
+		String testMethodSource = JavaCodeUtil.javaBlockAfter(javaSource, testMethodName);
+		List<Part> scenarioParts = JavaCodeUtil.getGivenWhenThenMethods(testMethodSource);
+		if (scenarioParts.isEmpty()) {
+			return null;
 		}
 
-		return classPackage.addBehaviour(testClass, camelCaseSentence);
-	}
-
-	public List<Package> getPackages() {
-		return packages;
-	}
-
-	public boolean hasClassSpecifications() {
-		for (Package javaPackage : packages) {
-			if (javaPackage.hasClassSpecifications()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean hasClassStatements() {
-		for (Package javaPackage : packages) {
-			if (javaPackage.hasClassStatements()) {
-				return true;
-			}
-		}
-		return false;
+		return new Scenario(scenarioParts);
 	}
 }

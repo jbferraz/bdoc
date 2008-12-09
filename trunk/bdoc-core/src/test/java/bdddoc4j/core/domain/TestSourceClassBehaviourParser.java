@@ -24,13 +24,14 @@
 
 package bdddoc4j.core.domain;
 
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import bdddoc4j.core.doc.Ref;
@@ -41,13 +42,19 @@ public class TestSourceClassBehaviourParser {
 
 	@Test
 	public void shouldComposeScenarioFromTestConstructedWithGivenWhenThenMethods() throws IOException {
-		String stackJava = FileUtils.readFileToString(new File("src/test/java/integrationtestclasses/stack/Stack.java"));
+		String stackJava = FileUtils.readFileToString(new File("src/test/java/integrationtestclasses/stack/StackBehavior.java"));
 
 		String[] testMethods = new String[] { "shouldPopSecondPushedValueFirst" };
 		SourceClassBehaviourParser sourceClassBehaviourParser = new SourceClassBehaviourParser(stackJava, testMethods);
 
-		assertTrue(sourceClassBehaviourParser.getScenarios().contains(
-				"givenAStackWithTwoPushedValuesWhenPopIsCalledThenTheLastItemPushedShouldBeReturnedAndTheValueShouldNotRemainInTheStack"));
+		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
+		scenarioParts.add( new Scenario.Part("givenAStackWithTwoPushedValues") );
+		scenarioParts.add( new Scenario.Part("whenPopIsCalled") );
+		scenarioParts.add( new Scenario.Part("thenTheLastItemPushedShouldBeReturned") );
+		scenarioParts.add( new Scenario.Part("thenTheValueShouldNotRemainInTheStack") );
+		
+		Scenario expectedScenario = new Scenario( scenarioParts );
+		assertEquals(expectedScenario , sourceClassBehaviourParser.getScenarios().get(0) );
 	}
 	
 	//test at en metode uten et scenario ikke gir feil

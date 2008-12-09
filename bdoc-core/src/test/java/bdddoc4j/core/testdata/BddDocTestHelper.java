@@ -24,10 +24,13 @@
 
 package bdddoc4j.core.testdata;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.Project;
+import bdddoc4j.core.domain.TestClass;
 
 /**
  * Class with static helper methods for generating testdata.
@@ -35,6 +38,8 @@ import bdddoc4j.core.domain.Project;
  * @author Per Otto Bergum Christensen
  */
 public class BddDocTestHelper {
+	
+	public static final File SRC_TEST_JAVA = new File("src/test/java");
 
 	private BddDocTestHelper() {
 	}
@@ -42,9 +47,9 @@ public class BddDocTestHelper {
 	public static BDoc bddDocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour() {
 		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
 		bddDoc.setProject(new Project("Testproject", "1.0"));
-		bddDoc.addBehaviourFrom(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class);
-		bddDoc.addBehaviourFrom(TestClassWithFourSpecifications.class);
-		bddDoc.addBehaviourFrom(TestClassWithGeneralBehaviour.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), SRC_TEST_JAVA );
+		bddDoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), SRC_TEST_JAVA );
+		bddDoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), SRC_TEST_JAVA );
 
 		return bddDoc;
 	}

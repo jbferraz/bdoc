@@ -22,36 +22,25 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.core.report;
+package bdddoc4j.core.domain.testdata;
 
-import static bdddoc4j.core.XmlCustomAssert.assertXPathContains;
-
-import java.io.File;
-import java.io.IOException;
-
-import org.junit.Test;
-
-import bdddoc4j.core.doc.Ref;
-import bdddoc4j.core.doc.Story;
-import bdddoc4j.core.testdata.BddDocTestHelper;
-
-@Ref(Story.CREATE_BDOC_FROM_CODE)
-public class TestBDocReport {
-
-	private static final String PROJECT_NAME = "testProject";
+public class TestDomainBehaviour {
 	
-	@Test
-	public void shouldExtractDocumentationFromAnyClassThatSpecifiesTests() throws ClassNotFoundException, IOException {
-		BDocReport bdocReport = new BDocReport();
-		bdocReport.setProjectName(PROJECT_NAME);
-		bdocReport.setProjectVersion("version");
-		bdocReport.setTestClassDirectory( new File( "target/test-classes"));
-		bdocReport.setClassLoader(getClass().getClassLoader() );
-		bdocReport.setIncludesFilePattern( new String[] { "integrationtestclasses/stack/**" });
-		bdocReport.run( BddDocTestHelper.SRC_TEST_JAVA );
-		String xml = bdocReport.getXml();
-		
-		assertXPathContains("Stack", "//bddDoc", xml );
-		assertXPathContains("StackBehavior", "//bddDoc", xml );		
+	@org.junit.Test
+	public void simpleScenario()
+	{
+		given();
+		when();
+		then();
 	}
+
+	private void then() {
+	}
+
+	private void when() {
+	}
+
+	private void given() {
+	}
+
 }

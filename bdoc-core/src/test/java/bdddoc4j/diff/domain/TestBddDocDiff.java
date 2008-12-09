@@ -34,9 +34,11 @@ import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
 import bdddoc4j.core.domain.BDoc;
 import bdddoc4j.core.domain.Project;
+import bdddoc4j.core.domain.TestClass;
+import bdddoc4j.core.testdata.BddDocTestHelper;
 import bdddoc4j.core.testdata.ExReference;
 import bdddoc4j.core.testdata.ExStory;
-import bdddoc4j.diff.domain.BddUserStoryDiffDocTestdataHelper.TestWithOnlyGeneralBehaviour;
+import bdddoc4j.diff.domain.BddUserStoryDiffDocTestdataHelper.TestWithOnlyGeneralBehaviourContent;
 
 @Ref(Story.DIFF_OF_BDOCS)
 public class TestBddDocDiff {
@@ -75,7 +77,7 @@ public class TestBddDocDiff {
 		BDoc bddDocV2 = new BDoc(org.junit.Test.class, ExReference.class);
 		bddDocV2.setProject(new Project("name", "1"));
 
-		bddDocV2.addBehaviourFrom(TestWithOnlyGeneralBehaviour.class);
+		bddDocV2.addBehaviourFrom(new TestClass(TestWithOnlyGeneralBehaviourContent.class), BddDocTestHelper.SRC_TEST_JAVA);
 
 		assertTrue(new BddDocDiff(bddDocV1, bddDocV2).getGeneralBehaviourDiff().diffExists());
 	}

@@ -79,10 +79,10 @@ public class BDocReport {
 		this.testAnnotation = testAnnotation;
 	}
 
-	public void run() throws ClassNotFoundException, IOException {
+	public void run( File testSrcDir ) throws ClassNotFoundException, IOException {
 		BDoc bddDoc = new BDoc(testAnnotation, storyRefAnnotation);
 		bddDoc.setProject(new Project(projectName, projectVersion));
-		bddDoc.addBehaviourFrom(classesDirectory, classLoader );
+		bddDoc.addBehaviourFrom(classesDirectory, classLoader, testSrcDir );
 		
 		xml = new XmlReport(bddDoc).xml();
 		html = new HtmlReport(bddDoc).html();

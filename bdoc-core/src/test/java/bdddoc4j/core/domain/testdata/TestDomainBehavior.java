@@ -22,32 +22,12 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.core.domain;
+package bdddoc4j.core.domain.testdata;
 
-import java.util.ArrayList;
-import java.util.List;
+public class TestDomainBehavior {
 
-import bdddoc4j.core.util.JavaCodeUtil;
-
-public class SourceClassBehaviourParser {
-
-	private String javaClassSource;
-	private String[] testMethods;
-
-	public SourceClassBehaviourParser(String javaClassSource, String[] testMethods) {
-		this.javaClassSource = javaClassSource;
-		this.testMethods = testMethods;
-	}
-
-	public List<Scenario> getScenarios() {
-		List<Scenario> result = new ArrayList<Scenario>();
+	@org.junit.Test
+	public void sillyTest() {
 		
-		for (String testMethod : testMethods) {			
-			String testMethodSource = JavaCodeUtil.javaBlockAfter(javaClassSource, testMethod );
-			result.add( new Scenario( JavaCodeUtil.getGivenWhenThenMethods(testMethodSource) ) );			
-		}
-		
-		return result;
 	}
-
 }

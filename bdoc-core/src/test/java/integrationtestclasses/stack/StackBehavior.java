@@ -29,11 +29,11 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 /**
-* This class written by Micael Vesterlund as a suggestion to how BDoc could be extended, to support a different way of structure the Javacode, when specifing a scenario. 
-* It is now used as testdata by bdddoc4j.core.domain.TestSourceClassBehaviourParser.java , to ensure that BDoc will extract the expected documentation.
-*
-* @Author Micael Vesterlund,  micael.vesterlund@gmail.com
-*/
+ * This class was written by Micael Vesterlund as a suggestion to how BDoc could be extended, to support a different way of structure the Javacode, when specifing a scenario. 
+ * It is now used as testdata by bdddoc4j.core.domain.TestSourceClassBehaviourParser.java , as a specification for BDoc on the user story "adcanced scenario specification "
+ *
+ * @Author Micael Vesterlund,  micael.vesterlund@gmail.com
+ */
 public class StackBehavior {
 
     private Stack<String> stack;

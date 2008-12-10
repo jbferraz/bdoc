@@ -26,17 +26,22 @@
 				<artifactId>maven-bdoc-plugin</artifactId>
 				<version>${maven.bdoc.plugin.version}</version>
 				<configuration>
-					<storyRefAnnotationClassName>com.googlecode.bdoc.examples.taskhandling.Ref</storyRefAnnotationClassName>
+					<storyRefAnnotationClassName>
+						com.googlecode.bdoc.examples.taskhandling.Ref
+					</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
-					
+
 					<excludes>
-						<exclude>com/googlecode/bdoc/examples/excluded/**</exclude>
+						<exclude>
+							com/googlecode/bdoc/examples/excluded/**
+						</exclude>
 					</excludes>
-					
+
 					<includes>
-						<include>com/googlecode/bdoc/examples/taskhandling/**</include>
+						<include>
+							com/googlecode/bdoc/examples/taskhandling/**
+						</include>
 					</includes>
-					
 				</configuration>
 				<executions>
 					<execution>

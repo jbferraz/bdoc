@@ -33,7 +33,7 @@ import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;
 
-import bdddoc4j.core.report.BddDocReport;
+import bdddoc4j.core.report.BDocReport;
 
 /**
  * @goal doc
@@ -44,6 +44,12 @@ import bdddoc4j.core.report.BddDocReport;
  * @author Per Otto Bergum Christensen
  */
 public class BddDocMojo extends AbstractBddDocMojo {
+
+	/**
+	 * @parameter default-value="${project.build.testSourceDirectory}"
+	 * @required
+	 */
+	private File testSourceDirectory;
 
 	/**
 	 * @parameter default-value="${project.build.directory}/test-classes"
@@ -88,7 +94,7 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	@SuppressWarnings("unchecked")
 	void executeInternal() throws Exception {
 		ClassLoader classLoader = getClassLoader();
-		BddDocReport bddDocReport = new BddDocReport();
+		BDocReport bddDocReport = new BDocReport();
 
 		bddDocReport.setProjectName(getProject().getName());
 		bddDocReport.setProjectVersion(getProject().getVersion());
@@ -102,7 +108,7 @@ public class BddDocMojo extends AbstractBddDocMojo {
 			bddDocReport.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
 		}
 
-		bddDocReport.run();
+		bddDocReport.run(testSourceDirectory);
 
 		if (null != logDirectory) {
 			writeFile(bddDocReport.getXml(), logDirectory, "bddDoc." + new Date().getTime() + ".xml");

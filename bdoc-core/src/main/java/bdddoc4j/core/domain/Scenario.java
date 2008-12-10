@@ -50,7 +50,8 @@ public class Scenario {
 
 		@Override
 		public boolean equals(Object obj) {
-			return ((obj instanceof Part) && (camelCaseDescription.equals(((Part) obj).camelCaseDescription)));
+			return ((obj instanceof Part) && (camelCaseDescription
+					.equals(((Part) obj).camelCaseDescription)));
 		}
 
 		public int scenarioKeyword() {
@@ -58,24 +59,28 @@ public class Scenario {
 				String[] keywords = pattern.keywords;
 
 				for (int index = 0; index < keywords.length; index++) {
-					if (camelCaseDescription.startsWith(keywords[index].toLowerCase())) {
+					if (camelCaseDescription.startsWith(keywords[index]
+							.toLowerCase())) {
 						return index;
 					}
 				}
 			}
-			throw new IllegalStateException("Didn't match [" + camelCaseDescription + "] with any scenario keyword");
+			throw new IllegalStateException("Didn't match ["
+					+ camelCaseDescription + "] with any scenario keyword");
 		}
 	}
 
 	public enum Pattern {
-		NO("og", new Locale("no"), "gitt", "Naar", "Saa"), EN("and", Locale.ENGLISH, "given", "When", "Then");
+		NO("og", new Locale("no"), "gitt", "Naar", "Saa"), EN("and",
+				Locale.ENGLISH, "given", "When", "Then");
 
 		private final String and;
 		private final String[] keywords;
 		private final Locale locale;
 
 		private Pattern(String and, Locale locale, String... template) {
-			Validate.isTrue(KEYWORD_COUNT == template.length, "Scenario keywords length should be 3");
+			Validate.isTrue(KEYWORD_COUNT == template.length,
+					"Scenario keywords length should be 3");
 			this.keywords = template;
 			this.locale = locale;
 			this.and = and;
@@ -98,9 +103,11 @@ public class Scenario {
 			return null;
 		}
 
-		public static int indexOfScenarioKeyword(String string, int scenarioKeyWord) {
+		public static int indexOfScenarioKeyword(String string,
+				int scenarioKeyWord) {
 			for (Pattern pattern : Pattern.values()) {
-				int index = string.indexOf(pattern.keywords[scenarioKeyWord].toLowerCase());
+				int index = string.indexOf(pattern.keywords[scenarioKeyWord]
+						.toLowerCase());
 				if (-1 < index) {
 					return index;
 				}
@@ -119,22 +126,39 @@ public class Scenario {
 		Pattern pattern = Pattern.find(camelCaseSentence);
 		Validate.notNull(pattern, "pattern not found for " + camelCaseSentence);
 
-		for (String ln : SentenceToLineSplit.split(camelCaseSentence, pattern.keywords[1], pattern.keywords[2])) {
-			line.add(CamelCaseToSentenceTranslator.translate(ln, pattern.locale()));
+		for (String ln : SentenceToLineSplit.split(camelCaseSentence,
+				pattern.keywords[1], pattern.keywords[2])) {
+			line.add(CamelCaseToSentenceTranslator.translate(ln, pattern
+					.locale()));
 		}
 	}
 
 	public Scenario(List<Part> parts) {
 		Pattern pattern = Pattern.find(parts.get(0).camelCaseDescription);
 		int index = 0;
+		String tempLine = "";
 		while (index < parts.size()) {
 
 			String partCamelCaseDescription = parts.get(index).camelCaseDescription;
 
-			if ((index + 1 < parts.size()) && (parts.get(index).scenarioKeyword() == parts.get(index + 1).scenarioKeyword())) {
-				partCamelCaseDescription = partCamelCaseDescription + " " + pattern.and() + " " + parts.get(index + 1).camelCaseDescription;
+			if (index > 0) {
+				if (parts.get(index).scenarioKeyword() == parts.get(index - 1)
+						.scenarioKeyword()) {
+					// this line has same keyword as the previously one+ " "
+					tempLine += (" " + pattern.and() + " " + partCamelCaseDescription);
+				} else {
+					line.add(CamelCaseToSentenceTranslator.translate(tempLine,
+							pattern.locale()));
+					tempLine = partCamelCaseDescription;
+				}
+			} else {
+				tempLine = partCamelCaseDescription;
 			}
-			line.add(CamelCaseToSentenceTranslator.translate(partCamelCaseDescription, pattern.locale()));
+
+			if (index + 1 == parts.size()) {
+				line.add(CamelCaseToSentenceTranslator.translate(tempLine,
+						pattern.locale()));
+			}
 
 			index++;
 		}

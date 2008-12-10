@@ -25,6 +25,7 @@
 package bdddoc4j.core.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,20 +58,26 @@ public class TestScenario {
 
 	@Test
 	public void shouldGiveTheStartIndexForScenarioKeywordGivenInNorwegianAndEnglish() {
-		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345givenA ", 0));
-		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345gittA ", 0));
+		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword(
+				"012345givenA ", 0));
+		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345gittA ",
+				0));
 	}
 
 	@Test
 	public void shouldGiveTheStartIndexForScenarioKeywordwhenInNorwegianAndEnglish() {
-		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345whenA ", 1));
-		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345naarA ", 1));
+		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345whenA ",
+				1));
+		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345naarA ",
+				1));
 	}
 
 	@Test
 	public void shouldGiveTheStartIndexForScenarioKeywordThenInNorwegianAndEnglish() {
-		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345thenA ", 2));
-		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345saaA ", 2));
+		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345thenA ",
+				2));
+		assertEquals(6, Scenario.Pattern.indexOfScenarioKeyword("012345saaA ",
+				2));
 	}
 
 	@Test
@@ -91,7 +98,8 @@ public class TestScenario {
 		parts.add(new Scenario.Part("when"));
 		parts.add(new Scenario.Part("then"));
 
-		assertEquals(new Scenario("givenAAndGivenBWhenThen").getLines().get(0), new Scenario(parts).getLines().get(0));
+		assertEquals(new Scenario("givenAAndGivenBWhenThen").getLines().get(0),
+				new Scenario(parts).getLines().get(0));
 
 	}
 
@@ -103,7 +111,8 @@ public class TestScenario {
 		parts.add(new Scenario.Part("whenD"));
 		parts.add(new Scenario.Part("then"));
 
-		assertEquals(new Scenario("givenWhenCAndWhenDThen").getLines().get(1), new Scenario(parts).getLines().get(1));
+		assertEquals(new Scenario("givenWhenCAndWhenDThen").getLines().get(1),
+				new Scenario(parts).getLines().get(1));
 	}
 
 	@Test
@@ -114,7 +123,8 @@ public class TestScenario {
 		parts.add(new Scenario.Part("thenA"));
 		parts.add(new Scenario.Part("thenB"));
 
-		assertEquals(new Scenario("givenWhenThenAAndThenB").getLines().get(2), new Scenario(parts).getLines().get(2));
+		assertEquals(new Scenario("givenWhenThenAAndThenB").getLines().get(2),
+				new Scenario(parts).getLines().get(2));
 	}
 
 	@Test
@@ -123,5 +133,23 @@ public class TestScenario {
 		parts.add(new Scenario.Part("givenIHave"));
 
 		assertEquals("Given I have", new Scenario(parts).getLines().get(0));
+	}
+
+	@Test
+	public void shouldCreateOneLinePerKeyword() {
+		List<Scenario.Part> parts = new ArrayList<Scenario.Part>();
+		parts.add(new Scenario.Part("given"));
+		parts.add(new Scenario.Part("whenX"));
+		parts.add(new Scenario.Part("whenY"));
+		parts.add(new Scenario.Part("thenA"));
+		parts.add(new Scenario.Part("thenB"));
+		parts.add(new Scenario.Part("thenC"));
+		List<String> lines = new Scenario(parts).getLines();
+
+		assertEquals(3, lines.size());
+
+		assertTrue(lines.get(0).startsWith("Given"));
+		assertTrue(lines.get(1).startsWith("When"));
+		assertTrue(lines.get(2).startsWith("Then"));
 	}
 }

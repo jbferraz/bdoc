@@ -23,13 +23,11 @@ Micael Vesterlund pointed out the problem with this standard approach, to long m
         return stack.pop();
     }
 
-    private void thenTheLastItemPushedShouldBeReturned(String pushed,
-        String poped) {
+    private void thenTheLastItemPushedShouldBeReturned(String pushed, String poped) {
         assertThat(pushed, equalTo(poped));
     }
 
-    private void thenTheValueShouldNotRemainInTheStack(int sizeBefore,
-        int sizeAfter) {
+    private void thenTheValueShouldNotRemainInTheStack(int sizeBefore, int sizeAfter) {
         assertThat(sizeAfter, equalTo(sizeBefore - 1));
     }
 

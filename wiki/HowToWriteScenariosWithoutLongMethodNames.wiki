@@ -3,15 +3,13 @@ One way to write Scenarios are to write a test on the form given..When..Then. BD
   * When.. .
   * Then.. .
 Micael Vesterlund pointed out the problem with this approach and an advanced scenario specification:
-
 Standard scenario specification:
 {{{
     @Test
-    public void givenAStackContainingItemsWhenPeekIsCalledThenTheStackShouldProvideTheValueOfTheMostRecentPushedValueAndThatValueShouldRemainInTheStack {
- .. .
+    public void    givenAStackContainingItemsWhenPeekIsCalledThenTheStackShouldProvideTheValueOfTheMostRecentPushedValueAndThatValueShouldRemainInTheStack {
+    .. .
 }
 }}}
-
 Advanced scenario specification:
 {{{
     private void givenAStackWithTwoPushedValues(String value1, String value2) {
@@ -44,12 +42,9 @@ Advanced scenario specification:
         thenTheValueShouldNotRemainInTheStack(sizeBefore, sizeAfter);
     } 
 }}}
-
 This is now the specification for how to write advanced scenarios in BDoc. The criteria for letting BDoc know that an advanced scenario is used is to let the postfix of the test be _Behaviour_. It might be a good idea to use the RefClass annotation to connect the test class with the correct implementation class. E.g.
 {{{
 @RefClass( Stack.class )
 public class TestStackBehavior {
-
 }}}
-
 Read more on HowTo..

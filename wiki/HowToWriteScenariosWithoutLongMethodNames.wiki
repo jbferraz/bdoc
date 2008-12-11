@@ -6,7 +6,7 @@ Micael Vesterlund pointed out the problem with this standard approach, to long m
 {{{
     // STANDARD
     @Test
-    public void    givenAStackContainingItemsWhenPeekIsCalledThenTheStackShouldProvideTheValueOfTheMostRecentPushedValueAndThatValueShouldRemainInTheStack {
+    public void givenAStackContainingItemsWhenPeekIsCalledThenTheStackShouldProvideTheValueOfTheMostRecentPushedValueAndThatValueShouldRemainInTheStack {
     .. .
 }
 }}}

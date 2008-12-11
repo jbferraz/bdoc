@@ -1,5 +1,5 @@
 _12 December 2008 - Release 0.7.16_
- Version 0.7.16 is released with functionality for specifying advanced scenarios without makeing an extramly long method. The solution was proposed by Micael Vesterlund, which now also is a developer on the project. Read more on HowToWriteScenariosWithoutLongMethodNames.
+ Version 0.7.16 is released with functionality for specifying advanced scenarios without makeing an extremly long test method. The solution was proposed by Micael Vesterlund, which now also is a developer on the project. Read more on HowToWriteScenariosWithoutLongMethodNames.
 
 _04 December 2008 - Release 0.7.14_
  Version 0.7.14 is released with functionality for specifying include/exclude configuration for the plugin. This was asked for in Issue3. Read more on [HowToExcludeAndIncludeTestsForBDoc].

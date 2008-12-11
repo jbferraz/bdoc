@@ -2,8 +2,7 @@ One way to write Scenarios are to write a test on the form given..When..Then. BD
   * Given.. .
   * When.. .
   * Then.. .
-Micael Vesterlund pointed out the problem with this standard approach and proposed an advanced scenario specification:
-
+Micael Vesterlund pointed out the problem with this standard approach and proposed an advanced scenario specification: 
 Standard (very long method approach):
 {{{
     @Test

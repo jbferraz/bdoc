@@ -48,4 +48,4 @@ This is now the specification for how to write advanced scenarios in BDoc. The c
 @RefClass( Stack.class )
 public class TestStackBehavior {
 }}}
-Read more on HowTo..
+Read more on HowtoChangeDefaultGeneratedClassNames.

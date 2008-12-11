@@ -2,16 +2,17 @@ One way to write Scenarios are to write a test on the form given..When..Then. BD
   * Given.. .
   * When.. .
   * Then.. .
-Micael Vesterlund pointed out the problem with this standard approach and proposed an advanced scenario specification: 
-Standard (very long method approach):
+Micael Vesterlund pointed out the problem with this standard approach, to long method names, and proposed an advanced scenario specification: 
 {{{
+    // STANDARD
     @Test
     public void    givenAStackContainingItemsWhenPeekIsCalledThenTheStackShouldProvideTheValueOfTheMostRecentPushedValueAndThatValueShouldRemainInTheStack {
     .. .
 }
 }}}
-Advanced scenario specification:
+
 {{{
+    // ADVANCED 
     private void givenAStackWithTwoPushedValues(String value1, String value2) {
         stack = new Stack<String>();
         stack.push(value1);

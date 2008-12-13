@@ -81,9 +81,21 @@ public class TestClassesDirectory {
 		assertFalse(classes.contains("integrationtestclasses.subpackage.AnotherClass"));
 	}
 
+	@Test
+	public void shouldAcceptThatThereIsNoTestClassesDirectory() {
+		classesDirectory.setBaseDir(unexistingDirectory());
+		classesDirectory.classes();
+	}
+
 	private File testClassesDirectory() {
 		File baseDir = new File(getBasedir());
 		File integrationtestdata = new File(baseDir, "target/test-classes");
+		return integrationtestdata;
+	}
+
+	private File unexistingDirectory() {
+		File baseDir = new File(getBasedir());
+		File integrationtestdata = new File(baseDir, "does/not/exists");
 		return integrationtestdata;
 	}
 

@@ -47,10 +47,12 @@ public class ClassesDirectory {
 
 		List<String> result = new ArrayList<String>();
 
-		ds.scan();
+		if (ds.getBasedir().isDirectory()) {
+			ds.scan();
 
-		for (String includedFile : ds.getIncludedFiles()) {
-			process(new File(ds.getBasedir(), includedFile), result);
+			for (String includedFile : ds.getIncludedFiles()) {
+				process(new File(ds.getBasedir(), includedFile), result);
+			}
 		}
 
 		return result;

@@ -131,10 +131,6 @@ public class Scenario {
 		part.addAll(parts);		
 	}
 
-	public List<String> getLines() {
-		return new AndInBetweenScenarioLinesFormatter().getLines(this);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		return (obj instanceof Scenario) && ((Scenario) obj).part.equals(part);

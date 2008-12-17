@@ -59,9 +59,9 @@ public class TestScenario {
 	@Test
 	public void shouldTranslateCamelCaseSentenceToGivenWhenThen() {
 		Scenario scenario = new Scenario("givenWhenThen");
-		assertEquals("Given", scenario.getLines().get(0));
-		assertEquals("When", scenario.getLines().get(1));
-		assertEquals("Then", scenario.getLines().get(2));
+		assertEquals("given", scenario.getParts().get(0).camelCaseDescription());
+		assertEquals("When", scenario.getParts().get(1).camelCaseDescription());
+		assertEquals("Then", scenario.getParts().get(2).camelCaseDescription());
 	}
 
 	@Test

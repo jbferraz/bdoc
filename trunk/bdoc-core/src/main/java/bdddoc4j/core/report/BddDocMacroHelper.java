@@ -24,7 +24,10 @@
 
 package bdddoc4j.core.report;
 
+import java.util.List;
 import java.util.ResourceBundle;
+
+import bdddoc4j.core.domain.Scenario;
 
 public class BddDocMacroHelper {
 
@@ -44,5 +47,16 @@ public class BddDocMacroHelper {
 
 	public String text(String key) {
 		return bundle.getString(key);
+	}
+
+	public String scenarioLines(Scenario scenario) {
+		List<String> lines = new AndInBetweenScenarioLinesFormatter().getLines(scenario);
+		StringBuilder scenarioHtmlSnippet = new StringBuilder();
+		for (String line : lines) {
+			scenarioHtmlSnippet.append("<li>");
+			scenarioHtmlSnippet.append( line );
+			scenarioHtmlSnippet.append("</li>");
+		}
+		return scenarioHtmlSnippet.toString();
 	}
 }

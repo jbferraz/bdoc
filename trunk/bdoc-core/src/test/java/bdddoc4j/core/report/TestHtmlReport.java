@@ -24,6 +24,7 @@
 
 package bdddoc4j.core.report;
 
+import static bdddoc4j.core.report.ScenarioTestHelper.scenarioPart;
 import static bdddoc4j.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 
@@ -75,10 +76,10 @@ public class TestHtmlReport {
 
 	@Test
 	public void shouldPresentTheScenariosOfTheStory() {
-		List<String> lines = bddDoc.getUserstories().get(0).getScenarios().get(0).getLines();
-		assertXPathContains(lines.get(0), "//ul[@class='scenario']", html);
-		assertXPathContains(lines.get(1), "//ul[@class='scenario']", html);
-		assertXPathContains(lines.get(2), "//ul[@class='scenario']", html);
+		Scenario scenario = bddDoc.getUserstories().get(0).getScenarios().get(0);
+		assertXPathContains(scenarioPart( 0, scenario  ), "//ul[@class='scenario']", html);
+		assertXPathContains(scenarioPart( 1, scenario  ), "//ul[@class='scenario']", html);
+		assertXPathContains(scenarioPart( 2, scenario  ), "//ul[@class='scenario']", html);		
 	}
 
 	@Test
@@ -107,7 +108,7 @@ public class TestHtmlReport {
 	@Test
 	public void shouldPresentScenariosNotAssociatedWithAnyStories() {
 		List<Scenario> scenarios = bddDoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getScenarios();
-		assertXPathContains(scenarios.get(0).getLines().get(0), "//div[@id='generalBehaviour']/div[@class='package']", html);
+		assertXPathContains( scenarioPart( 0, scenarios.get(0) ), "//div[@id='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test

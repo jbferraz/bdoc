@@ -54,9 +54,7 @@
 			<div class="scenarios"> 
 				<#list scenarios as scenario>													
 					<ul class="scenario">
-						<#list scenario.lines as line>
-							<li>${line}</li>
-						</#list>
+						${bddDocMacroHelper.scenarioLines(scenario)}
 					</ul>
 				</#list>
 			</div>

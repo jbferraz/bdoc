@@ -24,6 +24,7 @@
 
 package bdddoc4j.diff.report;
 
+import static bdddoc4j.core.report.ScenarioTestHelper.scenarioPart;
 import static bdddoc4j.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 
@@ -111,13 +112,13 @@ public class TestHtmlUserstoryDiffReport {
 
 	@Test
 	public void shouldPresentNewScenariosAssociatedWithAUserStory() {
-		assertXPathContains(bddDocDiff.getUpdatedStories().get(0).getNewScenarios().get(0).getLines().get(0),
+		assertXPathContains( scenarioPart(0,  bddDocDiff.getUpdatedStories().get(0).getNewScenarios().get(0) ),
 				"//li[@class='newScenarios']", html);
 	}
 
 	@Test
 	public void shouldPresentDeletedScenariosAssociatedWithAUserStory() {
-		assertXPathContains(bddDocDiff.getUpdatedStories().get(0).getDeletedScenarios().get(0).getLines().get(0),
+		assertXPathContains(scenarioPart(0,  bddDocDiff.getUpdatedStories().get(0).getDeletedScenarios().get(0) ),
 				"//li[@class='deletedScenarios']", html);
 	}
 

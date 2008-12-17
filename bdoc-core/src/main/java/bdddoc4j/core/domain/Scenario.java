@@ -25,13 +25,12 @@
 package bdddoc4j.core.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang.Validate;
 
-import bdddoc4j.core.util.CamelCaseToSentenceTranslator;
+import bdddoc4j.core.report.AndInBetweenScenarioLinesFormatter;
 import bdddoc4j.core.util.SentenceToLineSplit;
 
 /**
@@ -47,6 +46,10 @@ public class Scenario {
 		public Part(String camelCaseDescription) {
 			this.camelCaseDescription = camelCaseDescription;
 		}
+		
+		public String camelCaseDescription() {
+			return camelCaseDescription;
+		}
 
 		@Override
 		public boolean equals(Object obj) {
@@ -58,7 +61,7 @@ public class Scenario {
 				String[] keywords = pattern.keywords;
 
 				for (int index = 0; index < keywords.length; index++) {
-					if (camelCaseDescription.startsWith(keywords[index].toLowerCase())) {
+					if (camelCaseDescription.toLowerCase().startsWith(keywords[index].toLowerCase())) {
 						return index;
 					}
 				}
@@ -113,55 +116,32 @@ public class Scenario {
 		}
 	}
 
-	private final List<String> line = new ArrayList<String>();
+	private final List<Part> part = new ArrayList<Part>();
 
 	public Scenario(String camelCaseSentence) {
 		Pattern pattern = Pattern.find(camelCaseSentence);
 		Validate.notNull(pattern, "pattern not found for " + camelCaseSentence);
 
 		for (String ln : SentenceToLineSplit.split(camelCaseSentence, pattern.keywords[1], pattern.keywords[2])) {
-			line.add(CamelCaseToSentenceTranslator.translate(ln, pattern.locale()));
+			part.add(new Part(ln));
 		}
 	}
 
 	public Scenario(List<Part> parts) {
-		Pattern pattern = Pattern.find(parts.get(0).camelCaseDescription);
-		int index = 0;
-		String tempLine = "";
-		while (index < parts.size()) {
-
-			String partCamelCaseDescription = parts.get(index).camelCaseDescription;
-
-			if (index > 0) {
-				if (lineHasSameKeywordAsThePreviouslyOne(parts, index)) {
-					tempLine += (" " + pattern.and() + " " + partCamelCaseDescription);
-				} else {
-					line.add(CamelCaseToSentenceTranslator.translate(tempLine, pattern.locale()));
-					tempLine = partCamelCaseDescription;
-				}
-			} else {
-				tempLine = partCamelCaseDescription;
-			}
-
-			if (index + 1 == parts.size()) {
-				line.add(CamelCaseToSentenceTranslator.translate(tempLine, pattern.locale()));
-			}
-
-			index++;
-		}
-	}
-
-	private boolean lineHasSameKeywordAsThePreviouslyOne(List<Part> parts, int index) {
-		return parts.get(index).scenarioKeyword() == parts.get(index - 1).scenarioKeyword();
+		part.addAll(parts);		
 	}
 
 	public List<String> getLines() {
-		return Collections.unmodifiableList(line);
+		return new AndInBetweenScenarioLinesFormatter().getLines(this);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		return (obj instanceof Scenario) && ((Scenario) obj).line.equals(line);
+		return (obj instanceof Scenario) && ((Scenario) obj).part.equals(part);
+	}
+
+	public List<Part> getParts() {
+		return part;
 	}
 
 }

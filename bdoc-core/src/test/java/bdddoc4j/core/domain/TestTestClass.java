@@ -27,8 +27,12 @@ package bdddoc4j.core.domain;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
+import bdddoc4j.core.domain.Scenario.Part;
 import bdddoc4j.core.domain.testdata.TestDomainBehavior;
 import bdddoc4j.core.domain.testdata.TestDomainBehaviour;
 import bdddoc4j.core.testdata.BddDocTestHelper;
@@ -58,7 +62,12 @@ public class TestTestClass {
 		TestClass testClass = new TestClass(TestDomainBehaviour.class);
 		Scenario scenarioFromTestMethodBlock = testClass.getScenarioFromTestMethodBlock("simpleScenario", BddDocTestHelper.SRC_TEST_JAVA);
 
-		assertEquals(new Scenario("givenWhenThen"), scenarioFromTestMethodBlock);
+		List<Part> parts = new ArrayList<Part>();
+		parts.add(new Part("given"));
+		parts.add(new Part("when"));
+		parts.add(new Part("then"));
+		
+		assertEquals(new Scenario( parts ), scenarioFromTestMethodBlock );
 	}
 
 }

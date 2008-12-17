@@ -64,9 +64,8 @@ public class XmlReport {
 		xstream.alias("package", Package.class);
 		xstream.alias("specification", Specification.class);
 		xstream.alias("statement", Statement.class);
-		xstream.alias("line", String.class);
+		xstream.alias("part", Scenario.Part.class);
 		xstream.addImplicitCollection(Package.class, "classBehaviourList");
-		xstream.addImplicitCollection(Scenario.class, "line");
 	}
 
 	public static BDoc createBddDoc(String xml) {

@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import bdddoc4j.core.doc.Ref;
@@ -77,9 +78,9 @@ public class TestHtmlReport {
 	@Test
 	public void shouldPresentTheScenariosOfTheStory() {
 		Scenario scenario = bddDoc.getUserstories().get(0).getScenarios().get(0);
-		assertXPathContains(scenarioPart( 0, scenario  ), "//ul[@class='scenario']", html);
-		assertXPathContains(scenarioPart( 1, scenario  ), "//ul[@class='scenario']", html);
-		assertXPathContains(scenarioPart( 2, scenario  ), "//ul[@class='scenario']", html);		
+		assertXPathContains(scenarioPart(0, scenario), "//ul[@class='scenario']", html);
+		assertXPathContains(scenarioPart(1, scenario), "//ul[@class='scenario']", html);
+		assertXPathContains(scenarioPart(2, scenario), "//ul[@class='scenario']", html);
 	}
 
 	@Test
@@ -108,7 +109,7 @@ public class TestHtmlReport {
 	@Test
 	public void shouldPresentScenariosNotAssociatedWithAnyStories() {
 		List<Scenario> scenarios = bddDoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getScenarios();
-		assertXPathContains( scenarioPart( 0, scenarios.get(0) ), "//div[@id='generalBehaviour']/div[@class='package']", html);
+		assertXPathContains(scenarioPart(0, scenarios.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
@@ -122,5 +123,13 @@ public class TestHtmlReport {
 	public void shouldPresentStatementsNotAssociatedWithAnyStories() {
 		List<Statement> statements = bddDoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getStatements();
 		assertXPathContains(statements.get(0).getSentence(), "//div[@id='generalBehaviour']/div[@class='package']", html);
+	}
+
+	@Test
+	public void shouldBePossibleToChangeFormattingForAdvancedScenarioSpecification() throws IOException {
+		bddDoc = BddDocTestHelper.bddDocWithAdvancedScenarioSpecification();
+		String htmlAndInBetween = new HtmlReport(bddDoc, new AndInBetweenScenarioLinesFormatter()).html();
+		String htmlEachOnNewLine = new HtmlReport(bddDoc, new EachOnNewLineScenarioLinesFormatter()).html();
+		Assert.assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
 	}
 }

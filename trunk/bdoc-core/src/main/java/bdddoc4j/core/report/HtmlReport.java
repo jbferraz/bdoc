@@ -35,7 +35,6 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
 public class HtmlReport {
-	
 
 	private Map<String, Object> model;
 	private Configuration cfg;
@@ -44,10 +43,15 @@ public class HtmlReport {
 		cfg = new Configuration();
 		cfg.setTemplateLoader(new ClassTemplateLoader(HtmlReport.class, ""));
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
-		
+
 		model = new HashMap<String, Object>();
 		model.put("bddDoc", bddDoc);
-		model.put("bddDocMacroHelper", new BddDocMacroHelper() );
+		model.put("bddDocMacroHelper", new BddDocMacroHelper());
+	}
+
+	public HtmlReport(BDoc bddDoc, ScenarioLinesFormatter scenarioLinesFormatter) {
+		this(bddDoc);
+		model.put("bddDocMacroHelper", new BddDocMacroHelper(scenarioLinesFormatter));
 	}
 
 	public String html() {

@@ -33,7 +33,11 @@ import bdddoc4j.core.domain.Project;
 import bdddoc4j.core.util.ClassesDirectory;
 
 public class BDocReport {
-	
+
+	public void setScenarioLinesFormatter(ScenarioLinesFormatter scenarioLinesFormatter) {
+		this.scenarioLinesFormatter = scenarioLinesFormatter;
+	}
+
 	private ClassesDirectory classesDirectory = new ClassesDirectory();
 
 	private String projectName;
@@ -42,7 +46,8 @@ public class BDocReport {
 	private Class<? extends Annotation> storyRefAnnotation;
 	private Class<? extends Annotation> testAnnotation;
 	private String html, xml;
-	
+	private ScenarioLinesFormatter scenarioLinesFormatter;
+
 	public BDocReport() {
 		super();
 	}
@@ -58,7 +63,7 @@ public class BDocReport {
 	public void setTestClassDirectory(File testClassDirectory) {
 		classesDirectory.setBaseDir(testClassDirectory);
 	}
-	
+
 	public void setIncludesFilePattern(String[] includesFilePattern) {
 		classesDirectory.setIncludes(includesFilePattern);
 	}
@@ -79,13 +84,18 @@ public class BDocReport {
 		this.testAnnotation = testAnnotation;
 	}
 
-	public void run( File testSrcDir ) throws ClassNotFoundException, IOException {
+	public void run(File testSrcDir) throws ClassNotFoundException, IOException {
 		BDoc bddDoc = new BDoc(testAnnotation, storyRefAnnotation);
 		bddDoc.setProject(new Project(projectName, projectVersion));
-		bddDoc.addBehaviourFrom(classesDirectory, classLoader, testSrcDir );
-		
+		bddDoc.addBehaviourFrom(classesDirectory, classLoader, testSrcDir);
+
 		xml = new XmlReport(bddDoc).xml();
-		html = new HtmlReport(bddDoc).html();
+		if (scenarioLinesFormatter != null) {
+			html = new HtmlReport(bddDoc, scenarioLinesFormatter).html();
+		} else {
+			html = new HtmlReport(bddDoc).html();
+		}
+
 	}
 
 	public String getHtml() {

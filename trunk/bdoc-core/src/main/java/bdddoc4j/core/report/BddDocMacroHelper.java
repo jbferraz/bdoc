@@ -31,6 +31,16 @@ import bdddoc4j.core.domain.Scenario;
 
 public class BddDocMacroHelper {
 
+	private ScenarioLinesFormatter formatter;
+
+	public BddDocMacroHelper() {
+		this.formatter = new AndInBetweenScenarioLinesFormatter();
+	}
+
+	public BddDocMacroHelper(ScenarioLinesFormatter formatter) {
+		this.formatter = formatter;
+	}
+
 	ResourceBundle bundle;
 	{
 		bundle = ResourceBundle.getBundle("bdddoc4j.text");
@@ -50,11 +60,11 @@ public class BddDocMacroHelper {
 	}
 
 	public String scenarioLines(Scenario scenario) {
-		List<String> lines = new AndInBetweenScenarioLinesFormatter().getLines(scenario);
+		List<String> lines = formatter.getLines(scenario);
 		StringBuilder scenarioHtmlSnippet = new StringBuilder();
 		for (String line : lines) {
 			scenarioHtmlSnippet.append("<li>");
-			scenarioHtmlSnippet.append( line );
+			scenarioHtmlSnippet.append(line);
 			scenarioHtmlSnippet.append("</li>");
 		}
 		return scenarioHtmlSnippet.toString();

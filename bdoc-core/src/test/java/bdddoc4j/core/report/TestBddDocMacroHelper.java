@@ -25,6 +25,7 @@
 package bdddoc4j.core.report;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 public class TestBddDocMacroHelper {
@@ -37,6 +38,11 @@ public class TestBddDocMacroHelper {
 	@Test
 	public void shouldFindTextForAGivenKey() {
 		assertEquals("New user stories", new BddDocMacroHelper().text("new.user.stories"));
+	}
+
+	@Test
+	public void shouldBePossibleToSetScenarioFormatter() throws Exception {
+		new BddDocMacroHelper(new EachOnNewLineScenarioLinesFormatter());
 	}
 
 }

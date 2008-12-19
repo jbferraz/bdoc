@@ -24,50 +24,39 @@
 
 package bdddoc4j.core.report;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Test;
+
 import bdddoc4j.core.domain.Scenario;
 import bdddoc4j.core.domain.Scenario.Part;
-import bdddoc4j.core.domain.Scenario.Pattern;
-import bdddoc4j.core.util.CamelCaseToSentenceTranslator;
 
-public class AndInBetweenScenarioLinesFormatter implements ScenarioLinesFormatter {
+public class TestEachOnNewLineScenarioLinesFormatter {
 
-	public List<String> getLines(Scenario scenario) {
-		List<String> lines = new ArrayList<String>();
-		List<Part> parts = scenario.getParts();
+	private EachOnNewLineScenarioLinesFormatter formatter = new EachOnNewLineScenarioLinesFormatter();
 
-		Pattern pattern = Pattern.find(parts.get(0).camelCaseDescription());
+	@Test
+	public void shouldCreateOneLinePerScenarioPart() {
+		List<Part> parts = new ArrayList<Scenario.Part>();
+		parts.add(new Scenario.Part("given"));
+		parts.add(new Scenario.Part("whenX"));
+		parts.add(new Scenario.Part("whenY"));
+		parts.add(new Scenario.Part("thenA"));
+		parts.add(new Scenario.Part("thenB"));
+		parts.add(new Scenario.Part("thenC"));
+		List<String> lines = formatter.getLines(new Scenario(parts));
 
-		int index = 0;
-		String tempLine = "";
-		while (index < parts.size()) {
+		assertEquals(6, lines.size());
 
-			String partCamelCaseDescription = parts.get(index).camelCaseDescription();
-
-			if (0 < index) {
-				if (lineHasSameKeywordAsThePreviouslyOne(parts, index)) {
-					tempLine += (" " + pattern.and() + " " + partCamelCaseDescription);
-				} else {
-					lines.add(CamelCaseToSentenceTranslator.translate(tempLine, pattern.locale()));
-					tempLine = partCamelCaseDescription;
-				}
-			} else {
-				tempLine = partCamelCaseDescription;
-			}
-
-			if (index + 1 == parts.size()) {
-				lines.add(CamelCaseToSentenceTranslator.translate(tempLine, pattern.locale()));
-			}
-
-			index++;
-		}
-
-		return lines;
-	}
-
-	private boolean lineHasSameKeywordAsThePreviouslyOne(List<Part> parts, int index) {
-		return parts.get(index).scenarioKeyword() == parts.get(index - 1).scenarioKeyword();
+		assertTrue(lines.get(0).equals("Given"));
+		assertTrue(lines.get(1).equals("When x"));
+		assertTrue(lines.get(2).equals("When y"));
+		assertTrue(lines.get(3).equals("Then a"));
+		assertTrue(lines.get(4).equals("Then b"));
+		assertTrue(lines.get(5).equals("Then c"));
 	}
 }

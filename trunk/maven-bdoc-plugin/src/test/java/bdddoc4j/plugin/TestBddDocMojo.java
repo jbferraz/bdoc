@@ -77,9 +77,14 @@ public class TestBddDocMojo {
 
 	@Test
 	public void shouldWriteFileToLogDirectoryWhenLogDirectoryIsSet() throws Exception {
-		bddDocMojo.setLogDirectory( new File( "") );
+		bddDocMojo.setLogDirectory(new File(""));
 		bddDocMojo.executeInternal();
 		assertTrue(writeFileRun);
 	}
 
+	@Test
+	public void shouldBePossibleToSetScenarioFormatter() throws Exception {
+		bddDocMojo.setScenarioFormatterClassName("bdddoc4j.core.report.EachOnNewLineScenarioLinesFormatter");
+		bddDocMojo.executeInternal();
+	}
 }

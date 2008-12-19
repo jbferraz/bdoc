@@ -34,6 +34,7 @@ import java.util.Locale;
 import org.apache.maven.reporting.MavenReportException;
 
 import bdddoc4j.core.report.BDocReport;
+import bdddoc4j.core.report.ScenarioLinesFormatter;
 
 /**
  * @goal doc
@@ -83,6 +84,13 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	 */
 	protected String[] excludes;
 
+	/**
+	 * @parameter 
+	 *            default-value="bdddoc4j.core.report.AndInBetweenScenarioLinesFormatter"
+	 * @required
+	 */
+	private String scenarioFormatterClassName;
+
 	protected void executeReport(Locale arg0) throws MavenReportException {
 		try {
 			executeInternal();
@@ -103,6 +111,11 @@ public class BddDocMojo extends AbstractBddDocMojo {
 		bddDocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
 		bddDocReport.setIncludesFilePattern(includes);
 		bddDocReport.setExcludesFilePattern(excludes);
+
+		if (null != scenarioFormatterClassName) {
+			bddDocReport
+					.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName).newInstance());
+		}
 
 		if (null != storyRefAnnotationClassName) {
 			bddDocReport.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
@@ -149,5 +162,9 @@ public class BddDocMojo extends AbstractBddDocMojo {
 
 	public void setLogDirectory(File file) {
 		this.logDirectory = file;
+	}
+
+	public void setScenarioFormatterClassName(String scenarioFormatterClassName) {
+		this.scenarioFormatterClassName = scenarioFormatterClassName;
 	}
 }

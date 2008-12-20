@@ -116,6 +116,7 @@
 			<groupId>org.jmock</groupId>
 			<artifactId>jmock-junit4</artifactId>
 			<version>2.5.1</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -159,14 +160,12 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-core</artifactId>
-			<version>0.7.12-SNAPSHOT</version>
-			<scope>compile</scope>
+			<version>0.7.12</version>
 		</dependency>
 
 	</dependencies>

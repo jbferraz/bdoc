@@ -85,8 +85,7 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	protected String[] excludes;
 
 	/**
-	 * @parameter 
-	 *            default-value="bdddoc4j.core.report.AndInBetweenScenarioLinesFormatter"
+	 * @parameter default-value="bdddoc4j.core.report.AndInBetweenScenarioLinesFormatter"
 	 * @required
 	 */
 	private String scenarioFormatterClassName;

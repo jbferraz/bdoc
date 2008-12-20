@@ -1,3 +1,6 @@
+_20 December 2008 - Release 0.7.17_
+ Version 0.7.17 is released with functionality for specifying how scenarios are generated in the BDoc report. Read more on HowToChangeFormattingOfScenarios.
+
 _12 December 2008 - Release 0.7.16_
  Version 0.7.16 is released with functionality for specifying advanced scenarios without making an extremely long test method. The solution was proposed by Micael Vesterlund, which now also is a developer on the project. Read more on HowToWriteScenariosWithoutLongMethodNames.
 

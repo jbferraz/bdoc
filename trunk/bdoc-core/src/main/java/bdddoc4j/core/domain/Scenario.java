@@ -30,7 +30,6 @@ import java.util.Locale;
 
 import org.apache.commons.lang.Validate;
 
-import bdddoc4j.core.report.AndInBetweenScenarioLinesFormatter;
 import bdddoc4j.core.util.SentenceToLineSplit;
 
 /**

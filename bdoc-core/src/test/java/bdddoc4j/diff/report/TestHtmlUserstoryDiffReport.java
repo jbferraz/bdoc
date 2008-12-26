@@ -24,7 +24,7 @@
 
 package bdddoc4j.diff.report;
 
-import static bdddoc4j.core.report.ScenarioTestHelper.scenarioPart;
+import static bdddoc4j.core.report.ReportTestHelper.scenarioPart;
 import static bdddoc4j.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 
@@ -36,6 +36,7 @@ import org.junit.Test;
 
 import bdddoc4j.core.doc.Ref;
 import bdddoc4j.core.doc.Story;
+import bdddoc4j.core.report.ReportTestHelper;
 import bdddoc4j.diff.domain.BddDocDiff;
 import bdddoc4j.diff.domain.BddUserStoryDiffDocTestdataHelper;
 import bdddoc4j.diff.domain.NarrativeDiff;
@@ -112,26 +113,26 @@ public class TestHtmlUserstoryDiffReport {
 
 	@Test
 	public void shouldPresentNewScenariosAssociatedWithAUserStory() {
-		assertXPathContains( scenarioPart(0,  bddDocDiff.getUpdatedStories().get(0).getNewScenarios().get(0) ),
-				"//li[@class='newScenarios']", html);
+		assertXPathContains(scenarioPart(0, bddDocDiff.getUpdatedStories().get(0).getNewScenarios().get(0)), "//li[@class='newScenarios']",
+				html);
 	}
 
 	@Test
 	public void shouldPresentDeletedScenariosAssociatedWithAUserStory() {
-		assertXPathContains(scenarioPart(0,  bddDocDiff.getUpdatedStories().get(0).getDeletedScenarios().get(0) ),
+		assertXPathContains(scenarioPart(0, bddDocDiff.getUpdatedStories().get(0).getDeletedScenarios().get(0)),
 				"//li[@class='deletedScenarios']", html);
 	}
 
 	@Test
 	public void shouldPresentNewClassSpecificationsAssociatedWithAUserStory() {
-		assertXPathContains(bddDocDiff.getUpdatedStories().get(0).getNewClassSpecifications().get(0).getSpecifications().get(0)
-				.getSentence(), "//li[@class='newSpecifications']", html);
+		assertXPathContains(ReportTestHelper.sentence(bddDocDiff.getUpdatedStories().get(0).getNewClassSpecifications().get(0)
+				.getSpecifications().get(0)), "//li[@class='newSpecifications']", html);
 	}
 
 	@Test
 	public void shouldPresentDeletedClassSpecificationsAssociatedWithAUserStory() {
-		assertXPathContains(bddDocDiff.getUpdatedStories().get(0).getDeletedClassSpecifications().get(0).getSpecifications().get(0)
-				.getSentence(), "//li[@class='deletedSpecifications']", html);
+		assertXPathContains(ReportTestHelper.sentence(bddDocDiff.getUpdatedStories().get(0).getDeletedClassSpecifications().get(0)
+				.getSpecifications().get(0)), "//li[@class='deletedSpecifications']", html);
 	}
 
 	@Test
@@ -142,8 +143,8 @@ public class TestHtmlUserstoryDiffReport {
 
 	@Test
 	public void shouldPresentDeletedClassStatementsAssociatedWithAUserStory() {
-		assertXPathContains(bddDocDiff.getUpdatedStories().get(0).getDeletedClassStatements().get(0).getStatements().get(0)
-				.getSentence(), "//li[@class='deletedStatements']", html);
+		assertXPathContains(bddDocDiff.getUpdatedStories().get(0).getDeletedClassStatements().get(0).getStatements().get(0).getSentence(),
+				"//li[@class='deletedStatements']", html);
 	}
 
 	@Test

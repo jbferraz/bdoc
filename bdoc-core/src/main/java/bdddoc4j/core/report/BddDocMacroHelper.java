@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import bdddoc4j.core.domain.Scenario;
+import bdddoc4j.core.domain.Specification;
+import bdddoc4j.core.util.CamelCaseToSentenceTranslator;
 
 public class BddDocMacroHelper {
 
@@ -46,17 +48,13 @@ public class BddDocMacroHelper {
 		bundle = ResourceBundle.getBundle("bdddoc4j.text");
 	}
 
-	public String formatClassname(String className) {
-		String[] classNameBits = className.split("\\.");
-
-		if (0 < classNameBits.length) {
-			return classNameBits[classNameBits.length - 1];
-		}
-		return className;
-	}
 
 	public String text(String key) {
 		return bundle.getString(key);
+	}
+
+	public String format(Specification specification) {
+		return CamelCaseToSentenceTranslator.translate(specification.getSentence());
 	}
 
 	public String scenarioLines(Scenario scenario) {

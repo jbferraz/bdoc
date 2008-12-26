@@ -76,7 +76,7 @@
 						<span>${classSpecifications.className}</span>
 						<ul>
 							<#list classSpecifications.specifications as specification>
-								<li>${specification.sentence}</li>
+								<li>${bddDocMacroHelper.format(specification)}</li>
 							</#list>
 						</ul>
 					</li>									
@@ -100,8 +100,8 @@
 					<li>
 						<span>${classStatements.className}</span>
 						<ul>
-							<#list classStatements.statements as statements>
-								<li>${statements.sentence}</li>
+							<#list classStatements.statements as statement>
+								<li>${statement.sentence}</li>
 							</#list>
 						</ul>
 					</li>									

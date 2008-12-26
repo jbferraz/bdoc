@@ -22,30 +22,20 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.core.domain;
+package bdddoc4j.core.report;
 
+import bdddoc4j.core.domain.Scenario;
+import bdddoc4j.core.domain.Specification;
+import bdddoc4j.core.util.CamelCaseToSentenceTranslator;
 
-/**
- * A Statement defines behaviour that can't be described by a Specification or a
- * Scenario.
- * 
- * @author Per Otto Bergum Christensen
- */
-public class Statement {
+public class ReportTestHelper {
 
-	protected String camelCaseSentence;
-
-	public Statement(String camelCaseSentence) {
-		this.camelCaseSentence = camelCaseSentence;		
+	public static String scenarioPart(int partIndex, Scenario scenario) {
+		String camelCaseDescription = scenario.getParts().get(partIndex).camelCaseDescription();
+		return CamelCaseToSentenceTranslator.translate(camelCaseDescription);
 	}
 
-	public String getSentence() {
-		return camelCaseSentence;
+	public static String sentence(Specification specification) {
+		return CamelCaseToSentenceTranslator.translate(specification.getSentence());
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return (obj instanceof Statement) && ((Statement) obj).camelCaseSentence.equals(camelCaseSentence);
-	}
-
 }

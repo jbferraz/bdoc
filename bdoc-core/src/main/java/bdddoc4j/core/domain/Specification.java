@@ -68,7 +68,8 @@ public class Specification extends Statement {
 	 *             if camelCaseSentence isn't accepted as a specification
 	 */
 	public Specification(String camelCaseSentence) {
-		super(camelCaseSentence, validatedPattern(Pattern.find(camelCaseSentence), camelCaseSentence).locale());
+		super(camelCaseSentence );
+		validatedPattern(Pattern.find(camelCaseSentence), camelCaseSentence);
 	}
 
 	static Pattern validatedPattern(Pattern pattern, String camelCaseSentence) {
@@ -81,7 +82,7 @@ public class Specification extends Statement {
 
 	@Override
 	public boolean equals(Object obj) {
-		return (obj instanceof Specification) && ((Specification) obj).sentence.equals(sentence);
+		return (obj instanceof Specification) && ((Specification) obj).camelCaseSentence.equals(camelCaseSentence);
 	}
 
 }

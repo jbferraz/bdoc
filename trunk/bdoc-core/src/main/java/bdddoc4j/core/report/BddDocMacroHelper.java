@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import bdddoc4j.core.domain.Scenario;
-import bdddoc4j.core.domain.Specification;
+import bdddoc4j.core.domain.Statement;
 import bdddoc4j.core.util.CamelCaseToSentenceTranslator;
 
 public class BddDocMacroHelper {
@@ -53,8 +53,8 @@ public class BddDocMacroHelper {
 		return bundle.getString(key);
 	}
 
-	public String format(Specification specification) {
-		return CamelCaseToSentenceTranslator.translate(specification.getSentence());
+	public String format(Statement statement) {
+		return CamelCaseToSentenceTranslator.translate(statement.getSentence());
 	}
 
 	public String scenarioLines(Scenario scenario) {

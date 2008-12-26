@@ -101,7 +101,7 @@
 						<span>${classStatements.className}</span>
 						<ul>
 							<#list classStatements.statements as statement>
-								<li>${statement.sentence}</li>
+								<li>${bddDocMacroHelper.format(statement)}</li>
 							</#list>
 						</ul>
 					</li>									

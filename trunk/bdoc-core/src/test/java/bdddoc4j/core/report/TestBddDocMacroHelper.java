@@ -31,11 +31,6 @@ import org.junit.Test;
 public class TestBddDocMacroHelper {
 
 	@Test
-	public void shouldTransformAFullClassnameToJustTheNameOfTheClass() {
-		assertEquals("TheClass", new BddDocMacroHelper().formatClassname("package.subpackage.TheClass"));
-	}
-
-	@Test
 	public void shouldFindTextForAGivenKey() {
 		assertEquals("New user stories", new BddDocMacroHelper().text("new.user.stories"));
 	}

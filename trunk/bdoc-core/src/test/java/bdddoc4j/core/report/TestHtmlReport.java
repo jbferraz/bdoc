@@ -24,7 +24,7 @@
 
 package bdddoc4j.core.report;
 
-import static bdddoc4j.core.report.ScenarioTestHelper.scenarioPart;
+import static bdddoc4j.core.report.ReportTestHelper.scenarioPart;
 import static bdddoc4j.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 
@@ -86,7 +86,7 @@ public class TestHtmlReport {
 	@Test
 	public void shouldPresentTheSpecificationsAssociatedWithTheStory() {
 		List<Specification> specifications = bddDoc.getUserstories().get(0).getClassSpecifications().get(0).getSpecifications();
-		assertXPathContains(specifications.get(0).getSentence(), "//ul[@class='specifications']", html);
+		assertXPathContains(ReportTestHelper.sentence(specifications.get(0)), "//ul[@class='specifications']", html);
 	}
 
 	@Test
@@ -116,7 +116,7 @@ public class TestHtmlReport {
 	public void shouldPresentSpecificationsNotAssociatedWithAnyStories() {
 		List<Specification> specifications = bddDoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0)
 				.getSpecifications();
-		assertXPathContains(specifications.get(0).getSentence(), "//div[@id='generalBehaviour']/div[@class='package']", html);
+		assertXPathContains(ReportTestHelper.sentence(specifications.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test

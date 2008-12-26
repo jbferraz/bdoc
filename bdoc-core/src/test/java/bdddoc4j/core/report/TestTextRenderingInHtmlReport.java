@@ -45,30 +45,40 @@ import bdddoc4j.core.testdata.RefClass;
  */
 @Ref(Story.HTML_REPORT)
 @RefClass(HtmlReport.class)
-public class TestSpecificationInHtmlReport {
-	
+public class TestTextRenderingInHtmlReport {
+
 	private String html;
 
-	public TestSpecificationInHtmlReport() throws IOException {
+	public TestTextRenderingInHtmlReport() throws IOException {
 		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
 		bddDoc.setProject(BddDocTestHelper.testProject());
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithASpecification.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestClassWithAStatement.class), BddDocTestHelper.SRC_TEST_JAVA);
 
 		html = new HtmlReport(bddDoc).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 	}
-	
+
 	@Test
 	public void shouldConvertTheCamelCaseSpecificationToASentence() {
-		assertXPathContains("Should be a specification", "//ul[@class='specifications']", html);		
+		assertXPathContains("Should be a specification", "//ul[@class='specifications']", html);
 	}
-	
-	
-	//Testdata =>
+
+	@Test
+	public void shouldConvertTheCamelCaseStatementToASentence() {
+		assertXPathContains("This is a statement", "//ul[@class='statements']", html);
+	}
+
+	// Testdata =>
 	public class TestClassWithASpecification {
-		
 		@Test
 		public void shouldBeASpecification() {
+		}
+	}
+
+	public class TestClassWithAStatement {
+		@Test
+		public void thisIsAStatement() {
 		}
 	}
 

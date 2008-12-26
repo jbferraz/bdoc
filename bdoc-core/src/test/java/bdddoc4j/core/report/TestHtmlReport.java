@@ -92,7 +92,7 @@ public class TestHtmlReport {
 	@Test
 	public void shouldPresentTheStatementsAssociatedWithTheStory() {
 		List<Statement> statements = bddDoc.getUserstories().get(0).getClassStatements().get(0).getStatements();
-		assertXPathContains(statements.get(0).getSentence(), "//ul[@class='statements']", html);
+		assertXPathContains(ReportTestHelper.sentence(statements.get(0)), "//ul[@class='statements']", html);
 	}
 
 	@Test
@@ -122,7 +122,7 @@ public class TestHtmlReport {
 	@Test
 	public void shouldPresentStatementsNotAssociatedWithAnyStories() {
 		List<Statement> statements = bddDoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getStatements();
-		assertXPathContains(statements.get(0).getSentence(), "//div[@id='generalBehaviour']/div[@class='package']", html);
+		assertXPathContains(ReportTestHelper.sentence(statements.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test

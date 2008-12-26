@@ -25,7 +25,7 @@
 package bdddoc4j.core.report;
 
 import bdddoc4j.core.domain.Scenario;
-import bdddoc4j.core.domain.Specification;
+import bdddoc4j.core.domain.Statement;
 import bdddoc4j.core.util.CamelCaseToSentenceTranslator;
 
 public class ReportTestHelper {
@@ -35,7 +35,7 @@ public class ReportTestHelper {
 		return CamelCaseToSentenceTranslator.translate(camelCaseDescription);
 	}
 
-	public static String sentence(Specification specification) {
-		return CamelCaseToSentenceTranslator.translate(specification.getSentence());
+	public static String sentence(Statement statement) {
+		return CamelCaseToSentenceTranslator.translate(statement.getSentence());
 	}
 }

@@ -137,14 +137,14 @@ public class TestHtmlUserstoryDiffReport {
 
 	@Test
 	public void shouldPresentNewClassStatementsAssociatedWithAUserStory() {
-		assertXPathContains(bddDocDiff.getUpdatedStories().get(0).getNewClassStatements().get(0).getStatements().get(0).getSentence(),
-				"//li[@class='newStatements']", html);
+		assertXPathContains(ReportTestHelper.sentence(bddDocDiff.getUpdatedStories().get(0).getNewClassStatements().get(0).getStatements()
+				.get(0)), "//li[@class='newStatements']", html);
 	}
 
 	@Test
 	public void shouldPresentDeletedClassStatementsAssociatedWithAUserStory() {
-		assertXPathContains(bddDocDiff.getUpdatedStories().get(0).getDeletedClassStatements().get(0).getStatements().get(0).getSentence(),
-				"//li[@class='deletedStatements']", html);
+		assertXPathContains(ReportTestHelper.sentence(bddDocDiff.getUpdatedStories().get(0).getDeletedClassStatements().get(0)
+				.getStatements().get(0)), "//li[@class='deletedStatements']", html);
 	}
 
 	@Test

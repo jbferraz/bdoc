@@ -33,6 +33,8 @@ import org.apache.maven.project.MavenProject;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter;
+
 public class TestBddDocMojo {
 
 	private BddDocMojo bddDocMojo;
@@ -84,7 +86,7 @@ public class TestBddDocMojo {
 
 	@Test
 	public void shouldBePossibleToSetScenarioFormatter() throws Exception {
-		bddDocMojo.setScenarioFormatterClassName("bdddoc4j.core.report.EachOnNewLineScenarioLinesFormatter");
+		bddDocMojo.setScenarioFormatterClassName(EachOnNewLineScenarioLinesFormatter.class.getName());
 		bddDocMojo.executeInternal();
 	}
 }

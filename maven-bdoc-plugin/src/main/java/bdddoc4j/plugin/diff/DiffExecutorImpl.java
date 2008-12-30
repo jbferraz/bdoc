@@ -30,7 +30,7 @@ import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 
-import bdddoc4j.diff.report.DiffReport;
+import com.googlecode.bdoc.diff.report.DiffReport;
 
 public class DiffExecutorImpl implements DiffExecutor {
 

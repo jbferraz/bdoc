@@ -98,7 +98,7 @@
 				<version>0.7.17</version>
 				<configuration>
 					<storyRefAnnotationClassName>
-						bdddoc4j.core.doc.Ref
+						com.googlecode.bdoc.Ref
 					</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
 					

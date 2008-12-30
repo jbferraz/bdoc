@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import bdddoc4j.diff.report.DiffReport;
+import com.googlecode.bdoc.diff.report.DiffReport;
 
 public class BddLogDirDiff {
 

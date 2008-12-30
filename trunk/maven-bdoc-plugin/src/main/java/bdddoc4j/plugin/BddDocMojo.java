@@ -33,8 +33,8 @@ import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;
 
-import bdddoc4j.core.report.BDocReport;
-import bdddoc4j.core.report.ScenarioLinesFormatter;
+import com.googlecode.bdoc.doc.report.BDocReport;
+import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 
 /**
  * @goal doc
@@ -85,7 +85,7 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	protected String[] excludes;
 
 	/**
-	 * @parameter default-value="bdddoc4j.core.report.AndInBetweenScenarioLinesFormatter"
+	 * @parameter default-value="com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
 	 * @required
 	 */
 	private String scenarioFormatterClassName;

@@ -24,7 +24,7 @@
 
 package bdddoc4j.plugin.diff;
 
-import bdddoc4j.diff.report.DiffReport;
+import com.googlecode.bdoc.diff.report.DiffReport;
 
 public interface DiffExecutor {
 	

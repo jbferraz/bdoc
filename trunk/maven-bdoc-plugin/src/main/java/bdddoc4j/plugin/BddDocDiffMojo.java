@@ -28,9 +28,10 @@ import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;
 
-import bdddoc4j.diff.report.DiffReport;
 import bdddoc4j.plugin.diff.BddLogDirDiff;
 import bdddoc4j.plugin.diff.DiffExecutorImpl;
+
+import com.googlecode.bdoc.diff.report.DiffReport;
 
 /**
  * @goal diff

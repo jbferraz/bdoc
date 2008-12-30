@@ -31,7 +31,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;
 
-import bdddoc4j.diff.report.DiffReport;
+import com.googlecode.bdoc.diff.report.DiffReport;
 
 public class TestBddLogDirDiff {
 

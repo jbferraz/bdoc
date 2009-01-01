@@ -28,7 +28,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.googlecode.bdoc.diff.domain.BddDocDiff;
+import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.report.BddDocMacroHelper;
 import com.googlecode.bdoc.doc.report.HtmlReport;
 
@@ -44,7 +44,7 @@ public class HtmlDiffReport {
 	private Map<String, Object> model;
 	private Configuration cfg;
 
-	public HtmlDiffReport(BddDocDiff bddDocDiff) {
+	public HtmlDiffReport(BDocDiff bDocDiff) {
 		cfg = new Configuration();
 
 		final MultiTemplateLoader multiTemplateLoader = new MultiTemplateLoader(new TemplateLoader[] {
@@ -54,7 +54,7 @@ public class HtmlDiffReport {
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 
 		model = new HashMap<String, Object>();
-		model.put("bddDocDiff", bddDocDiff);
+		model.put("bddDocDiff", bDocDiff);
 		model.put("bddDocMacroHelper", new BddDocMacroHelper() );
 	}
 

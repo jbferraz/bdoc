@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.diff.domain.BddDocDiff;
+import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.BddUserStoryDiffDocTestdataHelper.TestWithOnlyGeneralBehaviourContent;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Project;
@@ -51,23 +51,23 @@ public class TestBddDocDiff {
 
 	@Test
 	public void shouldIdentifyNewStories() {
-		assertFalse(new BddDocDiff(emptyBddDoc, bddDocWithGeneralBehaviourAndAStory).getNewStories().isEmpty());
+		assertFalse(new BDocDiff(emptyBddDoc, bddDocWithGeneralBehaviourAndAStory).getNewStories().isEmpty());
 	}
 
 	@Test
 	public void shouldIdentifyDeletedStories() {
-		assertFalse(new BddDocDiff(bddDocWithGeneralBehaviourAndAStory, emptyBddDoc).getDeletedStories().isEmpty());
+		assertFalse(new BDocDiff(bddDocWithGeneralBehaviourAndAStory, emptyBddDoc).getDeletedStories().isEmpty());
 	}
 
 	@Test
 	public void shouldIdentifyUpdatedStories() {
-		BddDocDiff diff = new BddDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithUpdatedStory);
+		BDocDiff diff = new BDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithUpdatedStory);
 		assertEquals(ExStory.STORY1.getId(), diff.getUpdatedStories().get(0).getUserStoryId());
 	}
 
 	@Test
 	public void shouldNotListStoriesAsUpdatedWhereThereIsNoDiff() {
-		BddDocDiff diff = new BddDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithGeneralBehaviourAndAStory);		
+		BDocDiff diff = new BDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithGeneralBehaviourAndAStory);		
 		assertTrue(diff.getUpdatedStories().isEmpty());
 	}
 
@@ -81,18 +81,18 @@ public class TestBddDocDiff {
 
 		bddDocV2.addBehaviourFrom(new TestClass(TestWithOnlyGeneralBehaviourContent.class), BddDocTestHelper.SRC_TEST_JAVA);
 
-		assertTrue(new BddDocDiff(bddDocV1, bddDocV2).getGeneralBehaviourDiff().diffExists());
+		assertTrue(new BDocDiff(bddDocV1, bddDocV2).getGeneralBehaviourDiff().diffExists());
 	}
 
 	@Test
 	public void shouldNotReportDiffForUnchangedGeneralBehaviour() {
-		BddDocDiff bddDocDiff = new BddDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithGeneralBehaviourAndAStory);
-		assertFalse(bddDocDiff.getGeneralBehaviourDiff().diffExists());
+		BDocDiff bDocDiff = new BDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithGeneralBehaviourAndAStory);
+		assertFalse(bDocDiff.getGeneralBehaviourDiff().diffExists());
 	}
 
 	@Test
 	public void shouldReportDiffForProjectInfo() {
-		assertTrue(new BddDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithUpdatedStory).getProjectDiff().diffExists());
+		assertTrue(new BDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithUpdatedStory).getProjectDiff().diffExists());
 	}
 
 }

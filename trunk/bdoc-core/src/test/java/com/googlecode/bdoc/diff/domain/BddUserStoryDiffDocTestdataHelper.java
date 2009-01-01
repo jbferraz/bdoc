@@ -26,7 +26,7 @@ package com.googlecode.bdoc.diff.domain;
 
 import org.junit.Test;
 
-import com.googlecode.bdoc.diff.domain.BddDocDiff;
+import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.added.TestClassRepresentsTestsThatAreAdded2;
 import com.googlecode.bdoc.diff.domain.testpackageremoved.TestClassRepresentsTestsThatAreRemoved;
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -195,7 +195,7 @@ public class BddUserStoryDiffDocTestdataHelper {
 		return instance().bddDocWithUpdatedStory;
 	}
 
-	public static BddDocDiff getBddDocDiffForUpdatedStory() {
-		return new BddDocDiff(instance().bddDocWithGeneralBehaviourAndAStory, instance().bddDocWithUpdatedStory);
+	public static BDocDiff getBddDocDiffForUpdatedStory() {
+		return new BDocDiff(instance().bddDocWithGeneralBehaviourAndAStory, instance().bddDocWithUpdatedStory);
 	}
 }

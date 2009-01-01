@@ -36,7 +36,7 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.diff.domain.BddDocDiff;
+import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.BddGeneralBehaviourDiffDocTestdataHelper;
 import com.googlecode.bdoc.diff.domain.GeneralBehaviourDiff;
 import com.googlecode.bdoc.diff.domain.TimeDiff;
@@ -55,7 +55,7 @@ import com.googlecode.bdoc.doc.report.ReportTestHelper;
 @Ref(Story.HTML_DIFF_REPORT)
 public class TestHtmlGeneralBehaviourDiffReport {
 
-	BddDocDiff bddDocDiff = BddGeneralBehaviourDiffDocTestdataHelper.getBddDocDiffForUpdatedGeneralBehaviour();
+	BDocDiff bDocDiff = BddGeneralBehaviourDiffDocTestdataHelper.getBddDocDiffForUpdatedGeneralBehaviour();
 	{
 		Calendar time1 = Calendar.getInstance();
 		Calendar time2 = (Calendar) time1.clone();
@@ -63,15 +63,15 @@ public class TestHtmlGeneralBehaviourDiffReport {
 		time2.add(Calendar.HOUR, 2);
 		time2.add(Calendar.DAY_OF_WEEK, 15);
 
-		bddDocDiff.setDocTimeDiff(new TimeDiff(time1, time2));
+		bDocDiff.setDocTimeDiff(new TimeDiff(time1, time2));
 	}
-	private GeneralBehaviourDiff generalBehaviourDiff = bddDocDiff.getGeneralBehaviourDiff();
+	private GeneralBehaviourDiff generalBehaviourDiff = bDocDiff.getGeneralBehaviourDiff();
 
 	private String html;
 
 	public TestHtmlGeneralBehaviourDiffReport() throws IOException {
-		final String xml = new BddDocDiffReport().execute(bddDocDiff).xml();
-		html = new HtmlDiffReport(bddDocDiff).html();
+		final String xml = new BddDocDiffReport().execute(bDocDiff).xml();
+		html = new HtmlDiffReport(bDocDiff).html();
 
 		writeStringToFile(new File("target/" + getClass().getName() + ".xml"), xml);
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);

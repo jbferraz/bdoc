@@ -21,8 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.googlecode.bdoc.clog;
 
+import com.googlecode.bdoc.diff.domain.BDocDiff;
+import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.Project;
+
 public class ChangeLog {
+
+	private BDoc latestBDoc;
+	private BDocDiff latestDiff;
+
+	public void scan(BDoc bdoc) {
+		if (null == latestBDoc) {
+			latestBDoc = new BDoc();
+			latestBDoc.setProject(new Project("", ""));
+		}
+		latestDiff = new BDocDiff(latestBDoc, bdoc);
+		latestBDoc = bdoc;
+	}
+
+	public BDoc latestBDoc() {
+		return latestBDoc;
+	}
+
+	public BDocDiff latestDiff() {
+		return latestDiff;
+	}
 
 }

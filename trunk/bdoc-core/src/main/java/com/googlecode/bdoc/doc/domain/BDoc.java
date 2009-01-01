@@ -58,7 +58,6 @@ public class BDoc {
 	 * Constructor - for extensions
 	 */
 	public BDoc() {
-		this(org.junit.Test.class, null);
 	}
 
 	/**

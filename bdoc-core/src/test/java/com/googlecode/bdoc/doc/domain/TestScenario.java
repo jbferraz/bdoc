@@ -25,14 +25,14 @@
 package com.googlecode.bdoc.doc.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
-import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -48,9 +48,10 @@ public class TestScenario {
 	}
 
 	@Test
-	public void shouldAcceptSentenceAsAScenarioInBothNorwegianAndEnglish() {
+	public void shouldAcceptSentenceAsAScenarioInNorwegianAndEnglishAndSwedish() {
 		new Scenario("givenWhenThen");
 		new Scenario("gittNaarSaa");
+		new Scenario("givetNaarSaa");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -85,15 +86,21 @@ public class TestScenario {
 	}
 
 	@Test
-	@Ignore
 	public void shouldConstructAScenarioFromGivenWhenThenAsSeperateParts() {
 		List<Scenario.Part> parts = new ArrayList<Scenario.Part>();
 		parts.add(new Scenario.Part("given"));
-		parts.add(new Scenario.Part("when"));
-		parts.add(new Scenario.Part("then"));
+		parts.add(new Scenario.Part("When"));
+		parts.add(new Scenario.Part("Then"));
 
 		Scenario scenario = new Scenario(parts);
 		assertEquals(new Scenario("givenWhenThen"), scenario);
 		assertEquals(parts, scenario.getParts());
+	}
+
+	@Test
+	public void shouldSupportScenariosInEnglishAndNorwegianAndSwedish() {
+		assertNotNull(Pattern.valueOf("EN"));
+		assertNotNull(Pattern.valueOf("NO"));
+		assertNotNull(Pattern.valueOf("SV"));
 	}
 }

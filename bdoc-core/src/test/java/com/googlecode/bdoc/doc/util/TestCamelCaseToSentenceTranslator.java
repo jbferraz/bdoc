@@ -30,8 +30,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator;
-
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -39,14 +37,20 @@ public class TestCamelCaseToSentenceTranslator {
 
 	@Test
 	public void shouldTranselateTheEnglishIToUperCase() {
-		assertEquals("Given that I have this and I have that", CamelCaseToSentenceTranslator.translate(
-				"givenThatIHaveThisAndIHaveThat", Locale.ENGLISH));
+		assertEquals("Given that I have this and I have that", CamelCaseToSentenceTranslator.translate("givenThatIHaveThisAndIHaveThat",
+				Locale.ENGLISH));
 	}
 
 	@Test
 	public void shouldNotTranselateTheEnglishIToUperCaseForNorwegian() {
-		assertEquals("Gitt at jeg har 20 kroner i banken", CamelCaseToSentenceTranslator.translate(
-				"gittAtJegHar20KronerIBanken", new Locale("no")));
+		assertEquals("Gitt at jeg har 20 kroner i banken", CamelCaseToSentenceTranslator.translate("gittAtJegHar20KronerIBanken",
+				new Locale("no")));
+	}
+
+	@Test
+	public void shouldNotTranselateTheEnglishIToUperCaseForSwedish() {
+		assertEquals("Givet att jag har 20 kroner i banken", CamelCaseToSentenceTranslator.translate("givetAttJagHar20KronerIBanken",
+				new Locale("sv")));
 	}
 
 	@Test

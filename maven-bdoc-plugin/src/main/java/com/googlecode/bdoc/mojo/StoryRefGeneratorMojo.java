@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.plugin;
+package com.googlecode.bdoc.mojo;
 
 import static org.apache.commons.beanutils.MethodUtils.invokeMethod;
 import static org.apache.commons.beanutils.PropertyUtils.getSimpleProperty;

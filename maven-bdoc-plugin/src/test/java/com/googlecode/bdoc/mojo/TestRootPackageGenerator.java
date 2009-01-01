@@ -22,12 +22,14 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.plugin;
+package com.googlecode.bdoc.mojo;
 
 import org.apache.maven.project.MavenProject;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.googlecode.bdoc.mojo.RootPackageGenerator;
 
 public class TestRootPackageGenerator {
 

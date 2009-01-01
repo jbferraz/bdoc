@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.plugin.diff;
+package com.googlecode.bdoc.mojo.diff;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -32,6 +32,8 @@ import org.jmock.Mockery;
 import org.junit.Test;
 
 import com.googlecode.bdoc.diff.report.DiffReport;
+import com.googlecode.bdoc.mojo.diff.BddLogDirDiff;
+import com.googlecode.bdoc.mojo.diff.DiffExecutor;
 
 public class TestBddLogDirDiff {
 

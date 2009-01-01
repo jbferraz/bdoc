@@ -22,32 +22,45 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.plugin;
+package com.googlecode.bdoc.mojo;
 
-import static org.junit.Assert.assertEquals;
+import org.apache.maven.project.MavenProject;
 
-import org.junit.Before;
-import org.junit.Test;
+public class RootPackageGenerator {
 
-public class TestBddDiffMojo {
-	private String message;
+	private RootPackageGenerator() {
 
-	@Before
-	public void cleanMessage() {
-		message = null;
 	}
 
-	@Test
-	public void shouldReportErrorIfLogDirectoryIsUnset() {
+	public static String calculateRootPackage(MavenProject project) {
+		String groupId = project.getGroupId();
+		String artifactId = project.getArtifactId();
+		String result = null;
 
-		BddDocDiffMojo bddDiffMojo = new BddDocDiffMojo() {
-			@Override
-			protected void errorMessage(String msg) {
-				message = msg;
+		if (groupId.equals(artifactId) || groupId.endsWith(artifactId)) {
+			result = groupId;
+		} else {
+			String[] groupIdPices = groupId.split("\\.");
+
+			if (1 == groupIdPices.length) {
+				groupIdPices = groupId.split("-");
 			}
-		};
 
-		bddDiffMojo.executeInternal();
-		assertEquals(BddDocDiffMojo.LOG_DIRECTORY_NOT_SPECIFIED, message);
+			if (0 < groupIdPices.length) {
+				String groupIdPostfix = groupIdPices[groupIdPices.length - 1];
+
+				String[] artifactIdPices = artifactId.split("-");
+				String artifactIdPrefix = artifactIdPices[0];
+
+				if (groupIdPostfix.equals(artifactIdPrefix)) {
+					result = groupId + artifactId.substring(artifactIdPrefix.length());
+				}
+			}
+		}
+		if (null == result) {
+			result = groupId;
+		}
+		return result.replace('-', '.');
 	}
+
 }

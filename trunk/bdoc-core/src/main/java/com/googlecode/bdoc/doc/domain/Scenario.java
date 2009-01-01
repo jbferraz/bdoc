@@ -32,7 +32,6 @@ import org.apache.commons.lang.Validate;
 
 import com.googlecode.bdoc.doc.util.SentenceToLineSplit;
 
-
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -46,7 +45,7 @@ public class Scenario {
 		public Part(String camelCaseDescription) {
 			this.camelCaseDescription = camelCaseDescription;
 		}
-		
+
 		public String camelCaseDescription() {
 			return camelCaseDescription;
 		}
@@ -71,7 +70,8 @@ public class Scenario {
 	}
 
 	public enum Pattern {
-		NO("og", new Locale("no"), "gitt", "Naar", "Saa"), EN("and", Locale.ENGLISH, "given", "When", "Then");
+		NO("og", new Locale("no"), "gitt", "Naar", "Saa"), EN("and", Locale.ENGLISH, "given", "When", "Then"), SV("och", new Locale("sv"),
+				"givet", "Naar", "Saa");
 
 		private final String and;
 		private final String[] keywords;
@@ -128,7 +128,7 @@ public class Scenario {
 	}
 
 	public Scenario(List<Part> parts) {
-		part.addAll(parts);		
+		part.addAll(parts);
 	}
 
 	@Override

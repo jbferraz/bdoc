@@ -32,7 +32,7 @@ import java.util.Locale;
 public class Specification extends Statement {
 
 	public enum Pattern {
-		NO(new Locale("no"), "skal"), EN(Locale.ENGLISH, "should");
+		NO(new Locale("no"), "skal"), EN(Locale.ENGLISH, "should"), SV(new Locale("sv"), "skall");
 		private final String prefix;
 		private final Locale locale;
 
@@ -68,7 +68,7 @@ public class Specification extends Statement {
 	 *             if camelCaseSentence isn't accepted as a specification
 	 */
 	public Specification(String camelCaseSentence) {
-		super(camelCaseSentence );
+		super(camelCaseSentence);
 		validatedPattern(Pattern.find(camelCaseSentence), camelCaseSentence);
 	}
 

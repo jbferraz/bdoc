@@ -24,9 +24,11 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 
-import com.googlecode.bdoc.doc.domain.Specification;
+import com.googlecode.bdoc.doc.domain.Specification.Pattern;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -34,13 +36,21 @@ import com.googlecode.bdoc.doc.domain.Specification;
 public class TestSpecification {
 
 	@Test
-	public void shouldAcceptSentenceAsASpesificationInBothNorwegianAndEnglish() {
+	public void shouldAcceptSentenceAsASpecificationInBothNorwegianAndEnglish() {
 		new Specification("shouldBehaveLikeTrue");
 		new Specification("skalOppforeSegSlik");
+		new Specification("skallFungera");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void shouldNotAcceptASentenceAsASpesificationIfItDoesNotMatchTheSpecificationPattern() {
+	public void shouldNotAcceptASentenceAsASpecificationIfItDoesNotMatchTheSpecificationPattern() {
 		new Specification("asdf");
+	}
+
+	@Test
+	public void shouldSupportSpecificationsInEnglishAndNorwegianAndSwedish() {
+		assertNotNull(Pattern.valueOf("EN"));
+		assertNotNull(Pattern.valueOf("NO"));
+		assertNotNull(Pattern.valueOf("SV"));
 	}
 }

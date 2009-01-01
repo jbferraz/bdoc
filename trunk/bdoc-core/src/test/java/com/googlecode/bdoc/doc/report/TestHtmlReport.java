@@ -47,7 +47,7 @@ import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.HtmlReport;
 import com.googlecode.bdoc.doc.report.XmlReport;
-import com.googlecode.bdoc.doc.testdata.BddDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 
 /**
@@ -60,7 +60,7 @@ public class TestHtmlReport {
 	private BDoc bddDoc;
 
 	public TestHtmlReport() throws IOException {
-		bddDoc = BddDocTestHelper.bddDocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour();
+		bddDoc = BDocTestHelper.bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour();
 		html = new HtmlReport(bddDoc).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 		writeStringToFile(new File("target/" + getClass().getName() + ".xml"), new XmlReport(bddDoc).xml());
@@ -132,7 +132,7 @@ public class TestHtmlReport {
 
 	@Test
 	public void shouldBePossibleToChangeFormattingForAdvancedScenarioSpecification() throws IOException {
-		bddDoc = BddDocTestHelper.bddDocWithAdvancedScenarioSpecification();
+		bddDoc = BDocTestHelper.bdocWithAdvancedScenarioSpecification();
 		String htmlAndInBetween = new HtmlReport(bddDoc, new AndInBetweenScenarioLinesFormatter()).html();
 		String htmlEachOnNewLine = new HtmlReport(bddDoc, new EachOnNewLineScenarioLinesFormatter()).html();
 		Assert.assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));

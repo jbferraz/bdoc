@@ -37,7 +37,7 @@ import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.domain.testdata.TestDomainBehavior;
 import com.googlecode.bdoc.doc.domain.testdata.TestDomainBehaviour;
-import com.googlecode.bdoc.doc.testdata.BddDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 
 public class TestTestClass {
@@ -56,14 +56,14 @@ public class TestTestClass {
 
 	@Test
 	public void shouldLoadTheJavaSourceForTheTestClass() {
-		String source = new TestClass(TestDomainBehaviour.class).getSource(BddDocTestHelper.SRC_TEST_JAVA);
+		String source = new TestClass(TestDomainBehaviour.class).getSource(BDocTestHelper.SRC_TEST_JAVA);
 		assertTrue(source.contains("DomainBehaviour"));
 	}
 
 	@Test
 	public void shouldGetScenarioFromTestMethodBlock() {
 		TestClass testClass = new TestClass(TestDomainBehaviour.class);
-		Scenario scenarioFromTestMethodBlock = testClass.getScenarioFromTestMethodBlock("simpleScenario", BddDocTestHelper.SRC_TEST_JAVA);
+		Scenario scenarioFromTestMethodBlock = testClass.getScenarioFromTestMethodBlock("simpleScenario", BDocTestHelper.SRC_TEST_JAVA);
 
 		List<Part> parts = new ArrayList<Part>();
 		parts.add(new Part("given"));

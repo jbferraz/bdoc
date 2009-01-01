@@ -40,28 +40,35 @@ import com.googlecode.bdoc.doc.domain.TestClass;
  * 
  * @author Per Otto Bergum Christensen
  */
-public class BddDocTestHelper {
+public class BDocTestHelper {
 
 	public static final File SRC_TEST_JAVA = new File("src/test/java");
 
-	private BddDocTestHelper() {
+	private BDocTestHelper() {
 	}
 
-	public static BDoc bddDocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour() {
-		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.setProject(testProject());
-		bddDoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), SRC_TEST_JAVA);
-		bddDoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), SRC_TEST_JAVA);
-		bddDoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), SRC_TEST_JAVA);
+	public static BDoc bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour() {
+		BDoc bdoc = new BDoc(org.junit.Test.class, ExReference.class);
+		bdoc.setProject(testProject());
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), SRC_TEST_JAVA);
 
-		return bddDoc;
+		return bdoc;
+	}
+	
+	public static BDoc bdocWithOneSpecification() {
+		BDoc bdoc = new BDoc(org.junit.Test.class, ExReference.class);
+		bdoc.setProject(testProject());
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), SRC_TEST_JAVA);
+		return bdoc;
 	}
 
 	public static Project testProject() {
 		return new Project("Testproject", "1.0");
 	}
 
-	public static BDoc bddDocWithAdvancedScenarioSpecification() {
+	public static BDoc bdocWithAdvancedScenarioSpecification() {
 		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
 		bddDoc.setProject(testProject());
 		bddDoc.addBehaviourFrom(new TestClass(StackBehavior.class), SRC_TEST_JAVA);
@@ -106,6 +113,14 @@ public class BddDocTestHelper {
 
 		@Test
 		public void shouldAlsoDoThat() {
+		}
+	}
+	
+	public class TestClassWithOneSpecification {
+		
+		@Test
+		public void shouldBeASpecification() {
+			
 		}
 	}
 

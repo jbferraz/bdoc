@@ -34,14 +34,14 @@ import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.UserStory;
 
 
-public class BddDocDiff {
+public class BDocDiff {
 
 	private final ProjectDiff projectDiff;
 	private TimeDiff docTimeDiff;
 	private final ListDiff<UserStory, UserStoryDiff> userStories;
 	private final GeneralBehaviourDiff generalBehaviourDiff;
 
-	public BddDocDiff(BDoc oldVersion, BDoc newVersion) {
+	public BDocDiff(BDoc oldVersion, BDoc newVersion) {
 		Validate.notNull(oldVersion, "oldVersion");
 		Validate.notNull(newVersion, "newVersion");
 		generalBehaviourDiff = new GeneralBehaviourDiff(oldVersion.getGeneralBehaviour(), newVersion.getGeneralBehaviour());

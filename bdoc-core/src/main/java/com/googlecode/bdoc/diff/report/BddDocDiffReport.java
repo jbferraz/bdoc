@@ -25,7 +25,7 @@
 package com.googlecode.bdoc.diff.report;
 
 
-import com.googlecode.bdoc.diff.domain.BddDocDiff;
+import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.ClassBehaviourDiff;
 import com.googlecode.bdoc.diff.domain.GeneralBehaviourDiff;
 import com.googlecode.bdoc.diff.domain.NarrativeDiff;
@@ -42,27 +42,27 @@ public class BddDocDiffReport {
 		BDoc oldVersion = XmlReport.createBddDoc(oldXmlVersion);
 		BDoc newVersion = XmlReport.createBddDoc(newXmlVersion);
 
-		BddDocDiff bddDocDiff = new BddDocDiff(oldVersion, newVersion);
+		BDocDiff bDocDiff = new BDocDiff(oldVersion, newVersion);
 
-		return execute(bddDocDiff);
+		return execute(bDocDiff);
 	}
 
-	public DiffReport execute(BddDocDiff bddDocDiff) {
+	public DiffReport execute(BDocDiff bDocDiff) {
 		XStream xstream = new XStream(new DomDriver());
 
 		XmlReport.addAlias(xstream);
 
 		xstream.alias("userStoryDiff", UserStoryDiff.class);
 		xstream.alias("packageDiff", PackageDiff.class);
-		xstream.alias("bddDocDiff", BddDocDiff.class);
+		xstream.alias("bddDocDiff", BDocDiff.class);
 		xstream.alias("codeBehaviourDiff", GeneralBehaviourDiff.class);
 		xstream.alias("generalBehaviourDiff", GeneralBehaviourDiff.class);
 		xstream.alias("narrativeDiff", NarrativeDiff.class);
 		xstream.alias("classBehaviourDiff", ClassBehaviourDiff.class);
 
-		DiffReport diffReport = new DiffReport(bddDocDiff.diffExists(), xstream.toXML(bddDocDiff));
+		DiffReport diffReport = new DiffReport(bDocDiff.diffExists(), xstream.toXML(bDocDiff));
 		if (diffReport.diffExists()) {
-			diffReport.setHtmlReport(new HtmlDiffReport(bddDocDiff).html());
+			diffReport.setHtmlReport(new HtmlDiffReport(bDocDiff).html());
 		}
 		return diffReport;
 	}

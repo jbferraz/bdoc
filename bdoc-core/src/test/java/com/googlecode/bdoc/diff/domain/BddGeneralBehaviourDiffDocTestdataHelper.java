@@ -24,7 +24,7 @@
 
 package com.googlecode.bdoc.diff.domain;
 
-import com.googlecode.bdoc.diff.domain.BddDocDiff;
+import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.subpackage.TestClassNewInSubPackage;
 import com.googlecode.bdoc.diff.domain.testpackageremoved.TestClassRepresentsGeneralBehaviourThatIsRemoved;
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -73,8 +73,8 @@ public class BddGeneralBehaviourDiffDocTestdataHelper {
 		return new BddGeneralBehaviourDiffDocTestdataHelper();
 	}
 
-	public static BddDocDiff getBddDocDiffForUpdatedGeneralBehaviour() {
-		return new BddDocDiff(instance().oldBddDoc, instance().newBddDoc);
+	public static BDocDiff getBddDocDiffForUpdatedGeneralBehaviour() {
+		return new BDocDiff(instance().oldBddDoc, instance().newBddDoc);
 	}
 
 }

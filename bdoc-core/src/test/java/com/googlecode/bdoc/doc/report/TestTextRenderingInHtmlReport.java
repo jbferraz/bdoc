@@ -37,7 +37,7 @@ import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.report.HtmlReport;
-import com.googlecode.bdoc.doc.testdata.BddDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.RefClass;
 
@@ -53,9 +53,9 @@ public class TestTextRenderingInHtmlReport {
 
 	public TestTextRenderingInHtmlReport() throws IOException {
 		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.setProject(BddDocTestHelper.testProject());
-		bddDoc.addBehaviourFrom(new TestClass(TestClassWithASpecification.class), BddDocTestHelper.SRC_TEST_JAVA);
-		bddDoc.addBehaviourFrom(new TestClass(TestClassWithAStatement.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.setProject(BDocTestHelper.testProject());
+		bddDoc.addBehaviourFrom(new TestClass(TestClassWithASpecification.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestClassWithAStatement.class), BDocTestHelper.SRC_TEST_JAVA);
 
 		html = new HtmlReport(bddDoc).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);

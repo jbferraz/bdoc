@@ -37,7 +37,7 @@ import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
-import com.googlecode.bdoc.doc.testdata.BddDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.RefClass;
 
 
@@ -50,7 +50,7 @@ public class TestBDocBehaviour {
 	}
 
 	private ClassBehaviour whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock(BDoc doc) {
-		doc.addBehaviourFrom(new TestClass(TestBDocBehaviour.class), BddDocTestHelper.SRC_TEST_JAVA);
+		doc.addBehaviourFrom(new TestClass(TestBDocBehaviour.class), BDocTestHelper.SRC_TEST_JAVA);
 		return doc.getGeneralBehaviourFor(TestBDocBehaviour.class);
 	}
 

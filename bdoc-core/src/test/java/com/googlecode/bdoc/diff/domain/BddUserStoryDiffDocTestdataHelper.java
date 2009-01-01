@@ -36,7 +36,7 @@ import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestClass;
-import com.googlecode.bdoc.doc.testdata.BddDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.ExStory;
 
@@ -52,18 +52,18 @@ public class BddUserStoryDiffDocTestdataHelper {
 
 	{
 		bddDocWithGeneralBehaviourAndAStory.setProject(new Project("test-project", "version1"));
-		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithGeneralBehaviorAndRefToStory1.class), BddDocTestHelper.SRC_TEST_JAVA);
-		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithReferenceToOldStoryDescription.class), BddDocTestHelper.SRC_TEST_JAVA);
-		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithReferenceToStoryThatShouldBeDeleted.class), BddDocTestHelper.SRC_TEST_JAVA);
-		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestClassRepresentsTestsThatAreRemoved.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithGeneralBehaviorAndRefToStory1.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithReferenceToOldStoryDescription.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithReferenceToStoryThatShouldBeDeleted.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestClassRepresentsTestsThatAreRemoved.class), BDocTestHelper.SRC_TEST_JAVA);
 
 		bddDocWithUpdatedStory.setProject(new Project("test-test-project", "version2"));
-		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestWithGeneralBehaviorAndRefToStory1.class), BddDocTestHelper.SRC_TEST_JAVA);
-		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestAnotherWithRefToStory1.class), BddDocTestHelper.SRC_TEST_JAVA);
-		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestAnotherWithRefToStory2.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestWithGeneralBehaviorAndRefToStory1.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestAnotherWithRefToStory1.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestAnotherWithRefToStory2.class), BDocTestHelper.SRC_TEST_JAVA);
 
-		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestWithReferenceToNewStoryDescription.class), BddDocTestHelper.SRC_TEST_JAVA);
-		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestClassRepresentsTestsThatAreAdded2.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestWithReferenceToNewStoryDescription.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestClassRepresentsTestsThatAreAdded2.class), BDocTestHelper.SRC_TEST_JAVA);
 
 		ClassBehaviour classBehaviour = bddDocWithUpdatedStory.userStoryFor(ExStory.STORY1).classBehaviourFor(
 				TestWithGeneralBehaviorAndRefToStory1.class);

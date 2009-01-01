@@ -38,7 +38,7 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.report.XmlReport;
-import com.googlecode.bdoc.doc.testdata.BddDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 
 /**
@@ -52,7 +52,7 @@ public class TestXmlReport {
 
 	@Before
 	public void setupTestdata() throws IOException {
-		bddDoc = BddDocTestHelper.bddDocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour();
+		bddDoc = BDocTestHelper.bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour();
 		xml = new XmlReport(bddDoc).xml();
 		FileUtils.writeStringToFile(new File("target/" + getClass().getName() + ".xml"), xml);
 	}

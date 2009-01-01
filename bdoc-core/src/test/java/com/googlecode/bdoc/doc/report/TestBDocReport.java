@@ -34,7 +34,7 @@ import org.junit.Test;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.report.BDocReport;
-import com.googlecode.bdoc.doc.testdata.BddDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 
 @Ref(Story.CREATE_BDOC_FROM_CODE)
@@ -50,7 +50,7 @@ public class TestBDocReport {
 		bdocReport.setTestClassDirectory( new File( "target/test-classes"));
 		bdocReport.setClassLoader(getClass().getClassLoader() );
 		bdocReport.setIncludesFilePattern( new String[] { "integrationtestclasses/stack/**" });
-		bdocReport.run( BddDocTestHelper.SRC_TEST_JAVA );
+		bdocReport.run( BDocTestHelper.SRC_TEST_JAVA );
 		String xml = bdocReport.getXml();
 		
 		assertXPathContains("Stack", "//bddDoc", xml );

@@ -24,7 +24,6 @@
 
 package com.googlecode.bdoc;
 
-
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -46,9 +45,13 @@ public enum Story {
 			"so that I can see the difference between the two versions"),
 
 	HTML_DIFF_REPORT(8, "As a stakeholder in the project", "I want to generated BDocDiff as html", "so that it opens in a browser"),
-	
-	ADVANCED_SCENARIO_SPECIFICATION (9, "As a developer in the project", "I want to write a scenario as a series of given when then methods", "so that I can use more than one line to describe the behaviour")
-	;
+
+	ADVANCED_SCENARIO_SPECIFICATION(9, "As a developer in the project",
+			"I want to write a scenario as a series of given when then methods",
+			"so that I can use more than one line to describe the behaviour"),
+
+	CHANGE_LOG(10, "As a developer in the project", "I want a bdoc changelog to be generated continuously",
+			"so that I can keep track of each change in behaviour");
 
 	private Integer id;
 	private String[] narrative;

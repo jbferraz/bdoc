@@ -42,7 +42,7 @@ import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.UserStory;
-import com.googlecode.bdoc.doc.testdata.BddDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.ExReference2;
 import com.googlecode.bdoc.doc.testdata.ExStory;
@@ -60,15 +60,15 @@ public class TestBDoc {
 	@Before
 	public void resetBddDoc() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedMethods.class), BddDocTestHelper.SRC_TEST_JAVA);
-		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedMethods.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BDocTestHelper.SRC_TEST_JAVA);
 	}
 
 	@Test
 	public void shouldRunWithAStoryRefAnnotation() {
 		bddDoc = new BDoc(org.junit.Test.class, null);
-		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedMethods.class), BddDocTestHelper.SRC_TEST_JAVA);
-		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedMethods.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BDocTestHelper.SRC_TEST_JAVA);
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ public class TestBDoc {
 
 	@Test
 	public void shouldCreateTheDistinctNumberOfUserStories() {
-		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BDocTestHelper.SRC_TEST_JAVA);
 		assertEquals(3, bddDoc.getUserstories().size());
 	}
 
@@ -97,7 +97,7 @@ public class TestBDoc {
 	@Test
 	public void shouldExtractBehaviourFromMetodsAnnotatedWithAnAnnotationClassCalledTest() {
 		BDoc bdoc = new BDoc(null, null);
-		bdoc.addBehaviourFrom(new TestClass(TestTestsAnnotatedWithTest.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestTestsAnnotatedWithTest.class), BDocTestHelper.SRC_TEST_JAVA);
 		Specification specification = bdoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
 				.get(0);
 
@@ -107,7 +107,7 @@ public class TestBDoc {
 	@Test
 	public void shouldExtractBehaviourFromMetodsStartingWithTheWordTest() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.addBehaviourFrom(new TestClass(TestExampleJunit3.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleJunit3.class), BDocTestHelper.SRC_TEST_JAVA);
 
 		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
 				new Specification("shouldShowThatJUnit3IsSupported")));
@@ -143,14 +143,14 @@ public class TestBDoc {
 	@Test
 	public void shouldIgnoreClassesThatAreNotTests() {
 		bddDoc = new BDoc(org.junit.Test.class, Ref.class);
-		bddDoc.addBehaviourFrom(new TestClass(Ref.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(Ref.class), BDocTestHelper.SRC_TEST_JAVA);
 		assertEquals(0, bddDoc.getUserstories().size());
 	}
 
 	@Test
 	public void shouldHandleStoryReferencesThatDoesNotImplementUserStoryDescriptionDirectly() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference2.class);
-		bddDoc.addBehaviourFrom(new TestClass(TestClassWithExStory2Reference.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestClassWithExStory2Reference.class), BDocTestHelper.SRC_TEST_JAVA);
 		assertEquals("Test story", bddDoc.getUserstories().get(0).getTitle());
 	}
 
@@ -162,14 +162,14 @@ public class TestBDoc {
 	@Test
 	public void givenATestClassWithNoReferenceToAStoryWhenBdddocIsGeneratedThenTheSpecifiedBehaviourShouldNotBeAddedToAnyStories() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BDocTestHelper.SRC_TEST_JAVA);
 		assertEquals(0, bddDoc.getUserstories().size());
 	}
 
 	@Test
 	public void givenATestClassWithNoReferenceToAStoryWhenBdddocIsGeneratedThenTheSpecifiedBehaviourShouldBeAddedToGeneralBehaviour() {
 		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BddDocTestHelper.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BDocTestHelper.SRC_TEST_JAVA);
 
 		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
 				new Specification("shouldVerifyTheImportantStuff")));

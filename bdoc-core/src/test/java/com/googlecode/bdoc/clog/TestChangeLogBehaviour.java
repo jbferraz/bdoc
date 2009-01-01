@@ -21,13 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.googlecode.bdoc.clog;
 
-import org.junit.Test;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertEquals;
 
+import org.junit.Test;
+	
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
+import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.RefClass;
 
@@ -39,26 +45,30 @@ public class TestChangeLogBehaviour {
 		return new ChangeLog();
 	}
 
+	private BDoc whenABDocWithOneSpecificationIsScannedByTheChangeLog(ChangeLog changeLog) {
+		BDoc bdoc = BDocTestHelper.bdocWithOneSpecification();
+		changeLog.scan(bdoc);
+		return bdoc;
+	}
+
+	private void thenEnsureTheLatestBdocInTheChangeLogContainsTheBDoc(ChangeLog changeLog, BDoc bdoc) {
+		assertSame(bdoc, changeLog.latestBDoc());
+	}
+
+	private void thenEnsureTheLatestDiffInTheChangeLogContainsTheSpecification(ChangeLog changeLog, Specification specification) {
+		BDocDiff diff = changeLog.latestDiff();
+		assertEquals(specification, diff.getGeneralBehaviourDiff().getNewPackages().get(0).getClassSpecifications().get(0)
+				.getSpecifications().get(0));
+	}
+
 	@Test
 	public void shouldAddABDocDiffForAChange() {
 		ChangeLog changeLog = givenAnNewChangeLog();
-		whenABDocWithOneSpecificationIsScannedByTheChangeLog(changeLog);
-		thenEnsureTheChangeLogContainsTheBDoc();
-		thenEnsureTheLatestDiffInTheChangeLogContainsTheSpecification();
-	}
-
-	private void thenEnsureTheChangeLogContainsTheBDoc() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void thenEnsureTheLatestDiffInTheChangeLogContainsTheSpecification() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void whenABDocWithOneSpecificationIsScannedByTheChangeLog(ChangeLog changeLog) {
-		BDoc bdoc = BDocTestHelper.bdocWithOneSpecification();
+		BDoc bdoc = whenABDocWithOneSpecificationIsScannedByTheChangeLog(changeLog);
+		thenEnsureTheLatestBdocInTheChangeLogContainsTheBDoc(changeLog, bdoc);
+		Specification specification = bdoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
+				.get(0);
+		thenEnsureTheLatestDiffInTheChangeLogContainsTheSpecification(changeLog, specification);
 	}
 
 }

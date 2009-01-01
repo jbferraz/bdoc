@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.plugin;
+package com.googlecode.bdoc.mojo;
 
 import java.io.File;
 import java.lang.annotation.Annotation;

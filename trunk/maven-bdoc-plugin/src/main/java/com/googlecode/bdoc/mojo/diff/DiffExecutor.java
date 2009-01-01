@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.plugin.diff;
+package com.googlecode.bdoc.mojo.diff;
 
 import com.googlecode.bdoc.diff.report.DiffReport;
 

@@ -22,16 +22,16 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.plugin;
+package com.googlecode.bdoc.mojo;
 
 import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;
 
-import bdddoc4j.plugin.diff.BddLogDirDiff;
-import bdddoc4j.plugin.diff.DiffExecutorImpl;
 
 import com.googlecode.bdoc.diff.report.DiffReport;
+import com.googlecode.bdoc.mojo.diff.BddLogDirDiff;
+import com.googlecode.bdoc.mojo.diff.DiffExecutorImpl;
 
 /**
  * @goal diff

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package bdddoc4j.plugin;
+package com.googlecode.bdoc.mojo;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -34,6 +34,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter;
+import com.googlecode.bdoc.mojo.BddDocMojo;
 
 public class TestBddDocMojo {
 

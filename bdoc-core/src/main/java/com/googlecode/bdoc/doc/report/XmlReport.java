@@ -24,7 +24,6 @@
 
 package com.googlecode.bdoc.doc.report;
 
-
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.GeneralBehaviour;
@@ -42,6 +41,10 @@ public class XmlReport {
 
 	public XmlReport(BDoc bddDoc) {
 		this.bddDoc = bddDoc;
+	}
+
+	public static BDoc cloneBDoc(BDoc bdoc) {
+		return XmlReport.createBDoc(new XmlReport(bdoc).xml());
 	}
 
 	public String xml() {
@@ -68,7 +71,7 @@ public class XmlReport {
 		xstream.addImplicitCollection(Package.class, "classBehaviourList");
 	}
 
-	public static BDoc createBddDoc(String xml) {
+	public static BDoc createBDoc(String xml) {
 		return (BDoc) xStream().fromXML(xml);
 	}
 }

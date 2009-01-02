@@ -31,9 +31,10 @@ import java.io.File;
 import org.junit.Test;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.Project;
+import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
-
 
 /**
  * Class with static helper methods for generating testdata.
@@ -56,7 +57,7 @@ public class BDocTestHelper {
 
 		return bdoc;
 	}
-	
+
 	public static BDoc bdocWithOneSpecification() {
 		BDoc bdoc = new BDoc(org.junit.Test.class, ExReference.class);
 		bdoc.setProject(testProject());
@@ -115,13 +116,27 @@ public class BDocTestHelper {
 		public void shouldAlsoDoThat() {
 		}
 	}
-	
+
 	public class TestClassWithOneSpecification {
-		
+
 		@Test
 		public void shouldBeASpecification() {
-			
+
 		}
+	}
+
+	public class TestClassWithOneScenario {
+
+		@Test
+		public void givenWhenThen() {
+
+		}
+	}
+
+	public static Scenario addScenario(BDoc bdoc) {		
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), SRC_TEST_JAVA);
+		ClassBehaviour classBehaviour = bdoc.classBehaviourInGeneralBehaviour(TestClassWithOneScenario.class);
+		return classBehaviour.getScenarios().get(0);
 	}
 
 }

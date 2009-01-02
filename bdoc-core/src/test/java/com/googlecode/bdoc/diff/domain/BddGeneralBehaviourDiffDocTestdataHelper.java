@@ -45,24 +45,24 @@ public class BddGeneralBehaviourDiffDocTestdataHelper {
 		oldBddDoc.setProject(project);
 		oldBddDoc.addBehaviourFrom(new TestClass(TestClassRepresentsGeneralBehaviourThatIsRemoved.class), BDocTestHelper.SRC_TEST_JAVA);
 		oldBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BDocTestHelper.SRC_TEST_JAVA);
-		oldBddDoc.getGeneralBehaviourFor(TestWithGeneralBehaviour.class).addBehaviour(
+		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
 				"givenAScenarioWhenItIsRemovedThenEnsureItIsReportedAsDeleted");
 
-		oldBddDoc.getGeneralBehaviourFor(TestWithGeneralBehaviour.class).addBehaviour(
+		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
 				"shouldReportDeletedSpecifications");
 
 		newBddDoc.setProject(project);
 		newBddDoc.addBehaviourFrom(new TestClass(TestClassNewInSubPackage.class), BDocTestHelper.SRC_TEST_JAVA);
 		newBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BDocTestHelper.SRC_TEST_JAVA);
 
-		newBddDoc.getGeneralBehaviourFor(TestWithGeneralBehaviour.class).addBehaviour(
+		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
 				"givenANewScenario1WhenDiffIsRunThenPackageIsUpdatedWithANewScenario");
 
-		newBddDoc.getGeneralBehaviourFor(TestWithGeneralBehaviour.class).addBehaviour(
+		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
 				"givenANewScenario2WhenDiffIsRunThenPackageIsUpdatedWithANewScenario");
 
-		newBddDoc.getGeneralBehaviourFor(TestWithGeneralBehaviour.class).addBehaviour("shouldRepresentANewSpecification1");
-		newBddDoc.getGeneralBehaviourFor(TestWithGeneralBehaviour.class).addBehaviour("shouldRepresentANewSpecification2");
+		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour("shouldRepresentANewSpecification1");
+		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour("shouldRepresentANewSpecification2");
 
 	}
 

@@ -89,7 +89,7 @@ public class TestXmlReport {
 
 	@Test
 	public void shouldTransformBddDocAsXmlToBddDoc() {
-		assertEquals(bddDoc, XmlReport.createBddDoc(xml));
+		assertEquals(bddDoc, XmlReport.createBDoc(xml));
 	}
 
 }

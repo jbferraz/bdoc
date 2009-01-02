@@ -51,7 +51,7 @@ public class TestBDocBehaviour {
 
 	private ClassBehaviour whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock(BDoc doc) {
 		doc.addBehaviourFrom(new TestClass(TestBDocBehaviour.class), BDocTestHelper.SRC_TEST_JAVA);
-		return doc.getGeneralBehaviourFor(TestBDocBehaviour.class);
+		return doc.classBehaviourInGeneralBehaviour(TestBDocBehaviour.class);
 	}
 
 	private void thenEnsureThatTheScenarioIsExtracted(ClassBehaviour behaviour) {

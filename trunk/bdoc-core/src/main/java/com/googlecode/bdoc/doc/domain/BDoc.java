@@ -223,7 +223,7 @@ public class BDoc {
 		return generalBehaviour;
 	}
 
-	public ClassBehaviour getGeneralBehaviourFor(Class<? extends Object> testClass) {
+	public ClassBehaviour classBehaviourInGeneralBehaviour(Class<? extends Object> testClass) {
 		return generalBehaviour.classBehaviourFor(testClass);
 	}
 

@@ -24,6 +24,9 @@
 
 package com.googlecode.bdoc.clog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Project;
@@ -31,14 +34,17 @@ import com.googlecode.bdoc.doc.domain.Project;
 public class ChangeLog {
 
 	private BDoc latestBDoc;
-	private BDocDiff latestDiff;
+	private List<BDocDiff> diffList = new ArrayList<BDocDiff>();
 
 	public void scan(BDoc bdoc) {
 		if (null == latestBDoc) {
 			latestBDoc = new BDoc();
 			latestBDoc.setProject(new Project("", ""));
 		}
-		latestDiff = new BDocDiff(latestBDoc, bdoc);
+		BDocDiff bdocDiff = new BDocDiff(latestBDoc, bdoc);
+		if (bdocDiff.diffExists()) {
+			diffList.add(bdocDiff);
+		}
 		latestBDoc = bdoc;
 	}
 
@@ -47,7 +53,11 @@ public class ChangeLog {
 	}
 
 	public BDocDiff latestDiff() {
-		return latestDiff;
+		return diffList.get(diffList.size() - 1);
+	}
+
+	public List<BDocDiff> diffList() {
+		return diffList;
 	}
 
 }

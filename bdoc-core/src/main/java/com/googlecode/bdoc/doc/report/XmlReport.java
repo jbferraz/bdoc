@@ -33,6 +33,7 @@ import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.UserStory;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class XmlReport {
@@ -72,6 +73,10 @@ public class XmlReport {
 	}
 
 	public static BDoc createBDoc(String xml) {
-		return (BDoc) xStream().fromXML(xml);
+		try {
+			return (BDoc) xStream().fromXML(xml);
+		} catch (ConversionException e) {
+			throw new BDocRequiresResetException(e);
+		}
 	}
 }

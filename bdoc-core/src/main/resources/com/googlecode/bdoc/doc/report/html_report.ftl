@@ -34,7 +34,7 @@
 	</head>
 	<body>
 		<h1>${bddDoc.project.name} ${bddDoc.project.version}</h1>
-		<p>${bddDoc.docTime?date}</p>
+		<p>${bddDoc.docTime?datetime}</p>
 		
 		<#list bddDoc.userstories as userstory>
 			<@bdddoc.story userstory=userstory/> 		

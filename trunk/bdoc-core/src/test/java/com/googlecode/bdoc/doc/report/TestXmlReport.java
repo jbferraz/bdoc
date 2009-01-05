@@ -40,7 +40,6 @@ import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.report.XmlReport;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
-
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -90,6 +89,11 @@ public class TestXmlReport {
 	@Test
 	public void shouldTransformBddDocAsXmlToBddDoc() {
 		assertEquals(bddDoc, XmlReport.createBDoc(xml));
+	}
+
+	@Test(expected = BDocRequiresResetException.class)
+	public void shouldThrowBDocRequiresResetExceptionWhenBDocCanNotBeCreatedFromXmlWithConversionException() {
+		XmlReport.createBDoc("<bddDoc><project2></project2></bddDoc>");
 	}
 
 }

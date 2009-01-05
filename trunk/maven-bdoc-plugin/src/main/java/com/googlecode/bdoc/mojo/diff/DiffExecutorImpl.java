@@ -24,12 +24,11 @@
 
 package com.googlecode.bdoc.mojo.diff;
 
-import static org.apache.commons.beanutils.MethodUtils.invokeMethod;
-
 import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 
+import com.googlecode.bdoc.diff.report.BddDocDiffReport;
 import com.googlecode.bdoc.diff.report.DiffReport;
 
 public class DiffExecutorImpl implements DiffExecutor {
@@ -43,12 +42,11 @@ public class DiffExecutorImpl implements DiffExecutor {
 
 	public DiffReport createDiffReport(String oldBddDocFileName, String newBddDocFileName) {
 		try {
-			Object bddDocDiffReport = Class.forName("bdddoc4j.diff.report.BddDocDiffReport").newInstance();
 
 			String oldXmlVersion = FileUtils.readFileToString(new File(logDirectory, oldBddDocFileName));
 			String newXmlVersion = FileUtils.readFileToString(new File(logDirectory, newBddDocFileName));
 
-			return (DiffReport) invokeMethod(bddDocDiffReport, "execute", new Object[] { oldXmlVersion, newXmlVersion });
+			return new BddDocDiffReport().execute(oldXmlVersion, newXmlVersion );
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

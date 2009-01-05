@@ -46,7 +46,7 @@ public class TestStack {
 		stack.push("1");
 		assertFalse(stack.isEmpty());
 	}
-		
+
 	@Test
 	public void givenAStackWithOnePushedValueWhenPopIsCalledThenThatObjectShouldBeReturned() {
 		stack.push("1");
@@ -67,17 +67,16 @@ public class TestStack {
 		stack.pop();
 		assertSame("1", stack.peek());
 	}
-	
-	@Test 
-	public void givenAStackPushedWithTheSameValueTwiceWhenPopedThenOneValueShouldBeLeftOnTop()
-	{
+
+	@Test
+	public void givenAStackPushedWithTheSameValueTwiceWhenPopedThenOneValueShouldBeLeftOnTop() {
 		stack.push("1");
 		stack.push("1");
 		stack.pop();
 		assertSame("1", stack.peek());
-		assertEquals( 1, stack.size());
+		assertEquals(1, stack.size());
 	}
-	
+
 	@Test
 	public void givenAStackContainingItemsWhenPeekIsCalledThenTheStackShouldProvideTheValueOfTheMostRecentPushedValueAndThatValueShouldRemainInTheStack() {
 		stack.push("1");
@@ -85,20 +84,19 @@ public class TestStack {
 		assertSame("2", stack.peek());
 	}
 
-	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void givenAnEmptyStackWhenNullIsPushedThenAnExceptionShouldBeThrown() {
 		stack.push(null);
 	}
 
-	@Test(expected=IllegalStateException.class)
-	public void givenAaEmptyStackWhenPopIsCalledThenAnExceptionShouldBeThrown() {
+	@Test(expected = IllegalStateException.class)
+	public void givenAnEmptyStackWhenPopIsCalledThenAnExceptionShouldBeThrown() {
 		stack.pop();
 	}
-	
+
 	@Test
 	public void shouldBeEmptyWhenStackIsNew() {
 		assertTrue(stack.isEmpty());
 	}
-	
+
 }

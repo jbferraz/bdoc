@@ -98,6 +98,18 @@ public class TestStackBehavior {
 		assertThat(sizeAfter, equalTo(sizeBefore - 1));
 	}
 
+	private void thenShouldTheStackBeEmpty() {
+		if (!stack.isEmpty()) {
+			throw new AssertionError();
+		}
+	}
+
+	private void thenShouldTheStackBeNotEmpty() {
+		if (stack.isEmpty()) {
+			throw new AssertionError();
+		}
+	}
+
 	// TESTS
 	@Test(expected = Exception.class)
 	public void shouldThrowExceptionUponNullPush() {
@@ -118,16 +130,18 @@ public class TestStackBehavior {
 		givenAStackWithOnePushedValue(VALUE_1);
 		String poped = whenPopIsCalled();
 		thenThatObjectShouldBeReturned(VALUE_1, poped);
+		thenShouldTheStackBeEmpty();
 	}
 
 	@Test
-	public void shouldPopSecondPushedValueFirst() {
+	public void shouldPopLastPushedValueFirst() {
 		givenAStackWithTwoPushedValues(VALUE_1, VALUE_2);
 		int sizeBefore = stack.size();
 		String poped = whenPopIsCalled();
 		int sizeAfter = stack.size();
 		thenTheLastItemPushedShouldBeReturned(VALUE_2, poped);
 		thenTheValueShouldNotRemainInTheStack(sizeBefore, sizeAfter);
+		thenShouldTheStackBeNotEmpty();
 	}
 
 	@Test

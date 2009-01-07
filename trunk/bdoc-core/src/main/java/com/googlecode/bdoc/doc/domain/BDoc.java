@@ -232,10 +232,14 @@ public class BDoc {
 		return (obj instanceof BDoc) && ((BDoc) obj).docTime.equals(docTime) && ((BDoc) obj).project.equals(project);
 	}
 
-	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, File testSrcDir) throws ClassNotFoundException {
+	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, File testSrcDir)  {
 		List<String> classes = testClassesDirectory.classes();
 		for (String className : classes) {
-			addBehaviourFrom(new TestClass(classLoader.loadClass(className)), testSrcDir );
+			try {
+				addBehaviourFrom(new TestClass(classLoader.loadClass(className)), testSrcDir );
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException( e );
+			}
 		}
 	}
 

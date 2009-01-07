@@ -24,12 +24,21 @@
 
 package com.googlecode.bdoc.mojo;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.apache.maven.reporting.MavenReportException;
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.googlecode.bdoc.clog.ChangeLog;
+import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.Project;
 
 public class TestChangeLogMojo {
 
@@ -38,6 +47,7 @@ public class TestChangeLogMojo {
 	private Mockery context = new Mockery();
 
 	private BDocScanner bdocScanner;
+	private BDoc bdoc;
 
 	private ChangeLogMojo changeLogMojo = new ChangeLogMojo();
 
@@ -49,6 +59,17 @@ public class TestChangeLogMojo {
 	public void resetTestdata() {
 		changeLogMojo.getBDocChangeLogFile().delete();
 		bdocScanner = context.mock(BDocScanner.class);
+
+		bdoc = new BDoc();
+		bdoc.setProject(new Project("name", "version"));
+
+		context.checking(new Expectations() {
+			{
+				one(bdocScanner).scan();
+				will(returnValue(bdoc));
+			}
+		});
+
 		changeLogMojo.setBDocScanner(bdocScanner);
 	}
 
@@ -58,20 +79,11 @@ public class TestChangeLogMojo {
 		assertTrue(changeLogMojo.getBDocChangeLogFile().exists());
 	}
 
-//	@Test
-//	public void shouldUpdateTheLatestBDoc() throws MavenReportException, IOException {
-//
-//		final BDoc bdoc = BDocTestHelper.bdocWithProject();
-//
-//		context.checking(new Expectations() {
-//			{
-//				one(bdocScanner).scan();
-//				will(returnValue(bdoc));
-//			}
-//		});
-//
-//		changeLogMojo.executeReport(null);
-//		ChangeLog changeLogFromXml = ChangeLog.fromXml( changeLogMojo.getBDocChangeLogFile() );
-//	}
-
+	@Test
+	public void shouldUpdateTheLatestBDoc() throws MavenReportException, IOException {
+		changeLogMojo.executeReport(null);
+		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(changeLogMojo.getBDocChangeLogFile());
+		assertNotNull(updatedChangeLog.latestBDoc());
+		assertEquals(bdoc.getProject(), updatedChangeLog.latestBDoc().getProject());
+	}
 }

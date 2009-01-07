@@ -28,8 +28,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.maven.reporting.MavenReportException;
+
+import com.googlecode.bdoc.clog.ChangeLog;
+import com.googlecode.bdoc.doc.domain.BDoc;
 
 public class ChangeLogMojo extends AbstractBddDocMojo {
 
@@ -42,14 +44,13 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 	@Override
 	protected void executeReport(Locale arg0) throws MavenReportException {
 
-		String changeLogXml = "content";
-		File bdocChangeLogFile = getBDocChangeLogFile();
-		try {
-			FileUtils.writeStringToFile(bdocChangeLogFile, changeLogXml);
-		} catch (IOException e) {
-			getLog().error("Error writing to [" + bdocChangeLogFile.getAbsolutePath() + "]", e);
-		}
-
+		BDoc bdoc = bdocScanner.scan();
+		
+		ChangeLog changeLog = new ChangeLog();
+		
+		changeLog.scan(bdoc);
+		
+		changeLog.writeToFile(getBDocChangeLogFile());
 	}
 
 	public String getDescription(Locale arg0) {

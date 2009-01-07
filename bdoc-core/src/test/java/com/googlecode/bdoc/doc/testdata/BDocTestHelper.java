@@ -49,8 +49,7 @@ public class BDocTestHelper {
 	}
 
 	public static BDoc bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour() {
-		BDoc bdoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bdoc.setProject(testProject());
+		BDoc bdoc = bdocWithProject();
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), SRC_TEST_JAVA);
@@ -59,9 +58,14 @@ public class BDocTestHelper {
 	}
 
 	public static BDoc bdocWithOneSpecification() {
+		BDoc bdoc = bdocWithProject();
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), SRC_TEST_JAVA);
+		return bdoc;
+	}
+
+	public static BDoc bdocWithProject() {
 		BDoc bdoc = new BDoc(org.junit.Test.class, ExReference.class);
 		bdoc.setProject(testProject());
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), SRC_TEST_JAVA);
 		return bdoc;
 	}
 
@@ -70,8 +74,7 @@ public class BDocTestHelper {
 	}
 
 	public static BDoc bdocWithAdvancedScenarioSpecification() {
-		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-		bddDoc.setProject(testProject());
+		BDoc bddDoc = bdocWithProject();
 		bddDoc.addBehaviourFrom(new TestClass(StackBehavior.class), SRC_TEST_JAVA);
 
 		return bddDoc;

@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.clog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,10 @@ public class ChangeLog {
 
 	public List<BDocDiff> diffList() {
 		return diffList;
+	}
+
+	public static ChangeLog fromXmlFile(File changeLogXmlFile) {
+		return new ChangeLog();
 	}
 
 }

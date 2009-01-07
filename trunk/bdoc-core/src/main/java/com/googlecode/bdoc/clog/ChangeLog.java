@@ -25,12 +25,16 @@
 package com.googlecode.bdoc.clog;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Project;
+import com.thoughtworks.xstream.XStream;
 
 public class ChangeLog {
 
@@ -62,7 +66,24 @@ public class ChangeLog {
 	}
 
 	public static ChangeLog fromXmlFile(File changeLogXmlFile) {
-		return new ChangeLog();
+		try {
+			return (ChangeLog) xstream().fromXML(FileUtils.readFileToString(changeLogXmlFile));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void writeToFile(File changeLogXmlFile) {
+		try {
+			FileUtils.writeStringToFile(changeLogXmlFile, xstream().toXML(this));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static XStream xstream() {
+		XStream xstream = new XStream();
+		return xstream;
 	}
 
 }

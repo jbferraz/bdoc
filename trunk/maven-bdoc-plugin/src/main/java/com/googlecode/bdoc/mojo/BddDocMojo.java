@@ -34,6 +34,7 @@ import java.util.Locale;
 import org.apache.maven.reporting.MavenReportException;
 
 import com.googlecode.bdoc.doc.report.BDocReport;
+import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 
 /**
@@ -101,7 +102,7 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	@SuppressWarnings("unchecked")
 	void executeInternal() throws Exception {
 		ClassLoader classLoader = getClassLoader();
-		BDocReport bdocReport = new BDocReport();
+		BDocReport bdocReport = new BDocReportImpl();
 
 		bdocReport.setProjectName(getProject().getName());
 		bdocReport.setProjectVersion(getProject().getVersion());

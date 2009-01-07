@@ -24,8 +24,10 @@
 
 package com.googlecode.bdoc.mojo;
 
+import com.googlecode.bdoc.doc.domain.BDoc;
+
 public interface BDocScanner {
 
-	void scan();
+	BDoc scan();
 
 }

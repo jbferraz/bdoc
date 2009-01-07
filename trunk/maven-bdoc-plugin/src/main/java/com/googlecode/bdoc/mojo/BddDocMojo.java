@@ -101,31 +101,31 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	@SuppressWarnings("unchecked")
 	void executeInternal() throws Exception {
 		ClassLoader classLoader = getClassLoader();
-		BDocReport bddDocReport = new BDocReport();
+		BDocReport bdocReport = new BDocReport();
 
-		bddDocReport.setProjectName(getProject().getName());
-		bddDocReport.setProjectVersion(getProject().getVersion());
-		bddDocReport.setClassLoader(classLoader);
-		bddDocReport.setTestClassDirectory(testClassDirectory);
-		bddDocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
-		bddDocReport.setIncludesFilePattern(includes);
-		bddDocReport.setExcludesFilePattern(excludes);
+		bdocReport.setProjectName(getProject().getName());
+		bdocReport.setProjectVersion(getProject().getVersion());
+		bdocReport.setClassLoader(classLoader);
+		bdocReport.setTestClassDirectory(testClassDirectory);
+		bdocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
+		bdocReport.setIncludesFilePattern(includes);
+		bdocReport.setExcludesFilePattern(excludes);
 
 		if (null != scenarioFormatterClassName) {
-			bddDocReport
+			bdocReport
 					.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName).newInstance());
 		}
 
 		if (null != storyRefAnnotationClassName) {
-			bddDocReport.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
+			bdocReport.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
 		}
 
-		bddDocReport.run(testSourceDirectory);
+		bdocReport.run(testSourceDirectory);
 
 		if (null != logDirectory) {
-			writeFile(bddDocReport.getXml(), logDirectory, "bddDoc." + new Date().getTime() + ".xml");
+			writeFile(bdocReport.getXml(), logDirectory, "bddDoc." + new Date().getTime() + ".xml");
 		}
-		writeReport(bddDocReport.getHtml());
+		writeReport(bdocReport.getHtml());
 	}
 
 	protected ClassLoader getClassLoader() throws Exception {

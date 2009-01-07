@@ -25,13 +25,14 @@
 package com.googlecode.bdoc.mojo;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;
 
 import com.googlecode.bdoc.clog.ChangeLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.report.BDocReport;
+import com.googlecode.bdoc.doc.report.BDocReportImpl;
 
 public class ChangeLogMojo extends AbstractBddDocMojo {
 
@@ -39,12 +40,12 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 
 	private String changeLogDirectoryPath;
 
-	private BDocScanner bdocScanner;
+	private BDocReport bdocReport = new BDocReportImpl();
 
 	@Override
 	protected void executeReport(Locale arg0) throws MavenReportException {
 
-		BDoc bdoc = bdocScanner.scan();
+		BDoc bdoc = bdocReport.run(null);
 		
 		ChangeLog changeLog = new ChangeLog();
 		
@@ -73,8 +74,7 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 		this.changeLogDirectoryPath = changeLogDirectoryPath;
 	}
 
-	public void setBDocScanner(BDocScanner bdocScanner) {
-		this.bdocScanner = bdocScanner;
+	public void setBDocReport(BDocReport bdocReport) {
+		this.bdocReport = bdocReport;
 	}
-
 }

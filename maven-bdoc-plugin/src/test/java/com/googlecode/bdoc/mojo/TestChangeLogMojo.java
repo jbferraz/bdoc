@@ -39,6 +39,7 @@ import org.junit.Test;
 import com.googlecode.bdoc.clog.ChangeLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Project;
+import com.googlecode.bdoc.doc.report.BDocReport;
 
 public class TestChangeLogMojo {
 
@@ -46,7 +47,7 @@ public class TestChangeLogMojo {
 
 	private Mockery context = new Mockery();
 
-	private BDocScanner bdocScanner;
+	private BDocReport bdocReport;
 	private BDoc bdoc;
 
 	private ChangeLogMojo changeLogMojo = new ChangeLogMojo();
@@ -58,19 +59,19 @@ public class TestChangeLogMojo {
 	@Before
 	public void resetTestdata() {
 		changeLogMojo.getBDocChangeLogFile().delete();
-		bdocScanner = context.mock(BDocScanner.class);
+		bdocReport = context.mock(BDocReport.class);
 
 		bdoc = new BDoc();
 		bdoc.setProject(new Project("name", "version"));
 
 		context.checking(new Expectations() {
 			{
-				one(bdocScanner).scan();
+				one(bdocReport).run(null);
 				will(returnValue(bdoc));
 			}
 		});
 
-		changeLogMojo.setBDocScanner(bdocScanner);
+		changeLogMojo.setBDocReport(bdocReport);
 	}
 
 	@Test
@@ -80,7 +81,7 @@ public class TestChangeLogMojo {
 	}
 
 	@Test
-	public void shouldUpdateTheLatestBDoc() throws MavenReportException, IOException {
+	public void shouldUpdateTheLatestBDocInThePersistedChangeLog() throws MavenReportException, IOException {
 		changeLogMojo.executeReport(null);
 		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(changeLogMojo.getBDocChangeLogFile());
 		assertNotNull(updatedChangeLog.latestBDoc());

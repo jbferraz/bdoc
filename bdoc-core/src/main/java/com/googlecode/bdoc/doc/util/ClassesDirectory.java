@@ -28,6 +28,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -44,6 +45,7 @@ public class ClassesDirectory {
 	}
 
 	public List<String> classes() {
+		Validate.notNull(ds.getBasedir(), "BaseDir must be set on " + getClass().getCanonicalName() );
 
 		List<String> result = new ArrayList<String>();
 

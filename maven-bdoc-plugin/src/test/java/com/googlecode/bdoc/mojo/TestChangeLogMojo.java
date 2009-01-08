@@ -37,7 +37,7 @@ import org.junit.Test;
 import com.googlecode.bdoc.clog.ChangeLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Project;
-import com.googlecode.bdoc.doc.report.BDocReport;
+import com.googlecode.bdoc.doc.report.BDocReportInterface;
 
 public class TestChangeLogMojo {
 
@@ -45,7 +45,7 @@ public class TestChangeLogMojo {
 
 	private Mockery context = new Mockery();
 
-	private BDocReport bdocReport;
+	private BDocReportInterface bdocReport;
 	private BDoc bdoc;
 
 	private ChangeLogMojo changeLogMojo = new ChangeLogMojo();
@@ -56,7 +56,7 @@ public class TestChangeLogMojo {
 
 	public void initalizeBDocReportMock() {
 		changeLogMojo.getBDocChangeLogFile().delete();
-		bdocReport = context.mock(BDocReport.class);
+		bdocReport = context.mock(BDocReportInterface.class);
 
 		bdoc = new BDoc();
 		bdoc.setProject(new Project("name", "version"));

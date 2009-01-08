@@ -38,19 +38,45 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 
 	public static final String BDOC_CHANGE_LOG_XML = "bdoc-change-log.xml";
 
-	private String changeLogDirectoryPath;
+	/**
+	 * @parameter default-value="${project.build.testSourceDirectory}"
+	 * @required
+	 */
+	File testSourceDirectory;
 
-	private BDocReport bdocReport = new BDocReportImpl();
+	/**
+	 * @parameter default-value="${project.build.directory}/test-classes"
+	 * @required
+	 */
+	File testClassDirectory;
+
+	/**
+	 * Specifies files, which are included in the check. By default, all files
+	 * are included.
+	 * 
+	 * @parameter
+	 */
+	String[] includes;
+
+	String changeLogDirectoryPath;
+
+	BDocReport bdocReport = new BDocReportImpl();
 
 	@Override
 	protected void executeReport(Locale arg0) throws MavenReportException {
 
-		BDoc bdoc = bdocReport.run(null);
-		
+		bdocReport.setTestClassDirectory(testClassDirectory);
+
+		bdocReport.setClassLoader(getClass().getClassLoader());
+		bdocReport.setProjectName("projectName");
+		bdocReport.setProjectVersion("projectVersion");
+
+		BDoc bdoc = bdocReport.run(testSourceDirectory);
+
 		ChangeLog changeLog = new ChangeLog();
-		
+
 		changeLog.scan(bdoc);
-		
+
 		changeLog.writeToFile(getBDocChangeLogFile());
 	}
 
@@ -68,13 +94,5 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 
 	public File getBDocChangeLogFile() {
 		return new File(new File(changeLogDirectoryPath), BDOC_CHANGE_LOG_XML);
-	}
-
-	public void setChangeLogDirectoryPath(String changeLogDirectoryPath) {
-		this.changeLogDirectoryPath = changeLogDirectoryPath;
-	}
-
-	public void setBDocReport(BDocReport bdocReport) {
-		this.bdocReport = bdocReport;
 	}
 }

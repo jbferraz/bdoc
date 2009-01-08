@@ -31,7 +31,7 @@ import org.apache.maven.reporting.MavenReportException;
 
 import com.googlecode.bdoc.clog.ChangeLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.report.BDocReport;
+import com.googlecode.bdoc.doc.report.BDocReportInterface;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
 
 public class ChangeLogMojo extends AbstractBddDocMojo {
@@ -60,7 +60,7 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 
 	String changeLogDirectoryPath;
 
-	BDocReport bdocReport = new BDocReportImpl();
+	BDocReportInterface bdocReport = new BDocReportImpl();
 
 	@Override
 	protected void executeReport(Locale arg0) throws MavenReportException {

@@ -51,7 +51,7 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	 * @parameter default-value="${project.build.testSourceDirectory}"
 	 * @required
 	 */
-	private File testSourceDirectory;
+	public File testSourceDirectory;
 
 	/**
 	 * @parameter default-value="${project.build.directory}/test-classes"

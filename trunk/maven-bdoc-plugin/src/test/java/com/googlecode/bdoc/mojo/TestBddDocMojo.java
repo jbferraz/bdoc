@@ -65,6 +65,8 @@ public class TestBddDocMojo {
 		bddDocMojo.setProject(project);
 		bddDocMojo.setTestAnnotationClassName(Test.class.getName());
 		bddDocMojo.setTestClassDirectory(new File("target/test-classes"));
+		bddDocMojo.testSourceDirectory = new File( "src/test/java");
+		
 	}
 
 	@Test

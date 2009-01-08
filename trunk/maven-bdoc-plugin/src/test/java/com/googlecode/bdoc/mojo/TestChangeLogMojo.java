@@ -25,7 +25,6 @@
 package com.googlecode.bdoc.mojo;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -33,7 +32,6 @@ import java.io.IOException;
 import org.apache.maven.reporting.MavenReportException;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.googlecode.bdoc.clog.ChangeLog;
@@ -43,7 +41,7 @@ import com.googlecode.bdoc.doc.report.BDocReport;
 
 public class TestChangeLogMojo {
 
-	private static final String TARGET = "target";
+	public static final String TARGET = "target";
 
 	private Mockery context = new Mockery();
 
@@ -53,11 +51,10 @@ public class TestChangeLogMojo {
 	private ChangeLogMojo changeLogMojo = new ChangeLogMojo();
 
 	public TestChangeLogMojo() {
-		changeLogMojo.setChangeLogDirectoryPath(TARGET);
+		changeLogMojo.changeLogDirectoryPath = TARGET;
 	}
 
-	@Before
-	public void resetTestdata() {
+	public void initalizeBDocReportMock() {
 		changeLogMojo.getBDocChangeLogFile().delete();
 		bdocReport = context.mock(BDocReport.class);
 
@@ -66,25 +63,31 @@ public class TestChangeLogMojo {
 
 		context.checking(new Expectations() {
 			{
+				one(bdocReport).setTestClassDirectory(null);
+				one(bdocReport).setClassLoader(with(any(ClassLoader.class)));
+				one(bdocReport).setProjectName(with (any(String.class)));
+				one(bdocReport).setProjectVersion(with (any(String.class)));
 				one(bdocReport).run(null);
 				will(returnValue(bdoc));
 			}
 		});
 
-		changeLogMojo.setBDocReport(bdocReport);
+		changeLogMojo.bdocReport = bdocReport;
 	}
 
 	@Test
 	public void shouldCreateANewChangeLogXmlWhenOneDoesNotExist() throws MavenReportException {
+		initalizeBDocReportMock();
 		changeLogMojo.executeReport(null);
 		assertTrue(changeLogMojo.getBDocChangeLogFile().exists());
 	}
 
 	@Test
 	public void shouldUpdateTheLatestBDocInThePersistedChangeLog() throws MavenReportException, IOException {
+		initalizeBDocReportMock();
 		changeLogMojo.executeReport(null);
 		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(changeLogMojo.getBDocChangeLogFile());
-		assertNotNull(updatedChangeLog.latestBDoc());
 		assertEquals(bdoc.getProject(), updatedChangeLog.latestBDoc().getProject());
 	}
+
 }

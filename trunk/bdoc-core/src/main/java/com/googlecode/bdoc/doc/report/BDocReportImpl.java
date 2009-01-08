@@ -32,7 +32,7 @@ import com.googlecode.bdoc.doc.domain.Project;
 import com.googlecode.bdoc.doc.util.ClassesDirectory;
 
 
-public class BDocReportImpl implements BDocReport {
+public class BDocReportImpl implements BDocReportInterface {
 
 	/* (non-Javadoc)
 	 * @see com.googlecode.bdoc.doc.report.BDocReport#setScenarioLinesFormatter(com.googlecode.bdoc.doc.report.ScenarioLinesFormatter)

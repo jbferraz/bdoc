@@ -24,36 +24,43 @@
 
 package com.googlecode.bdoc.doc.report;
 
-import static com.googlecode.bdoc.doc.XmlCustomAssert.assertXPathContains;
-
 import java.io.File;
-import java.io.IOException;
+import java.lang.annotation.Annotation;
 
-import org.junit.Test;
+import com.googlecode.bdoc.doc.domain.BDoc;
 
-import com.googlecode.bdoc.Ref;
-import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.doc.report.BDocReportImpl;
-import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
+public interface BDocReportInterface {
 
+	public abstract void setScenarioLinesFormatter(ScenarioLinesFormatter scenarioLinesFormatter);
 
-@Ref(Story.CREATE_BDOC_FROM_CODE)
-public class TestBDocReport {
+	/**
+	 * @deprecated should be deleted and a new method setProject should be introduced
+	 */
+	@Deprecated
+	public abstract void setProjectName(String projectName);
 
-	private static final String PROJECT_NAME = "testProject";
-	
-	@Test
-	public void shouldExtractDocumentationFromAnyClassThatSpecifiesTests() throws ClassNotFoundException, IOException {
-		BDocReportInterface bdocReport = new BDocReportImpl();
-		bdocReport.setProjectName(PROJECT_NAME);
-		bdocReport.setProjectVersion("version");
-		bdocReport.setTestClassDirectory( new File( "target/test-classes"));
-		bdocReport.setClassLoader(getClass().getClassLoader() );
-		bdocReport.setIncludesFilePattern( new String[] { "integrationtestclasses/stack/**" });
-		bdocReport.run( BDocTestHelper.SRC_TEST_JAVA );
-		String xml = bdocReport.getXml();
-		
-		assertXPathContains("Stack", "//bddDoc", xml );
-		assertXPathContains("StackBehavior", "//bddDoc", xml );		
-	}
+	/**
+	 * @deprecated should be deleted and a new method setProject should be introduced
+	 */
+	@Deprecated
+	public abstract void setProjectVersion(String projectVersion);
+
+	public abstract void setTestClassDirectory(File testClassDirectory);
+
+	public abstract void setIncludesFilePattern(String[] includesFilePattern);
+
+	public abstract void setExcludesFilePattern(String[] excludesFilePattern);
+
+	public abstract void setClassLoader(ClassLoader classLoader);
+
+	public abstract void setStoryRefAnnotation(Class<? extends Annotation> storyRefAnnotation);
+
+	public abstract void setTestAnnotation(Class<? extends Annotation> testAnnotation);
+
+	public abstract BDoc run(File testSrcDir);
+
+	public abstract String getHtml();
+
+	public abstract String getXml();
+
 }

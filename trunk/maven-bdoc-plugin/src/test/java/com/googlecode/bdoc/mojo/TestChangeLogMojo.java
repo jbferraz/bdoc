@@ -65,8 +65,7 @@ public class TestChangeLogMojo {
 			{
 				one(bdocReport).setTestClassDirectory(null);
 				one(bdocReport).setClassLoader(with(any(ClassLoader.class)));
-				one(bdocReport).setProjectName(with (any(String.class)));
-				one(bdocReport).setProjectVersion(with (any(String.class)));
+				one(bdocReport).setProjectInfo(with (any(ProjectInfo.class)));
 				one(bdocReport).run(null);
 				will(returnValue(bdoc));
 			}

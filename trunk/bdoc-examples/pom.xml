@@ -61,7 +61,9 @@
   
   <modules>
 	 <module>bdoc-examples-stack</module>
+
      <module>bdoc-examples-taskhandling</module>
+	 
     <module>bdoc-examples-testng</module>
   </modules>
    

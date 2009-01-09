@@ -34,15 +34,17 @@
 					<testAnnotationClassName>org.junit.Test</testAnnotationClassName>
 					<scenarioFormatterClassName>com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter</scenarioFormatterClassName>					
 				</configuration>
+
 				<executions>
 					<execution>
 						<phase>install</phase>
 						<goals>
 							<goal>doc</goal>
-							<goal>diff</goal>
 						</goals>
 					</execution>
+					
 				</executions>
+				
 			</plugin>
 
 			<plugin>

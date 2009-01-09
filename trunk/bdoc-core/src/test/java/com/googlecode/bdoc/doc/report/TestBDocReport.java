@@ -33,6 +33,7 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
@@ -45,8 +46,7 @@ public class TestBDocReport {
 	@Test
 	public void shouldExtractDocumentationFromAnyClassThatSpecifiesTests() throws ClassNotFoundException, IOException {
 		BDocReportInterface bdocReport = new BDocReportImpl();
-		bdocReport.setProjectName(PROJECT_NAME);
-		bdocReport.setProjectVersion("version");
+		bdocReport.setProjectInfo( new ProjectInfo( PROJECT_NAME, "version") );
 		bdocReport.setTestClassDirectory( new File( "target/test-classes"));
 		bdocReport.setClassLoader(getClass().getClassLoader() );
 		bdocReport.setIncludesFilePattern( new String[] { "integrationtestclasses/stack/**" });

@@ -36,7 +36,7 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.clog.ChangeLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.domain.Project;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
 
 public class TestChangeLogMojo {
@@ -59,7 +59,7 @@ public class TestChangeLogMojo {
 		bdocReport = context.mock(BDocReportInterface.class);
 
 		bdoc = new BDoc();
-		bdoc.setProject(new Project("name", "version"));
+		bdoc.setProject(new ProjectInfo("name", "version"));
 
 		context.checking(new Expectations() {
 			{

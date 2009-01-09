@@ -50,10 +50,14 @@ public class TestAccountBehavior {
 	}
 
 	@Test
-	public void shouldAddDepositToBalanceInAnotherWay() {
+	public void advancedScenarios() {
 		givenAnAccountWithInitialBalanceEqualsTo(0);
 		whenDepositAreCalledWith(100);
 		thenShouldBalanceBeEqualTo(100);
+
+		givenAnAccountWithInitialBalanceEqualsTo(1);
+		whenDepositAreCalledWith(101);
+		thenShouldBalanceBeEqualTo(102);
 	}
 
 	private void thenShouldBalanceBeEqualTo(int balance) {
@@ -69,15 +73,15 @@ public class TestAccountBehavior {
 	}
 
 	private void givenAnAccountWithInitialBalanceEqualsTo0() {
-		account = new Account(0);
+		givenAnAccountWithInitialBalanceEqualsTo(0);
 	}
 
 	private void when100AreDepositToAccount() {
-		account.deposit(100);
+		whenDepositAreCalledWith(100);
 	}
 
 	private void thenShouldBalanceBeEqualTo100() {
-		assertEquals(100, account.balance());
+		thenShouldBalanceBeEqualTo(100);
 	}
 
 }

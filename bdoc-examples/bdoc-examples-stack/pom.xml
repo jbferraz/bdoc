@@ -32,7 +32,7 @@
 					<storyRefAnnotationClassName>bdddoc4j.examples.Ref</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
 					<testAnnotationClassName>org.junit.Test</testAnnotationClassName>
-					<scenarioFormatterClassName>bdddoc4j.core.report.EachOnNewLineScenarioLinesFormatter</scenarioFormatterClassName>					
+					<scenarioFormatterClassName>com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter</scenarioFormatterClassName>					
 				</configuration>
 				<executions>
 					<execution>

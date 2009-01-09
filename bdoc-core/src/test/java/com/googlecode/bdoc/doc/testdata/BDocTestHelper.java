@@ -33,7 +33,7 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
-import com.googlecode.bdoc.doc.domain.Project;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
 
@@ -70,8 +70,8 @@ public class BDocTestHelper {
 		return bdoc;
 	}
 
-	public static Project testProject() {
-		return new Project("Testproject", "1.0");
+	public static ProjectInfo testProject() {
+		return new ProjectInfo("Testproject", "1.0");
 	}
 
 	public static BDoc bdocWithAdvancedScenarioSpecification() {

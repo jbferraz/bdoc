@@ -30,14 +30,14 @@ import org.junit.Test;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.ProjectDiff;
-import com.googlecode.bdoc.doc.domain.Project;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 
 
 @Ref(Story.DIFF_OF_BDOCS)
 public class TestProjectDiff {
 
-	private Project oldVersion = new Project("name1", "version1");
-	private Project newVersion = new Project("name2", "version2");
+	private ProjectInfo oldVersion = new ProjectInfo("name1", "version1");
+	private ProjectInfo newVersion = new ProjectInfo("name2", "version2");
 
 	private ProjectDiff projectDiff = new ProjectDiff(oldVersion, newVersion);
 

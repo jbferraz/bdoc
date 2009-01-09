@@ -33,7 +33,7 @@ import org.apache.commons.io.FileUtils;
 
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.domain.Project;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.thoughtworks.xstream.XStream;
 
 public class ChangeLog {
@@ -44,7 +44,7 @@ public class ChangeLog {
 	public void scan(BDoc bdoc) {
 		if (null == latestBDoc) {
 			latestBDoc = new BDoc();
-			latestBDoc.setProject(new Project("", ""));
+			latestBDoc.setProject(new ProjectInfo("", ""));
 		}
 		BDocDiff bdocDiff = new BDocDiff(latestBDoc, bdoc);
 		if (bdocDiff.diffExists()) {

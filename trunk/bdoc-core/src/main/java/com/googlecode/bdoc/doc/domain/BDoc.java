@@ -49,7 +49,7 @@ public class BDoc {
 	protected transient Class<? extends Annotation> ignoreAnnotation;
 	protected transient Class<? extends Annotation> storyRefAnnotation;
 
-	protected Project project;
+	protected ProjectInfo projectInfo;
 	protected Calendar docTime = Calendar.getInstance();
 	protected List<UserStory> userStories = new ArrayList<UserStory>();
 	protected GeneralBehaviour generalBehaviour = new GeneralBehaviour();
@@ -218,12 +218,12 @@ public class BDoc {
 		return docTime.getTime();
 	}
 
-	public Project getProject() {
-		return project;
+	public ProjectInfo getProject() {
+		return projectInfo;
 	}
 
-	public void setProject(Project project) {
-		this.project = project;
+	public void setProject(ProjectInfo projectInfo) {
+		this.projectInfo = projectInfo;
 	}
 
 	/**
@@ -249,7 +249,7 @@ public class BDoc {
 
 	@Override
 	public boolean equals(Object obj) {
-		return (obj instanceof BDoc) && ((BDoc) obj).docTime.equals(docTime) && ((BDoc) obj).project.equals(project);
+		return (obj instanceof BDoc) && ((BDoc) obj).docTime.equals(docTime) && ((BDoc) obj).projectInfo.equals(projectInfo);
 	}
 
 	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, File testSrcDir)  {

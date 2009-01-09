@@ -58,7 +58,7 @@ public class TestXmlReport {
 
 	@Test
 	public void shouldContainNameOfTheApplication() throws Exception {
-		assertXpathEvaluatesTo(bddDoc.getProject().getName(), "*/project/name", xml);
+		assertXpathEvaluatesTo(bddDoc.getProject().getName(), "*/projectInfo/name", xml);
 	}
 
 	@Test

@@ -24,14 +24,14 @@
 
 package com.googlecode.bdoc.diff.domain;
 
-import com.googlecode.bdoc.doc.domain.Project;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 
 public class ProjectDiff {
 	
 	private final StringDiff nameDiff;
 	private final StringDiff versionDiff;
 
-	public ProjectDiff(Project oldVersion, Project newVersion) {
+	public ProjectDiff(ProjectInfo oldVersion, ProjectInfo newVersion) {
 		nameDiff = new StringDiff( oldVersion.getName(), newVersion.getName() );
 		versionDiff = new StringDiff( oldVersion.getVersion(), newVersion.getVersion() );
 	}

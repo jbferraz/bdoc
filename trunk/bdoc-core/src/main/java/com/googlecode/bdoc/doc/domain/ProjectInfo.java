@@ -24,11 +24,11 @@
 
 package com.googlecode.bdoc.doc.domain;
 
-public class Project {
+public class ProjectInfo {
 	private String name;
 	private String version;
 
-	public Project(String name, String version) {
+	public ProjectInfo(String name, String version) {
 		super();
 		this.name = name;
 		this.version = version;
@@ -44,6 +44,6 @@ public class Project {
 
 	@Override
 	public boolean equals(Object obj) {
-		return (obj instanceof Project) && ((Project) obj).name.equals(name) && ((Project) obj).version.equals(version);
+		return (obj instanceof ProjectInfo) && ((ProjectInfo) obj).name.equals(name) && ((ProjectInfo) obj).version.equals(version);
 	}
 }

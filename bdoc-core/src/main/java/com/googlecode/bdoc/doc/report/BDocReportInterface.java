@@ -28,23 +28,14 @@ import java.io.File;
 import java.lang.annotation.Annotation;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 
 public interface BDocReportInterface {
 
 	public abstract void setScenarioLinesFormatter(ScenarioLinesFormatter scenarioLinesFormatter);
 
-	/**
-	 * @deprecated should be deleted and a new method setProject should be introduced
-	 */
-	@Deprecated
-	public abstract void setProjectName(String projectName);
-
-	/**
-	 * @deprecated should be deleted and a new method setProject should be introduced
-	 */
-	@Deprecated
-	public abstract void setProjectVersion(String projectVersion);
-
+	public void setProjectInfo(ProjectInfo projectInfo);
+	
 	public abstract void setTestClassDirectory(File testClassDirectory);
 
 	public abstract void setIncludesFilePattern(String[] includesFilePattern);

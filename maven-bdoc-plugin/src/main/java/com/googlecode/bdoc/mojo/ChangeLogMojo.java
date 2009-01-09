@@ -31,8 +31,9 @@ import org.apache.maven.reporting.MavenReportException;
 
 import com.googlecode.bdoc.clog.ChangeLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.report.BDocReportInterface;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
+import com.googlecode.bdoc.doc.report.BDocReportInterface;
 
 public class ChangeLogMojo extends AbstractBddDocMojo {
 
@@ -68,8 +69,7 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 		bdocReport.setTestClassDirectory(testClassDirectory);
 
 		bdocReport.setClassLoader(getClass().getClassLoader());
-		bdocReport.setProjectName("projectName");
-		bdocReport.setProjectVersion("projectVersion");
+		bdocReport.setProjectInfo ( new ProjectInfo( "projectName", "projectVersion") );
 
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 

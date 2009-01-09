@@ -46,8 +46,7 @@ public class BDocReportImpl implements BDocReportInterface {
 
 	private ClassesDirectory classesDirectory = new ClassesDirectory();
 
-	private String projectName;
-	private String projectVersion;
+	private ProjectInfo projectInfo;
 	private ClassLoader classLoader;
 	private Class<? extends Annotation> storyRefAnnotation;
 	private Class<? extends Annotation> testAnnotation;
@@ -59,26 +58,8 @@ public class BDocReportImpl implements BDocReportInterface {
 		super();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.googlecode.bdoc.doc.report.BDocReport#setProjectName(java.lang.String
-	 * )
-	 */
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.googlecode.bdoc.doc.report.BDocReport#setProjectVersion(java.lang
-	 * .String)
-	 */
-	public void setProjectVersion(String projectVersion) {
-		this.projectVersion = projectVersion;
+	public void setProjectInfo(ProjectInfo projectInfo) {
+		this.projectInfo = projectInfo;
 	}
 
 	/*
@@ -153,7 +134,8 @@ public class BDocReportImpl implements BDocReportInterface {
 	 */
 	public BDoc run(File testSrcDir) {
 		BDoc bdoc = new BDoc(testAnnotation, storyRefAnnotation, ignoreAnnotation);
-		bdoc.setProject(new ProjectInfo(projectName, projectVersion));
+		
+		bdoc.setProject(projectInfo);
 		bdoc.addBehaviourFrom(classesDirectory, classLoader, testSrcDir);
 
 		xml = new XmlReport(bdoc).xml();

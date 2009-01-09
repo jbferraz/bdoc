@@ -24,7 +24,6 @@
 
 package com.googlecode.bdoc.diff.domain;
 
-import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.subpackage.TestClassNewInSubPackage;
 import com.googlecode.bdoc.diff.domain.testpackageremoved.TestClassRepresentsGeneralBehaviourThatIsRemoved;
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -34,11 +33,10 @@ import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.TestWithGeneralBehaviour;
 
-
 public class BddGeneralBehaviourDiffDocTestdataHelper {
 
-	private final BDoc oldBddDoc = new BDoc(org.junit.Test.class, ExReference.class);
-	private final BDoc newBddDoc = new BDoc(org.junit.Test.class, ExReference.class);
+	private final BDoc oldBddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+	private final BDoc newBddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 
 	{
 		Project project = new Project("test-project", "version1");
@@ -48,8 +46,7 @@ public class BddGeneralBehaviourDiffDocTestdataHelper {
 		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
 				"givenAScenarioWhenItIsRemovedThenEnsureItIsReportedAsDeleted");
 
-		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
-				"shouldReportDeletedSpecifications");
+		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour("shouldReportDeletedSpecifications");
 
 		newBddDoc.setProject(project);
 		newBddDoc.addBehaviourFrom(new TestClass(TestClassNewInSubPackage.class), BDocTestHelper.SRC_TEST_JAVA);

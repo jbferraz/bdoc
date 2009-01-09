@@ -26,7 +26,6 @@ package com.googlecode.bdoc.diff.domain;
 
 import org.junit.Test;
 
-import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.added.TestClassRepresentsTestsThatAreAdded2;
 import com.googlecode.bdoc.diff.domain.testpackageremoved.TestClassRepresentsTestsThatAreRemoved;
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -40,22 +39,25 @@ import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.ExStory;
 
-
 public class BddUserStoryDiffDocTestdataHelper {
 
-	private final BDoc emptyBddDoc = new BDoc(org.junit.Test.class, ExReference.class);
+	private final BDoc emptyBddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 	{
 		emptyBddDoc.setProject(new Project("emptyproject", "version1"));
 	}
-	private final BDoc bddDocWithGeneralBehaviourAndAStory = new BDoc(org.junit.Test.class, ExReference.class);
-	private final BDoc bddDocWithUpdatedStory = new BDoc(org.junit.Test.class, ExReference.class);
+	private final BDoc bddDocWithGeneralBehaviourAndAStory = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+	private final BDoc bddDocWithUpdatedStory = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 
 	{
 		bddDocWithGeneralBehaviourAndAStory.setProject(new Project("test-project", "version1"));
-		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithGeneralBehaviorAndRefToStory1.class), BDocTestHelper.SRC_TEST_JAVA);
-		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithReferenceToOldStoryDescription.class), BDocTestHelper.SRC_TEST_JAVA);
-		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithReferenceToStoryThatShouldBeDeleted.class), BDocTestHelper.SRC_TEST_JAVA);
-		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestClassRepresentsTestsThatAreRemoved.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithGeneralBehaviorAndRefToStory1.class),
+				BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithReferenceToOldStoryDescription.class),
+				BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestWithReferenceToStoryThatShouldBeDeleted.class),
+				BDocTestHelper.SRC_TEST_JAVA);
+		bddDocWithGeneralBehaviourAndAStory.addBehaviourFrom(new TestClass(TestClassRepresentsTestsThatAreRemoved.class),
+				BDocTestHelper.SRC_TEST_JAVA);
 
 		bddDocWithUpdatedStory.setProject(new Project("test-test-project", "version2"));
 		bddDocWithUpdatedStory.addBehaviourFrom(new TestClass(TestWithGeneralBehaviorAndRefToStory1.class), BDocTestHelper.SRC_TEST_JAVA);

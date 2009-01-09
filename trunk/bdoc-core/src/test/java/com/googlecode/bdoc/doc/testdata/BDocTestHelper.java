@@ -28,6 +28,7 @@ import integrationtestclasses.stack.StackBehavior;
 
 import java.io.File;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -64,7 +65,7 @@ public class BDocTestHelper {
 	}
 
 	public static BDoc bdocWithProject() {
-		BDoc bdoc = new BDoc(org.junit.Test.class, ExReference.class);
+		BDoc bdoc = new BDoc(Test.class, ExReference.class, Ignore.class);
 		bdoc.setProject(testProject());
 		return bdoc;
 	}
@@ -136,7 +137,7 @@ public class BDocTestHelper {
 		}
 	}
 
-	public static Scenario addScenario(BDoc bdoc) {		
+	public static Scenario addScenario(BDoc bdoc) {
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), SRC_TEST_JAVA);
 		ClassBehaviour classBehaviour = bdoc.classBehaviourInGeneralBehaviour(TestClassWithOneScenario.class);
 		return classBehaviour.getScenarios().get(0);

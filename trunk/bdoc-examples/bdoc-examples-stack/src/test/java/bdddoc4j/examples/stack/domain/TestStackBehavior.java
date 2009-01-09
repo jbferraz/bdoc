@@ -27,6 +27,8 @@ package bdddoc4j.examples.stack.domain;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import bdddoc4j.examples.Ref;
@@ -152,5 +154,11 @@ public class TestStackBehavior {
 		int sizeAfter = stack.size();
 		thenThatObjectShouldBeReturned(VALUE_1, peeked);
 		thenTheValueShouldRemainInTheStack(sizeBefore, sizeAfter);
+	}
+
+	@Ignore
+	@Test
+	public void shouldIgnoreMe() {
+		Assert.assertTrue(true);
 	}
 }

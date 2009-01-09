@@ -36,11 +36,9 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.TestClass;
-import com.googlecode.bdoc.doc.report.HtmlReport;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.RefClass;
-
 
 /**
  * @author Per Otto Bergum Christensen
@@ -52,7 +50,7 @@ public class TestTextRenderingInHtmlReport {
 	private String html;
 
 	public TestTextRenderingInHtmlReport() throws IOException {
-		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
+		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDoc.setProject(BDocTestHelper.testProject());
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithASpecification.class), BDocTestHelper.SRC_TEST_JAVA);
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithAStatement.class), BDocTestHelper.SRC_TEST_JAVA);

@@ -32,7 +32,6 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.BddUserStoryDiffDocTestdataHelper.TestWithOnlyGeneralBehaviourContent;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Project;
@@ -40,7 +39,6 @@ import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.ExStory;
-
 
 @Ref(Story.DIFF_OF_BDOCS)
 public class TestBddDocDiff {
@@ -67,16 +65,16 @@ public class TestBddDocDiff {
 
 	@Test
 	public void shouldNotListStoriesAsUpdatedWhereThereIsNoDiff() {
-		BDocDiff diff = new BDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithGeneralBehaviourAndAStory);		
+		BDocDiff diff = new BDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithGeneralBehaviourAndAStory);
 		assertTrue(diff.getUpdatedStories().isEmpty());
 	}
 
 	@Test
 	public void shouldReportDiffForChangedGeneralBehaviour() {
-		BDoc bddDocV1 = new BDoc(org.junit.Test.class, ExReference.class);
+		BDoc bddDocV1 = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDocV1.setProject(new Project("name", "1"));
 
-		BDoc bddDocV2 = new BDoc(org.junit.Test.class, ExReference.class);
+		BDoc bddDocV2 = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDocV2.setProject(new Project("name", "1"));
 
 		bddDocV2.addBehaviourFrom(new TestClass(TestWithOnlyGeneralBehaviourContent.class), BDocTestHelper.SRC_TEST_JAVA);

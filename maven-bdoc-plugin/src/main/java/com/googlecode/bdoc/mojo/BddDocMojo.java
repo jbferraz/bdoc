@@ -66,6 +66,12 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	private String testAnnotationClassName;
 
 	/**
+	 * @parameter default-value="org.junit.Ignore"
+	 * @required
+	 */
+	private String ignoreAnnotationClassName;
+
+	/**
 	 * @parameter
 	 */
 	private String storyRefAnnotationClassName;
@@ -86,7 +92,8 @@ public class BddDocMojo extends AbstractBddDocMojo {
 	protected String[] excludes;
 
 	/**
-	 * @parameter default-value="com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
+	 * @parameter default-value=
+	 *            "com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
 	 * @required
 	 */
 	private String scenarioFormatterClassName;
@@ -166,5 +173,9 @@ public class BddDocMojo extends AbstractBddDocMojo {
 
 	public void setScenarioFormatterClassName(String scenarioFormatterClassName) {
 		this.scenarioFormatterClassName = scenarioFormatterClassName;
+	}
+
+	public void setIgnoreAnnotationClassName(String ignoreAnnotationClassName) {
+		this.ignoreAnnotationClassName = ignoreAnnotationClassName;
 	}
 }

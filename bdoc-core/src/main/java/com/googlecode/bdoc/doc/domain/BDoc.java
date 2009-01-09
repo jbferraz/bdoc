@@ -39,7 +39,6 @@ import org.apache.commons.lang.Validate;
 
 import com.googlecode.bdoc.doc.util.ClassesDirectory;
 
-
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -47,6 +46,7 @@ public class BDoc {
 
 	private static final String TEST_METHOD_PREFIX = "test";
 	protected transient Class<? extends Annotation> testAnnotation;
+	protected transient Class<? extends Annotation> ignoreAnnotation;
 	protected transient Class<? extends Annotation> storyRefAnnotation;
 
 	protected Project project;
@@ -68,9 +68,11 @@ public class BDoc {
 	 * @param storyRefAnnotation
 	 *            marks method as something with a reference to story
 	 */
-	public BDoc(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> storyRefAnnotation) {
+	public BDoc(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> storyRefAnnotation,
+			Class<? extends Annotation> ignoreAnnotation) {
 		this.testAnnotation = testAnnotation;
 		this.storyRefAnnotation = storyRefAnnotation;
+		this.ignoreAnnotation = ignoreAnnotation;
 	}
 
 	/**
@@ -82,6 +84,10 @@ public class BDoc {
 
 		if ((null != storyRefAnnotation) && (testClass.isAnnotationPresent(storyRefAnnotation))) {
 			userStory = userStory(testClass.getAnnotation(storyRefAnnotation));
+		}
+
+		if (classIsAnnotatedWithIgnore(testClass)) {
+			return;
 		}
 
 		for (Method method : testClass.getMethods()) {
@@ -108,6 +114,10 @@ public class BDoc {
 		}
 	}
 
+	private boolean classIsAnnotatedWithIgnore(TestClass testClass) {
+		return (null != ignoreAnnotation) && (testClass.isAnnotationPresent(ignoreAnnotation));
+	}
+
 	/**
 	 * Tells if the metod is a testMethod
 	 * 
@@ -117,15 +127,25 @@ public class BDoc {
 	 */
 	private boolean test(Method method) {
 		if ((null != testAnnotation) && method.isAnnotationPresent(testAnnotation)) {
-			return true;
+			if ((null != ignoreAnnotation) && !method.isAnnotationPresent(ignoreAnnotation)) {
+				return true;
+			}
 		}
 
+		boolean testMethod = false;
+		boolean ignore = false;
 		Annotation[] annotations = method.getAnnotations();
 		for (Annotation annotation : annotations) {
 			String name = annotation.annotationType().getName();
 			if (name.endsWith(".Test")) {
-				return true;
+				testMethod = true;
+			} else if (name.endsWith(".Ignore")) {
+				ignore = true;
 			}
+		}
+
+		if (testMethod && !ignore) {
+			return true;
 		}
 
 		if (method.getName().startsWith(TEST_METHOD_PREFIX)) {

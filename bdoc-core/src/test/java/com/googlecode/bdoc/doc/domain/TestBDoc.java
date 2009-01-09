@@ -31,23 +31,16 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.domain.ClassBehaviour;
-import com.googlecode.bdoc.doc.domain.Package;
-import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.domain.Specification;
-import com.googlecode.bdoc.doc.domain.TestClass;
-import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.ExReference2;
 import com.googlecode.bdoc.doc.testdata.ExStory;
 import com.googlecode.bdoc.doc.testdata.TestClassWithExStory2Reference;
-
 
 /**
  * @author Per Otto Bergum Christensen
@@ -59,18 +52,18 @@ public class TestBDoc {
 
 	@Before
 	public void resetBddDoc() {
-		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
+		bddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedMethods.class), BDocTestHelper.SRC_TEST_JAVA);
 		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BDocTestHelper.SRC_TEST_JAVA);
 	}
 
 	@Test
 	public void shouldRunWithAStoryRefAnnotation() {
-		bddDoc = new BDoc(org.junit.Test.class, null);
+		bddDoc = new BDoc(org.junit.Test.class, null, org.junit.Ignore.class);
 		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedMethods.class), BDocTestHelper.SRC_TEST_JAVA);
 		bddDoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BDocTestHelper.SRC_TEST_JAVA);
 	}
-	
+
 	@Test
 	public void givenATestclassWhenTheTestclassIsAnnotatedWithAReferenceToAStoryThenEnsureTheStoryIsCreated() {
 		assertTrue(bddDoc.getUserstories().contains(new UserStory(ExStory.STORY3)));
@@ -96,7 +89,7 @@ public class TestBDoc {
 
 	@Test
 	public void shouldExtractBehaviourFromMetodsAnnotatedWithAnAnnotationClassCalledTest() {
-		BDoc bdoc = new BDoc(null, null);
+		BDoc bdoc = new BDoc(null, null, null);
 		bdoc.addBehaviourFrom(new TestClass(TestTestsAnnotatedWithTest.class), BDocTestHelper.SRC_TEST_JAVA);
 		Specification specification = bdoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
 				.get(0);
@@ -106,7 +99,7 @@ public class TestBDoc {
 
 	@Test
 	public void shouldExtractBehaviourFromMetodsStartingWithTheWordTest() {
-		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
+		bddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDoc.addBehaviourFrom(new TestClass(TestExampleJunit3.class), BDocTestHelper.SRC_TEST_JAVA);
 
 		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
@@ -142,14 +135,14 @@ public class TestBDoc {
 
 	@Test
 	public void shouldIgnoreClassesThatAreNotTests() {
-		bddDoc = new BDoc(org.junit.Test.class, Ref.class);
+		bddDoc = new BDoc(org.junit.Test.class, Ref.class, org.junit.Ignore.class);
 		bddDoc.addBehaviourFrom(new TestClass(Ref.class), BDocTestHelper.SRC_TEST_JAVA);
 		assertEquals(0, bddDoc.getUserstories().size());
 	}
 
 	@Test
 	public void shouldHandleStoryReferencesThatDoesNotImplementUserStoryDescriptionDirectly() {
-		bddDoc = new BDoc(org.junit.Test.class, ExReference2.class);
+		bddDoc = new BDoc(org.junit.Test.class, ExReference2.class, org.junit.Ignore.class);
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithExStory2Reference.class), BDocTestHelper.SRC_TEST_JAVA);
 		assertEquals("Test story", bddDoc.getUserstories().get(0).getTitle());
 	}
@@ -161,14 +154,14 @@ public class TestBDoc {
 
 	@Test
 	public void givenATestClassWithNoReferenceToAStoryWhenBdddocIsGeneratedThenTheSpecifiedBehaviourShouldNotBeAddedToAnyStories() {
-		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
+		bddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BDocTestHelper.SRC_TEST_JAVA);
 		assertEquals(0, bddDoc.getUserstories().size());
 	}
 
 	@Test
 	public void givenATestClassWithNoReferenceToAStoryWhenBdddocIsGeneratedThenTheSpecifiedBehaviourShouldBeAddedToGeneralBehaviour() {
-		bddDoc = new BDoc(org.junit.Test.class, ExReference.class);
+		bddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BDocTestHelper.SRC_TEST_JAVA);
 
 		assertTrue(bddDoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
@@ -181,6 +174,29 @@ public class TestBDoc {
 	@Test
 	public void shouldFindPackageOfAddedTestClassWithBehaviour() {
 		assertTrue(bddDoc.userStoryFor(ExStory.STORY1).getPackages().contains(Package.forClass(TestExampleAnnotatedClass.class)));
+	}
+
+	@Test
+	public void shouldIgnoreMethodsAnnotatedWithIgnore() {
+		bddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleIgnoreMethods.class), BDocTestHelper.SRC_TEST_JAVA);
+		GeneralBehaviour behaviour = bddDoc.getGeneralBehaviour();
+		List<Package> packages = behaviour.getPackages();
+		Package package1 = packages.get(0);
+		List<ClassBehaviour> classBehaviours = package1.getClassBehaviour();
+		ClassBehaviour classBehaviour = classBehaviours.get(0);
+		assertEquals(0, classBehaviour.getScenarios().size());
+		assertEquals(1, classBehaviour.getSpecifications().size());
+		assertEquals(0, classBehaviour.getStatements().size());
+	}
+
+	@Test
+	public void shouldIgnoreClassAnnotatedWithIgnore() {
+		bddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		bddDoc.addBehaviourFrom(new TestClass(TestExampleIgnoreClass.class), BDocTestHelper.SRC_TEST_JAVA);
+		GeneralBehaviour behaviour = bddDoc.getGeneralBehaviour();
+		List<Package> packages = behaviour.getPackages();
+		assertEquals(0, packages.size());
 	}
 
 	/**
@@ -256,6 +272,36 @@ public class TestBDoc {
 		@Test
 		@ExReference(ExStory.STORY2)
 		public void shouldBehaveLikeThisIfThat() {
+		}
+	}
+
+	/**
+	 * Testdata
+	 */
+	public class TestExampleIgnoreMethods {
+
+		@Test
+		public void shouldBeAnnotatedWithTest() {
+		}
+
+		@Ignore
+		public void shouldBeAnnotatedWithIgnore() {
+		}
+
+		@Test
+		@Ignore
+		public void shouldBeAnnotatedWithTestAndIgnore() {
+		}
+	}
+
+	/**
+	 * Testdata
+	 */
+	@Ignore
+	public class TestExampleIgnoreClass {
+
+		@Test
+		public void shouldBeAnnotatedWithTest() {
 		}
 	}
 }

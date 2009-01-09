@@ -31,11 +31,14 @@ import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Project;
 import com.googlecode.bdoc.doc.util.ClassesDirectory;
 
-
 public class BDocReportImpl implements BDocReportInterface {
 
-	/* (non-Javadoc)
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#setScenarioLinesFormatter(com.googlecode.bdoc.doc.report.ScenarioLinesFormatter)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.googlecode.bdoc.doc.report.BDocReport#setScenarioLinesFormatter(com
+	 * .googlecode.bdoc.doc.report.ScenarioLinesFormatter)
 	 */
 	public void setScenarioLinesFormatter(ScenarioLinesFormatter scenarioLinesFormatter) {
 		this.scenarioLinesFormatter = scenarioLinesFormatter;
@@ -48,6 +51,7 @@ public class BDocReportImpl implements BDocReportInterface {
 	private ClassLoader classLoader;
 	private Class<? extends Annotation> storyRefAnnotation;
 	private Class<? extends Annotation> testAnnotation;
+	private Class<? extends Annotation> ignoreAnnotation;
 	private String html, xml;
 	private ScenarioLinesFormatter scenarioLinesFormatter;
 
@@ -55,67 +59,100 @@ public class BDocReportImpl implements BDocReportInterface {
 		super();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#setProjectName(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.googlecode.bdoc.doc.report.BDocReport#setProjectName(java.lang.String
+	 * )
 	 */
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#setProjectVersion(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.googlecode.bdoc.doc.report.BDocReport#setProjectVersion(java.lang
+	 * .String)
 	 */
 	public void setProjectVersion(String projectVersion) {
 		this.projectVersion = projectVersion;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#setTestClassDirectory(java.io.File)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.googlecode.bdoc.doc.report.BDocReport#setTestClassDirectory(java.
+	 * io.File)
 	 */
 	public void setTestClassDirectory(File testClassDirectory) {
 		classesDirectory.setBaseDir(testClassDirectory);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#setIncludesFilePattern(java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.googlecode.bdoc.doc.report.BDocReport#setIncludesFilePattern(java
+	 * .lang.String[])
 	 */
 	public void setIncludesFilePattern(String[] includesFilePattern) {
 		classesDirectory.setIncludes(includesFilePattern);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#setExcludesFilePattern(java.lang.String[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.googlecode.bdoc.doc.report.BDocReport#setExcludesFilePattern(java
+	 * .lang.String[])
 	 */
 	public void setExcludesFilePattern(String[] excludesFilePattern) {
 		classesDirectory.setExcludes(excludesFilePattern);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#setClassLoader(java.lang.ClassLoader)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seecom.googlecode.bdoc.doc.report.BDocReport#setClassLoader(java.lang.
+	 * ClassLoader)
 	 */
 	public void setClassLoader(ClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#setStoryRefAnnotation(java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.googlecode.bdoc.doc.report.BDocReport#setStoryRefAnnotation(java.
+	 * lang.Class)
 	 */
 	public void setStoryRefAnnotation(Class<? extends Annotation> storyRefAnnotation) {
 		this.storyRefAnnotation = storyRefAnnotation;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#setTestAnnotation(java.lang.Class)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.googlecode.bdoc.doc.report.BDocReport#setTestAnnotation(java.lang
+	 * .Class)
 	 */
 	public void setTestAnnotation(Class<? extends Annotation> testAnnotation) {
 		this.testAnnotation = testAnnotation;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.googlecode.bdoc.doc.report.BDocReport#run(java.io.File)
 	 */
-	public BDoc run(File testSrcDir)  {
-		BDoc bdoc = new BDoc(testAnnotation, storyRefAnnotation);
+	public BDoc run(File testSrcDir) {
+		BDoc bdoc = new BDoc(testAnnotation, storyRefAnnotation, ignoreAnnotation);
 		bdoc.setProject(new Project(projectName, projectVersion));
 		bdoc.addBehaviourFrom(classesDirectory, classLoader, testSrcDir);
 
@@ -129,17 +166,25 @@ public class BDocReportImpl implements BDocReportInterface {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.googlecode.bdoc.doc.report.BDocReport#getHtml()
 	 */
 	public String getHtml() {
 		return html;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.googlecode.bdoc.doc.report.BDocReport#getXml()
 	 */
 	public String getXml() {
 		return xml;
+	}
+
+	public void setIgnoreAnnotation(Class<? extends Annotation> ignoreAnnotation) {
+		this.ignoreAnnotation = ignoreAnnotation;
 	}
 }

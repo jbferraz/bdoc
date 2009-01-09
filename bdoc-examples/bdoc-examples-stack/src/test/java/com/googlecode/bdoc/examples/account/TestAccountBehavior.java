@@ -26,6 +26,7 @@ package com.googlecode.bdoc.examples.account;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import bdddoc4j.examples.Ref;
@@ -36,11 +37,35 @@ public class TestAccountBehavior {
 
 	private Account account;
 
+	@Before
+	public void setUp() {
+		account = null;
+	}
+
 	@Test
 	public void shouldAddDepositToBalance() {
 		givenAnAccountWithInitialBalanceEqualsTo0();
 		when100AreDepositToAccount();
 		thenShouldBalanceBeEqualTo100();
+	}
+
+	@Test
+	public void shouldAddDepositToBalanceInAnotherWay() {
+		givenAnAccountWithInitialBalanceEqualsTo(0);
+		whenDepositAreCalledWith(100);
+		thenShouldBalanceBeEqualTo(100);
+	}
+
+	private void thenShouldBalanceBeEqualTo(int balance) {
+		assertEquals(balance, account.balance());
+	}
+
+	private void whenDepositAreCalledWith(int amount) {
+		account.deposit(amount);
+	}
+
+	private void givenAnAccountWithInitialBalanceEqualsTo(int initialBalance) {
+		account = new Account(initialBalance);
 	}
 
 	private void givenAnAccountWithInitialBalanceEqualsTo0() {

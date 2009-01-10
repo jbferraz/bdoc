@@ -25,6 +25,8 @@
 package com.googlecode.bdoc.mojo;
 
 import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Locale;
 
 import org.apache.maven.reporting.MavenReportException;
@@ -35,7 +37,17 @@ import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
 
+/**
+ * @goal ci
+ * @requiresDependencyResolution test
+ * @execute phase=test-compile
+ * @phase test-compile
+ * 
+ * @author Per Otto Bergum Christensen
+ */
 public class ChangeLogMojo extends AbstractBddDocMojo {
+
+	private static final String BDOC_DIR = "bdoc";
 
 	public static final String BDOC_CHANGE_LOG_XML = "bdoc-change-log.xml";
 
@@ -59,6 +71,9 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 	 */
 	String[] includes;
 
+	/**
+	 * Specifies where to save to changelog
+	 */
 	String changeLogDirectoryPath;
 
 	BDocReportInterface bdocReport = new BDocReportImpl();
@@ -68,8 +83,8 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 
 		bdocReport.setTestClassDirectory(testClassDirectory);
 
-		bdocReport.setClassLoader(getClass().getClassLoader());
-		bdocReport.setProjectInfo ( new ProjectInfo( "projectName", "projectVersion") );
+		bdocReport.setClassLoader(getClassLoader());
+		bdocReport.setProjectInfo(new ProjectInfo("projectName", "projectVersion"));
 
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 
@@ -77,7 +92,26 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 
 		changeLog.scan(bdoc);
 
-		changeLog.writeToFile(getBDocChangeLogFile());
+		File docChangeLogFile = getBDocChangeLogFile();
+		
+		getLog().info( "Writing to file: " + docChangeLogFile );
+		
+		changeLog.writeToFile(docChangeLogFile);
+	}
+
+	protected ClassLoader getClassLoader() {
+
+		try {
+			return new URLClassLoader(new URL[0], getClass().getClassLoader()) {
+				{
+					for (Object filePath : getProject().getTestClasspathElements()) {
+						addURL(new File(filePath.toString()).toURI().toURL());
+					}
+				}
+			};
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public String getDescription(Locale arg0) {
@@ -93,6 +127,16 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 	}
 
 	public File getBDocChangeLogFile() {
-		return new File(new File(changeLogDirectoryPath), BDOC_CHANGE_LOG_XML);
+		File dir = new File(getBDocChangeLogRootDirectoryPath(), getProject().getGroupId() + "/" + getProject().getArtifactId() );
+		
+		return new File( dir , getBDocChangeLogFileName() );
+	}
+
+	String getBDocChangeLogRootDirectoryPath() {
+		return System.getProperty("user.home") + "/" + BDOC_DIR;
+	}
+
+	String getBDocChangeLogFileName() {
+		return BDOC_CHANGE_LOG_XML;
 	}
 }

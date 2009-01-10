@@ -25,10 +25,13 @@
 package com.googlecode.bdoc.mojo;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 
+import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.MavenReportException;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -48,10 +51,21 @@ public class TestChangeLogMojo {
 	private BDocReportInterface bdocReport;
 	private BDoc bdoc;
 
-	private ChangeLogMojo changeLogMojo = new ChangeLogMojo();
+	private ChangeLogMojo changeLogMojo = new ChangeLogMojo() {
+		@Override
+		String getBDocChangeLogRootDirectoryPath() {
+			return TARGET;
+		}
+
+		@Override
+		String getBDocChangeLogFileName() {
+			return "fileName.xml";
+		}
+	};
 
 	public TestChangeLogMojo() {
 		changeLogMojo.changeLogDirectoryPath = TARGET;
+		changeLogMojo.project = new MavenProjectMock();
 	}
 
 	public void initalizeBDocReportMock() {
@@ -65,7 +79,7 @@ public class TestChangeLogMojo {
 			{
 				one(bdocReport).setTestClassDirectory(null);
 				one(bdocReport).setClassLoader(with(any(ClassLoader.class)));
-				one(bdocReport).setProjectInfo(with (any(ProjectInfo.class)));
+				one(bdocReport).setProjectInfo(with(any(ProjectInfo.class)));
 				one(bdocReport).run(null);
 				will(returnValue(bdoc));
 			}
@@ -89,4 +103,20 @@ public class TestChangeLogMojo {
 		assertEquals(bdoc.getProject(), updatedChangeLog.latestBDoc().getProject());
 	}
 
+	@Test
+	public void shouldUseTheUserHomeDirectoryConcatenatedWithBDocAsRootDirectoryForPersistedBDocChangeLogs() {
+		assertEquals(System.getProperty("user.home") + "/bdoc", new ChangeLogMojo().getBDocChangeLogRootDirectoryPath());
+	}
+
+	@Test
+	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
+		MavenProject mavenProject = new MavenProject();
+		mavenProject.setGroupId("groupId");
+		mavenProject.setArtifactId("artifactId");
+
+		changeLogMojo.project = mavenProject;
+
+		File expectedChangeLogFile = new File("target/groupId/artifactId/fileName.xml");
+		assertEquals(expectedChangeLogFile, changeLogMojo.getBDocChangeLogFile());
+	}
 }

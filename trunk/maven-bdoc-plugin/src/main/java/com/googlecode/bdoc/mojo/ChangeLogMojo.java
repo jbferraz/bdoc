@@ -126,9 +126,8 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 		return "changelog";
 	}
 
-	public File getBDocChangeLogFile() {
+	File getBDocChangeLogFile() {
 		File dir = new File(getBDocChangeLogRootDirectoryPath(), getProject().getGroupId() + "/" + getProject().getArtifactId() );
-		
 		return new File( dir , getBDocChangeLogFileName() );
 	}
 

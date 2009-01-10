@@ -27,7 +27,10 @@ package com.googlecode.bdoc.mojo;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.MavenReportException;
 import org.junit.Test;
 
@@ -41,6 +44,7 @@ public class TestChangeLogMojoBehaviour {
 
 	public TestChangeLogMojoBehaviour() {
 		changeLogMojo.changeLogDirectoryPath = TestChangeLogMojo.TARGET;
+		changeLogMojo.project = new MavenProjectMock();
 	}
 
 	@Test

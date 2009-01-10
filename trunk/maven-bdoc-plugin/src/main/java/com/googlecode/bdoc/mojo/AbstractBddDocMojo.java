@@ -45,7 +45,7 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 	 * @required
 	 * @readonly
 	 */
-	private MavenProject project;
+	MavenProject project;
 	
 	/**
 	 * @parameter
@@ -110,7 +110,4 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 	protected SiteRenderer getSiteRenderer() {
 		return siteRenderer;
 	}
-	
-	
-
 }

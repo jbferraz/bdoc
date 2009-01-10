@@ -65,7 +65,13 @@ public class TestChangeLogMojo {
 
 	public TestChangeLogMojo() {
 		changeLogMojo.changeLogDirectoryPath = TARGET;
-		changeLogMojo.project = new MavenProjectMock();
+
+		MavenProject mavenProject = new MavenProjectMock();
+		mavenProject.setGroupId("groupId");
+		mavenProject.setArtifactId("artifactId");
+
+		changeLogMojo.project = mavenProject;
+
 	}
 
 	public void initalizeBDocReportMock() {
@@ -110,12 +116,6 @@ public class TestChangeLogMojo {
 
 	@Test
 	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
-		MavenProject mavenProject = new MavenProject();
-		mavenProject.setGroupId("groupId");
-		mavenProject.setArtifactId("artifactId");
-
-		changeLogMojo.project = mavenProject;
-
 		File expectedChangeLogFile = new File("target/groupId/artifactId/fileName.xml");
 		assertEquals(expectedChangeLogFile, changeLogMojo.getBDocChangeLogFile());
 	}

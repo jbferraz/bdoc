@@ -31,10 +31,10 @@ import java.io.File;
 
 import org.apache.maven.project.MavenProject;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter;
-import com.googlecode.bdoc.mojo.BddDocMojo;
 
 public class TestBddDocMojo {
 
@@ -64,9 +64,10 @@ public class TestBddDocMojo {
 		MavenProject project = new MavenProject();
 		bddDocMojo.setProject(project);
 		bddDocMojo.setTestAnnotationClassName(Test.class.getName());
+		bddDocMojo.setIgnoreAnnotationClassName(Ignore.class.getName());
 		bddDocMojo.setTestClassDirectory(new File("target/test-classes"));
-		bddDocMojo.testSourceDirectory = new File( "src/test/java");
-		
+		bddDocMojo.testSourceDirectory = new File("src/test/java");
+
 	}
 
 	@Test

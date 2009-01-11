@@ -35,7 +35,7 @@ public interface BDocReportInterface {
 	public abstract void setScenarioLinesFormatter(ScenarioLinesFormatter scenarioLinesFormatter);
 
 	public void setProjectInfo(ProjectInfo projectInfo);
-	
+
 	public abstract void setTestClassDirectory(File testClassDirectory);
 
 	public abstract void setIncludesFilePattern(String[] includesFilePattern);
@@ -47,6 +47,8 @@ public interface BDocReportInterface {
 	public abstract void setStoryRefAnnotation(Class<? extends Annotation> storyRefAnnotation);
 
 	public abstract void setTestAnnotation(Class<? extends Annotation> testAnnotation);
+
+	public abstract void setIgnoreAnnotation(Class<? extends Annotation> ignoreAnnotation);
 
 	public abstract BDoc run(File testSrcDir);
 

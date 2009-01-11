@@ -34,8 +34,8 @@ import java.util.Locale;
 import org.apache.maven.reporting.MavenReportException;
 
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
-import com.googlecode.bdoc.doc.report.BDocReportInterface;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
+import com.googlecode.bdoc.doc.report.BDocReportInterface;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 
 /**
@@ -112,16 +112,16 @@ public class BddDocMojo extends AbstractBddDocMojo {
 		ClassLoader classLoader = getClassLoader();
 		BDocReportInterface bdocReport = new BDocReportImpl();
 
-		bdocReport.setProjectInfo(new ProjectInfo( getProject().getName(), getProject().getVersion()));
+		bdocReport.setProjectInfo(new ProjectInfo(getProject().getName(), getProject().getVersion()));
 		bdocReport.setClassLoader(classLoader);
 		bdocReport.setTestClassDirectory(testClassDirectory);
 		bdocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
+		bdocReport.setIgnoreAnnotation((Class<? extends Annotation>) classLoader.loadClass(ignoreAnnotationClassName));
 		bdocReport.setIncludesFilePattern(includes);
 		bdocReport.setExcludesFilePattern(excludes);
 
 		if (null != scenarioFormatterClassName) {
-			bdocReport
-					.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName).newInstance());
+			bdocReport.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName).newInstance());
 		}
 
 		if (null != storyRefAnnotationClassName) {

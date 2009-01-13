@@ -24,33 +24,12 @@
 
 package com.googlecode.bdoc.doc.util;
 
-import java.util.List;
+public class ItemInListNotFoundException extends RuntimeException {
 
-/**
- * @author Per Otto Bergum Christensen
- */
-public class Select<T> {
+	private static final long serialVersionUID = 1L;
 
-	private List<T> list;
-
-	private Select(List<T> list) {
-		this.list = list;
+	public ItemInListNotFoundException(Object object, StringBuilder listDescription) {
+		super( "Object [" + object + "] not found in list " + listDescription );
 	}
 
-	public static <T> Select<T> from(List<T> list) {
-		return new Select<T>(list);
-	}
-
-	public T equalTo(T object) {
-		if (!list.contains(object)) {
-			StringBuilder listDescription = new StringBuilder();
-			for (T element : list) {
-				listDescription.append("[");
-				listDescription.append(element);
-				listDescription.append("]");
-			}
-			throw new ItemInListNotFoundException(object,listDescription);
-		}
-		return list.get(list.indexOf(object));
-	}
 }

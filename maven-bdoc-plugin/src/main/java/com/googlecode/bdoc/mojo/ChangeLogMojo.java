@@ -77,6 +77,14 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 	String[] includes;
 
 	/**
+	 * Specifies files, which are excluded in the check. By default, no files
+	 * are excluded.
+	 * 
+	 * @parameter
+	 */
+	protected String[] excludes;
+
+	/**
 	 * Specifies where to save to changelog, optional
 	 * 
 	 * @parameter
@@ -88,15 +96,15 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 	@Override
 	protected void executeReport(Locale arg0) throws MavenReportException {
 
+		bdocReport.setIncludesFilePattern(includes);
+		bdocReport.setExcludesFilePattern(excludes);
 		bdocReport.setTestClassDirectory(testClassDirectory);
-
 		bdocReport.setClassLoader(getClassLoader());
 		bdocReport.setProjectInfo(new ProjectInfo("projectName", "projectVersion"));
 
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 
-		writeReport(BDOC_REPORT_HTML, new HtmlReport(bdoc).html());
-
+		// TODO, don't new each time, check on disk first
 		ChangeLog changeLog = new ChangeLog();
 
 		changeLog.scan(bdoc);
@@ -104,14 +112,16 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 		File docChangeLogFile = getBDocChangeLogFile();
 
 		getLog().info("Writing to file: " + docChangeLogFile);
-
 		changeLog.writeToFile(docChangeLogFile);
-
+		
+		writeReport(BDOC_REPORT_HTML, new HtmlReport(bdoc).html());
 	}
 
 	private void writeReport(String fileName, String reportHtmlContent) {
 		try {
-			FileUtils.writeStringToFile(new File(outputDirectory, fileName), reportHtmlContent);
+			File file = new File(outputDirectory, fileName);
+			getLog().info("Writing to file: " + fileName );
+			FileUtils.writeStringToFile(file, reportHtmlContent);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

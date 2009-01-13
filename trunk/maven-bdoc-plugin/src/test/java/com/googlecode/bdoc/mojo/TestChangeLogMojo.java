@@ -50,27 +50,17 @@ public class TestChangeLogMojo {
 	private BDocReportInterface bdocReport;
 	private BDoc bdoc;
 
-	private ChangeLogMojo changeLogMojo = new ChangeLogMojo() {
-		@Override
-		String getBDocChangeLogRootDirectoryPath() {
-			return TARGET;
-		}
-
-		@Override
-		String getBDocChangeLogFileName() {
-			return "fileName.xml";
-		}
-	};
+	private ChangeLogMojo changeLogMojo = new ChangeLogMojo();
 
 	public TestChangeLogMojo() {
 		changeLogMojo.changeLogDirectoryPath = TARGET;
+		changeLogMojo.outputDirectory = new File( TARGET );
 
 		MavenProject mavenProject = new MavenProjectMock();
 		mavenProject.setGroupId("groupId");
 		mavenProject.setArtifactId("artifactId");
 
 		changeLogMojo.project = mavenProject;
-
 	}
 
 	public void initalizeBDocReportMock() {
@@ -114,8 +104,16 @@ public class TestChangeLogMojo {
 	}
 
 	@Test
+	public void shouldChangeRootDirectoryForPersistedBDocChangesIfThisIsSpecifiedInConfiguration() {
+		ChangeLogMojo changeLogMojo2 = new ChangeLogMojo();
+		changeLogMojo2.changeLogDirectoryPath = "mypath";
+		assertEquals("mypath", changeLogMojo2.getBDocChangeLogRootDirectoryPath());
+	}
+
+	@Test
 	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
-		File expectedChangeLogFile = new File("target/groupId/artifactId/fileName.xml");
+		File expectedChangeLogFile = new File("target/groupId/artifactId/" + ChangeLogMojo.BDOC_CHANGE_LOG_XML);
 		assertEquals(expectedChangeLogFile, changeLogMojo.getBDocChangeLogFile());
 	}
+
 }

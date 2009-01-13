@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.mojo;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -44,22 +45,16 @@ public class TestChangeLogMojoBehaviour {
 		changeLogMojo.project = new MavenProjectMock();
 	}
 
-	@Test
-	@SuppressWarnings("unchecked")
-	public void shouldRunBDocOnTheProjectTestCode() throws MavenReportException {
-		givenATestSourceDirectory();
-		givenATestClassDirectory();
-		Class testClass = givenAnIncludeThatSpecifiesOneTestClass();
-		whenTheChangeLogMojoHasRun();
-		thenEnsureTheChangeLogContainsClassBehaviourSpecifiedByTheTestClass(testClass);
-	}
-
 	private void givenATestSourceDirectory() {
 		changeLogMojo.testSourceDirectory = new File("src/test/java");
 	}
 
 	private void givenATestClassDirectory() {
 		changeLogMojo.testClassDirectory = new File("target/test-classes");
+	}
+
+	private void givenAnOutputDirectory() {
+		changeLogMojo.outputDirectory = new File("target");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -81,4 +76,19 @@ public class TestChangeLogMojoBehaviour {
 		assertEquals(new ClassBehaviour(testClass), classBehaviourFromFile);
 	}
 
+	@Test
+	@SuppressWarnings("unchecked")
+	public void shouldRunBDocOnTheProjectTestCode() throws MavenReportException {
+		givenATestSourceDirectory();
+		givenATestClassDirectory();
+		givenAnOutputDirectory();
+		Class testClass = givenAnIncludeThatSpecifiesOneTestClass();
+		whenTheChangeLogMojoHasRun();
+		thenEnsureTheChangeLogContainsClassBehaviourSpecifiedByTheTestClass(testClass);
+		thenEnsureABDocHtmlReportHasBeenGenerated();
+	}
+
+	private void thenEnsureABDocHtmlReportHasBeenGenerated() {
+		assertTrue(new File("target/" + ChangeLogMojo.BDOC_REPORT_HTML).exists());
+	}
 }

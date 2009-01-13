@@ -55,7 +55,7 @@ public class TestSelect {
 		assertSame(bbb, Select.from(list).equalTo(new SomeTestType("bbb")));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = ItemInListNotFoundException.class)
 	public void shouldThrowAnExceptionIfAnIdenticalObjectIsNotFound() {
 		Select.from(list).equalTo(new SomeTestType("ddd"));
 	}

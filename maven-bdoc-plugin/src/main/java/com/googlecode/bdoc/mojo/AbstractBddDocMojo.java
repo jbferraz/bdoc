@@ -38,7 +38,7 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 	 * @parameter default-value="${project.reporting.outputDirectory}"
 	 * @required
 	 */
-	protected File outputDirectory;
+	File outputDirectory;
 
 	/**
 	 * @parameter default-value="${project}"
@@ -50,14 +50,14 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 	/**
 	 * @parameter
 	 */
-	protected File logDirectory;
+	File logDirectory;
 	
 	/**
 	 * @component
 	 * @required
 	 * @readonly
 	 */
-	private SiteRenderer siteRenderer;
+	SiteRenderer siteRenderer;
 
 	public AbstractBddDocMojo() {
 		super();

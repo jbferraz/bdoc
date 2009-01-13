@@ -73,6 +73,8 @@ public class TestChangeLogMojo {
 		context.checking(new Expectations() {
 			{
 				one(bdocReport).setTestClassDirectory(null);
+				one(bdocReport).setIncludesFilePattern(null);
+				one(bdocReport).setExcludesFilePattern(null);
 				one(bdocReport).setClassLoader(with(any(ClassLoader.class)));
 				one(bdocReport).setProjectInfo(with(any(ProjectInfo.class)));
 				one(bdocReport).run(null);
@@ -115,5 +117,6 @@ public class TestChangeLogMojo {
 		File expectedChangeLogFile = new File("target/groupId/artifactId/" + ChangeLogMojo.BDOC_CHANGE_LOG_XML);
 		assertEquals(expectedChangeLogFile, changeLogMojo.getBDocChangeLogFile());
 	}
+		
 
 }

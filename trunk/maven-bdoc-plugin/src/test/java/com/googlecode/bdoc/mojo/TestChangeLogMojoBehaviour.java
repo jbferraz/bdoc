@@ -26,6 +26,7 @@ package com.googlecode.bdoc.mojo;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 
@@ -34,8 +35,11 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.clog.ChangeLog;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
+import com.googlecode.bdoc.doc.util.ItemInListNotFoundException;
 import com.googlecode.bdoc.mojo.testdata.TestIt;
+import com.googlecode.bdoc.mojo.testdata.TestIt2;
 
+@SuppressWarnings("unchecked")
 public class TestChangeLogMojoBehaviour {
 
 	private ChangeLogMojo changeLogMojo = new ChangeLogMojo();
@@ -57,11 +61,15 @@ public class TestChangeLogMojoBehaviour {
 		changeLogMojo.outputDirectory = new File("target");
 	}
 
-	@SuppressWarnings("unchecked")
-	private Class givenAnIncludeThatSpecifiesOneTestClass() {
-		Class testClass = TestIt.class;
+	private Class givenAnIncludeThatSpecifiesOneTestClass(Class testClass) {
 		String testClassPathInclude = testClass.getName().replace('.', '/');
 		changeLogMojo.includes = new String[] { testClassPathInclude + ".class" };
+		return testClass;
+	}
+
+	private Class givenAnExcludeThatSpecifiesOneTestClass(Class testClass) {
+		String testClassPathInclude = testClass.getName().replace('.', '/');
+		changeLogMojo.excludes = new String[] { testClassPathInclude + ".class" };
 		return testClass;
 	}
 
@@ -69,26 +77,74 @@ public class TestChangeLogMojoBehaviour {
 		changeLogMojo.executeReport(null);
 	}
 
-	@SuppressWarnings("unchecked")
-	private void thenEnsureTheChangeLogContainsClassBehaviourSpecifiedByTheTestClass(Class testClass) {
-		ChangeLog changeLog = ChangeLog.fromXmlFile(changeLogMojo.getBDocChangeLogFile());
-		ClassBehaviour classBehaviourFromFile = changeLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
-		assertEquals(new ClassBehaviour(testClass), classBehaviourFromFile);
+	private void thenEnsureTheBDocContainsClassBehaviourSpecifiedByTheTestClass(Class testClass) {
+		bdocInChangeLogShouldContain(testClass);
 	}
 
-	@Test
-	@SuppressWarnings("unchecked")
-	public void shouldRunBDocOnTheProjectTestCode() throws MavenReportException {
-		givenATestSourceDirectory();
-		givenATestClassDirectory();
-		givenAnOutputDirectory();
-		Class testClass = givenAnIncludeThatSpecifiesOneTestClass();
-		whenTheChangeLogMojoHasRun();
-		thenEnsureTheChangeLogContainsClassBehaviourSpecifiedByTheTestClass(testClass);
-		thenEnsureABDocHtmlReportHasBeenGenerated();
+	private void thenEnsureTheBDocContainsBehaviourFromOtherTestClasses(Class<TestIt2> testClass) {
+		bdocInChangeLogShouldContain(testClass);
+	}
+
+	private void thenEnsureTheChangeLogDoesNotContainBehaviourFromOtherTestClasses(Class testClass) {
+		bdocInChangeLogShouldNotContain(testClass);
+	}
+
+	private void thenEnsureTheChangeLogDoesNotContainClassBehaviourSpecifiedByTheTestClass(Class testClass) {
+		bdocInChangeLogShouldNotContain(testClass);
 	}
 
 	private void thenEnsureABDocHtmlReportHasBeenGenerated() {
 		assertTrue(new File("target/" + ChangeLogMojo.BDOC_REPORT_HTML).exists());
 	}
+
+	@Test
+	public void shouldRunBDocOnTheProjectTestCode() throws MavenReportException {
+		givenATestSourceDirectory();
+		givenATestClassDirectory();
+		givenAnOutputDirectory();
+		givenAnIncludeThatSpecifiesOneTestClass(TestIt.class);
+		whenTheChangeLogMojoHasRun();
+		thenEnsureABDocHtmlReportHasBeenGenerated();
+	}
+
+	@Test
+	public void shouldIncludeTestsThatAreSpecified() throws MavenReportException {
+		givenATestSourceDirectory();
+		givenATestClassDirectory();
+		givenAnOutputDirectory();
+		Class testClass = givenAnIncludeThatSpecifiesOneTestClass(TestIt.class);
+		whenTheChangeLogMojoHasRun();
+		thenEnsureTheBDocContainsClassBehaviourSpecifiedByTheTestClass(testClass);
+		thenEnsureTheChangeLogDoesNotContainBehaviourFromOtherTestClasses(TestIt2.class);
+	}
+
+	@Test
+	public void shouldExcludeTestsThatAreSpecified() throws MavenReportException {
+		givenATestSourceDirectory();
+		givenATestClassDirectory();
+		givenAnOutputDirectory();
+		Class testClass = givenAnExcludeThatSpecifiesOneTestClass(TestIt.class);
+		whenTheChangeLogMojoHasRun();
+		thenEnsureTheChangeLogDoesNotContainClassBehaviourSpecifiedByTheTestClass(testClass);
+		thenEnsureTheBDocContainsBehaviourFromOtherTestClasses(TestIt2.class);
+	}
+
+	// --------------------------------------------------------------------------------------------
+
+	private void bdocInChangeLogShouldContain(Class testClass) {
+		ChangeLog changeLog = ChangeLog.fromXmlFile(changeLogMojo.getBDocChangeLogFile());
+		ClassBehaviour classBehaviourFromFile = changeLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
+		assertEquals(new ClassBehaviour(testClass), classBehaviourFromFile);
+	}
+
+	private void bdocInChangeLogShouldNotContain(Class testClass) {
+		ChangeLog changeLog = ChangeLog.fromXmlFile(changeLogMojo.getBDocChangeLogFile());
+		try {
+			changeLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
+			fail( "testclass did exist in bdoc: " + testClass );
+		} catch (ItemInListNotFoundException e) {
+			// should occur
+		}
+	}
+
 }

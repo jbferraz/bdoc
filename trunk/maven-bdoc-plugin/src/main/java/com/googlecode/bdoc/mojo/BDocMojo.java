@@ -90,6 +90,13 @@ public class BDocMojo extends AbstractBddDocMojo {
 	 * @required
 	 */
 	String testAnnotationClassName;
+	
+	/**
+	 * @parameter default-value="org.junit.Ignore"
+	 * @required
+	 */
+	String ignoreAnnotationClassName;
+	
 
 	/**
 	 * Specifies where to save to changelog, optional
@@ -118,8 +125,13 @@ public class BDocMojo extends AbstractBddDocMojo {
 		bdocReport.setTestClassDirectory(testClassDirectory);
 
 		bdocReport.setClassLoader(classLoader);
+		
+		//TODO
 		bdocReport.setProjectInfo(new ProjectInfo("projectName", "projectVersion"));
+
+		
 		bdocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
+		bdocReport.setIgnoreAnnotation((Class<? extends Annotation>) classLoader.loadClass(ignoreAnnotationClassName));
 
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 

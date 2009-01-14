@@ -31,6 +31,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 
 import org.apache.maven.reporting.MavenReportException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.clog.ChangeLog;
@@ -45,6 +46,7 @@ public class TestBDocMojoBehaviour {
 	private BDocMojo bdocMojo = new BDocMojo();
 	{
 		bdocMojo.testAnnotationClassName = Test.class.getName();
+		bdocMojo.ignoreAnnotationClassName = Ignore.class.getName();
 	}
 
 	public TestBDocMojoBehaviour() {

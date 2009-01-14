@@ -71,4 +71,9 @@ public class AndInBetweenScenarioLinesFormatter implements ScenarioLinesFormatte
 	private boolean lineHasSameKeywordAsThePreviouslyOne(List<Part> parts, int index) {
 		return parts.get(index).scenarioKeyword() == parts.get(index - 1).scenarioKeyword();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof AndInBetweenScenarioLinesFormatter;
+	}	
 }

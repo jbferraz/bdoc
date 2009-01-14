@@ -26,6 +26,7 @@ package com.googlecode.bdoc.mojo;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Locale;
@@ -48,7 +49,7 @@ import com.googlecode.bdoc.doc.report.HtmlReport;
  * 
  * @author Per Otto Bergum Christensen
  */
-public class ChangeLogMojo extends AbstractBddDocMojo {
+public class BDocMojo extends AbstractBddDocMojo {
 
 	static final String BDOC_DIR = "bdoc";
 
@@ -82,7 +83,13 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 	 * 
 	 * @parameter
 	 */
-	protected String[] excludes;
+	String[] excludes;
+
+	/**
+	 * @parameter default-value="org.junit.Test"
+	 * @required
+	 */
+	String testAnnotationClassName;
 
 	/**
 	 * Specifies where to save to changelog, optional
@@ -95,12 +102,24 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 
 	@Override
 	protected void executeReport(Locale arg0) throws MavenReportException {
+		try {
+			executeInternal();
+		} catch (Exception e) {
+			getLog().error("BDoc error:" + e, e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void executeInternal() throws Exception {
+		ClassLoader classLoader = getClassLoader();
 
 		bdocReport.setIncludesFilePattern(includes);
 		bdocReport.setExcludesFilePattern(excludes);
 		bdocReport.setTestClassDirectory(testClassDirectory);
-		bdocReport.setClassLoader(getClassLoader());
+
+		bdocReport.setClassLoader(classLoader);
 		bdocReport.setProjectInfo(new ProjectInfo("projectName", "projectVersion"));
+		bdocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
 
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 
@@ -113,18 +132,14 @@ public class ChangeLogMojo extends AbstractBddDocMojo {
 
 		getLog().info("Writing to file: " + docChangeLogFile);
 		changeLog.writeToFile(docChangeLogFile);
-		
+
 		writeReport(BDOC_REPORT_HTML, new HtmlReport(bdoc).html());
 	}
 
-	private void writeReport(String fileName, String reportHtmlContent) {
-		try {
-			File file = new File(outputDirectory, fileName);
-			getLog().info("Writing to file: " + fileName );
-			FileUtils.writeStringToFile(file, reportHtmlContent);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+	private void writeReport(String fileName, String reportHtmlContent) throws IOException {
+		File file = new File(outputDirectory, fileName);
+		getLog().info("Writing to file: " + fileName);
+		FileUtils.writeStringToFile(file, reportHtmlContent);
 	}
 
 	protected ClassLoader getClassLoader() {

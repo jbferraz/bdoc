@@ -37,6 +37,7 @@ import org.apache.maven.reporting.MavenReportException;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.clog.ChangeLog;
@@ -44,6 +45,7 @@ import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
 
+@SuppressWarnings("unchecked")
 public class TestBDocMojo {
 
 	public static final String TARGET = "target";
@@ -53,32 +55,27 @@ public class TestBDocMojo {
 	private BDocReportInterface bdocReport;
 	private BDoc bdoc;
 
-	private BDocMojo bDocMojo = new BDocMojo();
+	private BDocMojo bdocMojo = new BDocMojo();
 
 	public TestBDocMojo() {
-		bDocMojo.changeLogDirectoryPath = TARGET;
-		bDocMojo.outputDirectory = new File(TARGET);
+		bdocMojo.changeLogDirectoryPath = TARGET;
+		bdocMojo.outputDirectory = new File(TARGET);
 
 		MavenProject mavenProject = new MavenProjectMock();
 		mavenProject.setGroupId("groupId");
 		mavenProject.setArtifactId("artifactId");
 
-		bDocMojo.project = mavenProject;
-		bDocMojo.testAnnotationClassName = Test.class.getName();
+		bdocMojo.project = mavenProject;
 	}
 
 	@Before
-	public void resetBDoc() {
+	public void reset() {
 		bdoc = new BDoc();
 		bdoc.setProject(new ProjectInfo("name", "version"));
 
 		context = new Mockery();
 		bdocReport = context.mock(BDocReportInterface.class);
-		bDocMojo.bdocReport = bdocReport;
-	}
-
-	public void initalizeStandardBDocReportMock() {
-		bDocMojo.getBDocChangeLogFile().delete();
+		bdocMojo.bdocReport = bdocReport;
 
 		context.checking(new Expectations() {
 			{
@@ -87,25 +84,33 @@ public class TestBDocMojo {
 				one(bdocReport).setExcludesFilePattern(null);
 				one(bdocReport).setClassLoader(with(any(ClassLoader.class)));
 				one(bdocReport).setProjectInfo(with(any(ProjectInfo.class)));
-				one(bdocReport).setTestAnnotation(with(Test.class));
 				one(bdocReport).run(null);
 				will(returnValue(bdoc));
 			}
 		});
+
+		bdocMojo.getBDocChangeLogFile().delete();
+	}
+
+	public void expectDefaultMavenConfigurationSetOnBDocReport() {
+		bdocMojo.testAnnotationClassName = Test.class.getName();
+		bdocMojo.ignoreAnnotationClassName = Ignore.class.getName();
+		expectTheConfiguredTestAnnotationSetOnTheBDocReport(Test.class);
+		expectTheConfiguredIgnoreAnnotationSetOnTheBDocReport(Ignore.class);
 	}
 
 	@Test
 	public void shouldCreateANewChangeLogXmlWhenOneDoesNotExist() throws MavenReportException {
-		initalizeStandardBDocReportMock();
-		bDocMojo.executeReport(null);
-		assertTrue(bDocMojo.getBDocChangeLogFile().exists());
+		expectDefaultMavenConfigurationSetOnBDocReport();
+		whenTheReportIsExecuted();
+		assertTrue(bdocMojo.getBDocChangeLogFile().exists());
 	}
 
 	@Test
 	public void shouldUpdateTheLatestBDocInThePersistedChangeLog() throws MavenReportException, IOException {
-		initalizeStandardBDocReportMock();
-		bDocMojo.executeReport(null);
-		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(bDocMojo.getBDocChangeLogFile());
+		expectDefaultMavenConfigurationSetOnBDocReport();
+		whenTheReportIsExecuted();
+		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
 		assertEquals(bdoc.getProject(), updatedChangeLog.latestBDoc().getProject());
 	}
 
@@ -124,32 +129,60 @@ public class TestBDocMojo {
 	@Test
 	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
 		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocMojo.BDOC_CHANGE_LOG_XML);
-		assertEquals(expectedChangeLogFile, bDocMojo.getBDocChangeLogFile());
+		assertEquals(expectedChangeLogFile, bdocMojo.getBDocChangeLogFile());
+	}
+
+	// ----------------------------------------------------------------------------------------------------
+
+	private void givenTheTestAnnotationClassNameIsConfigured(Class clazz) {
+		bdocMojo.testAnnotationClassName = clazz.getName();
+	}
+
+	private void givenTheIgnoreAnnotationClassNameIsConfigured(Class clazz) {
+		bdocMojo.ignoreAnnotationClassName = clazz.getName();
+	}
+
+	private void expectTheConfiguredTestAnnotationSetOnTheBDocReport(final Class clazz) {
+		context.checking(new Expectations() {
+			{
+				one(bdocReport).setTestAnnotation(with(clazz));
+			}
+		});
+	}
+
+	private void expectTheConfiguredIgnoreAnnotationSetOnTheBDocReport(final Class clazz) {
+		context.checking(new Expectations() {
+			{
+				one(bdocReport).setIgnoreAnnotation(with(clazz));
+			}
+		});
+	}
+
+	private void whenTheReportIsExecuted() throws MavenReportException {
+		bdocMojo.executeReport(null);
+	}
+
+	private void thenEnsureExpectionsAreSatisfied() {
+		context.assertIsSatisfied();
 	}
 
 	@Test
-	public void shouldConfigureTheBDocReportWithAGivenTestAnnotation() throws MavenReportException {
-		bDocMojo.testAnnotationClassName = MyTestAnnotation.class.getName();
+	public void shouldConfigureTheBDocReportFromMavenConfiguration() throws MavenReportException {
+		givenTheTestAnnotationClassNameIsConfigured(MyTestAnnotation.class);
+		givenTheIgnoreAnnotationClassNameIsConfigured(MyIgnoreAnnotation.class);
 
-		context.checking(new Expectations() {
-			{
-				one(bdocReport).setTestAnnotation(with(MyTestAnnotation.class));
-				
-				one(bdocReport).setTestClassDirectory(null);
-				one(bdocReport).setIncludesFilePattern(null);
-				one(bdocReport).setExcludesFilePattern(null);
-				one(bdocReport).setClassLoader(with(any(ClassLoader.class)));
-				one(bdocReport).setProjectInfo(with(any(ProjectInfo.class)));
-				one(bdocReport).run(null);
-				will(returnValue(bdoc));
-			}
-		});
+		expectTheConfiguredTestAnnotationSetOnTheBDocReport(MyTestAnnotation.class);
+		expectTheConfiguredIgnoreAnnotationSetOnTheBDocReport(MyIgnoreAnnotation.class);
 
-		bDocMojo.executeReport(null);
-		context.assertIsSatisfied();
+		whenTheReportIsExecuted();
+		thenEnsureExpectionsAreSatisfied();
 	}
 
 	@Target( { ElementType.METHOD, ElementType.TYPE })
 	public @interface MyTestAnnotation {
+	}
+
+	@Target( { ElementType.METHOD, ElementType.TYPE })
+	public @interface MyIgnoreAnnotation {
 	}
 }

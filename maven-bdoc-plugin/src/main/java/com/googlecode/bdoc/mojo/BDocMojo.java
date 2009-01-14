@@ -40,6 +40,7 @@ import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
 import com.googlecode.bdoc.doc.report.HtmlReport;
+import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 
 /**
  * @goal ci
@@ -70,16 +71,14 @@ public class BDocMojo extends AbstractBddDocMojo {
 	File testClassDirectory;
 
 	/**
-	 * Specifies files, which are included in the check. By default, all files
-	 * are included.
+	 * Specifies files, which are included in the check. By default, all files are included.
 	 * 
 	 * @parameter
 	 */
 	String[] includes;
 
 	/**
-	 * Specifies files, which are excluded in the check. By default, no files
-	 * are excluded.
+	 * Specifies files, which are excluded in the check. By default, no files are excluded.
 	 * 
 	 * @parameter
 	 */
@@ -90,13 +89,18 @@ public class BDocMojo extends AbstractBddDocMojo {
 	 * @required
 	 */
 	String testAnnotationClassName;
-	
+
 	/**
 	 * @parameter default-value="org.junit.Ignore"
 	 * @required
 	 */
 	String ignoreAnnotationClassName;
-	
+
+	/**
+	 * @parameter default-value= "com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
+	 * @required
+	 */
+	String scenarioFormatterClassName;
 
 	/**
 	 * Specifies where to save to changelog, optional
@@ -119,20 +123,23 @@ public class BDocMojo extends AbstractBddDocMojo {
 	@SuppressWarnings("unchecked")
 	private void executeInternal() throws Exception {
 		ClassLoader classLoader = getClassLoader();
-
-		bdocReport.setIncludesFilePattern(includes);
-		bdocReport.setExcludesFilePattern(excludes);
-		bdocReport.setTestClassDirectory(testClassDirectory);
-
-		bdocReport.setClassLoader(classLoader);
 		
-		//TODO
-		bdocReport.setProjectInfo(new ProjectInfo("projectName", "projectVersion"));
-
+		bdocReport.setClassLoader(classLoader);
+		bdocReport.setTestClassDirectory(testClassDirectory);
 		
 		bdocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
 		bdocReport.setIgnoreAnnotation((Class<? extends Annotation>) classLoader.loadClass(ignoreAnnotationClassName));
+		bdocReport.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName).newInstance());
 
+		bdocReport.setIncludesFilePattern(includes);
+		bdocReport.setExcludesFilePattern(excludes);
+		
+		// TODO
+		bdocReport.setProjectInfo(new ProjectInfo("projectName", "projectVersion"));
+
+
+		// TODO set Ref annotation if it exists
+		
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 
 		// TODO, don't new each time, check on disk first
@@ -140,8 +147,8 @@ public class BDocMojo extends AbstractBddDocMojo {
 
 		changeLog.scan(bdoc);
 
+		//Refactor to pretty code
 		File docChangeLogFile = getBDocChangeLogFile();
-
 		getLog().info("Writing to file: " + docChangeLogFile);
 		changeLog.writeToFile(docChangeLogFile);
 

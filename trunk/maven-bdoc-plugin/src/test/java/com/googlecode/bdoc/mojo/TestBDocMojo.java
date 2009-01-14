@@ -29,11 +29,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
 
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.MavenReportException;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.googlecode.bdoc.clog.ChangeLog;
@@ -41,37 +44,97 @@ import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
 
-public class TestChangeLogMojo {
+public class TestBDocMojo {
 
 	public static final String TARGET = "target";
 
-	private Mockery context = new Mockery();
+	private Mockery context;
 
 	private BDocReportInterface bdocReport;
 	private BDoc bdoc;
 
-	private ChangeLogMojo changeLogMojo = new ChangeLogMojo();
+	private BDocMojo bDocMojo = new BDocMojo();
 
-	public TestChangeLogMojo() {
-		changeLogMojo.changeLogDirectoryPath = TARGET;
-		changeLogMojo.outputDirectory = new File( TARGET );
+	public TestBDocMojo() {
+		bDocMojo.changeLogDirectoryPath = TARGET;
+		bDocMojo.outputDirectory = new File(TARGET);
 
 		MavenProject mavenProject = new MavenProjectMock();
 		mavenProject.setGroupId("groupId");
 		mavenProject.setArtifactId("artifactId");
 
-		changeLogMojo.project = mavenProject;
+		bDocMojo.project = mavenProject;
+		bDocMojo.testAnnotationClassName = Test.class.getName();
 	}
 
-	public void initalizeBDocReportMock() {
-		changeLogMojo.getBDocChangeLogFile().delete();
-		bdocReport = context.mock(BDocReportInterface.class);
-
+	@Before
+	public void resetBDoc() {
 		bdoc = new BDoc();
 		bdoc.setProject(new ProjectInfo("name", "version"));
 
+		context = new Mockery();
+		bdocReport = context.mock(BDocReportInterface.class);
+		bDocMojo.bdocReport = bdocReport;
+	}
+
+	public void initalizeStandardBDocReportMock() {
+		bDocMojo.getBDocChangeLogFile().delete();
+
 		context.checking(new Expectations() {
 			{
+				one(bdocReport).setTestClassDirectory(null);
+				one(bdocReport).setIncludesFilePattern(null);
+				one(bdocReport).setExcludesFilePattern(null);
+				one(bdocReport).setClassLoader(with(any(ClassLoader.class)));
+				one(bdocReport).setProjectInfo(with(any(ProjectInfo.class)));
+				one(bdocReport).setTestAnnotation(with(Test.class));
+				one(bdocReport).run(null);
+				will(returnValue(bdoc));
+			}
+		});
+	}
+
+	@Test
+	public void shouldCreateANewChangeLogXmlWhenOneDoesNotExist() throws MavenReportException {
+		initalizeStandardBDocReportMock();
+		bDocMojo.executeReport(null);
+		assertTrue(bDocMojo.getBDocChangeLogFile().exists());
+	}
+
+	@Test
+	public void shouldUpdateTheLatestBDocInThePersistedChangeLog() throws MavenReportException, IOException {
+		initalizeStandardBDocReportMock();
+		bDocMojo.executeReport(null);
+		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(bDocMojo.getBDocChangeLogFile());
+		assertEquals(bdoc.getProject(), updatedChangeLog.latestBDoc().getProject());
+	}
+
+	@Test
+	public void shouldUseTheUserHomeDirectoryConcatenatedWithBDocAsRootDirectoryForPersistedBDocChangeLogs() {
+		assertEquals(System.getProperty("user.home") + "/bdoc", new BDocMojo().getBDocChangeLogRootDirectoryPath());
+	}
+
+	@Test
+	public void shouldChangeRootDirectoryForPersistedBDocChangesIfThisIsSpecifiedInConfiguration() {
+		BDocMojo changeLogMojo2 = new BDocMojo();
+		changeLogMojo2.changeLogDirectoryPath = "mypath";
+		assertEquals("mypath", changeLogMojo2.getBDocChangeLogRootDirectoryPath());
+	}
+
+	@Test
+	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
+		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocMojo.BDOC_CHANGE_LOG_XML);
+		assertEquals(expectedChangeLogFile, bDocMojo.getBDocChangeLogFile());
+	}
+
+	@Test
+	public void shouldConfigureTheBDocReportWithAGivenTestAnnotation() throws MavenReportException {
+		bDocMojo.testAnnotationClassName = MyTestAnnotation.class.getName();
+
+		context.checking(new Expectations() {
+			{
+				one(bdocReport).setTestAnnotation(with(MyTestAnnotation.class));
+				
 				one(bdocReport).setTestClassDirectory(null);
 				one(bdocReport).setIncludesFilePattern(null);
 				one(bdocReport).setExcludesFilePattern(null);
@@ -82,41 +145,11 @@ public class TestChangeLogMojo {
 			}
 		});
 
-		changeLogMojo.bdocReport = bdocReport;
+		bDocMojo.executeReport(null);
+		context.assertIsSatisfied();
 	}
 
-	@Test
-	public void shouldCreateANewChangeLogXmlWhenOneDoesNotExist() throws MavenReportException {
-		initalizeBDocReportMock();
-		changeLogMojo.executeReport(null);
-		assertTrue(changeLogMojo.getBDocChangeLogFile().exists());
+	@Target( { ElementType.METHOD, ElementType.TYPE })
+	public @interface MyTestAnnotation {
 	}
-
-	@Test
-	public void shouldUpdateTheLatestBDocInThePersistedChangeLog() throws MavenReportException, IOException {
-		initalizeBDocReportMock();
-		changeLogMojo.executeReport(null);
-		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(changeLogMojo.getBDocChangeLogFile());
-		assertEquals(bdoc.getProject(), updatedChangeLog.latestBDoc().getProject());
-	}
-
-	@Test
-	public void shouldUseTheUserHomeDirectoryConcatenatedWithBDocAsRootDirectoryForPersistedBDocChangeLogs() {
-		assertEquals(System.getProperty("user.home") + "/bdoc", new ChangeLogMojo().getBDocChangeLogRootDirectoryPath());
-	}
-
-	@Test
-	public void shouldChangeRootDirectoryForPersistedBDocChangesIfThisIsSpecifiedInConfiguration() {
-		ChangeLogMojo changeLogMojo2 = new ChangeLogMojo();
-		changeLogMojo2.changeLogDirectoryPath = "mypath";
-		assertEquals("mypath", changeLogMojo2.getBDocChangeLogRootDirectoryPath());
-	}
-
-	@Test
-	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
-		File expectedChangeLogFile = new File("target/groupId/artifactId/" + ChangeLogMojo.BDOC_CHANGE_LOG_XML);
-		assertEquals(expectedChangeLogFile, changeLogMojo.getBDocChangeLogFile());
-	}
-		
-
 }

@@ -40,41 +40,44 @@ import com.googlecode.bdoc.mojo.testdata.TestIt;
 import com.googlecode.bdoc.mojo.testdata.TestIt2;
 
 @SuppressWarnings("unchecked")
-public class TestChangeLogMojoBehaviour {
+public class TestBDocMojoBehaviour {
 
-	private ChangeLogMojo changeLogMojo = new ChangeLogMojo();
+	private BDocMojo bdocMojo = new BDocMojo();
+	{
+		bdocMojo.testAnnotationClassName = Test.class.getName();
+	}
 
-	public TestChangeLogMojoBehaviour() {
-		changeLogMojo.changeLogDirectoryPath = TestChangeLogMojo.TARGET;
-		changeLogMojo.project = new MavenProjectMock();
+	public TestBDocMojoBehaviour() {
+		bdocMojo.changeLogDirectoryPath = TestBDocMojo.TARGET;
+		bdocMojo.project = new MavenProjectMock();
 	}
 
 	private void givenATestSourceDirectory() {
-		changeLogMojo.testSourceDirectory = new File("src/test/java");
+		bdocMojo.testSourceDirectory = new File("src/test/java");
 	}
 
 	private void givenATestClassDirectory() {
-		changeLogMojo.testClassDirectory = new File("target/test-classes");
+		bdocMojo.testClassDirectory = new File("target/test-classes");
 	}
 
 	private void givenAnOutputDirectory() {
-		changeLogMojo.outputDirectory = new File("target");
+		bdocMojo.outputDirectory = new File("target");
 	}
 
 	private Class givenAnIncludeThatSpecifiesOneTestClass(Class testClass) {
 		String testClassPathInclude = testClass.getName().replace('.', '/');
-		changeLogMojo.includes = new String[] { testClassPathInclude + ".class" };
+		bdocMojo.includes = new String[] { testClassPathInclude + ".class" };
 		return testClass;
 	}
 
 	private Class givenAnExcludeThatSpecifiesOneTestClass(Class testClass) {
 		String testClassPathInclude = testClass.getName().replace('.', '/');
-		changeLogMojo.excludes = new String[] { testClassPathInclude + ".class" };
+		bdocMojo.excludes = new String[] { testClassPathInclude + ".class" };
 		return testClass;
 	}
 
 	private void whenTheChangeLogMojoHasRun() throws MavenReportException {
-		changeLogMojo.executeReport(null);
+		bdocMojo.executeReport(null);
 	}
 
 	private void thenEnsureTheBDocContainsClassBehaviourSpecifiedByTheTestClass(Class testClass) {
@@ -94,7 +97,7 @@ public class TestChangeLogMojoBehaviour {
 	}
 
 	private void thenEnsureABDocHtmlReportHasBeenGenerated() {
-		assertTrue(new File("target/" + ChangeLogMojo.BDOC_REPORT_HTML).exists());
+		assertTrue(new File("target/" + BDocMojo.BDOC_REPORT_HTML).exists());
 	}
 
 	@Test
@@ -132,16 +135,16 @@ public class TestChangeLogMojoBehaviour {
 	// --------------------------------------------------------------------------------------------
 
 	private void bdocInChangeLogShouldContain(Class testClass) {
-		ChangeLog changeLog = ChangeLog.fromXmlFile(changeLogMojo.getBDocChangeLogFile());
+		ChangeLog changeLog = ChangeLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
 		ClassBehaviour classBehaviourFromFile = changeLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
 		assertEquals(new ClassBehaviour(testClass), classBehaviourFromFile);
 	}
 
 	private void bdocInChangeLogShouldNotContain(Class testClass) {
-		ChangeLog changeLog = ChangeLog.fromXmlFile(changeLogMojo.getBDocChangeLogFile());
+		ChangeLog changeLog = ChangeLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
 		try {
 			changeLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
-			fail( "testclass did exist in bdoc: " + testClass );
+			fail("testclass did exist in bdoc: " + testClass);
 		} catch (ItemInListNotFoundException e) {
 			// should occur
 		}

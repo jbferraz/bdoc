@@ -36,6 +36,7 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.clog.ChangeLog;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
+import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.util.ItemInListNotFoundException;
 import com.googlecode.bdoc.mojo.testdata.TestIt;
 import com.googlecode.bdoc.mojo.testdata.TestIt2;
@@ -47,6 +48,7 @@ public class TestBDocMojoBehaviour {
 	{
 		bdocMojo.testAnnotationClassName = Test.class.getName();
 		bdocMojo.ignoreAnnotationClassName = Ignore.class.getName();
+		bdocMojo.scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
 	}
 
 	public TestBDocMojoBehaviour() {
@@ -107,7 +109,6 @@ public class TestBDocMojoBehaviour {
 		givenATestSourceDirectory();
 		givenATestClassDirectory();
 		givenAnOutputDirectory();
-		givenAnIncludeThatSpecifiesOneTestClass(TestIt.class);
 		whenTheChangeLogMojoHasRun();
 		thenEnsureABDocHtmlReportHasBeenGenerated();
 	}

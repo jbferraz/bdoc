@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
+import java.util.List;
 
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.MavenReportException;
@@ -43,7 +44,10 @@ import org.junit.Test;
 import com.googlecode.bdoc.clog.ChangeLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
+import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
+import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 
 @SuppressWarnings("unchecked")
 public class TestBDocMojo {
@@ -95,8 +99,10 @@ public class TestBDocMojo {
 	public void expectDefaultMavenConfigurationSetOnBDocReport() {
 		bdocMojo.testAnnotationClassName = Test.class.getName();
 		bdocMojo.ignoreAnnotationClassName = Ignore.class.getName();
-		expectTheConfiguredTestAnnotationSetOnTheBDocReport(Test.class);
-		expectTheConfiguredIgnoreAnnotationSetOnTheBDocReport(Ignore.class);
+		bdocMojo.scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
+		expectConfiguredTestAnnotationSetOnTheBDocReport(Test.class);
+		expectConfiguredIgnoreAnnotationSetOnTheBDocReport(Ignore.class);
+		expectConfiguredScenarioFormatterClassSetOnTheBDocReport(new AndInBetweenScenarioLinesFormatter() );
 	}
 
 	@Test
@@ -132,17 +138,21 @@ public class TestBDocMojo {
 		assertEquals(expectedChangeLogFile, bdocMojo.getBDocChangeLogFile());
 	}
 
-	// ----------------------------------------------------------------------------------------------------
+	// ------ Scenarios ----------------------------------------------------------------------------------------------
 
-	private void givenTheTestAnnotationClassNameIsConfigured(Class clazz) {
+	private void given_TestAnnotationClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
 		bdocMojo.testAnnotationClassName = clazz.getName();
 	}
 
-	private void givenTheIgnoreAnnotationClassNameIsConfigured(Class clazz) {
+	private void given_IgnoreAnnotationClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
 		bdocMojo.ignoreAnnotationClassName = clazz.getName();
 	}
 
-	private void expectTheConfiguredTestAnnotationSetOnTheBDocReport(final Class clazz) {
+	private void given_ScenarioFormatterClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
+		bdocMojo.scenarioFormatterClassName = clazz.getName();
+	}
+
+	private void expectConfiguredTestAnnotationSetOnTheBDocReport(final Class clazz) {
 		context.checking(new Expectations() {
 			{
 				one(bdocReport).setTestAnnotation(with(clazz));
@@ -150,10 +160,18 @@ public class TestBDocMojo {
 		});
 	}
 
-	private void expectTheConfiguredIgnoreAnnotationSetOnTheBDocReport(final Class clazz) {
+	private void expectConfiguredIgnoreAnnotationSetOnTheBDocReport(final Class clazz) {
 		context.checking(new Expectations() {
 			{
 				one(bdocReport).setIgnoreAnnotation(with(clazz));
+			}
+		});
+	}
+
+	private void expectConfiguredScenarioFormatterClassSetOnTheBDocReport(final ScenarioLinesFormatter scenarioLinesFormatter) {
+		context.checking(new Expectations() {
+			{
+				one(bdocReport).setScenarioLinesFormatter(scenarioLinesFormatter);
 			}
 		});
 	}
@@ -168,15 +186,19 @@ public class TestBDocMojo {
 
 	@Test
 	public void shouldConfigureTheBDocReportFromMavenConfiguration() throws MavenReportException {
-		givenTheTestAnnotationClassNameIsConfigured(MyTestAnnotation.class);
-		givenTheIgnoreAnnotationClassNameIsConfigured(MyIgnoreAnnotation.class);
+		given_TestAnnotationClassName_IsConfiguredOtherThanDefaultValue(MyTestAnnotation.class);
+		given_IgnoreAnnotationClassName_IsConfiguredOtherThanDefaultValue(MyIgnoreAnnotation.class);
+		given_ScenarioFormatterClassName_IsConfiguredOtherThanDefaultValue(MyScenarioLinesFormatter.class);
 
-		expectTheConfiguredTestAnnotationSetOnTheBDocReport(MyTestAnnotation.class);
-		expectTheConfiguredIgnoreAnnotationSetOnTheBDocReport(MyIgnoreAnnotation.class);
+		expectConfiguredTestAnnotationSetOnTheBDocReport(MyTestAnnotation.class);
+		expectConfiguredIgnoreAnnotationSetOnTheBDocReport(MyIgnoreAnnotation.class);
+		expectConfiguredScenarioFormatterClassSetOnTheBDocReport(new MyScenarioLinesFormatter());
 
 		whenTheReportIsExecuted();
 		thenEnsureExpectionsAreSatisfied();
 	}
+	
+	//-------- Classes used as test data -------------------------------------------------------
 
 	@Target( { ElementType.METHOD, ElementType.TYPE })
 	public @interface MyTestAnnotation {
@@ -184,5 +206,16 @@ public class TestBDocMojo {
 
 	@Target( { ElementType.METHOD, ElementType.TYPE })
 	public @interface MyIgnoreAnnotation {
+	}
+
+	public static class MyScenarioLinesFormatter implements ScenarioLinesFormatter {
+		public List<String> getLines(Scenario scenario) {
+			return null;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			return obj instanceof MyScenarioLinesFormatter;
+		}
 	}
 }

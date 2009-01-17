@@ -37,18 +37,16 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
-import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
-
 
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestJavaTestSourceBehaviourParser {
 
 	@Test
 	public void shouldComposeScenarioFromTestConstructedWithGivenWhenThenAsPartOfTheMethodBlock() throws IOException {
-		
-		String stackBehaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA + "/integrationtestclasses/stack/StackBehavior.java"));
+
+		String stackBehaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
+				+ "/integrationtestclasses/stack/StackBehavior.java"));
 
 		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(stackBehaviorJava);
 
@@ -58,16 +56,16 @@ public class TestJavaTestSourceBehaviourParser {
 		expectedScenarioParts.add(new Scenario.Part("thenTheLastItemPushedShouldBeReturned"));
 		expectedScenarioParts.add(new Scenario.Part("thenTheValueShouldNotRemainInTheStack"));
 
-		assertEquals(new Scenario(expectedScenarioParts), sourceClassBehaviourParser.getScenario("shouldPopSecondPushedValueFirst"));
+		assertEquals(new Scenario(expectedScenarioParts), sourceClassBehaviourParser.getScenario("shouldPopLastPushedValueFirst"));
 	}
 
 	@Test
-	public void shouldReturnNullIfTheMethodBlockDoesNotContainAScenario() throws IOException
-	{
-		String testStackJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA + "/integrationtestclasses/stack/TestStack.java"));
-		
+	public void shouldReturnNullIfTheMethodBlockDoesNotContainAScenario() throws IOException {
+		String testStackJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
+				+ "/integrationtestclasses/stack/TestStack.java"));
+
 		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(testStackJava);
-		
-		assertNull( sourceClassBehaviourParser.getScenario("shouldBeEmptyWhenStackIsNew") );
+
+		assertNull(sourceClassBehaviourParser.getScenario("shouldBeEmptyWhenStackIsNew"));
 	}
 }

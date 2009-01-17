@@ -117,7 +117,7 @@ public class StackBehavior {
 	}
 
 	@Test
-	public void shouldPopSecondPushedValueFirst() {
+	public void shouldPopLastPushedValueFirst() {
 		givenAStackWithTwoPushedValues(VALUE_1, VALUE_2);
 		int sizeBefore = stack.size();
 		String poped = whenPopIsCalled();

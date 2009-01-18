@@ -31,6 +31,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 
 import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.doxia.sink.SinkAdapter;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -44,17 +45,22 @@ import com.googlecode.bdoc.mojo.testdata.TestIt2;
 @SuppressWarnings("unchecked")
 public class TestBDocMojoBehaviour {
 
-	private BDocMojo bdocMojo = new BDocMojo();
-	{
-		bdocMojo.testAnnotationClassName = Test.class.getName();
-		bdocMojo.ignoreAnnotationClassName = Ignore.class.getName();
-		bdocMojo.scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
-	}
+	private BDocMojo bdocMojo = new BDocMojo() {
+		org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
+		{
+			changeLogDirectoryPath = TestBDocMojo.TARGET;
+			project = new MavenProjectMock();
 
-	public TestBDocMojoBehaviour() {
-		bdocMojo.changeLogDirectoryPath = TestBDocMojo.TARGET;
-		bdocMojo.project = new MavenProjectMock();
-	}
+			testAnnotationClassName = Test.class.getName();
+			ignoreAnnotationClassName = Ignore.class.getName();
+			scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
+		}
+
+		@Override
+		public org.codehaus.doxia.sink.Sink getSink() {
+			return sinkStub;
+		};
+	};
 
 	private void givenATestSourceDirectory() {
 		bdocMojo.testSourceDirectory = new File("src/test/java");
@@ -152,5 +158,4 @@ public class TestBDocMojoBehaviour {
 			// should occur
 		}
 	}
-
 }

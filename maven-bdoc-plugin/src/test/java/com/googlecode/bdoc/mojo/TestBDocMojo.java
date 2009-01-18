@@ -29,12 +29,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 import java.util.List;
 
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.doxia.sink.SinkAdapter;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
@@ -59,7 +61,13 @@ public class TestBDocMojo {
 	private BDocReportInterface bdocReport;
 	private BDoc bdoc;
 
-	private BDocMojo bdocMojo = new BDocMojo();
+	private BDocMojo bdocMojo = new BDocMojo() {
+		org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
+		@Override
+		public org.codehaus.doxia.sink.Sink getSink() {			
+			return sinkStub;
+		};
+	};
 
 	public TestBDocMojo() {
 		bdocMojo.changeLogDirectoryPath = TARGET;
@@ -70,6 +78,9 @@ public class TestBDocMojo {
 		mavenProject.setArtifactId("artifactId");
 
 		bdocMojo.project = mavenProject;
+		
+		
+		
 	}
 
 	@Before
@@ -102,7 +113,7 @@ public class TestBDocMojo {
 		bdocMojo.scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
 		expectConfiguredTestAnnotationSetOnTheBDocReport(Test.class);
 		expectConfiguredIgnoreAnnotationSetOnTheBDocReport(Ignore.class);
-		expectConfiguredScenarioFormatterClassSetOnTheBDocReport(new AndInBetweenScenarioLinesFormatter() );
+		expectConfiguredScenarioFormatterClassSetOnTheBDocReport(new AndInBetweenScenarioLinesFormatter());
 	}
 
 	@Test
@@ -152,6 +163,10 @@ public class TestBDocMojo {
 		bdocMojo.scenarioFormatterClassName = clazz.getName();
 	}
 
+	private void given_AStoryRefAnnotationAnnotation_IsConfigured(final Class<? extends Annotation> clazz) {
+		bdocMojo.storyRefAnnotationClassName = clazz.getName();
+	}
+
 	private void expectConfiguredTestAnnotationSetOnTheBDocReport(final Class clazz) {
 		context.checking(new Expectations() {
 			{
@@ -176,6 +191,14 @@ public class TestBDocMojo {
 		});
 	}
 
+	private void expectConfiguredRefAnnotationSetOnTheBDocReport(final Class<? extends Annotation> clazz) {
+		context.checking(new Expectations() {
+			{
+				one(bdocReport).setStoryRefAnnotation(clazz);
+			}
+		});
+	}
+
 	private void whenTheReportIsExecuted() throws MavenReportException {
 		bdocMojo.executeReport(null);
 	}
@@ -189,16 +212,22 @@ public class TestBDocMojo {
 		given_TestAnnotationClassName_IsConfiguredOtherThanDefaultValue(MyTestAnnotation.class);
 		given_IgnoreAnnotationClassName_IsConfiguredOtherThanDefaultValue(MyIgnoreAnnotation.class);
 		given_ScenarioFormatterClassName_IsConfiguredOtherThanDefaultValue(MyScenarioLinesFormatter.class);
+		given_AStoryRefAnnotationAnnotation_IsConfigured(MyRef.class);
 
 		expectConfiguredTestAnnotationSetOnTheBDocReport(MyTestAnnotation.class);
 		expectConfiguredIgnoreAnnotationSetOnTheBDocReport(MyIgnoreAnnotation.class);
 		expectConfiguredScenarioFormatterClassSetOnTheBDocReport(new MyScenarioLinesFormatter());
+		expectConfiguredRefAnnotationSetOnTheBDocReport(MyRef.class);
 
 		whenTheReportIsExecuted();
 		thenEnsureExpectionsAreSatisfied();
 	}
-	
-	//-------- Classes used as test data -------------------------------------------------------
+
+	// -------- Classes used as test data -------------------------------------------------------
+
+	@Target( { ElementType.METHOD, ElementType.TYPE })
+	public @interface MyRef {
+	}
 
 	@Target( { ElementType.METHOD, ElementType.TYPE })
 	public @interface MyTestAnnotation {

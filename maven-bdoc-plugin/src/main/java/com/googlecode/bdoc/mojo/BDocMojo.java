@@ -108,6 +108,11 @@ public class BDocMojo extends AbstractBddDocMojo {
 	 * @parameter
 	 */
 	String changeLogDirectoryPath;
+	
+	/**
+	 * @parameter
+	 */
+	String storyRefAnnotationClassName;
 
 	BDocReportInterface bdocReport = new BDocReportImpl();
 
@@ -134,11 +139,11 @@ public class BDocMojo extends AbstractBddDocMojo {
 		bdocReport.setIncludesFilePattern(includes);
 		bdocReport.setExcludesFilePattern(excludes);
 		
-		// TODO
-		bdocReport.setProjectInfo(new ProjectInfo("projectName", "projectVersion"));
+		bdocReport.setProjectInfo(new ProjectInfo(getProject().getName(), getProject().getVersion()));
 
-
-		// TODO set Ref annotation if it exists
+		if (null != storyRefAnnotationClassName) {
+			bdocReport.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
+		}
 		
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 
@@ -153,6 +158,22 @@ public class BDocMojo extends AbstractBddDocMojo {
 		changeLog.writeToFile(docChangeLogFile);
 
 		writeReport(BDOC_REPORT_HTML, new HtmlReport(bdoc).html());
+		
+		
+		getSink().head();
+		getSink().title();
+		getSink().text("BDoc");
+		getSink().title_();
+		getSink().head_();
+
+		getSink().body();
+		getSink().text("Summeray");
+		getSink().rawText("<br/><a href='bdoc-report.html'>Latest BDoc report</a>");
+		
+		getSink().body_();
+
+		getSink().flush();
+		
 	}
 
 	private void writeReport(String fileName, String reportHtmlContent) throws IOException {

@@ -45,7 +45,7 @@ public class BddDocDiffMojo extends AbstractBddDocMojo {
 	static final String NO_DIFF_IS_FOUND = "No diff is found";
 
 	static final String LOG_DIRECTORY_NOT_SPECIFIED = "Logdirectory not configured for plugin. "
-			+ "Example of config: <configuration> <logDirectory>bddlog</logDirectory><configuration>";
+			+ "Example of config: <configuration> <logDirectory>bddlog</logDirectory></configuration>";
 
 	/**
 	 * @parameter expression="${old}"

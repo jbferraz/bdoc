@@ -43,12 +43,12 @@ import com.googlecode.bdoc.mojo.testdata.TestIt;
 import com.googlecode.bdoc.mojo.testdata.TestIt2;
 
 @SuppressWarnings("unchecked")
-public class TestBDocMojoBehaviour {
+public class BDocReportsMojoBehaviour {
 
-	private BDocMojo bdocMojo = new BDocMojo() {
+	private BDocReportsMojo bdocMojo = new BDocReportsMojo() {
 		org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
 		{
-			changeLogDirectoryPath = TestBDocMojo.TARGET;
+			changeLogDirectoryPath = TestBDocReportsMojo.TARGET;
 			project = new MavenProjectMock();
 
 			testAnnotationClassName = Test.class.getName();
@@ -107,7 +107,7 @@ public class TestBDocMojoBehaviour {
 	}
 
 	private void thenEnsureABDocHtmlReportHasBeenGenerated() {
-		assertTrue(new File("target/" + BDocMojo.BDOC_REPORT_HTML).exists());
+		assertTrue(new File("target/" + BDocReportsMojo.BDOC_HTML).exists());
 	}
 
 	@Test

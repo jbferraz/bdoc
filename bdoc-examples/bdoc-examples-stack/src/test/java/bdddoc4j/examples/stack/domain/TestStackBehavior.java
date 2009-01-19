@@ -59,18 +59,31 @@ public class TestStackBehavior {
 	private int sizeBefore;
 	private int sizeAfter;
 
+	@Test
+	public void aNewlyCreatedStackMustBeEmpty() {
+		givenAnEmptyStack();
+		thenEnsureThatTheStackAreEmpty();
+	}
+
+	@Test
+	public void shouldNotBeEmptyAfterPush() {
+		givenAnEmptyStack();
+		whenPushedIsCalled(VALUE_1);
+		thenEnsureThatTheStackAreNotEmpty();
+	}
+
 	@Test(expected = Exception.class)
 	public void shouldThrowExceptionUponNullPush() {
 		givenAnEmptyStack();
 		whenPushedIsCalledWithNull();
-		thenShouldAnExceptionBeThrown();
+		thenEnsureThatAnExceptionAreThrown();
 	}
 
 	@Test(expected = Exception.class)
 	public void shouldThrowExceptionUponPopWithoutPush() {
 		givenAnEmptyStack();
 		whenPopIsCalled();
-		thenShouldAnExceptionBeThrown();
+		thenEnsureThatAnExceptionAreThrown();
 	}
 
 	@Test
@@ -78,8 +91,8 @@ public class TestStackBehavior {
 		givenAnEmptyStack();
 		whenPushedIsCalled(VALUE_1);
 		whenPopIsCalled();
-		thenLastItemPushedShouldBeReturnedFromPop();
-		thenShouldTheStackBeEmpty();
+		thenEnsureThatLastItemPushedAreReturnedFromPop();
+		thenEnsureThatTheStackAreEmpty();
 	}
 
 	@Test
@@ -88,9 +101,9 @@ public class TestStackBehavior {
 		whenPushedIsCalled(VALUE_1);
 		whenPushedIsCalled(VALUE_2);
 		whenPopIsCalled();
-		thenLastItemPushedShouldBeReturnedFromPop();
-		thenTheValueShouldNotRemainInTheStack();
-		thenShouldTheStackBeNotEmpty();
+		thenEnsureThatLastItemPushedAreReturnedFromPop();
+		thenEnsureThatTheValueNotRemainsInTheStack();
+		thenEnsureThatTheStackAreNotEmpty();
 	}
 
 	@Test
@@ -98,8 +111,8 @@ public class TestStackBehavior {
 		givenAnEmptyStack();
 		whenPushedIsCalled(VALUE_1);
 		whenPeekIsCalled();
-		thenLastItemPushedShouldBeReturnedFromPeek();
-		thenTheValueShouldRemainInTheStack();
+		thenEnsureThatLastItemPushedAreReturnedFromPeek();
+		thenEnsureThatTheValueRemainsInTheStack();
 	}
 
 	@Before
@@ -141,33 +154,33 @@ public class TestStackBehavior {
 	}
 
 	// THENS
-	private void thenShouldAnExceptionBeThrown() {
+	private void thenEnsureThatAnExceptionAreThrown() {
 		fail("method hasn't caused an exception when it should");
 	}
 
-	private void thenLastItemPushedShouldBeReturnedFromPop() {
+	private void thenEnsureThatLastItemPushedAreReturnedFromPop() {
 		assertThat(lastPushed, equalTo(poped));
 	}
 
-	private void thenLastItemPushedShouldBeReturnedFromPeek() {
+	private void thenEnsureThatLastItemPushedAreReturnedFromPeek() {
 		assertThat(lastPushed, equalTo(peeked));
 	}
 
-	private void thenTheValueShouldRemainInTheStack() {
+	private void thenEnsureThatTheValueRemainsInTheStack() {
 		assertThat(sizeAfter, equalTo(sizeBefore));
 	}
 
-	private void thenTheValueShouldNotRemainInTheStack() {
+	private void thenEnsureThatTheValueNotRemainsInTheStack() {
 		assertThat(sizeAfter, equalTo(sizeBefore - 1));
 	}
 
-	private void thenShouldTheStackBeEmpty() {
+	private void thenEnsureThatTheStackAreEmpty() {
 		if (!stack.isEmpty()) {
 			throw new AssertionError();
 		}
 	}
 
-	private void thenShouldTheStackBeNotEmpty() {
+	private void thenEnsureThatTheStackAreNotEmpty() {
 		if (stack.isEmpty()) {
 			throw new AssertionError();
 		}

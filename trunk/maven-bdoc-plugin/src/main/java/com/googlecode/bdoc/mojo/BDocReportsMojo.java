@@ -43,7 +43,7 @@ import com.googlecode.bdoc.doc.report.HtmlReport;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 
 /**
- * @goal ci
+ * @goal doc
  * @requiresDependencyResolution test
  * @execute phase=test-compile
  * @phase test-compile
@@ -52,9 +52,11 @@ import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
  */
 public class BDocReportsMojo extends AbstractBddDocMojo {
 
+	private static final String BDOC_REPORTS_TITLE = "BDoc reports";
+
 	static final String BDOC_DIR = "bdoc";
 
-	static final String BDOC_CHANGE_LOG_XML = "bdoc-change-log.xml";
+	static final String BDOC_REPORTS_XML = "bdoc-reports.xml";
 
 	static final String BDOC_HTML = "bdoc.html";
 
@@ -103,12 +105,12 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 	String scenarioFormatterClassName;
 
 	/**
-	 * Specifies where to save to changelog, optional
+	 * Specifies where to save the bdoc-reports.xml, optional
 	 * 
 	 * @parameter
 	 */
-	String changeLogDirectoryPath;
-	
+	String bdocReportsXmlDirectoryPath;
+
 	/**
 	 * @parameter
 	 */
@@ -128,23 +130,23 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 	@SuppressWarnings("unchecked")
 	private void executeInternal() throws Exception {
 		ClassLoader classLoader = getClassLoader();
-		
+
 		bdocReport.setClassLoader(classLoader);
 		bdocReport.setTestClassDirectory(testClassDirectory);
-		
+
 		bdocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
 		bdocReport.setIgnoreAnnotation((Class<? extends Annotation>) classLoader.loadClass(ignoreAnnotationClassName));
 		bdocReport.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName).newInstance());
 
 		bdocReport.setIncludesFilePattern(includes);
 		bdocReport.setExcludesFilePattern(excludes);
-		
+
 		bdocReport.setProjectInfo(new ProjectInfo(getProject().getName(), getProject().getVersion()));
 
 		if (null != storyRefAnnotationClassName) {
 			bdocReport.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
 		}
-		
+
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 
 		// TODO, don't new each time, check on disk first
@@ -152,43 +154,46 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 
 		changeLog.scan(bdoc);
 
-		//Refactor to pretty code
+		// Refactor to pretty code
 		File docChangeLogFile = getBDocChangeLogFile();
 		getLog().info("Writing to file: " + docChangeLogFile);
 		changeLog.writeToFile(docChangeLogFile);
 
 		writeReport(BDOC_HTML, new HtmlReport(bdoc).html());
-		
-		
+
+		makeBDocReportsHtml();
+	}
+
+	private void makeBDocReportsHtml() {
 		getSink().head();
 		getSink().title();
-		getSink().text("BDoc");
+		getSink().text(BDOC_REPORTS_TITLE);
 		getSink().title_();
 		getSink().head_();
 
 		getSink().body();
-		
+
 		getSink().lineBreak();
 		getSink().lineBreak();
-		getSink().text("BDoc reports");
+		getSink().text(BDOC_REPORTS_TITLE);
 		getSink().lineBreak();
-		
+
 		getSink().list();
 		getSink().listItem();
-		getSink().link( BDOC_HTML );
-		getSink().text( "BDoc" );
+		getSink().link(BDOC_HTML);
+		getSink().text("BDoc");
 		getSink().link_();
 		getSink().listItem_();
 		getSink().list_();
-		
+
 		getSink().body_();
 
-		getSink().flush();		
+		getSink().flush();
 	}
 
 	private void writeReport(String fileName, String reportHtmlContent) throws IOException {
 		File file = new File(outputDirectory, fileName);
-		getLog().info("Writing to file: " + fileName);
+		getLog().info("Writing to file: " + new File(outputDirectory, fileName));
 		FileUtils.writeStringToFile(file, reportHtmlContent);
 	}
 
@@ -212,7 +217,7 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 	}
 
 	public String getName(Locale arg0) {
-		return "BDoc reports";
+		return BDOC_REPORTS_TITLE;
 	}
 
 	public String getOutputName() {
@@ -225,13 +230,13 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 	}
 
 	String getBDocChangeLogRootDirectoryPath() {
-		if (null != changeLogDirectoryPath) {
-			return changeLogDirectoryPath;
+		if (null != bdocReportsXmlDirectoryPath) {
+			return bdocReportsXmlDirectoryPath;
 		}
 		return System.getProperty("user.home") + "/" + BDOC_DIR;
 	}
 
 	String getBDocChangeLogFileName() {
-		return BDOC_CHANGE_LOG_XML;
+		return BDOC_REPORTS_XML;
 	}
 }

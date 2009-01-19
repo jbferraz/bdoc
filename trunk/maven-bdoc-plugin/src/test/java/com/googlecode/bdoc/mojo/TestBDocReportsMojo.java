@@ -62,7 +62,9 @@ public class TestBDocReportsMojo {
 	private BDoc bdoc;
 
 	private BDocReportsMojo bdocReportsMojo = new BDocReportsMojo() {
+		@SuppressWarnings("deprecation")
 		org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
+		@SuppressWarnings("deprecation")
 		@Override
 		public org.codehaus.doxia.sink.Sink getSink() {			
 			return sinkStub;
@@ -70,7 +72,7 @@ public class TestBDocReportsMojo {
 	};
 
 	public TestBDocReportsMojo() {
-		bdocReportsMojo.changeLogDirectoryPath = TARGET;
+		bdocReportsMojo.bdocReportsXmlDirectoryPath = TARGET;
 		bdocReportsMojo.outputDirectory = new File(TARGET);
 
 		MavenProject mavenProject = new MavenProjectMock();
@@ -139,13 +141,13 @@ public class TestBDocReportsMojo {
 	@Test
 	public void shouldChangeRootDirectoryForPersistedBDocChangesIfThisIsSpecifiedInConfiguration() {
 		BDocReportsMojo changeLogMojo2 = new BDocReportsMojo();
-		changeLogMojo2.changeLogDirectoryPath = "mypath";
+		changeLogMojo2.bdocReportsXmlDirectoryPath = "mypath";
 		assertEquals("mypath", changeLogMojo2.getBDocChangeLogRootDirectoryPath());
 	}
 
 	@Test
 	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
-		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocReportsMojo.BDOC_CHANGE_LOG_XML);
+		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocReportsMojo.BDOC_REPORTS_XML);
 		assertEquals(expectedChangeLogFile, bdocReportsMojo.getBDocChangeLogFile());
 	}
 

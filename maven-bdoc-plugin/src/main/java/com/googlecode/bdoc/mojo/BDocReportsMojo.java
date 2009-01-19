@@ -50,13 +50,13 @@ import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
  * 
  * @author Per Otto Bergum Christensen
  */
-public class BDocMojo extends AbstractBddDocMojo {
+public class BDocReportsMojo extends AbstractBddDocMojo {
 
 	static final String BDOC_DIR = "bdoc";
 
 	static final String BDOC_CHANGE_LOG_XML = "bdoc-change-log.xml";
 
-	static final String BDOC_REPORT_HTML = "bdoc-report.html";
+	static final String BDOC_HTML = "bdoc.html";
 
 	/**
 	 * @parameter default-value="${project.build.testSourceDirectory}"
@@ -157,7 +157,7 @@ public class BDocMojo extends AbstractBddDocMojo {
 		getLog().info("Writing to file: " + docChangeLogFile);
 		changeLog.writeToFile(docChangeLogFile);
 
-		writeReport(BDOC_REPORT_HTML, new HtmlReport(bdoc).html());
+		writeReport(BDOC_HTML, new HtmlReport(bdoc).html());
 		
 		
 		getSink().head();
@@ -167,13 +167,23 @@ public class BDocMojo extends AbstractBddDocMojo {
 		getSink().head_();
 
 		getSink().body();
-		getSink().text("Summeray");
-		getSink().rawText("<br/><a href='bdoc-report.html'>Latest BDoc report</a>");
+		
+		getSink().lineBreak();
+		getSink().lineBreak();
+		getSink().text("BDoc reports");
+		getSink().lineBreak();
+		
+		getSink().list();
+		getSink().listItem();
+		getSink().link( BDOC_HTML );
+		getSink().text( "BDoc" );
+		getSink().link_();
+		getSink().listItem_();
+		getSink().list_();
 		
 		getSink().body_();
 
-		getSink().flush();
-		
+		getSink().flush();		
 	}
 
 	private void writeReport(String fileName, String reportHtmlContent) throws IOException {
@@ -202,11 +212,11 @@ public class BDocMojo extends AbstractBddDocMojo {
 	}
 
 	public String getName(Locale arg0) {
-		return "Change Log";
+		return "BDoc reports";
 	}
 
 	public String getOutputName() {
-		return "changelog";
+		return "bdoc-reports";
 	}
 
 	File getBDocChangeLogFile() {

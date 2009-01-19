@@ -52,7 +52,7 @@ import com.googlecode.bdoc.doc.report.BDocReportInterface;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 
 @SuppressWarnings("unchecked")
-public class TestBDocMojo {
+public class TestBDocReportsMojo {
 
 	public static final String TARGET = "target";
 
@@ -61,7 +61,7 @@ public class TestBDocMojo {
 	private BDocReportInterface bdocReport;
 	private BDoc bdoc;
 
-	private BDocMojo bdocMojo = new BDocMojo() {
+	private BDocReportsMojo bdocReportsMojo = new BDocReportsMojo() {
 		org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
 		@Override
 		public org.codehaus.doxia.sink.Sink getSink() {			
@@ -69,15 +69,15 @@ public class TestBDocMojo {
 		};
 	};
 
-	public TestBDocMojo() {
-		bdocMojo.changeLogDirectoryPath = TARGET;
-		bdocMojo.outputDirectory = new File(TARGET);
+	public TestBDocReportsMojo() {
+		bdocReportsMojo.changeLogDirectoryPath = TARGET;
+		bdocReportsMojo.outputDirectory = new File(TARGET);
 
 		MavenProject mavenProject = new MavenProjectMock();
 		mavenProject.setGroupId("groupId");
 		mavenProject.setArtifactId("artifactId");
 
-		bdocMojo.project = mavenProject;
+		bdocReportsMojo.project = mavenProject;
 		
 		
 		
@@ -90,7 +90,7 @@ public class TestBDocMojo {
 
 		context = new Mockery();
 		bdocReport = context.mock(BDocReportInterface.class);
-		bdocMojo.bdocReport = bdocReport;
+		bdocReportsMojo.bdocReport = bdocReport;
 
 		context.checking(new Expectations() {
 			{
@@ -104,13 +104,13 @@ public class TestBDocMojo {
 			}
 		});
 
-		bdocMojo.getBDocChangeLogFile().delete();
+		bdocReportsMojo.getBDocChangeLogFile().delete();
 	}
 
 	public void expectDefaultMavenConfigurationSetOnBDocReport() {
-		bdocMojo.testAnnotationClassName = Test.class.getName();
-		bdocMojo.ignoreAnnotationClassName = Ignore.class.getName();
-		bdocMojo.scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
+		bdocReportsMojo.testAnnotationClassName = Test.class.getName();
+		bdocReportsMojo.ignoreAnnotationClassName = Ignore.class.getName();
+		bdocReportsMojo.scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
 		expectConfiguredTestAnnotationSetOnTheBDocReport(Test.class);
 		expectConfiguredIgnoreAnnotationSetOnTheBDocReport(Ignore.class);
 		expectConfiguredScenarioFormatterClassSetOnTheBDocReport(new AndInBetweenScenarioLinesFormatter());
@@ -120,51 +120,51 @@ public class TestBDocMojo {
 	public void shouldCreateANewChangeLogXmlWhenOneDoesNotExist() throws MavenReportException {
 		expectDefaultMavenConfigurationSetOnBDocReport();
 		whenTheReportIsExecuted();
-		assertTrue(bdocMojo.getBDocChangeLogFile().exists());
+		assertTrue(bdocReportsMojo.getBDocChangeLogFile().exists());
 	}
 
 	@Test
 	public void shouldUpdateTheLatestBDocInThePersistedChangeLog() throws MavenReportException, IOException {
 		expectDefaultMavenConfigurationSetOnBDocReport();
 		whenTheReportIsExecuted();
-		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
+		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(bdocReportsMojo.getBDocChangeLogFile());
 		assertEquals(bdoc.getProject(), updatedChangeLog.latestBDoc().getProject());
 	}
 
 	@Test
 	public void shouldUseTheUserHomeDirectoryConcatenatedWithBDocAsRootDirectoryForPersistedBDocChangeLogs() {
-		assertEquals(System.getProperty("user.home") + "/bdoc", new BDocMojo().getBDocChangeLogRootDirectoryPath());
+		assertEquals(System.getProperty("user.home") + "/bdoc", new BDocReportsMojo().getBDocChangeLogRootDirectoryPath());
 	}
 
 	@Test
 	public void shouldChangeRootDirectoryForPersistedBDocChangesIfThisIsSpecifiedInConfiguration() {
-		BDocMojo changeLogMojo2 = new BDocMojo();
+		BDocReportsMojo changeLogMojo2 = new BDocReportsMojo();
 		changeLogMojo2.changeLogDirectoryPath = "mypath";
 		assertEquals("mypath", changeLogMojo2.getBDocChangeLogRootDirectoryPath());
 	}
 
 	@Test
 	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
-		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocMojo.BDOC_CHANGE_LOG_XML);
-		assertEquals(expectedChangeLogFile, bdocMojo.getBDocChangeLogFile());
+		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocReportsMojo.BDOC_CHANGE_LOG_XML);
+		assertEquals(expectedChangeLogFile, bdocReportsMojo.getBDocChangeLogFile());
 	}
 
 	// ------ Scenarios ----------------------------------------------------------------------------------------------
 
 	private void given_TestAnnotationClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
-		bdocMojo.testAnnotationClassName = clazz.getName();
+		bdocReportsMojo.testAnnotationClassName = clazz.getName();
 	}
 
 	private void given_IgnoreAnnotationClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
-		bdocMojo.ignoreAnnotationClassName = clazz.getName();
+		bdocReportsMojo.ignoreAnnotationClassName = clazz.getName();
 	}
 
 	private void given_ScenarioFormatterClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
-		bdocMojo.scenarioFormatterClassName = clazz.getName();
+		bdocReportsMojo.scenarioFormatterClassName = clazz.getName();
 	}
 
 	private void given_AStoryRefAnnotationAnnotation_IsConfigured(final Class<? extends Annotation> clazz) {
-		bdocMojo.storyRefAnnotationClassName = clazz.getName();
+		bdocReportsMojo.storyRefAnnotationClassName = clazz.getName();
 	}
 
 	private void expectConfiguredTestAnnotationSetOnTheBDocReport(final Class clazz) {
@@ -200,7 +200,7 @@ public class TestBDocMojo {
 	}
 
 	private void whenTheReportIsExecuted() throws MavenReportException {
-		bdocMojo.executeReport(null);
+		bdocReportsMojo.executeReport(null);
 	}
 
 	private void thenEnsureExpectionsAreSatisfied() {

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<parent>
@@ -29,10 +30,16 @@
 				<artifactId>maven-bdoc-plugin</artifactId>
 				<version>${maven.bdoc.plugin.version}</version>
 				<configuration>
-					<storyRefAnnotationClassName>bdddoc4j.examples.Ref</storyRefAnnotationClassName>
+					<storyRefAnnotationClassName>
+						bdddoc4j.examples.Ref
+					</storyRefAnnotationClassName>
 					<logDirectory>bddlog</logDirectory>
-					<testAnnotationClassName>org.junit.Test</testAnnotationClassName>
-					<scenarioFormatterClassName>com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter</scenarioFormatterClassName>					
+					<testAnnotationClassName>
+						org.junit.Test
+					</testAnnotationClassName>
+					<scenarioFormatterClassName>
+						com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter
+					</scenarioFormatterClassName>
 				</configuration>
 
 				<executions>
@@ -42,9 +49,9 @@
 							<goal>doc</goal>
 						</goals>
 					</execution>
-					
+
 				</executions>
-				
+
 			</plugin>
 
 			<plugin>
@@ -70,6 +77,28 @@
 		</plugins>
 	</build>
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>com.googlecode.bdoc</groupId>
+				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>${maven.bdoc.plugin.version}</version>
+				<configuration>
+					<storyRefAnnotationClassName>
+						bdddoc4j.examples.Ref
+					</storyRefAnnotationClassName>
+					<logDirectory>bddlog</logDirectory>
+					<testAnnotationClassName>
+						org.junit.Test
+					</testAnnotationClassName>
+					<scenarioFormatterClassName>
+						com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter
+					</scenarioFormatterClassName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
 	<profiles>
 		<profile>
 			<id>no_integration_testing</id>
@@ -82,8 +111,12 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<excludes>
-								<exclude>**/*IntegrationTest.java</exclude>
-								<exclude>**/IntegrationTest*.java</exclude>
+								<exclude>
+									**/*IntegrationTest.java
+								</exclude>
+								<exclude>
+									**/IntegrationTest*.java
+								</exclude>
 							</excludes>
 						</configuration>
 					</plugin>
@@ -98,8 +131,12 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
 							<includes>
-								<include>**/*IntegrationTest.java</include>
-								<include>**/IntegrationTest*.java</include>
+								<include>
+									**/*IntegrationTest.java
+								</include>
+								<include>
+									**/IntegrationTest*.java
+								</include>
 							</includes>
 							<excludes></excludes>
 						</configuration>

@@ -63,10 +63,6 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 		super();
 	}
 
-	public boolean isExternalReport() {
-		return true;
-	}
-
 	protected void writeReport(String content) {
 		getSink().rawText(content);
 		getSink().flush();

@@ -46,9 +46,10 @@ import com.googlecode.bdoc.mojo.testdata.TestIt2;
 public class BDocReportsMojoBehaviour {
 
 	private BDocReportsMojo bdocMojo = new BDocReportsMojo() {
+		@SuppressWarnings("deprecation")
 		org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
 		{
-			changeLogDirectoryPath = TestBDocReportsMojo.TARGET;
+			bdocReportsXmlDirectoryPath = TestBDocReportsMojo.TARGET;
 			project = new MavenProjectMock();
 
 			testAnnotationClassName = Test.class.getName();
@@ -56,6 +57,7 @@ public class BDocReportsMojoBehaviour {
 			scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		public org.codehaus.doxia.sink.Sink getSink() {
 			return sinkStub;

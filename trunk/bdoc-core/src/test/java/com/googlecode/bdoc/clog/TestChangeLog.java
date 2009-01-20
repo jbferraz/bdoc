@@ -27,6 +27,7 @@ package com.googlecode.bdoc.clog;
 import java.io.File;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,4 +51,28 @@ public class TestChangeLog {
 		ChangeLog changeLogfromFile = ChangeLog.fromXmlFile(changeLogXmlFile);
 		assertEquals(changeLog.latestBDoc(), changeLogfromFile.latestBDoc());
 	}
+
+	@Test
+	public void shouldNotProduceAnyDiffForTheFirstBDocScan() {
+		ChangeLog changeLog = new ChangeLog();
+		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
+		assertTrue(changeLog.diffList().isEmpty());
+	}
+
+	@Test
+	public void shouldNotAddBDocDiffIfNoDiffExists() {
+		ChangeLog changeLog = new ChangeLog();
+		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
+		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
+		assertEquals(0, changeLog.diffList().size());
+	}
+
+	@Test
+	public void shouldAddBDocDiffWhenDiffExists() {
+		ChangeLog changeLog = new ChangeLog();
+		changeLog.scan(BDocTestHelper.bdocWithProject());
+		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
+		assertEquals(1, changeLog.diffList().size());
+	}
+
 }

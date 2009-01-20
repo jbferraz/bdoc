@@ -45,7 +45,7 @@ import com.googlecode.bdoc.doc.testdata.RefClass;
 @RefClass(ChangeLog.class)
 public class TestChangeLogBehaviour {
 
-	private ChangeLog givenAnNewChangeLog() {
+	private ChangeLog givenAnEmptyChangeLog() {
 		return new ChangeLog();
 	}
 
@@ -53,11 +53,11 @@ public class TestChangeLogBehaviour {
 		return BDocTestHelper.bdocWithOneSpecification();
 	}
 
-	private void whenTheBDocIsScannedByTheChangeLog(ChangeLog changeLog, BDoc bdoc) {
+	private void whenTheBDocIsScanned(ChangeLog changeLog, BDoc bdoc) {
 		changeLog.scan(bdoc);
 	}
 
-	private void thenEnsureTheLatestBdocInTheChangeLogContainsTheNewBDoc(ChangeLog changeLog, BDoc bdoc) {
+	private void thenEnsureTheLatestBDocIsUpdated(ChangeLog changeLog, BDoc bdoc) {
 		assertSame(bdoc, changeLog.latestBDoc());
 	}
 
@@ -68,22 +68,19 @@ public class TestChangeLogBehaviour {
 	}
 
 	@Test
-	public void shouldPutNewBDocDiffOnTopInEmptyChangeLog() {
-		ChangeLog changeLog = givenAnNewChangeLog();
+	public void shouldContainTheLatestScannedBDoc() {
+		ChangeLog changeLog = givenAnEmptyChangeLog();
 		BDoc bdoc = givenABDocWithOneSpecification();
-		whenTheBDocIsScannedByTheChangeLog(changeLog, bdoc);
-		thenEnsureTheLatestBdocInTheChangeLogContainsTheNewBDoc(changeLog, bdoc);
-
-		Specification specification = bdoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
-				.get(0);
-		thenEnsureTheLatestDiffInTheChangeLogContainsTheNewSpecification(changeLog, specification);
+		whenTheBDocIsScanned(changeLog, bdoc);
+		thenEnsureTheLatestBDocIsUpdated(changeLog, bdoc);
 	}
 
 	// ------------------------------------------------------------------------------------------------------
 
 	private ChangeLog givenAChangeLogWithOneDiffContainingOneSpecification() {
-		ChangeLog changeLog = givenAnNewChangeLog();
-		whenTheBDocIsScannedByTheChangeLog(changeLog, givenABDocWithOneSpecification());
+		ChangeLog changeLog = new ChangeLog();
+		changeLog.scan(BDocTestHelper.bdocWithProject());
+		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
 		return changeLog;
 	}
 
@@ -96,30 +93,20 @@ public class TestChangeLogBehaviour {
 	}
 
 	private void thenEnsureTheOldBDocDiffIsPushedOneDownInTheBDocDiffList(BDocDiff oldDiff, List<BDocDiff> diffList) {
-		assertEquals( oldDiff, diffList.get(diffList.size()-2) );
+		assertEquals(oldDiff, diffList.get(diffList.size() - 2));
 	}
-	
+
 	@Test
 	public void shouldPushOldBDocDiffDownTheListWhenANewDiffIsFound() {
 		ChangeLog changeLog = givenAChangeLogWithOneDiffContainingOneSpecification();
 		BDocDiff oldDiff = changeLog.latestDiff();
-		BDoc bdoc = XmlReport.cloneBDoc(changeLog.latestBDoc() );
+		BDoc bdoc = XmlReport.cloneBDoc(changeLog.latestBDoc());
 		Scenario scenario = whenAScenarioIsAddedToTheBDoc(bdoc);
-		whenTheBDocIsScannedByTheChangeLog(changeLog, bdoc);
-		thenEnsureTheLatestBdocInTheChangeLogContainsTheNewBDoc(changeLog, bdoc);
+		whenTheBDocIsScanned(changeLog, bdoc);
+		thenEnsureTheLatestBDocIsUpdated(changeLog, bdoc);
 		thenEnsureTheNewBDocDiffContainsTheNewScenario(changeLog.latestDiff(), scenario);
-		thenEnsureTheOldBDocDiffIsPushedOneDownInTheBDocDiffList(  oldDiff, changeLog.diffList() );
+		thenEnsureTheOldBDocDiffIsPushedOneDownInTheBDocDiffList(oldDiff, changeLog.diffList());
 	}
-	
-	// ------------------------------------------------------------------------------------------------------
-	
-	@Test
-	public void shouldNotAddBDocDiffIfNoDiffExists() {
-		ChangeLog changeLog = new ChangeLog();
-		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		assertEquals( 1, changeLog.diffList().size() );		
-	}
-	
+
 	
 }

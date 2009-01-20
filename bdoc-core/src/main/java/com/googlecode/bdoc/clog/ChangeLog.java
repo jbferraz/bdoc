@@ -34,6 +34,8 @@ import org.apache.commons.io.FileUtils;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
+import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.report.XmlReport;
 import com.thoughtworks.xstream.XStream;
 
 public class ChangeLog {
@@ -42,13 +44,11 @@ public class ChangeLog {
 	private List<BDocDiff> diffList = new ArrayList<BDocDiff>();
 
 	public void scan(BDoc bdoc) {
-		if (null == latestBDoc) {
-			latestBDoc = new BDoc();
-			latestBDoc.setProject(new ProjectInfo("", ""));
-		}
-		BDocDiff bdocDiff = new BDocDiff(latestBDoc, bdoc);
-		if (bdocDiff.diffExists()) {
-			diffList.add(bdocDiff);
+		if (null != latestBDoc) {
+			BDocDiff bdocDiff = new BDocDiff(latestBDoc, bdoc);
+			if (bdocDiff.diffExists()) {
+				diffList.add(bdocDiff);
+			}
 		}
 		latestBDoc = bdoc;
 	}
@@ -83,6 +83,8 @@ public class ChangeLog {
 
 	private static XStream xstream() {
 		XStream xstream = new XStream();
+		XmlReport.addAlias(xstream);
+		xstream.alias("changeLog", ChangeLog.class);
 		return xstream;
 	}
 

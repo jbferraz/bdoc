@@ -149,15 +149,15 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 
-		// TODO, don't new each time, check on disk first
 		ChangeLog changeLog = new ChangeLog();
+		if (getBDocChangeLogFile().exists()) {
+			changeLog = ChangeLog.fromXmlFile(getBDocChangeLogFile());
+		}
 
 		changeLog.scan(bdoc);
 
-		// Refactor to pretty code
-		File docChangeLogFile = getBDocChangeLogFile();
-		getLog().info("Writing to file: " + docChangeLogFile);
-		changeLog.writeToFile(docChangeLogFile);
+		getLog().info("Updating file: " + getBDocChangeLogFile());
+		changeLog.writeToFile(getBDocChangeLogFile());
 
 		writeReport(BDOC_HTML, new HtmlReport(bdoc).html());
 

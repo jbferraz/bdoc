@@ -32,47 +32,51 @@ import java.io.File;
 
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.doxia.sink.SinkAdapter;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.clog.ChangeLog;
+import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.util.ItemInListNotFoundException;
 import com.googlecode.bdoc.mojo.testdata.TestIt;
 import com.googlecode.bdoc.mojo.testdata.TestIt2;
 
 @SuppressWarnings("unchecked")
-public class BDocReportsMojoBehaviour {
+public class TestBDocReportsMojoBehaviour {
 
-	private BDocReportsMojo bdocMojo = new BDocReportsMojo() {
-		@SuppressWarnings("deprecation")
-		org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
-		{
-			bdocReportsXmlDirectoryPath = TestBDocReportsMojo.TARGET;
-			project = new MavenProjectMock();
+	private BDocReportsMojo bdocMojo = null;
 
-			testAnnotationClassName = Test.class.getName();
-			ignoreAnnotationClassName = Ignore.class.getName();
-			scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
-		}
+	@Before
+	public void resetMojo() {
+		bdocMojo = new BDocReportsMojo() {
+			@SuppressWarnings("deprecation")
+			org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
+			{
+				bdocReportsXmlDirectoryPath = TestBDocReportsMojo.TARGET;
+				project = new MavenProjectMock();
 
-		@SuppressWarnings("deprecation")
-		@Override
-		public org.codehaus.doxia.sink.Sink getSink() {
-			return sinkStub;
+				testAnnotationClassName = Test.class.getName();
+				ignoreAnnotationClassName = Ignore.class.getName();
+				scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
+			}
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public org.codehaus.doxia.sink.Sink getSink() {
+				return sinkStub;
+			};
 		};
-	};
+		
+		bdocMojo.getBDocChangeLogFile().delete();
+	}
 
-	private void givenATestSourceDirectory() {
+	private void givenMavenInjectedValuesForSourceDirectoryAndTestClassDirectoryAndOutputDirectory() {
 		bdocMojo.testSourceDirectory = new File("src/test/java");
-	}
-
-	private void givenATestClassDirectory() {
 		bdocMojo.testClassDirectory = new File("target/test-classes");
-	}
-
-	private void givenAnOutputDirectory() {
 		bdocMojo.outputDirectory = new File("target");
 	}
 
@@ -88,7 +92,7 @@ public class BDocReportsMojoBehaviour {
 		return testClass;
 	}
 
-	private void whenTheChangeLogMojoHasRun() throws MavenReportException {
+	private void whenTheBDocReportsMojoHasRun() throws MavenReportException {
 		bdocMojo.executeReport(null);
 	}
 
@@ -114,33 +118,50 @@ public class BDocReportsMojoBehaviour {
 
 	@Test
 	public void shouldRunBDocOnTheProjectTestCode() throws MavenReportException {
-		givenATestSourceDirectory();
-		givenATestClassDirectory();
-		givenAnOutputDirectory();
-		whenTheChangeLogMojoHasRun();
+		givenMavenInjectedValuesForSourceDirectoryAndTestClassDirectoryAndOutputDirectory();
+		whenTheBDocReportsMojoHasRun();
 		thenEnsureABDocHtmlReportHasBeenGenerated();
 	}
 
 	@Test
 	public void shouldIncludeTestsThatAreSpecified() throws MavenReportException {
-		givenATestSourceDirectory();
-		givenATestClassDirectory();
-		givenAnOutputDirectory();
+		givenMavenInjectedValuesForSourceDirectoryAndTestClassDirectoryAndOutputDirectory();
 		Class testClass = givenAnIncludeThatSpecifiesOneTestClass(TestIt.class);
-		whenTheChangeLogMojoHasRun();
+		whenTheBDocReportsMojoHasRun();
 		thenEnsureTheBDocContainsClassBehaviourSpecifiedByTheTestClass(testClass);
 		thenEnsureTheChangeLogDoesNotContainBehaviourFromOtherTestClasses(TestIt2.class);
 	}
 
 	@Test
 	public void shouldExcludeTestsThatAreSpecified() throws MavenReportException {
-		givenATestSourceDirectory();
-		givenATestClassDirectory();
-		givenAnOutputDirectory();
+		givenMavenInjectedValuesForSourceDirectoryAndTestClassDirectoryAndOutputDirectory();
 		Class testClass = givenAnExcludeThatSpecifiesOneTestClass(TestIt.class);
-		whenTheChangeLogMojoHasRun();
+		whenTheBDocReportsMojoHasRun();
 		thenEnsureTheChangeLogDoesNotContainClassBehaviourSpecifiedByTheTestClass(testClass);
 		thenEnsureTheBDocContainsBehaviourFromOtherTestClasses(TestIt2.class);
+	}
+
+	// --------------------------------------------------------------------------------------------
+
+	private void givenAnExistingBDocReportsXmlFile() {
+		ChangeLog changeLog = new ChangeLog();
+		BDoc bdoc = new BDoc(org.junit.Test.class, null, org.junit.Ignore.class);
+		bdoc.setProject(new ProjectInfo("test", "test"));
+		changeLog.scan(bdoc);
+		changeLog.writeToFile( bdocMojo.getBDocChangeLogFile() );
+	}
+
+	private void thenEnsureTheBDocReportsXmlFileHasBeenUpdated() {
+		ChangeLog changeLog = ChangeLog.fromXmlFile(bdocMojo.getBDocChangeLogFile() );
+		assertTrue( 0 < changeLog.diffList().size() );
+	}
+
+	@Test
+	public void shouldUpdateExistingBDocReportsXmlFile() throws MavenReportException {
+		givenMavenInjectedValuesForSourceDirectoryAndTestClassDirectoryAndOutputDirectory();
+		givenAnExistingBDocReportsXmlFile();
+		whenTheBDocReportsMojoHasRun();
+		thenEnsureTheBDocReportsXmlFileHasBeenUpdated();
 	}
 
 	// --------------------------------------------------------------------------------------------

@@ -80,9 +80,6 @@ public class TestBDocReportsMojo {
 		mavenProject.setArtifactId("artifactId");
 
 		bdocReportsMojo.project = mavenProject;
-		
-		
-		
 	}
 
 	@Before
@@ -140,9 +137,9 @@ public class TestBDocReportsMojo {
 
 	@Test
 	public void shouldChangeRootDirectoryForPersistedBDocChangesIfThisIsSpecifiedInConfiguration() {
-		BDocReportsMojo changeLogMojo2 = new BDocReportsMojo();
-		changeLogMojo2.bdocReportsXmlDirectoryPath = "mypath";
-		assertEquals("mypath", changeLogMojo2.getBDocChangeLogRootDirectoryPath());
+		BDocReportsMojo bdocReportsMojo2 = new BDocReportsMojo();
+		bdocReportsMojo2.bdocReportsXmlDirectoryPath = "mypath";
+		assertEquals("mypath", bdocReportsMojo2.getBDocChangeLogRootDirectoryPath());
 	}
 
 	@Test
@@ -150,7 +147,7 @@ public class TestBDocReportsMojo {
 		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocReportsMojo.BDOC_REPORTS_XML);
 		assertEquals(expectedChangeLogFile, bdocReportsMojo.getBDocChangeLogFile());
 	}
-
+	
 	// ------ Scenarios ----------------------------------------------------------------------------------------------
 
 	private void given_TestAnnotationClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {

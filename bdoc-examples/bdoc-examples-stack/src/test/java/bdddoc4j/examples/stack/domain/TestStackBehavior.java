@@ -28,9 +28,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import bdddoc4j.examples.Ref;
@@ -62,57 +60,57 @@ public class TestStackBehavior {
 	@Test
 	public void aNewlyCreatedStackMustBeEmpty() {
 		givenAnEmptyStack();
-		thenEnsureThatTheStackAreEmpty();
+		thenTheStackAreEmpty();
 	}
 
 	@Test
 	public void shouldNotBeEmptyAfterPush() {
 		givenAnEmptyStack();
 		whenPushedIsCalled(VALUE_1);
-		thenEnsureThatTheStackAreNotEmpty();
+		thenTheStackAreNotEmpty();
 	}
 
 	@Test(expected = Exception.class)
 	public void shouldThrowExceptionUponNullPush() {
 		givenAnEmptyStack();
 		whenPushedIsCalledWithNull();
-		thenEnsureThatAnExceptionAreThrown();
+		thenAnExceptionAreThrown();
 	}
 
 	@Test(expected = Exception.class)
 	public void shouldThrowExceptionUponPopWithoutPush() {
 		givenAnEmptyStack();
 		whenPopIsCalled();
-		thenEnsureThatAnExceptionAreThrown();
+		thenAnExceptionAreThrown();
 	}
 
 	@Test
 	public void shouldPopPushedValue() {
 		givenAnEmptyStack();
-		whenPushedIsCalled(VALUE_1);
+		givenOnePushedItem(VALUE_1);
 		whenPopIsCalled();
-		thenEnsureThatLastItemPushedAreReturnedFromPop();
-		thenEnsureThatTheStackAreEmpty();
+		thenLastItemPushedAreReturnedFromPop();
+		thenTheStackAreEmpty();
 	}
 
 	@Test
 	public void shouldPopLastPushedValueFirst() {
 		givenAnEmptyStack();
-		whenPushedIsCalled(VALUE_1);
-		whenPushedIsCalled(VALUE_2);
+		givenOnePushedItem(VALUE_1);
+		givenOnePushedItem(VALUE_2);
 		whenPopIsCalled();
-		thenEnsureThatLastItemPushedAreReturnedFromPop();
-		thenEnsureThatTheValueNotRemainsInTheStack();
-		thenEnsureThatTheStackAreNotEmpty();
+		thenLastItemPushedAreReturnedFromPop();
+		thenTheValueNotRemainsInTheStack();
+		thenTheStackAreNotEmpty();
 	}
 
 	@Test
 	public void shouldLeaveValueOnStackAfterPeep() {
 		givenAnEmptyStack();
-		whenPushedIsCalled(VALUE_1);
+		givenOnePushedItem(VALUE_1);
 		whenPeekIsCalled();
-		thenEnsureThatLastItemPushedAreReturnedFromPeek();
-		thenEnsureThatTheValueRemainsInTheStack();
+		thenLastItemPushedAreReturnedFromPeek();
+		thenTheValueRemainsInTheStack();
 	}
 
 	@Before
@@ -124,21 +122,23 @@ public class TestStackBehavior {
 		sizeAfter = 0;
 	}
 
-	// GIVENS
 	private void givenAnEmptyStack() {
 		stack = new Stack<String>();
 	}
 
-	// WHENS
-	private void whenPushedIsCalled(String item) {
+	private void givenOnePushedItem(String item) {
 		sizeBefore = stack.size();
 		stack.push(item);
 		sizeAfter = stack.size();
 		lastPushed = item;
 	}
 
+	private void whenPushedIsCalled(String item) {
+		givenOnePushedItem(item);
+	}
+
 	private void whenPushedIsCalledWithNull() {
-		whenPushedIsCalled(null);
+		givenOnePushedItem(null);
 	}
 
 	private void whenPopIsCalled() {
@@ -153,42 +153,35 @@ public class TestStackBehavior {
 		sizeAfter = stack.size();
 	}
 
-	// THENS
-	private void thenEnsureThatAnExceptionAreThrown() {
+	private void thenAnExceptionAreThrown() {
 		fail("method hasn't caused an exception when it should");
 	}
 
-	private void thenEnsureThatLastItemPushedAreReturnedFromPop() {
+	private void thenLastItemPushedAreReturnedFromPop() {
 		assertThat(lastPushed, equalTo(poped));
 	}
 
-	private void thenEnsureThatLastItemPushedAreReturnedFromPeek() {
+	private void thenLastItemPushedAreReturnedFromPeek() {
 		assertThat(lastPushed, equalTo(peeked));
 	}
 
-	private void thenEnsureThatTheValueRemainsInTheStack() {
+	private void thenTheValueRemainsInTheStack() {
 		assertThat(sizeAfter, equalTo(sizeBefore));
 	}
 
-	private void thenEnsureThatTheValueNotRemainsInTheStack() {
+	private void thenTheValueNotRemainsInTheStack() {
 		assertThat(sizeAfter, equalTo(sizeBefore - 1));
 	}
 
-	private void thenEnsureThatTheStackAreEmpty() {
+	private void thenTheStackAreEmpty() {
 		if (!stack.isEmpty()) {
 			throw new AssertionError();
 		}
 	}
 
-	private void thenEnsureThatTheStackAreNotEmpty() {
+	private void thenTheStackAreNotEmpty() {
 		if (stack.isEmpty()) {
 			throw new AssertionError();
 		}
-	}
-
-	@Ignore
-	@Test
-	public void shouldIgnoreMe() {
-		Assert.assertTrue(true);
 	}
 }

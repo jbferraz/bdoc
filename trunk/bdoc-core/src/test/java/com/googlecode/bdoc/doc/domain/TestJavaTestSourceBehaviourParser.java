@@ -51,10 +51,13 @@ public class TestJavaTestSourceBehaviourParser {
 		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(stackBehaviorJava);
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
-		expectedScenarioParts.add(new Scenario.Part("givenAStackWithTwoPushedValues"));
+		expectedScenarioParts.add(new Scenario.Part("givenAnEmptyStack"));
+		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItem"));
+		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItem"));
 		expectedScenarioParts.add(new Scenario.Part("whenPopIsCalled"));
-		expectedScenarioParts.add(new Scenario.Part("thenTheLastItemPushedShouldBeReturned"));
-		expectedScenarioParts.add(new Scenario.Part("thenTheValueShouldNotRemainInTheStack"));
+		expectedScenarioParts.add(new Scenario.Part("thenLastItemPushedAreReturnedFromPop"));
+		expectedScenarioParts.add(new Scenario.Part("thenTheValueNotRemainsInTheStack"));
+		expectedScenarioParts.add(new Scenario.Part("thenTheStackAreNotEmpty"));
 
 		assertEquals(new Scenario(expectedScenarioParts), sourceClassBehaviourParser.getScenario("shouldPopLastPushedValueFirst"));
 	}
@@ -67,5 +70,26 @@ public class TestJavaTestSourceBehaviourParser {
 		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(testStackJava);
 
 		assertNull(sourceClassBehaviourParser.getScenario("shouldBeEmptyWhenStackIsNew"));
+	}
+
+	@Test
+	public void shouldComposeScenarioFromTestConstructedWithMultipleGivenWhenThenAsPartOfTheMethodBlock() throws IOException {
+
+		String behaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
+				+ "/integrationtestclasses/bankaccount/BankAccountBehavior.java"));
+
+		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
+
+		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
+		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance"));
+		expectedScenarioParts.add(new Scenario.Part("whenDepositAreCalledWithAmount"));
+		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo"));
+		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance"));
+		expectedScenarioParts.add(new Scenario.Part("whenDepositAreCalledWithAmount"));
+		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo"));
+
+		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldAddDepositToBalance");
+
+		assertEquals(new Scenario(expectedScenarioParts), scenario);
 	}
 }

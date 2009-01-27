@@ -31,8 +31,6 @@ import java.util.List;
 import org.junit.Test;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.util.JavaCodeUtil;
-
 
 public class TestJavaCodeUtil {
 
@@ -41,6 +39,7 @@ public class TestJavaCodeUtil {
 	private final static String JAVA_METHOD_CONTENT_GIVEN_WHEN_THEN = "givenA(); whenB(); thenC(); ";
 
 	private final static String JAVA_METHOD_CONTENT_GIVEN_GIVEN_WHEN_WHEN_THEN_THEN = "givenA(); givenAA(); whenB(); whenBB(); thenC(); thenCC(); ";
+	private final static String JAVA_METHOD_CONTENT_GIVEN_WHEN_THEN_GIVEN_WHEN_THEN_ = "givenA(); whenB(); thenC(); givenAA(); whenBB(); thenCC(); ";
 
 	@Test
 	public void shouldReturnTheBlockAfterASpecifiedToken() {
@@ -50,20 +49,31 @@ public class TestJavaCodeUtil {
 	@Test
 	public void shouldExtractMethodsStartingWithGivenWhenThen() {
 		List<Scenario.Part> behaviour = JavaCodeUtil.getGivenWhenThenMethods(JAVA_METHOD_CONTENT_GIVEN_WHEN_THEN);
-		assertEquals(new Scenario.Part( "givenA"), behaviour.get(0));
-		assertEquals(new Scenario.Part( "whenB"), behaviour.get(1));
-		assertEquals(new Scenario.Part( "thenC"), behaviour.get(2));
+		assertEquals(new Scenario.Part("givenA"), behaviour.get(0));
+		assertEquals(new Scenario.Part("whenB"), behaviour.get(1));
+		assertEquals(new Scenario.Part("thenC"), behaviour.get(2));
 	}
 
 	@Test
 	public void shouldExtractMethodsStartingWith2xGiven2xWhenAnd2xThen() {
 		List<Scenario.Part> behaviour = JavaCodeUtil.getGivenWhenThenMethods(JAVA_METHOD_CONTENT_GIVEN_GIVEN_WHEN_WHEN_THEN_THEN);
-		assertEquals(new Scenario.Part( "givenA"), behaviour.get(0));
-		assertEquals(new Scenario.Part( "givenAA"), behaviour.get(1));
-		assertEquals(new Scenario.Part( "whenB"), behaviour.get(2));
-		assertEquals(new Scenario.Part( "whenBB"), behaviour.get(3));
-		assertEquals(new Scenario.Part( "thenC"), behaviour.get(4));
-		assertEquals(new Scenario.Part( "thenCC"), behaviour.get(5));
+		assertEquals(new Scenario.Part("givenA"), behaviour.get(0));
+		assertEquals(new Scenario.Part("givenAA"), behaviour.get(1));
+		assertEquals(new Scenario.Part("whenB"), behaviour.get(2));
+		assertEquals(new Scenario.Part("whenBB"), behaviour.get(3));
+		assertEquals(new Scenario.Part("thenC"), behaviour.get(4));
+		assertEquals(new Scenario.Part("thenCC"), behaviour.get(5));
+	}
+
+	@Test
+	public void shouldExtractMethodsStartingWith2xGivenWhenThen() {
+		List<Scenario.Part> behaviour = JavaCodeUtil.getGivenWhenThenMethods(JAVA_METHOD_CONTENT_GIVEN_WHEN_THEN_GIVEN_WHEN_THEN_);
+		assertEquals(new Scenario.Part("givenA"), behaviour.get(0));
+		assertEquals(new Scenario.Part("givenAA"), behaviour.get(3));
+		assertEquals(new Scenario.Part("whenB"), behaviour.get(1));
+		assertEquals(new Scenario.Part("whenBB"), behaviour.get(4));
+		assertEquals(new Scenario.Part("thenC"), behaviour.get(2));
+		assertEquals(new Scenario.Part("thenCC"), behaviour.get(5));
 	}
 
 }

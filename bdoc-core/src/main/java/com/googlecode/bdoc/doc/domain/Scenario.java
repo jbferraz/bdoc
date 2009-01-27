@@ -67,6 +67,11 @@ public class Scenario {
 			}
 			throw new IllegalStateException("Didn't match [" + camelCaseDescription + "] with any scenario keyword");
 		}
+
+		@Override
+		public String toString() {
+			return camelCaseDescription;
+		}
 	}
 
 	public enum Pattern {
@@ -138,6 +143,11 @@ public class Scenario {
 
 	public List<Part> getParts() {
 		return part;
+	}
+
+	@Override
+	public String toString() {
+		return part.toString();
 	}
 
 }

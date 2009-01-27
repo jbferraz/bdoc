@@ -31,7 +31,6 @@ import org.apache.commons.lang.StringUtils;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
 
-
 /**
  * Util-methods for getting data from java source code.
  */
@@ -50,21 +49,42 @@ public class JavaCodeUtil {
 
 		String javaTmp = javaMethodContent;
 
-		for (int keywordIndex = 0; keywordIndex < Scenario.KEYWORD_COUNT; keywordIndex++) {
+		for (int contentIndex = 0; contentIndex < javaMethodContent.length(); contentIndex++) {
 
-			boolean found = true;
-			while (found) {
-				int keywordStart = Scenario.Pattern.indexOfScenarioKeyword(javaTmp, keywordIndex);
-				found = -1 < keywordStart;
-				if (found) {
-					javaTmp = javaTmp.substring(keywordStart);
-					String behaviourByKeyword = StringUtils.substringBefore(javaTmp, "(");
-					result.add(new Scenario.Part(behaviourByKeyword));
-					javaTmp = javaTmp.substring(behaviourByKeyword.length());
-				}
+			int[] indexes = findFirstIndexForEachKeyword(javaTmp);
+			int firstFoundIndex = getKeywordWithLowestIndex(indexes, javaMethodContent.length());
+
+			if (foundKeyword(javaMethodContent, firstFoundIndex)) {
+				javaTmp = javaTmp.substring(firstFoundIndex);
+				String behaviourByKeyword = StringUtils.substringBefore(javaTmp, "(");
+				result.add(new Scenario.Part(behaviourByKeyword));
+				javaTmp = javaTmp.substring(behaviourByKeyword.length());
 			}
 		}
 
 		return result;
+	}
+
+	private static boolean foundKeyword(String javaMethodContent, int firstFoundIndex) {
+		return firstFoundIndex > -1 && firstFoundIndex < javaMethodContent.length();
+	}
+
+	private static int getKeywordWithLowestIndex(int[] indexes, int max) {
+		int firstFoundIndex = max;
+		for (int index : indexes) {
+			if (index > -1 && index < firstFoundIndex) {
+				firstFoundIndex = index;
+			}
+		}
+		return firstFoundIndex;
+	}
+
+	private static int[] findFirstIndexForEachKeyword(String javaTmp) {
+		int indexes[] = new int[Scenario.KEYWORD_COUNT];
+		for (int keywordIndex = 0; keywordIndex < Scenario.KEYWORD_COUNT; keywordIndex++) {
+			int keywordStart = Scenario.Pattern.indexOfScenarioKeyword(javaTmp, keywordIndex);
+			indexes[keywordIndex] = keywordStart;
+		}
+		return indexes;
 	}
 }

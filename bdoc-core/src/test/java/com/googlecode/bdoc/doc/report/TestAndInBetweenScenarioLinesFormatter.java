@@ -34,33 +34,31 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
-import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
-
 
 public class TestAndInBetweenScenarioLinesFormatter {
-	
+
 	private AndInBetweenScenarioLinesFormatter formatter = new AndInBetweenScenarioLinesFormatter();
 
 	@Test
 	public void shouldTransformASimpleGivenWhenThenToThreeLinesWhereEachLineStartsWithUppercase() {
-		
+
 		List<String> lines = formatter.getLines(new Scenario("givenWhenThen"));
 
 		assertTrue(lines.get(0).startsWith("Given"));
 		assertTrue(lines.get(1).startsWith("When"));
 		assertTrue(lines.get(2).startsWith("Then"));
 	}
-	
+
 	@Test
 	public void shouldTranslateTheLowerLetterIToUpcaseI() {
 		List<Scenario.Part> parts = new ArrayList<Scenario.Part>();
 		parts.add(new Part("givenIHave"));
 
-		List<String> lines =formatter.getLines(new Scenario(parts));
-		
+		List<String> lines = formatter.getLines(new Scenario(parts));
+
 		assertEquals("Given I have", lines.get(0));
 	}
-	
+
 	@Test
 	public void shouldCreateOneLinePerKeyword() {
 		List<Part> parts = new ArrayList<Scenario.Part>();
@@ -78,7 +76,7 @@ public class TestAndInBetweenScenarioLinesFormatter {
 		assertTrue(lines.get(1).startsWith("When"));
 		assertTrue(lines.get(2).startsWith("Then"));
 	}
-	
+
 	@Test
 	public void shouldAddAndBetween2xGiven() {
 		List<Part> parts = new ArrayList<Part>();
@@ -87,9 +85,9 @@ public class TestAndInBetweenScenarioLinesFormatter {
 		parts.add(new Scenario.Part("when"));
 		parts.add(new Scenario.Part("then"));
 
-		assertEquals( "Given a and given b", formatter.getLines( new Scenario( parts ) ).get(0) );
+		assertEquals("Given a and given b", formatter.getLines(new Scenario(parts)).get(0));
 	}
-	
+
 	@Test
 	public void shouldAddAndBetween2xWhen() {
 		List<Scenario.Part> parts = new ArrayList<Scenario.Part>();
@@ -98,9 +96,9 @@ public class TestAndInBetweenScenarioLinesFormatter {
 		parts.add(new Scenario.Part("whenD"));
 		parts.add(new Scenario.Part("then"));
 
-		assertEquals( "When c and when d", formatter.getLines( new Scenario( parts ) ).get(1) );
+		assertEquals("When c and when d", formatter.getLines(new Scenario(parts)).get(1));
 	}
-	
+
 	@Test
 	public void shouldAddAndBetween2xThen() {
 		List<Scenario.Part> parts = new ArrayList<Scenario.Part>();
@@ -109,6 +107,27 @@ public class TestAndInBetweenScenarioLinesFormatter {
 		parts.add(new Scenario.Part("thenA"));
 		parts.add(new Scenario.Part("thenB"));
 
-		assertEquals( "Then a and then b", formatter.getLines( new Scenario( parts ) ).get(2) );
-	}	
+		assertEquals("Then a and then b", formatter.getLines(new Scenario(parts)).get(2));
+	}
+
+	@Test
+	public void shouldSupportMultipleGivenWhenThen() {
+		List<Part> parts = new ArrayList<Scenario.Part>();
+		parts.add(new Scenario.Part("given1"));
+		parts.add(new Scenario.Part("when1"));
+		parts.add(new Scenario.Part("then1"));
+		parts.add(new Scenario.Part("given2"));
+		parts.add(new Scenario.Part("when2"));
+		parts.add(new Scenario.Part("then2"));
+		List<String> lines = formatter.getLines(new Scenario(parts));
+
+		assertEquals(6, lines.size());
+
+		assertTrue(lines.get(0).startsWith("Given"));
+		assertTrue(lines.get(1).startsWith("When"));
+		assertTrue(lines.get(2).startsWith("Then"));
+		assertTrue(lines.get(3).startsWith("Given"));
+		assertTrue(lines.get(4).startsWith("When"));
+		assertTrue(lines.get(5).startsWith("Then"));
+	}
 }

@@ -36,21 +36,49 @@ import com.googlecode.bdoc.doc.domain.Scenario;
  */
 public class JavaCodeUtil {
 
+	static final char LEFT = '{';
+	static final char RIGHT = '}';
+
 	private JavaCodeUtil() {
 	}
 
 	public static String javaBlockAfter(String javaSourceCode, String token) {
 		String cutCode = StringUtils.substringAfter(javaSourceCode, token);
-		return StringUtils.substringBetween(cutCode, "{", "}").trim();
+		int startIndex = StringUtils.indexOf(cutCode, LEFT) + 1;
+		int endIndex = findIndexWhereMethodsBlockEnds(cutCode);
+		return StringUtils.substring(cutCode, startIndex, endIndex).trim();
+	}
+
+	public static int findIndexWhereMethodsBlockEnds(String javaSourceCode) {
+		int endIndex = javaSourceCode.length();
+		int nrOfLeft = 0;
+		int nrOfRight = 0;
+
+		for (int index = 0; index < javaSourceCode.length(); index++) {
+			char charAt = javaSourceCode.charAt(index);
+			if (charAt == LEFT) {
+				nrOfLeft++;
+			} else if (charAt == RIGHT) {
+				nrOfRight++;
+			}
+			if (balance(nrOfLeft, nrOfRight)) {
+				endIndex = index;
+				break;
+			}
+		}
+		return endIndex;
+	}
+
+	private static boolean balance(int nrOfLeft, int nrOfRight) {
+		return nrOfLeft > 0 && nrOfLeft == nrOfRight;
 	}
 
 	public static List<Scenario.Part> getGivenWhenThenMethods(String javaMethodContent) {
 		List<Scenario.Part> result = new ArrayList<Scenario.Part>();
 
 		String javaTmp = javaMethodContent;
-
-		for (int contentIndex = 0; contentIndex < javaMethodContent.length(); contentIndex++) {
-
+		boolean moreToFind = true;
+		while (moreToFind) {
 			int[] indexes = findFirstIndexForEachKeyword(javaTmp);
 			int firstFoundIndex = getKeywordWithLowestIndex(indexes, javaMethodContent.length());
 
@@ -59,6 +87,8 @@ public class JavaCodeUtil {
 				String behaviourByKeyword = StringUtils.substringBefore(javaTmp, "(");
 				result.add(new Scenario.Part(behaviourByKeyword));
 				javaTmp = javaTmp.substring(behaviourByKeyword.length());
+			} else {
+				moreToFind = false;
 			}
 		}
 

@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,9 @@ package com.googlecode.bdoc.mojo.testdata;
 
 import org.junit.Test;
 
+/**
+ *  @author Per Otto Bergum Christensen
+ */
 public class TestIt {
 
 	@Test

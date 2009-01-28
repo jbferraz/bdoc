@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,9 @@ import org.apache.commons.io.FileUtils;
 import com.googlecode.bdoc.diff.report.BddDocDiffReport;
 import com.googlecode.bdoc.diff.report.DiffReport;
 
+/**
+ *  @author Per Otto Bergum Christensen
+ */
 public class DiffExecutorImpl implements DiffExecutor {
 
 	private File logDirectory;

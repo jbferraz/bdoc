@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,9 @@ package com.googlecode.bdoc.mojo.diff;
 
 import com.googlecode.bdoc.diff.report.DiffReport;
 
+/**
+ *  @author Per Otto Bergum Christensen
+ */
 public interface DiffExecutor {
 	
 	public DiffReport createDiffReport( String oldBddDocFileName, String newBddDocFileName ); 

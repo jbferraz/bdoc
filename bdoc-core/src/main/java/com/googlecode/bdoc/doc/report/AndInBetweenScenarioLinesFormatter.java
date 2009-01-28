@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,9 @@ import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 import com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator;
 
 
+/**
+ * @author Micael Vesterlund 
+ */
 public class AndInBetweenScenarioLinesFormatter implements ScenarioLinesFormatter {
 
 	public List<String> getLines(Scenario scenario) {

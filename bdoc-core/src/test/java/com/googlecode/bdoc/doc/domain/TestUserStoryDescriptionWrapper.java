@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,9 @@ import com.googlecode.bdoc.doc.domain.UserStoryDescriptionWrapper;
 import com.googlecode.bdoc.doc.domain.UserStoryDescription.Narrative;
 import com.googlecode.bdoc.doc.testdata.ExStory2;
 
-
+/**
+ *  @author Per Otto Bergum Christensen
+ */
 public class TestUserStoryDescriptionWrapper {
 
 	private UserStoryDescriptionWrapper userStoryDescriptionWrapper = new UserStoryDescriptionWrapper(ExStory2.TEST_STORY);

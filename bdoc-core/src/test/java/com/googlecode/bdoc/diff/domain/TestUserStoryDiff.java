@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,9 @@ import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.domain.UserStoryDescription;
 
-
+/**
+ * @author Per Otto Bergum Christensen
+ */
 @Ref(Story.DIFF_OF_BDOCS)
 public class TestUserStoryDiff {
 
@@ -130,8 +132,8 @@ public class TestUserStoryDiff {
 
 	@Test
 	public void shouldReturnSpecificationsAsNewWhenFoundInNewPackages() {
-		assertTrue(new UserStoryDiff(emptyUserStory, updatedUserStory).getNewClassSpecifications().get(0).getSpecifications()
-				.contains(new Specification(SHOULD_BEHAVE)));
+		assertTrue(new UserStoryDiff(emptyUserStory, updatedUserStory).getNewClassSpecifications().get(0).getSpecifications().contains(
+				new Specification(SHOULD_BEHAVE)));
 	}
 
 	@Test
@@ -142,8 +144,8 @@ public class TestUserStoryDiff {
 
 	@Test
 	public void shouldReturnClassSpecificationsAsDeletedWhenFoundInDeletedPackages() {
-		assertTrue(new UserStoryDiff(updatedUserStory, emptyUserStory).getDeletedClassSpecifications().get(0).getSpecifications()
-				.contains(new Specification(SHOULD_BEHAVE)));
+		assertTrue(new UserStoryDiff(updatedUserStory, emptyUserStory).getDeletedClassSpecifications().get(0).getSpecifications().contains(
+				new Specification(SHOULD_BEHAVE)));
 	}
 
 	@Test
@@ -160,8 +162,8 @@ public class TestUserStoryDiff {
 
 	@Test
 	public void shouldReturnStatementsAsNewWhenReturnedAsNewFromThePackageDiff() {
-		assertTrue(new UserStoryDiff(updatedUserStory, userStoryWithDeletedAndNewBehaviour).getNewClassStatements().get(0)
-				.getStatements().contains(new Statement(ANOTHER_STATEMENT)));
+		assertTrue(new UserStoryDiff(updatedUserStory, userStoryWithDeletedAndNewBehaviour).getNewClassStatements().get(0).getStatements()
+				.contains(new Statement(ANOTHER_STATEMENT)));
 	}
 
 	@Test

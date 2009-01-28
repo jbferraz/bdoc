@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,13 @@ package com.googlecode.bdoc.doc.domain;
 
 import java.util.List;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public interface ClassSpecifications  {
 
 	String getClassName();
 
-	/**
-	 * @return unmodifiableList of specifications
-	 */
 	List<Specification> getSpecifications();
 
 	boolean hasSpecifications();

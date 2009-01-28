@@ -36,6 +36,8 @@ public class TestJavaCodeUtil {
 
 	private final static String JAVA_BLOCK_CODE_SNIPPET = "{ public void shouldVerify() { givenA(); } }";
 
+	private final static String JAVA_BLOCK_WITH_TRY_CATCH_CODE_SNIPPET = "{ public void shouldVerify() { try {givenA();} catch {thenInsideCatch();} thenAfterCatch();} }";
+
 	private final static String JAVA_METHOD_CONTENT_GIVEN_WHEN_THEN = "givenA(); whenB(); thenC(); ";
 
 	private final static String JAVA_METHOD_CONTENT_GIVEN_GIVEN_WHEN_WHEN_THEN_THEN = "givenA(); givenAA(); whenB(); whenBB(); thenC(); thenCC(); ";
@@ -44,6 +46,8 @@ public class TestJavaCodeUtil {
 	@Test
 	public void shouldReturnTheBlockAfterASpecifiedToken() {
 		assertEquals("givenA();", JavaCodeUtil.javaBlockAfter(JAVA_BLOCK_CODE_SNIPPET, "shouldVerify"));
+		assertEquals("try {givenA();} catch {thenInsideCatch();} thenAfterCatch();", JavaCodeUtil.javaBlockAfter(
+				JAVA_BLOCK_WITH_TRY_CATCH_CODE_SNIPPET, "shouldVerify"));
 	}
 
 	@Test

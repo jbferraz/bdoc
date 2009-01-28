@@ -92,4 +92,23 @@ public class TestJavaTestSourceBehaviourParser {
 
 		assertEquals(new Scenario(expectedScenarioParts), scenario);
 	}
+
+	@Test
+	public void shouldComposeScenarioFromTestConstructedWithCatchBlockAsPartOfTheMethodBlock() throws IOException {
+
+		String behaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
+				+ "/integrationtestclasses/bankaccount/BankAccountBehavior.java"));
+
+		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
+
+		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
+		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance"));
+		expectedScenarioParts.add(new Scenario.Part("whenWithdrawAreCalledWithAmount"));
+		expectedScenarioParts.add(new Scenario.Part("thenShouldAnExceptionBeThrown"));
+		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo"));
+
+		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldNotAffectBalanceIfAttemptToWithdrawOverBalance");
+
+		assertEquals(new Scenario(expectedScenarioParts), scenario);
+	}
 }

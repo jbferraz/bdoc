@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,9 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
+/**
+ *  @author Per Otto Bergum Christensen
+ */
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestJavaTestSourceBehaviourParser {
 

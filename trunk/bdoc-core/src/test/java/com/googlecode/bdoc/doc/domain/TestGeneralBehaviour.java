@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,9 @@ import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 
+/**
+ *  @author Per Otto Bergum Christensen
+ */
 public class TestGeneralBehaviour {
 
 	private static final String GIVEN_SOMETHING_WHEN_AN_ACTION_THEN_VERIFY_RESULT = "givenSomethingWhenAnActionThenVerifyResult";

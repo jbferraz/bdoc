@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,9 @@ import org.apache.commons.lang.Validate;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.UserStory;
 
-
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class BDocDiff {
 
 	private final ProjectDiff projectDiff;

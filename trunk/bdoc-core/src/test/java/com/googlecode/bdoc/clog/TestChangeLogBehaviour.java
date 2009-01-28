@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,11 +36,13 @@ import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.report.XmlReport;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.RefClass;
 
+/**
+ *  @author Per Otto Bergum Christensen
+ */
 @Ref(Story.CHANGE_LOG)
 @RefClass(ChangeLog.class)
 public class TestChangeLogBehaviour {
@@ -59,12 +61,6 @@ public class TestChangeLogBehaviour {
 
 	private void thenEnsureTheLatestBDocIsUpdated(ChangeLog changeLog, BDoc bdoc) {
 		assertSame(bdoc, changeLog.latestBDoc());
-	}
-
-	private void thenEnsureTheLatestDiffInTheChangeLogContainsTheNewSpecification(ChangeLog changeLog, Specification specification) {
-		BDocDiff diff = changeLog.latestDiff();
-		assertEquals(specification, diff.getGeneralBehaviourDiff().getNewPackages().get(0).getClassSpecifications().get(0)
-				.getSpecifications().get(0));
 	}
 
 	@Test

@@ -1,7 +1,7 @@
 /**
  * The MIT License
  * 
- * Copyright (c) 2008 Per Otto Bergum Christensen
+ * Copyright (c) 2008, 2009 @Author(s)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,9 @@ import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.report.XmlReport;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class BddDocDiffReport {
 
 	public DiffReport execute(String oldXmlVersion, String newXmlVersion) {

@@ -2,7 +2,7 @@
 
     The MIT License
     
-    Copyright (c) 2008 Per Otto Bergum Christensen
+    Copyright (c) 2008, 2009 @Author(s)
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
     THE SOFTWARE.
 
 -->
+
 <#import "bdd_doc_macros.ftl" as bdddoc />
 
 <#setting date_format="short">

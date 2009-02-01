@@ -31,7 +31,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class BankAccountBehavior {
 

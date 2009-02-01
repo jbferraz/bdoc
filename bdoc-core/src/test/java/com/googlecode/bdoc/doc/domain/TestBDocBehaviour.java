@@ -33,16 +33,11 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.domain.ClassBehaviour;
-import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.RefClass;
 
-
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 @RefClass(BDoc.class)
@@ -61,8 +56,8 @@ public class TestBDocBehaviour {
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
 		expectedScenarioParts.add(new Scenario.Part("givenAnEmptyBDoc"));
-		expectedScenarioParts.add(new Scenario.Part("whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock"));
-		expectedScenarioParts.add(new Scenario.Part("thenEnsureThatTheScenarioIsExtracted"));
+		expectedScenarioParts.add(new Scenario.Part("whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlockDoc"));
+		expectedScenarioParts.add(new Scenario.Part("thenEnsureThatTheScenarioIsExtractedBehaviour"));
 
 		assertTrue(behaviour.getScenarios().contains(new Scenario(expectedScenarioParts)));
 	}

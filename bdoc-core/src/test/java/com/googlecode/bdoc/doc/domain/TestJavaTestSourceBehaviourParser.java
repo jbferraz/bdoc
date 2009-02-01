@@ -40,7 +40,8 @@ import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestJavaTestSourceBehaviourParser {
@@ -55,8 +56,8 @@ public class TestJavaTestSourceBehaviourParser {
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
 		expectedScenarioParts.add(new Scenario.Part("givenAnEmptyStack"));
-		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItem"));
-		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItem"));
+		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemValue_1"));
+		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemValue_2"));
 		expectedScenarioParts.add(new Scenario.Part("whenPopIsCalled"));
 		expectedScenarioParts.add(new Scenario.Part("thenLastItemPushedAreReturnedFromPop"));
 		expectedScenarioParts.add(new Scenario.Part("thenTheValueNotRemainsInTheStack"));
@@ -84,12 +85,12 @@ public class TestJavaTestSourceBehaviourParser {
 		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
-		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance"));
-		expectedScenarioParts.add(new Scenario.Part("whenDepositAreCalledWithAmount"));
-		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo"));
-		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance"));
-		expectedScenarioParts.add(new Scenario.Part("whenDepositAreCalledWithAmount"));
-		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo"));
+		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance0"));
+		expectedScenarioParts.add(new Scenario.Part("whenDepositAreCalledWithAmount100"));
+		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo100"));
+		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance100"));
+		expectedScenarioParts.add(new Scenario.Part("whenDepositAreCalledWithAmount100"));
+		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo200"));
 
 		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldAddDepositToBalance");
 
@@ -105,12 +106,30 @@ public class TestJavaTestSourceBehaviourParser {
 		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
-		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance"));
-		expectedScenarioParts.add(new Scenario.Part("whenWithdrawAreCalledWithAmount"));
+		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance20"));
+		expectedScenarioParts.add(new Scenario.Part("whenWithdrawAreCalledWithAmount21"));
 		expectedScenarioParts.add(new Scenario.Part("thenShouldAnExceptionBeThrown"));
-		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo"));
+		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo20"));
 
 		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldNotAffectBalanceIfAttemptToWithdrawOverBalance");
+
+		assertEquals(new Scenario(expectedScenarioParts), scenario);
+	}
+
+	@Test
+	public void shouldComposeScenarioIncludingParameter() throws IOException {
+
+		String behaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
+				+ "/integrationtestclasses/bankaccount/BankAccountBehavior.java"));
+
+		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
+
+		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
+		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance100"));
+		expectedScenarioParts.add(new Scenario.Part("whenWithdrawAreCalledWithAmount20"));
+		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo80"));
+
+		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldWithdrawAmountFromBalance");
 
 		assertEquals(new Scenario(expectedScenarioParts), scenario);
 	}

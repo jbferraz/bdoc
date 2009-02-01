@@ -36,7 +36,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.googlecode.bdoc.clog.ChangeLog;
+import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
@@ -147,16 +147,16 @@ public class TestBDocReportsMojoBehaviour {
 	// --------------------------------------------------------------------------------------------
 
 	private void givenAnExistingBDocReportsXmlFile() {
-		ChangeLog changeLog = new ChangeLog();
+		DiffLog diffLog = new DiffLog();
 		BDoc bdoc = new BDoc(org.junit.Test.class, null, org.junit.Ignore.class);
 		bdoc.setProject(new ProjectInfo("test", "test"));
-		changeLog.scan(bdoc);
-		changeLog.writeToFile( bdocMojo.getBDocChangeLogFile() );
+		diffLog.scan(bdoc);
+		diffLog.writeToFile( bdocMojo.getBDocChangeLogFile() );
 	}
 
 	private void thenEnsureTheBDocReportsXmlFileHasBeenUpdated() {
-		ChangeLog changeLog = ChangeLog.fromXmlFile(bdocMojo.getBDocChangeLogFile() );
-		assertTrue( 0 < changeLog.diffList().size() );
+		DiffLog diffLog = DiffLog.fromXmlFile(bdocMojo.getBDocChangeLogFile() );
+		assertTrue( 0 < diffLog.diffList().size() );
 	}
 
 	@Test
@@ -170,15 +170,15 @@ public class TestBDocReportsMojoBehaviour {
 	// --------------------------------------------------------------------------------------------
 
 	private void bdocInChangeLogShouldContain(Class testClass) {
-		ChangeLog changeLog = ChangeLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
-		ClassBehaviour classBehaviourFromFile = changeLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
+		DiffLog diffLog = DiffLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
+		ClassBehaviour classBehaviourFromFile = diffLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
 		assertEquals(new ClassBehaviour(testClass), classBehaviourFromFile);
 	}
 
 	private void bdocInChangeLogShouldNotContain(Class testClass) {
-		ChangeLog changeLog = ChangeLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
+		DiffLog diffLog = DiffLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
 		try {
-			changeLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
+			diffLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
 			fail("testclass did exist in bdoc: " + testClass);
 		} catch (ItemInListNotFoundException e) {
 			// should occur

@@ -43,7 +43,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.googlecode.bdoc.clog.ChangeLog;
+import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.Scenario;
@@ -129,7 +129,7 @@ public class TestBDocReportsMojo {
 	public void shouldUpdateTheLatestBDocInThePersistedChangeLog() throws MavenReportException, IOException {
 		expectDefaultMavenConfigurationSetOnBDocReport();
 		whenTheReportIsExecuted();
-		ChangeLog updatedChangeLog = ChangeLog.fromXmlFile(bdocReportsMojo.getBDocChangeLogFile());
+		DiffLog updatedChangeLog = DiffLog.fromXmlFile(bdocReportsMojo.getBDocChangeLogFile());
 		assertEquals(bdoc.getProject(), updatedChangeLog.latestBDoc().getProject());
 	}
 

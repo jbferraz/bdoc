@@ -34,7 +34,7 @@ import java.util.Locale;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.reporting.MavenReportException;
 
-import com.googlecode.bdoc.clog.ChangeLog;
+import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
@@ -149,15 +149,15 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 
 		BDoc bdoc = bdocReport.run(testSourceDirectory);
 
-		ChangeLog changeLog = new ChangeLog();
+		DiffLog diffLog = new DiffLog();
 		if (getBDocChangeLogFile().exists()) {
-			changeLog = ChangeLog.fromXmlFile(getBDocChangeLogFile());
+			diffLog = DiffLog.fromXmlFile(getBDocChangeLogFile());
 		}
 
-		changeLog.scan(bdoc);
+		diffLog.scan(bdoc);
 
 		getLog().info("Updating file: " + getBDocChangeLogFile());
-		changeLog.writeToFile(getBDocChangeLogFile());
+		diffLog.writeToFile(getBDocChangeLogFile());
 
 		writeReport(BDOC_HTML, new HtmlReport(bdoc).html());
 

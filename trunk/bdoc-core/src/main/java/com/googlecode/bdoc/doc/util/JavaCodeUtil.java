@@ -35,7 +35,7 @@ import com.googlecode.bdoc.doc.domain.Scenario;
  * Util-methods for getting data from java source code.
  * 
  * @author Per Otto Bergum Christensen
- * @author Micael Vesterlund 
+ * @author Micael Vesterlund
  */
 public class JavaCodeUtil {
 
@@ -88,6 +88,7 @@ public class JavaCodeUtil {
 			if (foundKeyword(javaMethodContent, firstFoundIndex)) {
 				javaTmp = javaTmp.substring(firstFoundIndex);
 				String behaviourByKeyword = StringUtils.substringBefore(javaTmp, "(");
+				behaviourByKeyword += getParametersWithOnlyFirstLetterInUpperCase(javaTmp);
 				result.add(new Scenario.Part(behaviourByKeyword));
 				javaTmp = javaTmp.substring(behaviourByKeyword.length());
 			} else {
@@ -96,6 +97,10 @@ public class JavaCodeUtil {
 		}
 
 		return result;
+	}
+
+	private static String getParametersWithOnlyFirstLetterInUpperCase(String javaTmp) {
+		return StringUtils.capitalize(StringUtils.substringBetween(javaTmp, "(", ")").toLowerCase());
 	}
 
 	private static boolean foundKeyword(String javaMethodContent, int firstFoundIndex) {

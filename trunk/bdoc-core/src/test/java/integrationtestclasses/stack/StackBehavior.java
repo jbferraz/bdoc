@@ -36,7 +36,7 @@ import org.junit.Test;
  * support a different way of structure the Javacode, when specifing a scenario.
  * It is now used as testdata by
  * bdddoc4j.core.domain.TestSourceClassBehaviourParser.java , as a specification
- * for BDoc on the user story "adcanced scenario specification "
+ * for BDoc on the user story "advanced scenario specification "
  * 
  * @Author Micael Vesterlund, micael.vesterlund@gmail.com
  */
@@ -62,14 +62,14 @@ public class StackBehavior {
 	@Test
 	public void shouldNotBeEmptyAfterPush() {
 		givenAnEmptyStack();
-		whenPushedIsCalled(VALUE_1);
+		whenPushedIsCalledWith(VALUE_1);
 		thenTheStackAreNotEmpty();
 	}
 
 	@Test(expected = Exception.class)
 	public void shouldThrowExceptionUponNullPush() {
 		givenAnEmptyStack();
-		whenPushedIsCalledWithNull();
+		whenPushedIsCalledWith(null);
 		thenAnExceptionAreThrown();
 	}
 
@@ -129,12 +129,8 @@ public class StackBehavior {
 		lastPushed = item;
 	}
 
-	private void whenPushedIsCalled(String item) {
+	private void whenPushedIsCalledWith(String item) {
 		givenOnePushedItem(item);
-	}
-
-	private void whenPushedIsCalledWithNull() {
-		givenOnePushedItem(null);
 	}
 
 	private void whenPopIsCalled() {

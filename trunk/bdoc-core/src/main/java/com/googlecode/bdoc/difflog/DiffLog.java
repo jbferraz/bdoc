@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.clog;
+package com.googlecode.bdoc.difflog;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +39,7 @@ import com.thoughtworks.xstream.XStream;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class ChangeLog {
+public class DiffLog {
 
 	private BDoc latestBDoc;
 	private List<BDocDiff> diffList = new ArrayList<BDocDiff>();
@@ -66,9 +66,9 @@ public class ChangeLog {
 		return diffList;
 	}
 
-	public static ChangeLog fromXmlFile(File changeLogXmlFile) {
+	public static DiffLog fromXmlFile(File changeLogXmlFile) {
 		try {
-			return (ChangeLog) xstream().fromXML(FileUtils.readFileToString(changeLogXmlFile));
+			return (DiffLog) xstream().fromXML(FileUtils.readFileToString(changeLogXmlFile));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -85,7 +85,7 @@ public class ChangeLog {
 	private static XStream xstream() {
 		XStream xstream = new XStream();
 		XmlReport.addAlias(xstream);
-		xstream.alias("changeLog", ChangeLog.class);
+		xstream.alias("changeLog", DiffLog.class);
 		return xstream;
 	}
 

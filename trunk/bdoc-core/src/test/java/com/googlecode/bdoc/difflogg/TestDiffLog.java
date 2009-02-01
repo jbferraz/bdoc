@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.clog;
+package com.googlecode.bdoc.difflogg;
 
 import java.io.File;
 
@@ -31,12 +31,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 /**
  *  @author Per Otto Bergum Christensen
  */
-public class TestChangeLog {
+public class TestDiffLog {
 
 	private File changeLogXmlFile = new File("target/changeLog.xml");
 
@@ -47,35 +48,35 @@ public class TestChangeLog {
 
 	@Test
 	public void shouldBeAbleToReadAndWriteChangeLogInstanceFromXmlFile() {
-		ChangeLog changeLog = new ChangeLog();
-		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
+		DiffLog diffLog = new DiffLog();
+		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
 
-		changeLog.writeToFile(changeLogXmlFile);
-		ChangeLog changeLogfromFile = ChangeLog.fromXmlFile(changeLogXmlFile);
-		assertEquals(changeLog.latestBDoc(), changeLogfromFile.latestBDoc());
+		diffLog.writeToFile(changeLogXmlFile);
+		DiffLog changeLogfromFile = DiffLog.fromXmlFile(changeLogXmlFile);
+		assertEquals(diffLog.latestBDoc(), changeLogfromFile.latestBDoc());
 	}
 
 	@Test
 	public void shouldNotProduceAnyDiffForTheFirstBDocScan() {
-		ChangeLog changeLog = new ChangeLog();
-		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		assertTrue(changeLog.diffList().isEmpty());
+		DiffLog diffLog = new DiffLog();
+		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
+		assertTrue(diffLog.diffList().isEmpty());
 	}
 
 	@Test
 	public void shouldNotAddBDocDiffIfNoDiffExists() {
-		ChangeLog changeLog = new ChangeLog();
-		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		assertEquals(0, changeLog.diffList().size());
+		DiffLog diffLog = new DiffLog();
+		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
+		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
+		assertEquals(0, diffLog.diffList().size());
 	}
 
 	@Test
 	public void shouldAddBDocDiffWhenDiffExists() {
-		ChangeLog changeLog = new ChangeLog();
-		changeLog.scan(BDocTestHelper.bdocWithProject());
-		changeLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		assertEquals(1, changeLog.diffList().size());
+		DiffLog diffLog = new DiffLog();
+		diffLog.scan(BDocTestHelper.bdocWithProject());
+		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
+		assertEquals(1, diffLog.diffList().size());
 	}
 
 }

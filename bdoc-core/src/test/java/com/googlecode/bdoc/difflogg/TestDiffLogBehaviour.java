@@ -44,7 +44,7 @@ import com.googlecode.bdoc.doc.testdata.RefClass;
 /**
  *  @author Per Otto Bergum Christensen
  */
-@Ref(Story.CHANGE_LOG)
+@Ref(Story.DIFF_LOG)
 @RefClass(DiffLog.class)
 public class TestDiffLogBehaviour {
 

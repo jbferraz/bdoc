@@ -42,7 +42,7 @@ public class TestDiffLog {
 	private File changeLogXmlFile = new File("target/changeLog.xml");
 
 	@Before
-	public void resetChangeLogXmlFile() {
+	public void resetXmlFile() {
 		changeLogXmlFile.delete();
 	}
 

@@ -55,9 +55,20 @@ public class BDoc {
 	protected GeneralBehaviour generalBehaviour = new GeneralBehaviour();
 
 	/**
-	 * Constructor - for extensions
+	 * Constructor - for test
 	 */
 	public BDoc() {
+		this.testAnnotation = org.junit.Test.class;
+		this.ignoreAnnotation = org.junit.Ignore.class;
+	}
+
+	/**
+	 * Constructor - for test
+	 */
+	public BDoc(ProjectInfo projectInfo) {
+		this.testAnnotation = org.junit.Test.class;
+		this.ignoreAnnotation = org.junit.Ignore.class;
+		this.projectInfo = projectInfo;
 	}
 
 	/**
@@ -155,8 +166,7 @@ public class BDoc {
 	}
 
 	/**
-	 * Gets the camelCaseSentence from the testmethod, removing 'test' if JUnit
-	 * 3 is used
+	 * Gets the camelCaseSentence from the testmethod, removing 'test' if JUnit 3 is used
 	 * 
 	 * @param testMethod
 	 *            that specifies the test
@@ -166,8 +176,7 @@ public class BDoc {
 		String camelCaseSentence = testMethod.getName();
 		if (camelCaseSentence.startsWith(TEST_METHOD_PREFIX)) {
 			camelCaseSentence = camelCaseSentence.substring(TEST_METHOD_PREFIX.length());
-			camelCaseSentence = camelCaseSentence.substring(0, 1).toLowerCase()
-					+ camelCaseSentence.substring(1, camelCaseSentence.length());
+			camelCaseSentence = camelCaseSentence.substring(0, 1).toLowerCase() + camelCaseSentence.substring(1, camelCaseSentence.length());
 		}
 		return camelCaseSentence;
 	}
@@ -252,15 +261,33 @@ public class BDoc {
 		return (obj instanceof BDoc) && ((BDoc) obj).docTime.equals(docTime) && ((BDoc) obj).projectInfo.equals(projectInfo);
 	}
 
-	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, File testSrcDir)  {
+	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, File testSrcDir) {
 		List<String> classes = testClassesDirectory.classes();
 		for (String className : classes) {
 			try {
-				addBehaviourFrom(new TestClass(classLoader.loadClass(className)), testSrcDir );
+				addBehaviourFrom(new TestClass(classLoader.loadClass(className)), testSrcDir);
 			} catch (ClassNotFoundException e) {
-				throw new RuntimeException( e );
+				throw new RuntimeException(e);
 			}
 		}
+	}
+
+	public List<Specification> specifications() {
+		List<Specification> result = new ArrayList<Specification>();
+
+		for (Package javaPackage : generalBehaviour.getPackages()) {
+			for (ClassSpecifications classSpecifications : javaPackage.getClassSpecifications()) {
+				result.addAll(classSpecifications.getSpecifications());
+			}
+		}
+
+		for (UserStory userStory : userStories) {
+			for (ClassSpecifications classSpecifications : userStory.getClassSpecifications()) {
+				result.addAll(classSpecifications.getSpecifications());
+			}
+
+		}
+		return result;
 	}
 
 }

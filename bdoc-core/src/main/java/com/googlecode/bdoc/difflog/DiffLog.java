@@ -48,10 +48,14 @@ public class DiffLog {
 		if (null != latestBDoc) {
 			BDocDiff bdocDiff = new BDocDiff(latestBDoc, bdoc);
 			if (bdocDiff.diffExists()) {
-				diffList.add(bdocDiff);
+				addBDocDiff(bdocDiff);
 			}
 		}
 		latestBDoc = bdoc;
+	}
+
+	public boolean addBDocDiff(BDocDiff bdocDiff) {
+		return diffList.add(bdocDiff);
 	}
 
 	public BDoc latestBDoc() {

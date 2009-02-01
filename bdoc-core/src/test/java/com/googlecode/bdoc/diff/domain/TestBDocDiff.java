@@ -32,7 +32,7 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.diff.domain.BddUserStoryDiffDocTestdataHelper.TestWithOnlyGeneralBehaviourContent;
+import com.googlecode.bdoc.diff.domain.BDocUserStoryDiffDocTestdataHelper.TestWithOnlyGeneralBehaviourContent;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
@@ -44,11 +44,11 @@ import com.googlecode.bdoc.doc.testdata.ExStory;
  *  @author Per Otto Bergum Christensen
  */
 @Ref(Story.DIFF_OF_BDOCS)
-public class TestBddDocDiff {
+public class TestBDocDiff {
 
-	private final BDoc emptyBddDoc = BddUserStoryDiffDocTestdataHelper.getEmptyBddDoc();
-	private final BDoc bddDocWithGeneralBehaviourAndAStory = BddUserStoryDiffDocTestdataHelper.getBddDocWithGeneralBehaviourAndAStory();
-	private final BDoc bddDocWithUpdatedStory = BddUserStoryDiffDocTestdataHelper.getBddDocWithUpdatedStory();
+	private final BDoc emptyBddDoc = BDocUserStoryDiffDocTestdataHelper.getEmptyBddDoc();
+	private final BDoc bddDocWithGeneralBehaviourAndAStory = BDocUserStoryDiffDocTestdataHelper.getBddDocWithGeneralBehaviourAndAStory();
+	private final BDoc bddDocWithUpdatedStory = BDocUserStoryDiffDocTestdataHelper.getBddDocWithUpdatedStory();
 
 	@Test
 	public void shouldIdentifyNewStories() {

@@ -50,7 +50,7 @@ public enum Story {
 			"I want to write a scenario as a series of given when then methods",
 			"so that I can use more than one line to describe the behaviour"),
 
-	CHANGE_LOG(10, "As a developer in the project", "I want a bdoc changelog to be generated continuously",
+	DIFF_LOG(10, "As a developer in the project", "I want a bdoc difflog to be generated continuously",
 			"so that I can keep track of each change in behaviour");
 
 	private Integer id;

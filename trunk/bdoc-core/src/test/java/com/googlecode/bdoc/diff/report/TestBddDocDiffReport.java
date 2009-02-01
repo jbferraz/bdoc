@@ -34,7 +34,7 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.diff.domain.BddUserStoryDiffDocTestdataHelper;
+import com.googlecode.bdoc.diff.domain.BDocUserStoryDiffDocTestdataHelper;
 import com.googlecode.bdoc.diff.report.BddDocDiffReport;
 import com.googlecode.bdoc.diff.report.DiffReport;
 import com.googlecode.bdoc.doc.report.XmlReport;
@@ -49,8 +49,8 @@ public class TestBddDocDiffReport {
 	public void givenTwoVersionsOfABddDocWhenABddDocDiffReportIsExecutedThenEnsureTheDiffIsFound() throws IOException {
 		BddDocDiffReport bddDocDiffReport = new BddDocDiffReport();
 
-		final String version1 = new XmlReport(BddUserStoryDiffDocTestdataHelper.getBddDocWithGeneralBehaviourAndAStory()).xml();
-		final String version2 = new XmlReport(BddUserStoryDiffDocTestdataHelper.getBddDocWithUpdatedStory()).xml();
+		final String version1 = new XmlReport(BDocUserStoryDiffDocTestdataHelper.getBddDocWithGeneralBehaviourAndAStory()).xml();
+		final String version2 = new XmlReport(BDocUserStoryDiffDocTestdataHelper.getBddDocWithUpdatedStory()).xml();
 
 		final DiffReport diffReport = bddDocDiffReport.execute(version1, version2);
 

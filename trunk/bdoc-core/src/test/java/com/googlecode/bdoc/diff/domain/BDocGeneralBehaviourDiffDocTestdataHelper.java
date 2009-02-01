@@ -36,7 +36,7 @@ import com.googlecode.bdoc.doc.testdata.TestWithGeneralBehaviour;
 /**
  *  @author Per Otto Bergum Christensen
  */
-public class BddGeneralBehaviourDiffDocTestdataHelper {
+public class BDocGeneralBehaviourDiffDocTestdataHelper {
 
 	private final BDoc oldBddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 	private final BDoc newBddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
@@ -66,11 +66,11 @@ public class BddGeneralBehaviourDiffDocTestdataHelper {
 
 	}
 
-	private BddGeneralBehaviourDiffDocTestdataHelper() {
+	private BDocGeneralBehaviourDiffDocTestdataHelper() {
 	}
 
-	private static BddGeneralBehaviourDiffDocTestdataHelper instance() {
-		return new BddGeneralBehaviourDiffDocTestdataHelper();
+	private static BDocGeneralBehaviourDiffDocTestdataHelper instance() {
+		return new BDocGeneralBehaviourDiffDocTestdataHelper();
 	}
 
 	public static BDocDiff getBddDocDiffForUpdatedGeneralBehaviour() {

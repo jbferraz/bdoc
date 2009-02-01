@@ -37,7 +37,7 @@ import org.junit.Test;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
-import com.googlecode.bdoc.diff.domain.BddGeneralBehaviourDiffDocTestdataHelper;
+import com.googlecode.bdoc.diff.domain.BDocGeneralBehaviourDiffDocTestdataHelper;
 import com.googlecode.bdoc.diff.domain.GeneralBehaviourDiff;
 import com.googlecode.bdoc.diff.domain.TimeDiff;
 import com.googlecode.bdoc.diff.report.BddDocDiffReport;
@@ -55,7 +55,7 @@ import com.googlecode.bdoc.doc.report.ReportTestHelper;
 @Ref(Story.HTML_DIFF_REPORT)
 public class TestHtmlGeneralBehaviourDiffReport {
 
-	BDocDiff bDocDiff = BddGeneralBehaviourDiffDocTestdataHelper.getBddDocDiffForUpdatedGeneralBehaviour();
+	BDocDiff bDocDiff = BDocGeneralBehaviourDiffDocTestdataHelper.getBddDocDiffForUpdatedGeneralBehaviour();
 	{
 		Calendar time1 = Calendar.getInstance();
 		Calendar time2 = (Calendar) time1.clone();

@@ -36,7 +36,7 @@ import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.UserStory;
-import com.googlecode.bdoc.doc.domain.TestBDoc.TestExampleAnnotatedMethods;
+import com.googlecode.bdoc.doc.domain.TestBDoc.TestExampleAnnotatedScenariosAndSpecifications;
 import com.googlecode.bdoc.doc.testdata.ExStory;
 
 
@@ -59,19 +59,19 @@ public class TestUserStory {
 
 	@Test
 	public void shouldBeAbleToAddASpecificationAndRetreiveIt() {
-		userStory.addBehaviour(TestExampleAnnotatedMethods.class, SHOULD_DO_THAT);
+		userStory.addBehaviour(TestExampleAnnotatedScenariosAndSpecifications.class, SHOULD_DO_THAT);
 		assertTrue(userStory.getClassSpecifications().get(0).getSpecifications().contains(new Specification(SHOULD_DO_THAT)));
 	}
 
 	@Test
 	public void shouldBeAbleToAddAScenarioAndRetreiveIt() {
-		userStory.addBehaviour(TestExampleAnnotatedMethods.class, GIVEN_WHEN_THEN);
+		userStory.addBehaviour(TestExampleAnnotatedScenariosAndSpecifications.class, GIVEN_WHEN_THEN);
 		assertTrue(userStory.getScenarios().contains(new Scenario(GIVEN_WHEN_THEN)));
 	}
 
 	@Test
 	public void shouldBeAbleToAddAStatementAndRetreiveIt() {
-		userStory.addBehaviour(TestExampleAnnotatedMethods.class, STATMENT_ABOUT_IT);
+		userStory.addBehaviour(TestExampleAnnotatedScenariosAndSpecifications.class, STATMENT_ABOUT_IT);
 		assertTrue(userStory.getClassStatements().get(0).getStatements().contains(new Statement(STATMENT_ABOUT_IT)));
 	}
 
@@ -82,14 +82,14 @@ public class TestUserStory {
 
 	@Test
 	public void givenAUserStoryWhenBehaviourIsAddedFromATestClassThenThePackageOfTheTestClassShouldBePresent() {
-		userStory.addBehaviour(TestExampleAnnotatedMethods.class, SHOULD_DO_THAT);
-		Package packageToFind = Package.forClass(TestExampleAnnotatedMethods.class);
+		userStory.addBehaviour(TestExampleAnnotatedScenariosAndSpecifications.class, SHOULD_DO_THAT);
+		Package packageToFind = Package.forClass(TestExampleAnnotatedScenariosAndSpecifications.class);
 		assertTrue(userStory.getPackages().contains(packageToFind));
 	}
 
 	@Test
 	public void givenAnEmptyUserStoryWhenASpecificationIsAddedThenEnsureThatClassSpecificationsContainsTheSpecification() {
-		userStory.addBehaviour(TestExampleAnnotatedMethods.class, SHOULD_DO_THAT);
+		userStory.addBehaviour(TestExampleAnnotatedScenariosAndSpecifications.class, SHOULD_DO_THAT);
 		assertTrue(userStory.getClassSpecifications().get(0).getSpecifications().contains(new Specification(SHOULD_DO_THAT)));
 	}
 

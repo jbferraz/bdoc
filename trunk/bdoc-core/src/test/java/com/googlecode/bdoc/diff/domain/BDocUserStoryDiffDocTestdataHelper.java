@@ -40,11 +40,11 @@ import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.ExStory;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
-public class BddUserStoryDiffDocTestdataHelper {
+public class BDocUserStoryDiffDocTestdataHelper {
 
-	private final BDoc emptyBddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+	private final BDoc emptyBddDoc = createBDoc();
 	{
 		emptyBddDoc.setProject(new ProjectInfo("emptyproject", "version1"));
 	}
@@ -81,11 +81,11 @@ public class BddUserStoryDiffDocTestdataHelper {
 		classBehaviour.getStatements().remove(new Statement("statementThatWillBeDeletedInNextVersion"));
 	}
 
-	private BddUserStoryDiffDocTestdataHelper() {
+	private BDocUserStoryDiffDocTestdataHelper() {
 	}
 
-	private static BddUserStoryDiffDocTestdataHelper instance() {
-		return new BddUserStoryDiffDocTestdataHelper();
+	private static BDocUserStoryDiffDocTestdataHelper instance() {
+		return new BDocUserStoryDiffDocTestdataHelper();
 	}
 
 	public class TestWithReferenceToOldStoryDescription {
@@ -188,8 +188,22 @@ public class BddUserStoryDiffDocTestdataHelper {
 		}
 	}
 
+	public class TestClassWithOneSpecification {
+
+		@Test
+		public void shouldBeTheOnlyTestInTheTestClass() {
+		}
+	}
+
 	public static BDoc getEmptyBddDoc() {
 		return instance().emptyBddDoc;
+	}
+
+	public static BDoc getBDocWithOneSpecification() {
+		BDoc bdoc = createBDoc();
+		bdoc.setProject(new ProjectInfo("emptyproject", "version1"));
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), BDocTestHelper.SRC_TEST_JAVA);
+		return bdoc;
 	}
 
 	public static BDoc getBddDocWithGeneralBehaviourAndAStory() {
@@ -202,5 +216,9 @@ public class BddUserStoryDiffDocTestdataHelper {
 
 	public static BDocDiff getBddDocDiffForUpdatedStory() {
 		return new BDocDiff(instance().bddDocWithGeneralBehaviourAndAStory, instance().bddDocWithUpdatedStory);
+	}
+
+	public static BDoc createBDoc() {
+		return new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 	}
 }

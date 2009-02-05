@@ -34,11 +34,10 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
-import com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter;
-
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class TestEachOnNewLineScenarioLinesFormatter {
 
@@ -63,5 +62,40 @@ public class TestEachOnNewLineScenarioLinesFormatter {
 		assertTrue(lines.get(3).equals("Then a"));
 		assertTrue(lines.get(4).equals("Then b"));
 		assertTrue(lines.get(5).equals("Then c"));
+	}
+
+	@Test
+	public void shouldSupportMultipleGivenWhenThen() {
+		List<Part> parts = new ArrayList<Scenario.Part>();
+		parts.add(new Scenario.Part("given"));
+		parts.add(new Scenario.Part("whenX"));
+		parts.add(new Scenario.Part("whenY"));
+		parts.add(new Scenario.Part("thenA"));
+		parts.add(new Scenario.Part("thenB"));
+		parts.add(new Scenario.Part("thenC"));
+
+		parts.add(new Scenario.Part("given"));
+		parts.add(new Scenario.Part("whenX"));
+		parts.add(new Scenario.Part("whenY"));
+		parts.add(new Scenario.Part("thenA"));
+		parts.add(new Scenario.Part("thenB"));
+		parts.add(new Scenario.Part("thenC"));
+		List<String> lines = formatter.getLines(new Scenario(parts));
+
+		assertEquals(12, lines.size());
+
+		assertTrue(lines.get(0).equals("Given"));
+		assertTrue(lines.get(1).equals("When x"));
+		assertTrue(lines.get(2).equals("When y"));
+		assertTrue(lines.get(3).equals("Then a"));
+		assertTrue(lines.get(4).equals("Then b"));
+		assertTrue(lines.get(5).equals("Then c"));
+
+		assertTrue(lines.get(6).equals("Given"));
+		assertTrue(lines.get(7).equals("When x"));
+		assertTrue(lines.get(8).equals("When y"));
+		assertTrue(lines.get(9).equals("Then a"));
+		assertTrue(lines.get(10).equals("Then b"));
+		assertTrue(lines.get(11).equals("Then c"));
 	}
 }

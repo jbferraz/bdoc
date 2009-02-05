@@ -36,7 +36,8 @@ import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class TestAndInBetweenScenarioLinesFormatter {
 
@@ -117,11 +118,16 @@ public class TestAndInBetweenScenarioLinesFormatter {
 	public void shouldSupportMultipleGivenWhenThen() {
 		List<Part> parts = new ArrayList<Scenario.Part>();
 		parts.add(new Scenario.Part("given1"));
+		parts.add(new Scenario.Part("given1a"));
 		parts.add(new Scenario.Part("when1"));
 		parts.add(new Scenario.Part("then1"));
+		parts.add(new Scenario.Part("then1a"));
+
 		parts.add(new Scenario.Part("given2"));
+		parts.add(new Scenario.Part("given2a"));
 		parts.add(new Scenario.Part("when2"));
 		parts.add(new Scenario.Part("then2"));
+		parts.add(new Scenario.Part("then2a"));
 		List<String> lines = formatter.getLines(new Scenario(parts));
 
 		assertEquals(6, lines.size());
@@ -129,6 +135,7 @@ public class TestAndInBetweenScenarioLinesFormatter {
 		assertTrue(lines.get(0).startsWith("Given"));
 		assertTrue(lines.get(1).startsWith("When"));
 		assertTrue(lines.get(2).startsWith("Then"));
+
 		assertTrue(lines.get(3).startsWith("Given"));
 		assertTrue(lines.get(4).startsWith("When"));
 		assertTrue(lines.get(5).startsWith("Then"));

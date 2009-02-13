@@ -49,6 +49,7 @@ import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
  * @phase test-compile
  * 
  * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class BDocReportsMojo extends AbstractBddDocMojo {
 
@@ -73,14 +74,16 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 	File testClassDirectory;
 
 	/**
-	 * Specifies files, which are included in the check. By default, all files are included.
+	 * Specifies files, which are included in the check. By default, all files
+	 * are included.
 	 * 
 	 * @parameter
 	 */
 	String[] includes;
 
 	/**
-	 * Specifies files, which are excluded in the check. By default, no files are excluded.
+	 * Specifies files, which are excluded in the check. By default, no files
+	 * are excluded.
 	 * 
 	 * @parameter
 	 */
@@ -99,7 +102,8 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 	String ignoreAnnotationClassName;
 
 	/**
-	 * @parameter default-value= "com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
+	 * @parameter default-value=
+	 *            "com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
 	 * @required
 	 */
 	String scenarioFormatterClassName;
@@ -159,7 +163,8 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 		getLog().info("Updating file: " + getBDocChangeLogFile());
 		diffLog.writeToFile(getBDocChangeLogFile());
 
-		writeReport(BDOC_HTML, new HtmlReport(bdoc).html());
+		writeReport(BDOC_HTML, new HtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
+				.newInstance()).html());
 
 		makeBDocReportsHtml();
 	}

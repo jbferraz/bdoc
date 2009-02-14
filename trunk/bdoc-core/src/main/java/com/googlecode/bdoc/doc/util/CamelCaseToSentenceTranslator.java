@@ -28,6 +28,7 @@ import java.util.Locale;
 
 /**
  * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class CamelCaseToSentenceTranslator {
 
@@ -57,11 +58,11 @@ public class CamelCaseToSentenceTranslator {
 
 			char c = sentence.charAt(i);
 
-			if (number(c) && !lastCharIsNumber) {
+			if (isNumber(c) && !lastCharIsNumber) {
 				sentenceWithNumberFormatted.append(" ");
 				lastCharIsNumber = true;
 			} else {
-				lastCharIsNumber = number(c);
+				lastCharIsNumber = isNumber(c);
 			}
 			sentenceWithNumberFormatted.append(c);
 		}
@@ -69,8 +70,12 @@ public class CamelCaseToSentenceTranslator {
 		return sentenceWithNumberFormatted.toString().trim();
 	}
 
-	private static boolean number(char c) {
-		return "0123456789".contains(String.valueOf(c));
+	private static boolean isNumber(char c) {
+		return "0123456789".contains(String.valueOf(c)) || isSpecialCharacterInNumber(c);
+	}
+
+	private static boolean isSpecialCharacterInNumber(char c) {
+		return "-.".contains(String.valueOf(c));
 	}
 
 	public static String translate(String camelCaseSentence, Locale locale) {

@@ -32,8 +32,21 @@ import org.junit.Test;
 
 /**
  * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class TestCamelCaseToSentenceTranslator {
+
+	@Test
+	public void shouldAddASpaceInFrontOfAMinusSign() {
+		assertEquals("When deposit are called with amount -100", CamelCaseToSentenceTranslator
+				.translate("whenDepositAreCalledWithAmount-100"));
+	}
+
+	@Test
+	public void shouldNotAddSpaceAroundDecimalSeparator() {
+		assertEquals("When deposit are called with amount 99.9", CamelCaseToSentenceTranslator
+				.translate("whenDepositAreCalledWithAmount99.9"));
+	}
 
 	@Test
 	public void shouldTranselateTheEnglishIToUperCase() {

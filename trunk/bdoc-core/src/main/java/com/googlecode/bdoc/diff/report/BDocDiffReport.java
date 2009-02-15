@@ -38,7 +38,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class BddDocDiffReport {
+public class BDocDiffReport {
 
 	public DiffReport execute(String oldXmlVersion, String newXmlVersion) {
 		BDoc oldVersion = XmlReport.createBDoc(oldXmlVersion);

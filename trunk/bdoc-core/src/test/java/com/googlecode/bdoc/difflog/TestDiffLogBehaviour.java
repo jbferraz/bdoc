@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.difflogg;
+package com.googlecode.bdoc.difflog;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;

@@ -41,7 +41,7 @@ import com.googlecode.bdoc.diff.domain.BDocUserStoryDiffDocTestdataHelper;
 import com.googlecode.bdoc.diff.domain.NarrativeDiff;
 import com.googlecode.bdoc.diff.domain.StringDiff;
 import com.googlecode.bdoc.diff.domain.TimeDiff;
-import com.googlecode.bdoc.diff.report.BddDocDiffReport;
+import com.googlecode.bdoc.diff.report.BDocDiffReport;
 import com.googlecode.bdoc.diff.report.HtmlDiffReport;
 import com.googlecode.bdoc.doc.report.ReportTestHelper;
 
@@ -69,7 +69,7 @@ public class TestHtmlUserstoryDiffReport {
 	private String html;
 
 	public TestHtmlUserstoryDiffReport() throws IOException {
-		final String xml = new BddDocDiffReport().execute(bDocDiff).xml();
+		final String xml = new BDocDiffReport().execute(bDocDiff).xml();
 		html = new HtmlDiffReport(bDocDiff).html();
 
 		writeStringToFile(new File("target/" + getClass().getName() + ".xml"), xml);

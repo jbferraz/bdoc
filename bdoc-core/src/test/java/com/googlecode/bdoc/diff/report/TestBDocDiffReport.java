@@ -35,7 +35,7 @@ import org.junit.Test;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocUserStoryDiffDocTestdataHelper;
-import com.googlecode.bdoc.diff.report.BddDocDiffReport;
+import com.googlecode.bdoc.diff.report.BDocDiffReport;
 import com.googlecode.bdoc.diff.report.DiffReport;
 import com.googlecode.bdoc.doc.report.XmlReport;
 
@@ -43,16 +43,16 @@ import com.googlecode.bdoc.doc.report.XmlReport;
  *  @author Per Otto Bergum Christensen
  */
 @Ref(Story.DIFF_OF_BDOCS)
-public class TestBddDocDiffReport {
+public class TestBDocDiffReport {
 
 	@Test
 	public void givenTwoVersionsOfABddDocWhenABddDocDiffReportIsExecutedThenEnsureTheDiffIsFound() throws IOException {
-		BddDocDiffReport bddDocDiffReport = new BddDocDiffReport();
+		BDocDiffReport bDocDiffReport = new BDocDiffReport();
 
 		final String version1 = new XmlReport(BDocUserStoryDiffDocTestdataHelper.getBddDocWithGeneralBehaviourAndAStory()).xml();
 		final String version2 = new XmlReport(BDocUserStoryDiffDocTestdataHelper.getBddDocWithUpdatedStory()).xml();
 
-		final DiffReport diffReport = bddDocDiffReport.execute(version1, version2);
+		final DiffReport diffReport = bDocDiffReport.execute(version1, version2);
 
 		FileUtils.writeStringToFile(new File("target/" + getClass().getName() + ".xml"), diffReport.xml());
 

@@ -23,6 +23,9 @@
     THE SOFTWARE.
 
 -->
+<#--
+	@author Per Otto Bergum Christensen
+-->
 
 <#if moduleDiff.hasNewScenarios()>		
 	<li class="newScenarios">

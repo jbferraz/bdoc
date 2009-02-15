@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.difflogg;
+package com.googlecode.bdoc.difflog;
 
 import java.io.File;
 

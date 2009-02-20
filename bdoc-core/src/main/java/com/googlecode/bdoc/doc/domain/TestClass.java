@@ -34,8 +34,6 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.Validate;
 
-import com.googlecode.bdoc.doc.domain.BDoc.TestAnnotations;
-
 /**
  * @author Per Otto Bergum Christensen
  */

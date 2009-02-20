@@ -25,10 +25,9 @@
 package com.googlecode.bdoc.doc.domain;
 
 import static com.googlecode.bdoc.doc.domain.BDoc.TEST_METHOD_PREFIX;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-
-import com.googlecode.bdoc.doc.domain.BDoc.TestAnnotations;
 
 public class TestMethod {
 

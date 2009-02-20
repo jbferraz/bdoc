@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.doc.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -198,25 +199,33 @@ public class TestBDoc {
 		List<Package> packages = behaviour.getPackages();
 		assertEquals(0, packages.size());
 	}
-
+	
 	@Test
-	public void shouldProvideAListOfAllSpecificationsFoundInUserStoriesAndForGeneralBehaviour() {
-
-		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
-		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class), BDocTestHelper.SRC_TEST_JAVA);
-
-		assertTrue(bdoc.specifications().contains(new Specification("shouldNotBeAnnotatedWithAStory")));
-		assertTrue(bdoc.specifications().contains(new Specification("shouldBehaveLikeThisIfThat")));
+	public void listOfSpecificationsShouldIncludeThoseRelatedToGeneralBehaviour() {
+		bdoc = new BDoc();
+		bdoc.addBehaviourFrom(new TestClass( TestExampleNoStories.class), BDocTestHelper.SRC_TEST_JAVA);
+		assertFalse( bdoc.specifications().isEmpty() );
 	}
 
 	@Test
-	public void shouldProvideAListOfAllScenariosFoundInUserStoriesAndForGeneralBehaviour() {
+	public void listOfSpecificationsShouldIncludeThoseRelatedToUserStories() {
+		bdoc = new BDoc();
+		bdoc.addBehaviourFrom(new TestClass( TestExampleWithStory.class), BDocTestHelper.SRC_TEST_JAVA);
+		assertFalse( bdoc.specifications().isEmpty() );
+	}
+	
+	@Test
+	public void listOfScenariosShouldIncludeThoseRelatedToGeneralBehaviour() {
+		bdoc = new BDoc();
+		bdoc.addBehaviourFrom(new TestClass( TestExampleNoStories.class), BDocTestHelper.SRC_TEST_JAVA);
+		assertFalse( bdoc.scenarios().isEmpty() );		
+	}
 
-		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
-		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class), BDocTestHelper.SRC_TEST_JAVA);
-
-		assertTrue(bdoc.scenarios().contains(new Scenario("givenWhenThenWithoutRefToScenario")));
-		assertTrue(bdoc.scenarios().contains(new Scenario("givenWhenThen")));
+	@Test
+	public void listOfScenariosShouldIncludeThoseRelatedToUserStories() {
+		bdoc = new BDoc();
+		bdoc.addBehaviourFrom(new TestClass( TestExampleWithStory.class), BDocTestHelper.SRC_TEST_JAVA);
+		assertFalse( bdoc.scenarios().isEmpty() );		
 	}
 
 	/**
@@ -232,6 +241,21 @@ public class TestBDoc {
 	 * Testdata
 	 */
 	public class TestExampleNoStories {
+
+		@Test
+		public void shouldVerifyTheImportantStuff() {
+		}
+
+		@Test
+		public void givenSomethingWhenAnActionThenVerifyResult() {
+		}
+	}
+
+	/**
+	 * Testdata
+	 */
+	@ExReference(ExStory.STORY3)
+	public class TestExampleWithStory {
 
 		@Test
 		public void shouldVerifyTheImportantStuff() {

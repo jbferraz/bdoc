@@ -44,10 +44,35 @@ import com.googlecode.bdoc.doc.util.ClassesDirectory;
  */
 public class BDoc {
 
-	private static final String TEST_METHOD_PREFIX = "test";
-	protected transient Class<? extends Annotation> testAnnotation;
-	protected transient Class<? extends Annotation> ignoreAnnotation;
+	public static class TestAnnotations {
+		private transient Class<? extends Annotation> testAnnotation = org.junit.Test.class;
+		private transient Class<? extends Annotation> ignoreAnnotation = org.junit.Ignore.class;
+
+		public TestAnnotations() {
+		}
+
+		public TestAnnotations(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> ignoreAnnotation) {
+			if (null != testAnnotation) {
+				this.testAnnotation = testAnnotation;
+			}
+			if (null != ignoreAnnotation) {
+				this.ignoreAnnotation = ignoreAnnotation;
+			}
+		}
+
+		public Class<? extends Annotation> getTestAnnotation() {
+			return testAnnotation;
+		}
+
+		public Class<? extends Annotation> getIgnoreAnnotation() {
+			return ignoreAnnotation;
+		}
+	}
+
+	public static final String TEST_METHOD_PREFIX = "test";
+
 	protected transient Class<? extends Annotation> storyRefAnnotation;
+	protected transient TestAnnotations testAnnotations = new TestAnnotations();
 
 	protected ProjectInfo projectInfo;
 	protected Calendar docTime = Calendar.getInstance();
@@ -58,16 +83,12 @@ public class BDoc {
 	 * Constructor - for test
 	 */
 	public BDoc() {
-		this.testAnnotation = org.junit.Test.class;
-		this.ignoreAnnotation = org.junit.Ignore.class;
 	}
 
 	/**
 	 * Constructor - for test
 	 */
 	public BDoc(ProjectInfo projectInfo) {
-		this.testAnnotation = org.junit.Test.class;
-		this.ignoreAnnotation = org.junit.Ignore.class;
 		this.projectInfo = projectInfo;
 	}
 
@@ -81,14 +102,12 @@ public class BDoc {
 	 */
 	public BDoc(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> storyRefAnnotation,
 			Class<? extends Annotation> ignoreAnnotation) {
-		this.testAnnotation = testAnnotation;
 		this.storyRefAnnotation = storyRefAnnotation;
-		this.ignoreAnnotation = ignoreAnnotation;
+		testAnnotations = new TestAnnotations(testAnnotation, ignoreAnnotation);
 	}
 
 	/**
 	 * @param testClass
-	 *            that describes behaviour with testmethods
 	 */
 	public void addBehaviourFrom(TestClass testClass, File testSrcDir) {
 		UserStory userStory = null;
@@ -97,88 +116,30 @@ public class BDoc {
 			userStory = userStory(testClass.getAnnotation(storyRefAnnotation));
 		}
 
-		if (classIsAnnotatedWithIgnore(testClass)) {
+		if (testClass.classIsAnnotatedWithIgnore(testAnnotations)) {
 			return;
 		}
 
-		for (Method method : testClass.getMethods()) {
+		for (TestMethod method : testClass.getTestMethods(testAnnotations)) {
 
-			if (test(method)) {
-				if ((null != storyRefAnnotation) && (method.isAnnotationPresent(storyRefAnnotation))) {
-					userStory = userStory(method.getAnnotation(storyRefAnnotation));
-				}
+			if ((null != storyRefAnnotation) && (method.isAnnotationPresent(storyRefAnnotation))) {
+				userStory = userStory(method.getAnnotation(storyRefAnnotation));
+			}
 
-				ClassBehaviour classBehaviour = null;
-				if (null != userStory) {
-					classBehaviour = userStory.addBehaviour(testClass.clazz(), camelCaseSentence(method));
-				} else {
-					classBehaviour = generalBehaviour.addBehaviour(testClass.clazz(), camelCaseSentence(method));
-				}
+			ClassBehaviour classBehaviour = null;
+			if (null != userStory) {
+				classBehaviour = userStory.addBehaviour(testClass.clazz(), method.camelCaseSentence());
+			} else {
+				classBehaviour = generalBehaviour.addBehaviour(testClass.clazz(), method.camelCaseSentence());
+			}
 
-				if (testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks()) {
-					Scenario scenario = testClass.getScenarioFromTestMethodBlock(method.getName(), testSrcDir);
-					if (null != scenario) {
-						classBehaviour.addScenario(scenario);
-					}
+			if (testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks()) {
+				Scenario scenario = testClass.getScenarioFromTestMethodBlock(method.getName(), testSrcDir);
+				if (null != scenario) {
+					classBehaviour.addScenario(scenario);
 				}
 			}
 		}
-	}
-
-	private boolean classIsAnnotatedWithIgnore(TestClass testClass) {
-		return (null != ignoreAnnotation) && (testClass.isAnnotationPresent(ignoreAnnotation));
-	}
-
-	/**
-	 * Tells if the metod is a testMethod
-	 * 
-	 * @param method
-	 *            to check
-	 * @return true if method is a test
-	 */
-	private boolean test(Method method) {
-		if ((null != testAnnotation) && method.isAnnotationPresent(testAnnotation)) {
-			if ((null != ignoreAnnotation) && !method.isAnnotationPresent(ignoreAnnotation)) {
-				return true;
-			}
-		}
-
-		boolean testMethod = false;
-		boolean ignore = false;
-		Annotation[] annotations = method.getAnnotations();
-		for (Annotation annotation : annotations) {
-			String name = annotation.annotationType().getName();
-			if (name.endsWith(".Test")) {
-				testMethod = true;
-			} else if (name.endsWith(".Ignore")) {
-				ignore = true;
-			}
-		}
-
-		if (testMethod && !ignore) {
-			return true;
-		}
-
-		if (method.getName().startsWith(TEST_METHOD_PREFIX)) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Gets the camelCaseSentence from the testmethod, removing 'test' if JUnit 3 is used
-	 * 
-	 * @param testMethod
-	 *            that specifies the test
-	 * @return camelCaseSentence describeing behaviour
-	 */
-	private String camelCaseSentence(Method testMethod) {
-		String camelCaseSentence = testMethod.getName();
-		if (camelCaseSentence.startsWith(TEST_METHOD_PREFIX)) {
-			camelCaseSentence = camelCaseSentence.substring(TEST_METHOD_PREFIX.length());
-			camelCaseSentence = camelCaseSentence.substring(0, 1).toLowerCase() + camelCaseSentence.substring(1, camelCaseSentence.length());
-		}
-		return camelCaseSentence;
 	}
 
 	/**
@@ -290,4 +251,23 @@ public class BDoc {
 		return result;
 	}
 
+	public List<Scenario> scenarios() {
+		List<Scenario> result = new ArrayList<Scenario>();
+
+		// for (Package javaPackage : generalBehaviour.getPackages()) {
+		// result.addAll(javaPackage.getScenarios());
+		// }
+
+		for (UserStory userStory : userStories) {
+			result.addAll(userStory.getScenarios());
+		}
+		return result;
+	}
+
+	/**
+	 * Helper method for test - when default annotations should be set, after serializing the BDoc, since annotations are transient
+	 */
+	public void setDefaultTestAnnotations() {
+		testAnnotations = new TestAnnotations();
+	}
 }

@@ -209,6 +209,16 @@ public class TestBDoc {
 		assertTrue(bdoc.specifications().contains(new Specification("shouldBehaveLikeThisIfThat")));
 	}
 
+	@Test
+	public void shouldProvideAListOfAllScenariosFoundInUserStoriesAndForGeneralBehaviour() {
+
+		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class), BDocTestHelper.SRC_TEST_JAVA);
+
+		assertTrue(bdoc.scenarios().contains(new Scenario("givenWhenThenWithoutRefToScenario")));
+		assertTrue(bdoc.scenarios().contains(new Scenario("givenWhenThen")));
+	}
+
 	/**
 	 * Testdata
 	 */
@@ -272,6 +282,10 @@ public class TestBDoc {
 		@Test
 		@ExReference(ExStory.STORY1)
 		public void givenWhenThen() {
+		}
+
+		@Test
+		public void givenWhenThenWithoutRefToScenario() {
 		}
 
 		@Test

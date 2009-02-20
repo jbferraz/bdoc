@@ -44,31 +44,6 @@ import com.googlecode.bdoc.doc.util.ClassesDirectory;
  */
 public class BDoc {
 
-	public static class TestAnnotations {
-		private transient Class<? extends Annotation> testAnnotation = org.junit.Test.class;
-		private transient Class<? extends Annotation> ignoreAnnotation = org.junit.Ignore.class;
-
-		public TestAnnotations() {
-		}
-
-		public TestAnnotations(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> ignoreAnnotation) {
-			if (null != testAnnotation) {
-				this.testAnnotation = testAnnotation;
-			}
-			if (null != ignoreAnnotation) {
-				this.ignoreAnnotation = ignoreAnnotation;
-			}
-		}
-
-		public Class<? extends Annotation> getTestAnnotation() {
-			return testAnnotation;
-		}
-
-		public Class<? extends Annotation> getIgnoreAnnotation() {
-			return ignoreAnnotation;
-		}
-	}
-
 	public static final String TEST_METHOD_PREFIX = "test";
 
 	protected transient Class<? extends Annotation> storyRefAnnotation;
@@ -236,17 +211,9 @@ public class BDoc {
 	public List<Specification> specifications() {
 		List<Specification> result = new ArrayList<Specification>();
 
-		for (Package javaPackage : generalBehaviour.getPackages()) {
-			for (ClassSpecifications classSpecifications : javaPackage.getClassSpecifications()) {
-				result.addAll(classSpecifications.getSpecifications());
-			}
-		}
-
+		result.addAll(generalBehaviour.specifications());
 		for (UserStory userStory : userStories) {
-			for (ClassSpecifications classSpecifications : userStory.getClassSpecifications()) {
-				result.addAll(classSpecifications.getSpecifications());
-			}
-
+			result.addAll( userStory.specifications() );
 		}
 		return result;
 	}
@@ -254,10 +221,8 @@ public class BDoc {
 	public List<Scenario> scenarios() {
 		List<Scenario> result = new ArrayList<Scenario>();
 
-		// for (Package javaPackage : generalBehaviour.getPackages()) {
-		// result.addAll(javaPackage.getScenarios());
-		// }
-
+		result.addAll( generalBehaviour.scenarios() );
+		
 		for (UserStory userStory : userStories) {
 			result.addAll(userStory.getScenarios());
 		}

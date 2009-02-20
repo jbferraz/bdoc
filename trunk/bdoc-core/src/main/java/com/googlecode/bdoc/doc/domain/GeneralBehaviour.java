@@ -73,4 +73,27 @@ public class GeneralBehaviour {
 		}
 		return false;
 	}
+
+	/**
+	 * @return list of all specifications found in general behaviour
+	 */
+	public List<Specification> specifications() {
+		ArrayList<Specification> result = new ArrayList<Specification>();
+		for (Package javaPackage : packages) {
+
+			for (ClassSpecifications classSpecifications : javaPackage.getClassSpecifications()) {
+				result.addAll(classSpecifications.getSpecifications());
+			}
+
+		}
+		return result;
+	}
+
+	public List<Scenario> scenarios() {
+		List<Scenario> result = new ArrayList<Scenario>();
+		for (Package javaPackage : packages) {
+			result.addAll(javaPackage.getScenarios());
+		}
+		return result;
+	}
 }

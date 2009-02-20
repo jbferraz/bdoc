@@ -78,13 +78,13 @@ public class TestTestClass {
 	@Test
 	public void shouldReturnTestMethods() {
 		TestClass testClass = new TestClass(MyTest.class);
-		assertEquals(1, testClass.getTestMethods(new BDoc.TestAnnotations()).size());
+		assertEquals(1, testClass.getTestMethods(new TestAnnotations()).size());
 	}
 	
 	@Test
 	public void shouldTellIfTestClassIsMarkedWithIgnore() {
-		assertFalse( new TestClass(MyTest.class).classIsAnnotatedWithIgnore(new BDoc.TestAnnotations()) );
-		assertTrue( new TestClass(MyIgnoredTest.class).classIsAnnotatedWithIgnore(new BDoc.TestAnnotations()) );
+		assertFalse( new TestClass(MyTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()) );
+		assertTrue( new TestClass(MyIgnoredTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()) );
 	}
 	
 	@Ignore

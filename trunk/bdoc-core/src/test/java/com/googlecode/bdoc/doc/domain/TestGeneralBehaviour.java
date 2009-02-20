@@ -87,6 +87,14 @@ public class TestGeneralBehaviour {
 		packages.addBehaviour(TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF);
 		assertTrue(packages.hasClassSpecifications());
 	}
+	
+	@Test
+	public void supportsListingOfAllSpecifications() {
+		GeneralBehaviour generalBehaviour = new GeneralBehaviour();
+		generalBehaviour.addBehaviour(TestExample.class, "shouldRepresentASpecification");
+		
+		assertFalse(generalBehaviour.specifications().isEmpty() );
+	}
 
 	/**
 	 * Testdata

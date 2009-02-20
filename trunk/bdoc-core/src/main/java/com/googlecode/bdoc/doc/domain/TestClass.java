@@ -28,8 +28,13 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.Validate;
+
+import com.googlecode.bdoc.doc.domain.BDoc.TestAnnotations;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -41,6 +46,7 @@ public class TestClass {
 	private JavaTestSourceBehaviourParser javaTestSourceBehaviourParser;
 
 	public TestClass(Class<? extends Object> clazz) {
+		Validate.notNull(clazz, "clazz can't be null");
 		this.clazz = clazz;
 	}
 
@@ -82,4 +88,24 @@ public class TestClass {
 
 		return scenario;
 	}
+
+	public List<TestMethod> getTestMethods(TestAnnotations testAnnotations) {
+		List<TestMethod> result = new ArrayList<TestMethod>();
+		Method[] methods = getMethods();
+		for (Method method : methods) {
+			TestMethod testMethod = new TestMethod(method);
+			if (testMethod.isTest(testAnnotations)) {
+				result.add(testMethod);
+			}
+		}
+		return result;
+	}
+
+	public boolean classIsAnnotatedWithIgnore(TestAnnotations testAnnotations) {
+		Validate.notNull(testAnnotations, "testAnnotations can't be null");
+		Validate.notNull(testAnnotations.getIgnoreAnnotation());
+		
+		return (clazz.isAnnotationPresent(testAnnotations.getIgnoreAnnotation()));
+	}
+
 }

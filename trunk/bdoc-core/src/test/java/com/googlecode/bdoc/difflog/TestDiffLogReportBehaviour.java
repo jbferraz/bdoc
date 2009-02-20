@@ -25,9 +25,15 @@
 package com.googlecode.bdoc.difflog;
 
 import static com.googlecode.bdoc.doc.report.ReportTestHelper.sentence;
+import static com.googlecode.bdoc.doc.report.ReportTestHelper.scenarioPart;
 import static com.googlecode.bdoc.doc.testdata.BDocTestHelper.SRC_TEST_JAVA;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
+import static org.apache.commons.io.FileUtils.writeStringToFile;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -37,6 +43,7 @@ import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassWithOneScenario;
 import com.googlecode.bdoc.testdataclasses.TestClassWithOneSpecification;
 
 /**
@@ -51,8 +58,19 @@ public class TestDiffLogReportBehaviour {
 		bdocWithOneSpecification.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), SRC_TEST_JAVA);
 	}
 
+	BDoc bdocWithOneScenario = new BDoc(new ProjectInfo("test", "test"));
+	{
+		bdocWithOneScenario.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), SRC_TEST_JAVA);
+	}
+
 	private DiffLog diffLog = new DiffLog();
-	private DiffLogReport diffLogReport = new DiffLogReport();
+	private DiffLogReport diffLogReport;
+	
+	@Before
+	public void reset() {
+		diffLogReport = new DiffLogReport();
+		diffLog = null;
+	}
 
 	private void givenAnEmptyDiffLog() {
 		diffLog = new DiffLog();
@@ -62,20 +80,39 @@ public class TestDiffLogReportBehaviour {
 		diffLog.addBDocDiff(new BDocDiff(emptyBdoc, bdocWithOneSpecification));
 	}
 
+	private void whenADiffWithOneNewScenarioIsAddedToTheDiffLog() {
+		diffLog.addBDocDiff(new BDocDiff(emptyBdoc, bdocWithOneSpecification));
+	}
+
 	private void whenTheReportIsRunOnTheDiffLog() {
 		diffLogReport.run(diffLog);
 	}
 
-	private void thenEnsureTheReportContainsTheDiffWithTheAddedSpecification() {
-		assertXPathContains(sentence(bdocWithOneSpecification.specifications().get(0)), "//diffLogs", diffLogReport.result());
+	private void thenEnsureTheReportContainsTheDiffWithTheAddedSpecification() throws IOException {
+		String html = diffLogReport.result();
+		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
+		assertXPathContains(sentence(bdocWithOneSpecification.specifications().get(0)), "//div[@id='diffLogs']", html);
+	}
+
+	private void thenEnsureTheReportContainsTheDiffWithTheAddedScenario() throws IOException {
+		String html = diffLogReport.result();
+		assertXPathContains(scenarioPart(1,bdocWithOneScenario.scenarios().get(0)), "//div[@id='diffLogs']", html);
 	}
 
 	@Test
-	@Ignore
-	public void shouldContainBDocDiff() {
+	public void shouldContainSpecficaitonsInTheBDocDiff() throws IOException {
 		givenAnEmptyDiffLog();
 		whenADiffWithOneNewSpecificationIsAddedToTheDiffLog();
 		whenTheReportIsRunOnTheDiffLog();
 		thenEnsureTheReportContainsTheDiffWithTheAddedSpecification();
+	}
+
+	@Test
+	@Ignore
+	public void shouldContainScenariosInTheBDocDiff() throws IOException {
+		givenAnEmptyDiffLog();
+		whenADiffWithOneNewScenarioIsAddedToTheDiffLog();
+		whenTheReportIsRunOnTheDiffLog();
+		thenEnsureTheReportContainsTheDiffWithTheAddedScenario();
 	}
 }

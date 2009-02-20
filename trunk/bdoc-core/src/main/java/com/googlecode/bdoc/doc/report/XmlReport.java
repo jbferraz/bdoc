@@ -48,7 +48,9 @@ public class XmlReport {
 	}
 
 	public static BDoc cloneBDoc(BDoc bdoc) {
-		return XmlReport.createBDoc(new XmlReport(bdoc).xml());
+		BDoc createBDoc = XmlReport.createBDoc(new XmlReport(bdoc).xml());
+		createBDoc.setDefaultTestAnnotations();
+		return createBDoc;
 	}
 
 	public String xml() {

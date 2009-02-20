@@ -37,6 +37,10 @@
 		<#include "css.ftl">					
 	</head>
 	<body>
-		<h1><@bdddoc.text key="diff.log.title" /></h1>
+		<div id="diffLogs">
+			
+			<h1><@bdddoc.text key="diff.log.title" /></h1>
+			Should be a specification
+		</div>
 	</body>
 </html>

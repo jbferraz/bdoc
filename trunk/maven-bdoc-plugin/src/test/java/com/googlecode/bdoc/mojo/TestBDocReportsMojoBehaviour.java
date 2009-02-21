@@ -156,7 +156,7 @@ public class TestBDocReportsMojoBehaviour {
 
 	private void thenEnsureTheBDocReportsXmlFileHasBeenUpdated() {
 		DiffLog diffLog = DiffLog.fromXmlFile(bdocMojo.getBDocChangeLogFile() );
-		assertTrue( 0 < diffLog.diffList().size() );
+		assertTrue( 0 < diffLog.getDiffList().size() );
 	}
 
 	@Test

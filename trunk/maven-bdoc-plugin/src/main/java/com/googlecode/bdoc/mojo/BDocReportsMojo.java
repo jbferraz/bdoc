@@ -35,6 +35,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.maven.reporting.MavenReportException;
 
 import com.googlecode.bdoc.difflog.DiffLog;
+import com.googlecode.bdoc.difflog.DiffLogReport;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
@@ -61,6 +62,8 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 
 	static final String BDOC_HTML = "bdoc.html";
 
+	private static final String BDOC_DIFF_LOG_HTML = "bdoc_diff_log.html";
+
 	/**
 	 * @parameter default-value="${project.build.testSourceDirectory}"
 	 * @required
@@ -74,16 +77,14 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 	File testClassDirectory;
 
 	/**
-	 * Specifies files, which are included in the check. By default, all files
-	 * are included.
+	 * Specifies files, which are included in the check. By default, all files are included.
 	 * 
 	 * @parameter
 	 */
 	String[] includes;
 
 	/**
-	 * Specifies files, which are excluded in the check. By default, no files
-	 * are excluded.
+	 * Specifies files, which are excluded in the check. By default, no files are excluded.
 	 * 
 	 * @parameter
 	 */
@@ -102,8 +103,7 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 	String ignoreAnnotationClassName;
 
 	/**
-	 * @parameter default-value=
-	 *            "com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
+	 * @parameter default-value= "com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
 	 * @required
 	 */
 	String scenarioFormatterClassName;
@@ -163,8 +163,10 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 		getLog().info("Updating file: " + getBDocChangeLogFile());
 		diffLog.writeToFile(getBDocChangeLogFile());
 
-		writeReport(BDOC_HTML, new HtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
-				.newInstance()).html());
+		writeReport(BDOC_HTML,
+				new HtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName).newInstance()).html());
+
+		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog).result());
 
 		makeBDocReportsHtml();
 	}
@@ -184,11 +186,19 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 		getSink().lineBreak();
 
 		getSink().list();
+		
 		getSink().listItem();
 		getSink().link(BDOC_HTML);
 		getSink().text("BDoc");
 		getSink().link_();
 		getSink().listItem_();
+		
+		getSink().listItem();
+		getSink().link(BDOC_DIFF_LOG_HTML);
+		getSink().text("BDocDiffLog");
+		getSink().link_();
+		getSink().listItem_();
+		
 		getSink().list_();
 
 		getSink().body_();

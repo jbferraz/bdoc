@@ -23,6 +23,10 @@
     THE SOFTWARE.
 
 -->
+<#--
+	@author Per Otto Bergum Christensen
+-->
+
 
 <#macro story userstory header="h2">
 	<div class="userstory">
@@ -55,7 +59,7 @@
 			<div class="scenarios"> 
 				<#list scenarios as scenario>													
 					<ul class="scenario">
-						${bddDocMacroHelper.scenarioLines(scenario)}
+						${bdocMacroHelper.scenarioLines(scenario)}
 					</ul>
 				</#list>
 			</div>
@@ -77,7 +81,7 @@
 						<span>${classSpecifications.className}</span>
 						<ul>
 							<#list classSpecifications.specifications as specification>
-								<li>${bddDocMacroHelper.format(specification)}</li>
+								<li>${bdocMacroHelper.format(specification)}</li>
 							</#list>
 						</ul>
 					</li>									
@@ -102,7 +106,7 @@
 						<span>${classStatements.className}</span>
 						<ul>
 							<#list classStatements.statements as statement>
-								<li>${bddDocMacroHelper.format(statement)}</li>
+								<li>${bdocMacroHelper.format(statement)}</li>
 							</#list>
 						</ul>
 					</li>									
@@ -122,5 +126,5 @@
 </#macro>
 
 <#macro text key>
-	${bddDocMacroHelper.text(key)}
+	${bdocMacroHelper.text(key)}
 </#macro>

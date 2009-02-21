@@ -40,7 +40,11 @@
 		<div id="diffLogs">
 			
 			<h1><@bdddoc.text key="diff.log.title" /></h1>
-			Should be a specification
+			<hr/>
+			<#list diffLog.diffList as bdocDiff>
+				<#include "html_diff_report_content.ftl">
+			</#list>
+			<hr/>			
 		</div>
 	</body>
 </html>

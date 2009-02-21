@@ -60,7 +60,7 @@ public class TestDiffLog {
 	public void shouldNotProduceAnyDiffForTheFirstBDocScan() {
 		DiffLog diffLog = new DiffLog();
 		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		assertTrue(diffLog.diffList().isEmpty());
+		assertTrue(diffLog.getDiffList().isEmpty());
 	}
 
 	@Test
@@ -68,7 +68,7 @@ public class TestDiffLog {
 		DiffLog diffLog = new DiffLog();
 		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
 		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		assertEquals(0, diffLog.diffList().size());
+		assertEquals(0, diffLog.getDiffList().size());
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class TestDiffLog {
 		DiffLog diffLog = new DiffLog();
 		diffLog.scan(BDocTestHelper.bdocWithProject());
 		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		assertEquals(1, diffLog.diffList().size());
+		assertEquals(1, diffLog.getDiffList().size());
 	}
 
 }

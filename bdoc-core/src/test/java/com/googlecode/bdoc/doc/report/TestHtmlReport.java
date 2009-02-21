@@ -57,24 +57,24 @@ import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 public class TestHtmlReport {
 
 	private String html;
-	private BDoc bddDoc;
+	private BDoc bdoc;
 
 	public TestHtmlReport() throws IOException {
-		bddDoc = BDocTestHelper.bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour();
-		html = new HtmlReport(bddDoc).html();
+		bdoc = BDocTestHelper.bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour();
+		html = new HtmlReport(bdoc).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
-		writeStringToFile(new File("target/" + getClass().getName() + ".xml"), new XmlReport(bddDoc).xml());
+		writeStringToFile(new File("target/" + getClass().getName() + ".xml"), new XmlReport(bdoc).xml());
 	}
 
 	@Test
 	public void shouldContainNameOfTheProjectNameInTheTitleAndHeader() {
-		assertXPathContains(bddDoc.getProject().getName(), "//title", html);
-		assertXPathContains(bddDoc.getProject().getName(), "//h1", html);
+		assertXPathContains(bdoc.getProject().getName(), "//title", html);
+		assertXPathContains(bdoc.getProject().getName(), "//h1", html);
 	}
 
 	@Test
 	public void shouldPresentTheNarrativeOfTheStory() {
-		Narrative narrative = bddDoc.getUserstories().get(0).getNarrative();
+		Narrative narrative = bdoc.getUserstories().get(0).getNarrative();
 		assertXPathContains(narrative.getRole(), "//div[@class='userstory']", html);
 		assertXPathContains(narrative.getAction(), "//div[@class='userstory']", html);
 		assertXPathContains(narrative.getBenefit(), "//div[@class='userstory']", html);
@@ -82,7 +82,7 @@ public class TestHtmlReport {
 
 	@Test
 	public void shouldPresentTheScenariosOfTheStory() {
-		Scenario scenario = bddDoc.getUserstories().get(0).getScenarios().get(0);
+		Scenario scenario = bdoc.getUserstories().get(0).getScenarios().get(0);
 		assertXPathContains(scenarioPart(0, scenario), "//ul[@class='scenario']", html);
 		assertXPathContains(scenarioPart(1, scenario), "//ul[@class='scenario']", html);
 		assertXPathContains(scenarioPart(2, scenario), "//ul[@class='scenario']", html);
@@ -90,51 +90,51 @@ public class TestHtmlReport {
 
 	@Test
 	public void shouldPresentTheSpecificationsAssociatedWithTheStory() {
-		List<Specification> specifications = bddDoc.getUserstories().get(0).getClassSpecifications().get(0).getSpecifications();
+		List<Specification> specifications = bdoc.getUserstories().get(0).getClassSpecifications().get(0).getSpecifications();
 		assertXPathContains(ReportTestHelper.sentence(specifications.get(0)), "//ul[@class='specifications']", html);
 	}
 
 	@Test
 	public void shouldPresentTheStatementsAssociatedWithTheStory() {
-		List<Statement> statements = bddDoc.getUserstories().get(0).getClassStatements().get(0).getStatements();
+		List<Statement> statements = bdoc.getUserstories().get(0).getClassStatements().get(0).getStatements();
 		assertXPathContains(ReportTestHelper.sentence(statements.get(0)), "//ul[@class='statements']", html);
 	}
 
 	@Test
 	public void shouldPresentTheNameOfTheClassWithTheSpecifications() {
-		ClassSpecifications classBehaviour = bddDoc.getUserstories().get(0).getClassSpecifications().get(0);
+		ClassSpecifications classBehaviour = bdoc.getUserstories().get(0).getClassSpecifications().get(0);
 		assertXPathContains(classBehaviour.getClassName(), "//ul[@class='specifications']", html);
 	}
 
 	@Test
 	public void shouldPresentPackagesWithBehaviourNotAssociatedWityAnyStories() {
-		assertXPathContains(bddDoc.getGeneralBehaviour().getPackages().get(0).getName(), "//div[@id='generalBehaviour']", html);
+		assertXPathContains(bdoc.getGeneralBehaviour().getPackages().get(0).getName(), "//div[@id='generalBehaviour']", html);
 	}
 
 	@Test
 	public void shouldPresentScenariosNotAssociatedWithAnyStories() {
-		List<Scenario> scenarios = bddDoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getScenarios();
+		List<Scenario> scenarios = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getScenarios();
 		assertXPathContains(scenarioPart(0, scenarios.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
 	public void shouldPresentSpecificationsNotAssociatedWithAnyStories() {
-		List<Specification> specifications = bddDoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0)
+		List<Specification> specifications = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0)
 				.getSpecifications();
 		assertXPathContains(ReportTestHelper.sentence(specifications.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
 	public void shouldPresentStatementsNotAssociatedWithAnyStories() {
-		List<Statement> statements = bddDoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getStatements();
+		List<Statement> statements = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getStatements();
 		assertXPathContains(ReportTestHelper.sentence(statements.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
 	public void shouldBePossibleToChangeFormattingForAdvancedScenarioSpecification() throws IOException {
-		bddDoc = BDocTestHelper.bdocWithAdvancedScenarioSpecification();
-		String htmlAndInBetween = new HtmlReport(bddDoc, new AndInBetweenScenarioLinesFormatter()).html();
-		String htmlEachOnNewLine = new HtmlReport(bddDoc, new EachOnNewLineScenarioLinesFormatter()).html();
+		bdoc = BDocTestHelper.bdocWithAdvancedScenarioSpecification();
+		String htmlAndInBetween = new HtmlReport(bdoc, new AndInBetweenScenarioLinesFormatter()).html();
+		String htmlEachOnNewLine = new HtmlReport(bdoc, new EachOnNewLineScenarioLinesFormatter()).html();
 		Assert.assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
 	}
 }

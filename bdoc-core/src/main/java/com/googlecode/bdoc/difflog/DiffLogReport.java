@@ -61,9 +61,8 @@ public class DiffLogReport {
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 
 		model = new HashMap<String, Object>();
-		//List<BDocDiff> diffList = diffLog.diffList();
 		model.put("diffLog", diffLog);
-		model.put("bddDocMacroHelper", new BddDocMacroHelper());
+		model.put("bdocMacroHelper", new BddDocMacroHelper());
 	}
 
 	public String result() {

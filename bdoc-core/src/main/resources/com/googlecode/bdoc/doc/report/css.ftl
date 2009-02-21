@@ -23,6 +23,10 @@
     THE SOFTWARE.
 
 -->
+<#--
+	@author Per Otto Bergum Christensen
+-->
+
 
 <style type="text/css">		
 	h1 { font-family:arial,sans-serif; }

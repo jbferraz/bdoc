@@ -45,19 +45,25 @@ public class TestDiffLogReport {
 	{
 		bdocWithTwoSpecifications.addBehaviourFrom(new TestClass(TestClassWithTwoSpecifications.class), SRC_TEST_JAVA);
 	}
+	BDoc bdocWithTwoSpecificationsAndAScenario = new BDoc(new ProjectInfo("test", "test"));
+	{
+		bdocWithTwoSpecificationsAndAScenario.addBehaviourFrom(new TestClass(TestClassWithTwoSpecifications.class), SRC_TEST_JAVA);
+		bdocWithTwoSpecificationsAndAScenario.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), SRC_TEST_JAVA);
+	}
 
 	private DiffLog diffLog = new DiffLog();
 	{
 		diffLog.addBDocDiff(new BDocDiff(emptyBdoc, bdocWithTwoSpecifications));
+		diffLog.addBDocDiff(new BDocDiff(bdocWithTwoSpecifications,bdocWithTwoSpecificationsAndAScenario)); 
 	}
-	
+
 	private String html;
-	
+
 	public TestDiffLogReport() throws IOException {
 		DiffLogReport diffLogReport = new DiffLogReport();
 		diffLogReport.run(diffLog);
 		html = diffLogReport.result();
-		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);		
+		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 	}
 
 	@Test
@@ -74,6 +80,12 @@ public class TestDiffLogReport {
 
 		@Test
 		public void shouldDoThat2() {
+		}
+	}
+
+	public class TestClassWithOneScenario {
+		@Test
+		public void givenWhenThenThisScenarioShouldBeVisible() {
 		}
 	}
 }

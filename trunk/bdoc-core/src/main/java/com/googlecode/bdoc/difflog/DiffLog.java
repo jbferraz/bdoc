@@ -66,7 +66,7 @@ public class DiffLog {
 		return diffList.get(diffList.size() - 1);
 	}
 
-	public List<BDocDiff> diffList() {
+	public List<BDocDiff> getDiffList() {
 		return diffList;
 	}
 

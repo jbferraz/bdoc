@@ -23,6 +23,10 @@
     THE SOFTWARE.
 
 -->
+<#--
+	@author Per Otto Bergum Christensen
+-->
+
 
 <#import "bdd_doc_macros.ftl" as bdddoc />
 <#setting date_format="short">

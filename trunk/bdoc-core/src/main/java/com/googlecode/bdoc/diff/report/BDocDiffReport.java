@@ -49,7 +49,7 @@ public class BDocDiffReport {
 		return execute(bDocDiff);
 	}
 
-	public DiffReport execute(BDocDiff bDocDiff) {
+	public DiffReport execute(BDocDiff bdocDiff) {
 		XStream xstream = new XStream(new DomDriver());
 
 		XmlReport.addAlias(xstream);
@@ -62,9 +62,9 @@ public class BDocDiffReport {
 		xstream.alias("narrativeDiff", NarrativeDiff.class);
 		xstream.alias("classBehaviourDiff", ClassBehaviourDiff.class);
 
-		DiffReport diffReport = new DiffReport(bDocDiff.diffExists(), xstream.toXML(bDocDiff));
+		DiffReport diffReport = new DiffReport(bdocDiff.diffExists(), xstream.toXML(bdocDiff));
 		if (diffReport.diffExists()) {
-			diffReport.setHtmlReport(new HtmlDiffReport(bDocDiff).html());
+			diffReport.setHtmlReport(new HtmlDiffReport(bdocDiff).html());
 		}
 		return diffReport;
 	}

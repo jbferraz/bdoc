@@ -101,7 +101,7 @@ public class TestDiffLogBehaviour {
 		whenTheBDocIsScanned(diffLog, bdoc);
 		thenEnsureTheLatestBDocIsUpdated(diffLog, bdoc);
 		thenEnsureTheNewBDocDiffContainsTheNewScenario(diffLog.latestDiff(), scenario);
-		thenEnsureTheOldBDocDiffIsPushedOneDownInTheBDocDiffList(oldDiff, diffLog.diffList());
+		thenEnsureTheOldBDocDiffIsPushedOneDownInTheBDocDiffList(oldDiff, diffLog.getDiffList());
 	}
 
 	

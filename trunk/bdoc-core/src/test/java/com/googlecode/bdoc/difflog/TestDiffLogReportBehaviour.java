@@ -24,8 +24,8 @@
 
 package com.googlecode.bdoc.difflog;
 
-import static com.googlecode.bdoc.doc.report.ReportTestHelper.sentence;
 import static com.googlecode.bdoc.doc.report.ReportTestHelper.scenarioPart;
+import static com.googlecode.bdoc.doc.report.ReportTestHelper.sentence;
 import static com.googlecode.bdoc.doc.testdata.BDocTestHelper.SRC_TEST_JAVA;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
@@ -34,7 +34,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
@@ -81,7 +80,7 @@ public class TestDiffLogReportBehaviour {
 	}
 
 	private void whenADiffWithOneNewScenarioIsAddedToTheDiffLog() {
-		diffLog.addBDocDiff(new BDocDiff(emptyBdoc, bdocWithOneSpecification));
+		diffLog.addBDocDiff(new BDocDiff(emptyBdoc, bdocWithOneScenario));
 	}
 
 	private void whenTheReportIsRunOnTheDiffLog() {
@@ -108,7 +107,6 @@ public class TestDiffLogReportBehaviour {
 	}
 
 	@Test
-	@Ignore
 	public void shouldContainScenariosInTheBDocDiff() throws IOException {
 		givenAnEmptyDiffLog();
 		whenADiffWithOneNewScenarioIsAddedToTheDiffLog();

@@ -57,8 +57,8 @@ public class HtmlDiffReport {
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 
 		model = new HashMap<String, Object>();
-		model.put("bddDocDiff", bDocDiff);
-		model.put("bddDocMacroHelper", new BddDocMacroHelper() );
+		model.put("bdocDiff", bDocDiff);
+		model.put("bdocMacroHelper", new BddDocMacroHelper() );
 	}
 
 	public String html() {

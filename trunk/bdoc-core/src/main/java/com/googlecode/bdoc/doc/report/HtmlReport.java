@@ -50,12 +50,12 @@ public class HtmlReport {
 
 		model = new HashMap<String, Object>();
 		model.put("bddDoc", bddDoc);
-		model.put("bddDocMacroHelper", new BddDocMacroHelper());
+		model.put("bdocMacroHelper", new BddDocMacroHelper());
 	}
 
 	public HtmlReport(BDoc bddDoc, ScenarioLinesFormatter scenarioLinesFormatter) {
 		this(bddDoc);
-		model.put("bddDocMacroHelper", new BddDocMacroHelper(scenarioLinesFormatter));
+		model.put("bdocMacroHelper", new BddDocMacroHelper(scenarioLinesFormatter));
 	}
 
 	public String html() {

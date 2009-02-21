@@ -66,18 +66,13 @@ public class TestBDoc {
 	}
 
 	@Test
-	public void givenATestclassWhenTheTestclassIsAnnotatedWithAReferenceToAStoryThenEnsureTheStoryIsCreated() {
-		assertTrue(bdoc.getUserstories().contains(new UserStory(ExStory.STORY3)));
-	}
-
-	@Test
 	public void shouldCreateTheDistinctNumberOfUserStories() {
 		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BDocTestHelper.SRC_TEST_JAVA);
 		assertEquals(3, bdoc.getUserstories().size());
 	}
 
-	@Test
-	public void givenATestclassWhenATestmethodIsAnnotatedWithAReferenceToAStoryThenEnsureTheStoryIsCreated() {
+	@Test 
+	public void shouldCreateUserStoriesReferencedByTests() {
 		assertTrue(bdoc.getUserstories().contains(new UserStory(ExStory.STORY1)));
 	}
 

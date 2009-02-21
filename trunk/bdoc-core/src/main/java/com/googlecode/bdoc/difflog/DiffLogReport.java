@@ -50,7 +50,7 @@ public class DiffLogReport {
 	public DiffLogReport() {
 	}
 
-	public void run(DiffLog diffLog) {
+	public DiffLogReport run(DiffLog diffLog) {
 		cfg = new Configuration();
 
 		final MultiTemplateLoader multiTemplateLoader = new MultiTemplateLoader(new TemplateLoader[] {
@@ -63,6 +63,8 @@ public class DiffLogReport {
 		model = new HashMap<String, Object>();
 		model.put("diffLog", diffLog);
 		model.put("bdocMacroHelper", new BddDocMacroHelper());
+		
+		return this;
 	}
 
 	public String result() {

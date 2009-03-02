@@ -56,8 +56,8 @@ public class TestJavaTestSourceBehaviourParser {
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
 		expectedScenarioParts.add(new Scenario.Part("givenAnEmptyStack"));
-		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemValue_1"));
-		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemValue_2"));
+		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemVALUE_1"));
+		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemVALUE_2"));
 		expectedScenarioParts.add(new Scenario.Part("whenPopIsCalled"));
 		expectedScenarioParts.add(new Scenario.Part("thenLastItemPushedAreReturnedFromPop"));
 		expectedScenarioParts.add(new Scenario.Part("thenTheValueNotRemainsInTheStack"));

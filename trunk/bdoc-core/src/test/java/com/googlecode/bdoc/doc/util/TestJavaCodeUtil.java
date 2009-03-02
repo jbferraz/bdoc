@@ -43,7 +43,7 @@ public class TestJavaCodeUtil {
 	private final static String JAVA_BLOCK_WITH_TRY_CATCH_CODE_SNIPPET = "{ public void shouldVerify() { try {givenA();} catch {thenInsideCatch();} thenAfterCatch();} }";
 
 	private final static String JAVA_METHOD_CONTENT_GIVEN_WHEN_THEN = "givenA(); whenB(); thenC(); ";
-	private final static String JAVA_METHOD_CONTENT_WITH_DATA = "given(AA); ";
+	private final static String JAVA_METHOD_CONTENT_WITH_DATA = "given(AnArgument); ";
 
 	private final static String JAVA_METHOD_CONTENT_GIVEN_GIVEN_WHEN_WHEN_THEN_THEN = "givenA(); givenAA(); whenB(); whenBB(); thenC(); thenCC(); ";
 	private final static String JAVA_METHOD_CONTENT_GIVEN_WHEN_THEN_GIVEN_WHEN_THEN_ = "givenA(); whenB(); thenC(); givenAA(); whenBB(); thenCC(); ";
@@ -51,7 +51,7 @@ public class TestJavaCodeUtil {
 	@Test
 	public void shouldIncludeParameterWithOnlyFirstLetterInUpperCase() {
 		List<Scenario.Part> behaviour = JavaCodeUtil.getGivenWhenThenMethods(JAVA_METHOD_CONTENT_WITH_DATA);
-		assertEquals(new Scenario.Part("givenAa"), behaviour.get(0));
+		assertEquals(new Scenario.Part("givenAnArgument"), behaviour.get(0));
 	}
 
 	@Test

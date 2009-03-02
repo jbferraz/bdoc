@@ -88,7 +88,7 @@ public class JavaCodeUtil {
 			if (foundKeyword(javaMethodContent, firstFoundIndex)) {
 				javaTmp = javaTmp.substring(firstFoundIndex);
 				String behaviourByKeyword = StringUtils.substringBefore(javaTmp, "(");
-				behaviourByKeyword += getParametersWithOnlyFirstLetterInUpperCase(javaTmp);
+				behaviourByKeyword += getParametersWithFirstLetterInUpperCase(javaTmp);
 				result.add(new Scenario.Part(behaviourByKeyword));
 				javaTmp = javaTmp.substring(behaviourByKeyword.length());
 			} else {
@@ -99,8 +99,8 @@ public class JavaCodeUtil {
 		return result;
 	}
 
-	private static String getParametersWithOnlyFirstLetterInUpperCase(String javaTmp) {
-		return StringUtils.capitalize(StringUtils.substringBetween(javaTmp, "(", ")").toLowerCase());
+	private static String getParametersWithFirstLetterInUpperCase(String javaTmp) {
+		return StringUtils.capitalize(StringUtils.substringBetween(javaTmp, "(", ")"));
 	}
 
 	private static boolean foundKeyword(String javaMethodContent, int firstFoundIndex) {

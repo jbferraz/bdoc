@@ -33,10 +33,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
+import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 /**
@@ -132,5 +134,21 @@ public class TestJavaTestSourceBehaviourParser {
 		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldWithdrawAmountFromBalance");
 
 		assertEquals(new Scenario(expectedScenarioParts), scenario);
+	}
+
+	@Test
+	@Ignore
+	public void shouldHandleArgumentsThatAreVariables() throws IOException {
+		String behaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
+				+ "/integrationtestclasses/calculator/TestCalculatorBehaviour.java"));
+
+		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
+		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldAddADoubleWithAnInteger");
+
+		assertEquals("givenOperandOneIs4.5", scenario.getParts().get(0).camelCaseDescription() );
+		assertEquals("givenOperandTwoIs10", scenario.getParts().get(1).camelCaseDescription() );
+		
+		assertEquals("whenTheAddOperationIsExecuted", scenario.getParts().get(2).camelCaseDescription() );
+		assertEquals("thenTheResultShouldEqual14.5", scenario.getParts().get(3).camelCaseDescription() );
 	}
 }

@@ -24,24 +24,18 @@
 
 package com.googlecode.bdoc.difflog;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-
-import java.util.List;
 
 import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.report.XmlReport;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.RefClass;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 @Ref(Story.DIFF_LOG)
 @RefClass(DiffLog.class)
@@ -70,39 +64,4 @@ public class TestDiffLogBehaviour {
 		whenTheBDocIsScanned(diffLog, bdoc);
 		thenEnsureTheLatestBDocIsUpdated(diffLog, bdoc);
 	}
-
-	// ------------------------------------------------------------------------------------------------------
-
-	private DiffLog givenAChangeLogWithOneDiffContainingOneSpecification() {
-		DiffLog diffLog = new DiffLog();
-		diffLog.scan(BDocTestHelper.bdocWithProject());
-		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
-		return diffLog;
-	}
-
-	private Scenario whenAScenarioIsAddedToTheBDoc(BDoc bdoc) {
-		return BDocTestHelper.addScenario(bdoc);
-	}
-
-	private void thenEnsureTheNewBDocDiffContainsTheNewScenario(BDocDiff docDiff, Scenario scenario) {
-		assertEquals(scenario, docDiff.getGeneralBehaviourDiff().getPackageDiff().get(0).getNewScenarios().get(0));
-	}
-
-	private void thenEnsureTheOldBDocDiffIsPushedOneDownInTheBDocDiffList(BDocDiff oldDiff, List<BDocDiff> diffList) {
-		assertEquals(oldDiff, diffList.get(diffList.size() - 2));
-	}
-
-	@Test
-	public void shouldPushOldBDocDiffDownTheListWhenANewDiffIsFound() {
-		DiffLog diffLog = givenAChangeLogWithOneDiffContainingOneSpecification();
-		BDocDiff oldDiff = diffLog.latestDiff();
-		BDoc bdoc = XmlReport.cloneBDoc(diffLog.latestBDoc());
-		Scenario scenario = whenAScenarioIsAddedToTheBDoc(bdoc);
-		whenTheBDocIsScanned(diffLog, bdoc);
-		thenEnsureTheLatestBDocIsUpdated(diffLog, bdoc);
-		thenEnsureTheNewBDocDiffContainsTheNewScenario(diffLog.latestDiff(), scenario);
-		thenEnsureTheOldBDocDiffIsPushedOneDownInTheBDocDiffList(oldDiff, diffLog.getDiffList());
-	}
-
-	
 }

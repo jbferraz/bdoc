@@ -38,7 +38,6 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 /**

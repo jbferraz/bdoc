@@ -186,7 +186,7 @@ public class PackageDiff implements ModuleDiff {
 		List<ClassStatements> newClassStatements = new ArrayList<ClassStatements>();
 
 		for (ClassBehaviour classBehaviour : classBehaviourListDiff.getNewItems()) {
-			if (classBehaviour.hasSpecifications()) {
+			if (classBehaviour.hasStatements()) {
 				newClassStatements.add(classBehaviour);
 			}
 		}

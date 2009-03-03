@@ -37,12 +37,16 @@ import com.googlecode.bdoc.doc.report.XmlReport;
 import com.thoughtworks.xstream.XStream;
 
 /**
+ * Holds a changelog off diffs between bdocs that have been scaned.
+ * 
  * @author Per Otto Bergum Christensen
  */
 public class DiffLog {
 
+	private static final int DEFAULT_NUMBER_OF_CHANGE_LOG_ITEMS = 100;
 	private BDoc latestBDoc;
 	private List<BDocDiff> diffList = new ArrayList<BDocDiff>();
+	private transient int numberOfChangeLogItemsToKeep = DEFAULT_NUMBER_OF_CHANGE_LOG_ITEMS;
 
 	public void scan(BDoc bdoc) {
 		if (null != latestBDoc) {
@@ -54,8 +58,11 @@ public class DiffLog {
 		latestBDoc = bdoc;
 	}
 
-	public boolean addBDocDiff(BDocDiff bdocDiff) {
-		return diffList.add(bdocDiff);
+	public void addBDocDiff(BDocDiff bdocDiff) {
+		diffList.add(0, bdocDiff);
+		if (getNumberOfChangeLogItemsToKeep() < diffList.size()) {
+			diffList.remove(diffList.size() - 1);
+		}
 	}
 
 	public BDoc latestBDoc() {
@@ -93,4 +100,14 @@ public class DiffLog {
 		return xstream;
 	}
 
+	public void setNumberOfChangeLogItemsToKeep(int numberOfChangeLogItemsToKeep) {
+		this.numberOfChangeLogItemsToKeep = numberOfChangeLogItemsToKeep;
+	}
+
+	public int getNumberOfChangeLogItemsToKeep() {
+		if (0 == numberOfChangeLogItemsToKeep) {
+			numberOfChangeLogItemsToKeep = DEFAULT_NUMBER_OF_CHANGE_LOG_ITEMS;
+		}
+		return numberOfChangeLogItemsToKeep;
+	}
 }

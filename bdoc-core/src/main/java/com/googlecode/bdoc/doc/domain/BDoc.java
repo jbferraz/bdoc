@@ -49,7 +49,7 @@ public class BDoc {
 	protected transient Class<? extends Annotation> storyRefAnnotation;
 	protected transient TestAnnotations testAnnotations = new TestAnnotations();
 
-	protected ProjectInfo projectInfo;
+	protected ProjectInfo projectInfo = new ProjectInfo("unnamed", "unknown");
 	protected Calendar docTime = Calendar.getInstance();
 	protected List<UserStory> userStories = new ArrayList<UserStory>();
 	protected GeneralBehaviour generalBehaviour = new GeneralBehaviour();
@@ -83,8 +83,9 @@ public class BDoc {
 
 	/**
 	 * @param testClass
+	 * @return this instance
 	 */
-	public void addBehaviourFrom(TestClass testClass, File testSrcDir) {
+	public BDoc addBehaviourFrom(TestClass testClass, File testSrcDir) {
 		UserStory userStory = null;
 
 		if ((null != storyRefAnnotation) && (testClass.isAnnotationPresent(storyRefAnnotation))) {
@@ -92,7 +93,7 @@ public class BDoc {
 		}
 
 		if (testClass.classIsAnnotatedWithIgnore(testAnnotations)) {
-			return;
+			return this;
 		}
 
 		for (TestMethod method : testClass.getTestMethods(testAnnotations)) {
@@ -115,6 +116,7 @@ public class BDoc {
 				}
 			}
 		}
+		return this;
 	}
 
 	/**
@@ -213,7 +215,7 @@ public class BDoc {
 
 		result.addAll(generalBehaviour.specifications());
 		for (UserStory userStory : userStories) {
-			result.addAll( userStory.specifications() );
+			result.addAll(userStory.specifications());
 		}
 		return result;
 	}
@@ -221,8 +223,8 @@ public class BDoc {
 	public List<Scenario> scenarios() {
 		List<Scenario> result = new ArrayList<Scenario>();
 
-		result.addAll( generalBehaviour.scenarios() );
-		
+		result.addAll(generalBehaviour.scenarios());
+
 		for (UserStory userStory : userStories) {
 			result.addAll(userStory.getScenarios());
 		}

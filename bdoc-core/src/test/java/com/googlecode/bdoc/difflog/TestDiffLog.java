@@ -24,19 +24,26 @@
 
 package com.googlecode.bdoc.difflog;
 
+import static com.googlecode.bdoc.doc.testdata.BDocTestHelper.SRC_TEST_JAVA;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.googlecode.bdoc.difflog.DiffLog;
+import com.googlecode.bdoc.Ref;
+import com.googlecode.bdoc.Story;
+import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
+@Ref(Story.DIFF_LOG)
 public class TestDiffLog {
 
 	private File changeLogXmlFile = new File("target/changeLog.xml");
@@ -77,6 +84,76 @@ public class TestDiffLog {
 		diffLog.scan(BDocTestHelper.bdocWithProject());
 		diffLog.scan(BDocTestHelper.bdocWithOneSpecification());
 		assertEquals(1, diffLog.getDiffList().size());
+	}
+
+	@Test
+	public void shouldSortDiffListWithLatestChangeFirst() {
+		DiffLog diffLog = new DiffLog();
+
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithSpecification.class), SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithStatement.class), SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithScenario.class), SRC_TEST_JAVA));
+
+		assertFalse(diffLog.getDiffList().get(0).getGeneralBehaviourDiff().getPackageDiff().get(0).getNewScenarios().isEmpty());
+		assertFalse(diffLog.getDiffList().get(1).getGeneralBehaviourDiff().getPackageDiff().get(0).getNewClassStatements().isEmpty());
+	}
+
+	@Test
+	public void shouldOnlyKeepASpecifiedNumberOfChangeLogItems() {
+		DiffLog diffLog = new DiffLog();
+		diffLog.setNumberOfChangeLogItemsToKeep(2);
+
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithSpecification.class), SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithStatement.class), SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithScenario.class), SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithYetAnotherSpecification.class), SRC_TEST_JAVA));
+
+		assertEquals(2, diffLog.getDiffList().size());
+		assertFalse("last diff should be kept", diffLog.getDiffList().get(0).getGeneralBehaviourDiff().getPackageDiff().get(0)
+				.getNewClassSpecifications().isEmpty());
+	}
+	
+	@Test
+	public void defaultNumberOfChangeLogItemsShouldBe100() {
+		DiffLog diffLog = new DiffLog();
+		assertEquals( 100,  diffLog.getNumberOfChangeLogItemsToKeep() );		
+	}
+	
+	@Test
+	public void ifTheNumberOfChangeLogItemsToKeepIsSetToZeroBecauseOfSerializationTheDefaultValueWillBeUsed() {
+		DiffLog diffLog = new DiffLog();
+		diffLog.setNumberOfChangeLogItemsToKeep(0);
+		assertEquals( 100,  diffLog.getNumberOfChangeLogItemsToKeep() );		
+		
+	}
+
+	// --- testdata
+	class TestWithSpecification {
+		@Test
+		public void shouldBeASpecifiaction() {
+
+		}
+	}
+
+	class TestWithYetAnotherSpecification {
+		@Test
+		public void shouldBeYetAnotherSpecifiaction() {
+
+		}
+	}
+
+	class TestWithStatement {
+		@Test
+		public void isAStatement() {
+
+		}
+	}
+
+	class TestWithScenario {
+		@Test
+		public void givenWhenThen() {
+
+		}
 	}
 
 }

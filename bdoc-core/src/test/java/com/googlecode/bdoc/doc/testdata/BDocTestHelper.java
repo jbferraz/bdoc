@@ -64,6 +64,12 @@ public class BDocTestHelper {
 		return bdoc;
 	}
 
+	public static BDoc bdocWithOneScenario() {
+		BDoc bdoc = bdocWithProject();
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), SRC_TEST_JAVA);
+		return bdoc;
+	}
+
 	public static BDoc bdocWithProject() {
 		BDoc bdoc = new BDoc(Test.class, ExReference.class, Ignore.class);
 		bdoc.setProject(testProject());

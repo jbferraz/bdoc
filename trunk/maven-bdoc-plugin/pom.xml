@@ -39,6 +39,15 @@
 				<role>developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<id>micael.vesterlund</id>
+			<name>Micael Vesterlund</name>
+			<email>micael.vesterlund@gmail.com</email>
+			<timezone>-5</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
 	</developers>
 
 	<distributionManagement>

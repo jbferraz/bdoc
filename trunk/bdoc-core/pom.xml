@@ -43,6 +43,15 @@
 				<role>developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<id>micael.vesterlund</id>
+			<name>Micael Vesterlund</name>
+			<email>micael.vesterlund@gmail.com</email>
+			<timezone>-5</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
 	</developers>
 
 	<pluginRepositories>
@@ -95,7 +104,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.7.17</version>
+				<version>0.8.1-SNAPSHOT</version>
 				<configuration>
 					<storyRefAnnotationClassName>
 						com.googlecode.bdoc.Ref
@@ -205,7 +214,7 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>2.3.14</version>
+			<version>2.3.15</version>
 			<scope>compile</scope>
 		</dependency>
 

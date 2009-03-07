@@ -41,11 +41,11 @@ public class TestCalculatorBehaviour {
 		calculator = new Calculator();
 	}
 
-	private void givenOperandOneIs(Operand operand) {
+	private void givenAValueForOperandOne(Operand operand) {
 		calculator.setOperandOne(operand);
 	}
 
-	private void givenOperandTwoIs(Operand operand) {
+	private void givenAValueForOperandTwo(Operand operand) {
 		calculator.setOperandTwo(operand);
 	}
 
@@ -53,15 +53,46 @@ public class TestCalculatorBehaviour {
 		calculator.add();
 	}
 
-	private void thenTheResultShouldEqual(double expectedResult) {
+	private void thenEnsureTheResultIsTheSumOfTheTwoValues(double expectedResult) {
 		assertEquals(expectedResult, calculator.result(), .001);
 	}
 
 	@Test
 	public void shouldAddADoubleWithAnInteger() {
-		givenOperandOneIs(new Operand(4.5D));
-		givenOperandTwoIs(new Operand(10));
+		givenAValueForOperandOne(new Operand(4.5D));
+		givenAValueForOperandTwo(new Operand(10));
 		whenTheAddOperationIsExecuted();
-		thenTheResultShouldEqual(14.5D);
+		thenEnsureTheResultIsTheSumOfTheTwoValues(14.5D);
 	}
+
+@Test
+public void shouldAddNumbers() {
+	addExample(2, 2, 4);
+	addExample(2, 3, 5);
+	addExample(4, -4, 0);
+
+}
+
+public void addExample(int operand1, int operand2, int result) {
+	givenAValueForOperandOne(new Operand(operand1));
+	givenAValueForOperandTwo(new Operand(operand2));
+	whenTheAddOperationIsExecuted();
+	thenEnsureTheResultIsTheSumOfTheTwoValues(result);
+}
+
+/*
+ * Given a value for operand one and a value for operand two 
+ * When the add operation is executed 
+ * Then ensure the result is the sum of the two values 
+ * 
+ * | operand1 | operand2 | result |
+ * -------------------------------- 
+ * | 2        | 2        | 4      |
+ * | 2        | 3        | 5      |
+ * | 4        | -4		 | 0      |
+ * 
+ */
+	
+	
+	
 }

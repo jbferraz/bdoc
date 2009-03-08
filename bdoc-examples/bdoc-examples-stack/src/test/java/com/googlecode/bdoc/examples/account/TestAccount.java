@@ -39,31 +39,31 @@ public class TestAccount {
 
 	@Test
 	public void givenIHave200$InMyAccountWhenIAskToWithdraw20$ThenIShouldBeGiven20$AndMyBalanceShouldBe180$() {
-		Account account = new Account(200);
-		int cashGiven = account.withdraw(20);
-		assertEquals(20, cashGiven);
-		assertEquals(180, account.balance());
+		Account account = new Account(200D);
+		double cashGiven = account.withdraw(20D);
+		assertEquals(20D, cashGiven,0.01);
+		assertEquals(180D, account.balance(),0.01);
 	}
 
 	@Test
 	public void shouldAddDepositToBalance() {
-		Account account = new Account(0);
-		account.deposit(100);
-		assertEquals(100, account.balance());
+		Account account = new Account(0D);
+		account.deposit(100D);
+		assertEquals(100D, account.balance(),.01);
 	}
 
 	@Test
 	public void shouldWithdrawAmoutFromBalance() {
-		Account account = new Account(100);
-		account.withdraw(20);
-		assertEquals(80, account.balance());
+		Account account = new Account(100D);
+		account.withdraw(20D);
+		assertEquals(80, account.balance(),.01);
 
 	}
 
 	@Test(expected=IllegalStateException.class)
 	public void shouldNotBeOverdrawn() {
-		Account account = new Account(20);
-		account.withdraw(21);
+		Account account = new Account(20D);
+		account.withdraw(21D);
 	}
 
 	// public void testBalance() {

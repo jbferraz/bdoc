@@ -47,15 +47,15 @@ public class TestAccountPrototypeBehaviour {
 		then_my_balance_should_be_$1(180);
 	}
 
-	private void given_an_initial_balance_of_$1(int balance) {
+	private void given_an_initial_balance_of_$1(double balance) {
 		account = new Account(balance);
 	}
 
-	private void when_I_withdraw_$1(int amount) {
+	private void when_I_withdraw_$1(double amount) {
 		account.withdraw(amount);
 	}
 
-	private void then_my_balance_should_be_$1(int balance) {
-		assertEquals(balance, account.balance());
+	private void then_my_balance_should_be_$1(double balance) {
+		assertEquals(balance, account.balance(),.01);
 	}
 }

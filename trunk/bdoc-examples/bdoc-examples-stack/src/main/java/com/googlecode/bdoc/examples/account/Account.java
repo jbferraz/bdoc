@@ -28,14 +28,24 @@ package com.googlecode.bdoc.examples.account;
  * @author Per Otto Bergum Christensen
  */
 public class Account {
-	private int balance;
+	private double balance;
+	private Long id;
 
-	public Account(int initialBalance) {
+	public Account(Double initialBalance) {
 		this.balance = initialBalance;
 	}
 
-	public int withdraw(int amount) {
-		int newBalance = balance - amount;
+	public Account() {
+	}
+
+	public Account(Long id, Double initialBalance) {
+		this.id = id;
+		this.balance = initialBalance;
+	}
+
+
+	public Double withdraw(Double amount) {
+		Double newBalance = balance - amount;
 		if (newBalance < 0) {
 			throw new IllegalStateException("Account cannot be overdrawn");
 		}
@@ -43,12 +53,16 @@ public class Account {
 		return amount;
 	}
 
-	public int balance() {
+	public Double balance() {
 		return balance;
 	}
 
-	public void deposit(int amount) {
-		balance = balance + amount;
+	public void deposit(double d) {
+		balance = balance + d;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 }

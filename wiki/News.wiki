@@ -1,3 +1,6 @@
+_08 March 2009 - Release 0.8.1_
+ Version 0.8.1 is released with changes in the underlying persistence mechanism, the doc and diff report is merged into one, and advanced scenarios has had an upgrade. Persistence was earlier a configuration option, this is no longer an option and bdoc will always save a copy of the the bdoc (under [user.home]/bdoc). The goal bdoc:diff is removed, now the bdoc:doc will both produce a bdoc report and a bdoc change log report. This change will give the users less configuration and full functionality of bdoc. The goal bdoc:generate has been changed to bdoc:init, which better communicates the intent of the goal. More info about the changes in support for advanced scenarios will be added shortly.
+
 _20 December 2008 - Release 0.7.17_
  Version 0.7.17 is released with functionality for specifying how scenarios are generated in the BDoc report. Read more on HowToChangeFormattingOfScenarios.
 

@@ -26,6 +26,6 @@ For detailed documentation of the bdoc-project, [http://code.google.com/p/bdoc/s
 
 .
 
-_“If new tools do not fit with existing ways of doing things, no one will use them.”_
+ _“If new tools do not fit with existing ways of doing things, no one will use them.”_
 
   

@@ -10,8 +10,7 @@
 
   - should be nonintrusive, no compile-time dependencies to bdoc classes  
 
-  - should support "existing ways of doing things" and at the same time offer new 
-functionality 
+  - should support "existing ways of doing things" and at the same time offer new functionality 
 
   - should support different languages
 

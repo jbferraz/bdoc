@@ -1,9 +1,23 @@
-#summary Main goals for the BDoc project
+#summary Main requirements for the BDoc project
 
-= Goals =
+= Main goals =
 
-Extracting documentation from unit tests, supporting behaviour driven development 
+* Extracting documentation from unit tests, supporting behaviour driven development 
+* Help to "getting the words right"
+
 
 === BDoc ===
-  * should be nonintrusive 
-  * should support existing ways of writeing tests
+  * should be nonintrusive, no compile-time dependencies to bdoc classes  
+  * should support "existing ways of doing things" and at the same time offer new functionality 
+  * should support different languages
+  * should work on existing codebases
+  * should support all major testing frameworks, without being one 
+  * should support different semantics
+
+
+
+
+
+_“If new tools do not fit with existing ways of doing things, no one will use them.”_
+
+  

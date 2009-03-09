@@ -4,7 +4,7 @@
   * Help "getting the words right"
   * Present a cheaper documentation solution, compared to the “fitnesse documentation approach”  
 
- BDoc
+ *BDoc*
 
   * should support "existing ways of doing things" 
   * should support different languages

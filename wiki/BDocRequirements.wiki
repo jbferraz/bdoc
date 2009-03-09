@@ -1,7 +1,7 @@
 = Main goals =
 
-* Extracting documentation from unit tests, supporting behaviour driven development 
-* Help to "getting the words right"
+  * Extracting documentation from unit tests, supporting behaviour driven development 
+  * Help to "getting the words right"
 
 
 * BDoc *

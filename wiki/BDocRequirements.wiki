@@ -6,17 +6,21 @@
 
 * BDoc *
 
-  * should be nonintrusive, no compile-time dependencies to bdoc 
-
-  * should support "existing ways of doing things" and at the same time offer new functionality 
+  * should support "existing ways of doing things" 
 
   * should support different languages
 
+  * should support different semantics
+
+  * should support all major unit testing frameworks
+
   * should work on existing codebases
 
-  * should support all major testing frameworks, without being one 
+  * should be nonintrusive
 
-  * should support different semantics
+
+
+
 
 
 

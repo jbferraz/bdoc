@@ -7,15 +7,10 @@
 * BDoc *
 
   * should support "existing ways of doing things" 
-
   * should support different languages
-
   * should support different semantics
-
   * should support all major unit testing frameworks
-
   * should work on existing codebases
-
   * should be nonintrusive
 
 

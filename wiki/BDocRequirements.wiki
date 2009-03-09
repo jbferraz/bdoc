@@ -4,14 +4,14 @@
   * Help "getting the words right"
   * Present a cheaper documentation solution, compared to the “fitnesse documentation approach”  
 
- *BDoc*
+ _BDoc_
 
-  * should support "existing ways of doing things" 
-  * should support different languages
-  * should support different semantics
-  * should support all major unit testing frameworks
-  * should work on existing codebases
-  * should be nonintrusive
+  * _should support "existing ways of doing things"_
+  * _should support different languages_
+  * _should support different semantics_
+  * _should support all major unit testing frameworks_
+  * _should work on existing codebases_
+  * _should be nonintrusive_
 
 
 

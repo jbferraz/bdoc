@@ -1,5 +1,3 @@
-#summary Main requirements for the BDoc project
-
 = Main goals =
 
 * Extracting documentation from unit tests, supporting behaviour driven development 

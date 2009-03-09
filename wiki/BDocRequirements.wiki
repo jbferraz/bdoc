@@ -4,8 +4,7 @@
 * Help to "getting the words right"
 
 
-*BDoc*
-
+  *BDoc*
   * should be nonintrusive, no compile-time dependencies to bdoc 
 
   * should support "existing ways of doing things" and at the same time offer new functionality 

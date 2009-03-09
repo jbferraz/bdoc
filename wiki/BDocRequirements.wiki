@@ -1,0 +1,10 @@
+#summary Main goals for the BDoc project
+
+= Goals =
+
+Extracting documentation from unit tests, supporting behaviour driven development 
+
+= BDoc specifications =
+
+  * should be nonintrusive 
+  * should support existing ways of writeing tests

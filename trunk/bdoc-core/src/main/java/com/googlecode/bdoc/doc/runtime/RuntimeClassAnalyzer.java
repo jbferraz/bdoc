@@ -28,12 +28,16 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.objectweb.asm.Type;
-
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
+
+/**
+ * 
+ * @author Per Otto Bergum Christensen
+ * 
+ */
 public class RuntimeClassAnalyzer implements MethodInterceptor {
 
 	private Object testInstance;

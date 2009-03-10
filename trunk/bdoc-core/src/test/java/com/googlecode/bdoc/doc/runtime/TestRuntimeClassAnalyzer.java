@@ -24,7 +24,7 @@
 
 package com.googlecode.bdoc.doc.runtime;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
@@ -36,7 +36,8 @@ import com.googlecode.bdoc.doc.runtime.testdata.AccountBehaviour;
 /**
  * 
  * @author Per Otto Bergum Christensen
- *
+ * @author Micael Vesterlund
+ * 
  */
 public class TestRuntimeClassAnalyzer {
 
@@ -52,6 +53,18 @@ public class TestRuntimeClassAnalyzer {
 		assertEquals("whenIAskToWithdraw", methodCalls.get(index++).getName());
 		assertEquals("thenIShouldBeGiven", methodCalls.get(index++).getName());
 		assertEquals("andTheNewBalanceShouldBe", methodCalls.get(index++).getName());
+	}
+
+	@Test
+	public void shouldReturnArgumentsWithValue() {
+		MethodCall methodCall = runtimeClassAnalyzer.invoke("create").get(0);
+
+		assertEquals("givenAnAccountNameAndInitalBalance", methodCall.getName());
+
+		List<Argument> arguments = methodCall.getArguments();
+		assertEquals("MyAccount", arguments.get(0).getValue());
+
+		assertEquals(200, arguments.get(1).getValue());
 	}
 
 	@Test

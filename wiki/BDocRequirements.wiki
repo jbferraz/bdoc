@@ -1,7 +1,7 @@
 = Main goals =
 
   * Support behaviour driven development, help "getting the words right"
-  * Present a cheaper documentation solution, compared to the “fitnesse documentation approach” or non at all
+  * Present a cheaper documentation solution, compared to the “fitnesse documentation approach” 
 
  _BDoc_
 

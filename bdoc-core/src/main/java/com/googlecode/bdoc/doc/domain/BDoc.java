@@ -78,7 +78,7 @@ public class BDoc {
 	public BDoc(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> storyRefAnnotation,
 			Class<? extends Annotation> ignoreAnnotation) {
 		this.storyRefAnnotation = storyRefAnnotation;
-		testAnnotations = new TestAnnotations(testAnnotation, ignoreAnnotation);
+		this.testAnnotations = new TestAnnotations(testAnnotation, ignoreAnnotation);
 	}
 
 	/**

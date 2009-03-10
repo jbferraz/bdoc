@@ -52,7 +52,7 @@ public class Scenario {
 
 		@Override
 		public boolean equals(Object obj) {
-			return ((obj instanceof Part) && (camelCaseDescription.equals(((Part) obj).camelCaseDescription)));
+			return ((obj instanceof Part) && (camelCaseDescription.equalsIgnoreCase(((Part) obj).camelCaseDescription)));
 		}
 
 		public int scenarioKeyword() {

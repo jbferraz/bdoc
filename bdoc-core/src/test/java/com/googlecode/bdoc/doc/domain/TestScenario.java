@@ -103,4 +103,11 @@ public class TestScenario {
 		assertNotNull(Pattern.valueOf("NO"));
 		assertNotNull(Pattern.valueOf("SV"));
 	}
+	
+	@Test
+	public void shouldFindTheCorrespondingLocaleGivenTheScenarioText() {
+		assertEquals( Pattern.EN, Pattern.find("givenBlaBla.. .") );
+		assertEquals( Pattern.NO, Pattern.find("gittBlaBla.. .") );
+		assertEquals( Pattern.SV, Pattern.find("givetBlaBla.. .") );
+	}
 }

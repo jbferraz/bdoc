@@ -32,15 +32,13 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
-
 /**
- * 
  * @author Per Otto Bergum Christensen
- * 
  */
 public class RuntimeClassAnalyzer implements MethodInterceptor {
 
 	private Object testInstance;
+	private String initialMethodCall;
 	private List<MethodCall> methodCalls;
 
 	public RuntimeClassAnalyzer(Class<?> testClass) {
@@ -51,6 +49,7 @@ public class RuntimeClassAnalyzer implements MethodInterceptor {
 	}
 
 	public List<MethodCall> invoke(String methodName) {
+		this.initialMethodCall = methodName;
 		methodCalls = new ArrayList<MethodCall>();
 		try {
 			Method method = testInstance.getClass().getMethod(methodName, new Class[0]);
@@ -63,10 +62,11 @@ public class RuntimeClassAnalyzer implements MethodInterceptor {
 	}
 
 	public Object intercept(Object obj, java.lang.reflect.Method method, Object[] args, MethodProxy proxy) throws Throwable {
-
 		Object retValFromSuper = proxy.invokeSuper(obj, args);
-		
-		methodCalls.add(new MethodCall(method,args));
+
+		if (!method.getName().equals(initialMethodCall)) {
+			methodCalls.add(new MethodCall(method, args));
+		}
 
 		return retValFromSuper;
 	}

@@ -69,4 +69,52 @@ public class AccountBehaviour {
 
 	void givenAnAccountNameAndInitalBalance(String accountName, int initialBalance) {
 	}
+
+	@Test
+	public void plainScenario() {
+		given();
+		when();
+		then();
+	}
+
+	void given() {
+	}
+
+	void when() {
+	}
+
+	void then() {
+	}
+
+	@Test
+	public void scenarioWithArguments() {
+		given(1);
+		when(2, 3);
+		then(4, 5, 6);
+	}
+
+	void given(int i) {
+	}
+
+	void when(int i, int j) {
+	}
+
+	void then(int i, int j, int k) {
+	}
+
+	@Test
+	public void norwegianScenario() {
+		gitt(1);
+		naar(2, 3);
+		saa(4, 5, 6);
+	}
+
+	void gitt(int i) {
+	}
+
+	void naar(int i, int j) {
+	}
+
+	void saa(int i, int j, int k) {
+	}
 }

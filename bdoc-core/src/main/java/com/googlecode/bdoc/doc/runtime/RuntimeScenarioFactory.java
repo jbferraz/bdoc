@@ -24,48 +24,50 @@
 
 package com.googlecode.bdoc.doc.runtime;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 
 /**
  * @author Per Otto Bergum Christensen
  */
-public class MethodCall {
+public class RuntimeScenarioFactory {
 
-	private final String methodName;
-	private List<Argument> arguments = new ArrayList<Argument>();
+	private RuntimeClassAnalyzer runtimeClassAnalyzer;
 
-	public MethodCall(Method method, Object[] args) {
-		this.methodName = method.getName();
-		for (Object arg : args) {
-			arguments.add(new Argument(arg));
+	public RuntimeScenarioFactory(Class<?> testClass) {
+		runtimeClassAnalyzer = new RuntimeClassAnalyzer(testClass);
+	}
+
+	public static Scenario create(List<MethodCall> methodCalls) {
+		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
+
+		Pattern locale = null;
+		for (MethodCall methodCall : methodCalls) {
+			String camelCaseDescription = methodCall.getName();
+
+			if (null == locale) {
+				locale = Scenario.Pattern.find(camelCaseDescription);
+			}
+
+			for (Argument argument : methodCall.getArguments()) {
+
+				if (0 < methodCall.getArguments().indexOf(argument)) {
+					camelCaseDescription = camelCaseDescription + locale.and();
+				}
+
+				camelCaseDescription = camelCaseDescription + argument.value();
+			}
+
+			scenarioParts.add(new Scenario.Part(camelCaseDescription));
 		}
+		return new Scenario(scenarioParts);
 	}
 
-	public MethodCall(String methodName) {
-		this.methodName = methodName;
-	}
-
-	public String getName() {
-		return methodName;
-	}
-
-	public List<Argument> getArguments() {
-		return arguments;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((methodName == null) ? 0 : methodName.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return (obj instanceof MethodCall) && (((MethodCall) obj).methodName.equals(methodName));
+	public Scenario create(String testMethodName) {
+		return create(runtimeClassAnalyzer.invoke(testMethodName));
 	}
 
 }

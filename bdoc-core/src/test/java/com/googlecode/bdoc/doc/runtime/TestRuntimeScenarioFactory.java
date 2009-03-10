@@ -24,51 +24,50 @@
 
 package com.googlecode.bdoc.doc.runtime;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
+import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.runtime.testdata.AccountBehaviour;
 
 /**
- * 
  * @author Per Otto Bergum Christensen
- * 
  */
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
-public class TestRuntimeClassAnalyzer {
-
-	private RuntimeClassAnalyzer runtimeClassAnalyzer = new RuntimeClassAnalyzer(AccountBehaviour.class);
+public class TestRuntimeScenarioFactory {
 
 	@Test
-	public void shouldReturnAllMethodCallsInTheTestClassWhenRunningTheTest() {
+	public void shouldCreateAScenarioFromAListOfMethodCalls() {
+		List<MethodCall> methodCalls = new ArrayList<MethodCall>();
+		methodCalls.add(new MethodCall("given"));
+		methodCalls.add(new MethodCall("when"));
+		methodCalls.add(new MethodCall("then"));
 
-		List<MethodCall> methodCalls = runtimeClassAnalyzer.invoke("withdraw");
-
-		int index = 0;
-		assertEquals("givenMyAccountHasAnInitialBalanceOf", methodCalls.get(index++).getName());
-		assertEquals("whenIAskToWithdraw", methodCalls.get(index++).getName());
-		assertEquals("thenIShouldBeGiven", methodCalls.get(index++).getName());
-		assertEquals("andTheNewBalanceShouldBe", methodCalls.get(index++).getName());
+		Scenario scenario = RuntimeScenarioFactory.create(methodCalls);
+		assertEquals(new Scenario("givenWhenThen"), scenario);
 	}
 
 	@Test
-	public void shouldAddArgumentValuesToMethodCalls() {
-		MethodCall methodCall = runtimeClassAnalyzer.invoke("create").get(0);
-
-		assertEquals("givenAnAccountNameAndInitalBalance", methodCall.getName());
-		assertEquals("MyAccount", methodCall.getArguments().get(0).value());
+	public void shouldCreateAScenarioFromTestMethodWithGivenWhenThenMethodCalls() {
+		Scenario scenario = new RuntimeScenarioFactory(AccountBehaviour.class).create("plainScenario");
+		assertEquals(new Scenario("givenWhenThen"), scenario);
 	}
 
 	@Test
-	public void shouldNotIncludeTheInitialMethodCallToTheTestMethod() {
-		List<MethodCall> methodCalls = runtimeClassAnalyzer.invoke("withdraw");
-		assertFalse(methodCalls.contains(new MethodCall("withdraw")));
+	public void shouldAddMethodCallArgumentValuesToTheEndOfEachScenarioPartSeperatedWithAnd() {
+		Scenario scenario = new RuntimeScenarioFactory(AccountBehaviour.class).create("scenarioWithArguments");
+		assertEquals(new Scenario("given1When2And3Then4And5And6"), scenario);
 	}
-	
+
+	@Test
+	public void shouldUseTheWordOgForScenariosWrittenInNorwegian() {
+		Scenario scenario = new RuntimeScenarioFactory(AccountBehaviour.class).create("norwegianScenario");
+		assertEquals(new Scenario("gitt1Naar2Og3Saa4Og5Og6"), scenario);
+	}
 }

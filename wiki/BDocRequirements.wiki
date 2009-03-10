@@ -13,7 +13,7 @@
   * _should be nonintrusive_
 
 
-For detailed documentation of the bdoc-project, [http://code.google.com/p/bdoc/source/checkout check it out], and run _mvn bdoc:doc_ on it!
+ For detailed documentation of the bdoc-project, [http://code.google.com/p/bdoc/source/checkout check it out], and run _mvn bdoc:doc_ on it!
 
 
 

@@ -25,18 +25,20 @@
 package com.googlecode.bdoc.doc.runtime;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Per Otto Bergum Christensen
+ *
+ */
 public class MethodCall {
 
 	private Method method;
-	private Object[] args;
 
 	public MethodCall(Method method, Object[] args) {
 		this.method = method;
-		this.args = args;
 	}
 
 	public String getName() {

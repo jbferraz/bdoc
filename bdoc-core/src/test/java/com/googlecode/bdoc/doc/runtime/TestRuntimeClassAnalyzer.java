@@ -33,6 +33,11 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.doc.runtime.testdata.AccountBehaviour;
 
+/**
+ * 
+ * @author Per Otto Bergum Christensen
+ *
+ */
 public class TestRuntimeClassAnalyzer {
 
 	private RuntimeClassAnalyzer runtimeClassAnalyzer = new RuntimeClassAnalyzer(AccountBehaviour.class);

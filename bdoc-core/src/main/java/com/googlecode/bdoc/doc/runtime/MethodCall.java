@@ -31,14 +31,23 @@ import java.util.List;
 /**
  * 
  * @author Per Otto Bergum Christensen
- *
+ * @author Micael Vesterlund
+ * 
  */
 public class MethodCall {
 
 	private Method method;
+	private List<Argument> arguments = new ArrayList<Argument>();
 
 	public MethodCall(Method method, Object[] args) {
 		this.method = method;
+		for (Object arg : args) {
+			/*
+			 * TODO I don't think that it's possible to find the name of the
+			 * parameter by using reflection.
+			 */
+			arguments.add(new Argument(null, arg));
+		}
 	}
 
 	public String getName() {
@@ -46,10 +55,8 @@ public class MethodCall {
 	}
 
 	public List<Argument> getArguments() {
-		List<Argument> result = new ArrayList<Argument>();
-		
-		
-		return result;
+
+		return arguments;
 	}
 
 }

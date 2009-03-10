@@ -32,18 +32,12 @@ package com.googlecode.bdoc.doc.runtime;
 public class Argument {
 
 	private Object value;
-	private String name;
 
-	public Argument(String name, Object value) {
-		this.name = name;
+	public Argument(Object value) {
 		this.value = value;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public Object getValue() {
+	public Object value() {
 		return value;
 	}
 }

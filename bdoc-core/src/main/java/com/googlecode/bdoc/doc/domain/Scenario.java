@@ -133,6 +133,7 @@ public class Scenario {
 	}
 
 	public Scenario(List<Part> parts) {
+		Validate.isTrue(!parts.isEmpty(), "Can't create scenario with no parts");
 		part.addAll(parts);
 	}
 

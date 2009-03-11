@@ -71,6 +71,15 @@ public class AccountBehaviour {
 	}
 
 	@Test
+	public void shouldThrowException() {
+		throw new RuntimeException("don't crash because of this");
+	}
+
+	@Test
+	public void shouldJustBeASimpleSpecification() {
+	}
+
+	@Test
 	public void plainScenario() {
 		given();
 		when();

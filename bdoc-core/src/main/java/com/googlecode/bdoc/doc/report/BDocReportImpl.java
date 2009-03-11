@@ -29,6 +29,7 @@ import java.lang.annotation.Annotation;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
+import com.googlecode.bdoc.doc.domain.ScenarioFactory;
 import com.googlecode.bdoc.doc.util.ClassesDirectory;
 
 /**
@@ -135,11 +136,11 @@ public class BDocReportImpl implements BDocReportInterface {
 	 * 
 	 * @see com.googlecode.bdoc.doc.report.BDocReport#run(java.io.File)
 	 */
-	public BDoc run(File testSrcDir) {
+	public BDoc run(ScenarioFactory scenarioFactory) {
 		BDoc bdoc = new BDoc(testAnnotation, storyRefAnnotation, ignoreAnnotation);
 		
 		bdoc.setProject(projectInfo);
-		bdoc.addBehaviourFrom(classesDirectory, classLoader, testSrcDir);
+		bdoc.addBehaviourFrom(classesDirectory, classLoader, scenarioFactory);
 
 		xml = new XmlReport(bdoc).xml();
 		if (scenarioLinesFormatter != null) {

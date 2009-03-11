@@ -28,15 +28,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.domain.ScenarioFactory;
+import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 
 /**
  * @author Per Otto Bergum Christensen
  */
-public class RuntimeScenarioFactory {
-
-	public RuntimeScenarioFactory() {
-	}
+public class RuntimeScenarioFactory implements ScenarioFactory {
 
 	public static Scenario create(List<MethodCall> methodCalls) {
 		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
@@ -64,8 +64,17 @@ public class RuntimeScenarioFactory {
 	}
 
 	public Scenario create(Class<?> testClass, String testMethodName) {
-		
-		return create(new RuntimeClassAnalyzer(testClass).invoke(testMethodName));
+		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(testMethodName);
+
+		if ((null == methodCalls) || (methodCalls.isEmpty())) {
+			return null;
+		}
+
+		return create(methodCalls);
+	}
+
+	public Scenario createScenario(TestClass testClass, TestMethod method) {
+		return create(testClass.clazz(), method.getName());
 	}
 
 }

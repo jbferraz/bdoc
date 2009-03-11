@@ -28,30 +28,24 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * Demonstrates that a class also could have an integrationtest with behaviour
- * 
  * @author Per Otto Bergum Christensen
  */
 public class TestCalcBehaviour {
 
-	private int operand2;
 	private int operand1;
+	private int operand2;
 	private int result;
 
 	@Test
 	public void shouldAddNumbers() {
-		givenOperandOneIs(5);
-		givenOperandTwoIs(4);
+		givenTheTwoOperands(4, 5);
 		whenTheAddOperationIsExecuted();
 		thenTheResultShouldBe(9);
 	}
 
-	void givenOperandOneIs(int i) {
+	void givenTheTwoOperands(int i, int j) {
 		this.operand1 = i;
-	}
-
-	void givenOperandTwoIs(int i) {
-		this.operand2 = i;
+		this.operand2 = j;
 	}
 
 	void whenTheAddOperationIsExecuted() {
@@ -61,11 +55,4 @@ public class TestCalcBehaviour {
 	void thenTheResultShouldBe(int i) {
 		assertEquals(i, result);
 	}
-
-
-//	@Test
-//	public void givenSixAddedWithFourWhenTheResultIsSubtractWithFiveEnsureTheResultIsFive() {
-//
-//		Assert.assertEquals(5, calc.subtract(calc.add(6, 4), 5));
-//	}
 }

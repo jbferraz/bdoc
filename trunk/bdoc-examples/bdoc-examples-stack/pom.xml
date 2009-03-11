@@ -33,7 +33,7 @@
 					<storyRefAnnotationClassName>
 						bdddoc4j.examples.Ref
 					</storyRefAnnotationClassName>
-					<logDirectory>bddlog</logDirectory>
+					<scenarioAnalyzer>dynamic</scenarioAnalyzer>
 					<testAnnotationClassName>
 						org.junit.Test
 					</testAnnotationClassName>

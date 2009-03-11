@@ -41,6 +41,8 @@ import com.googlecode.bdoc.doc.runtime.testdata.AccountBehaviour;
  */
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestRuntimeScenarioFactory {
+	
+	RuntimeScenarioFactory runtimeScenarioFactory = new RuntimeScenarioFactory();
 
 	@Test
 	public void shouldCreateAScenarioFromAListOfMethodCalls() {
@@ -55,19 +57,19 @@ public class TestRuntimeScenarioFactory {
 
 	@Test
 	public void shouldCreateAScenarioFromTestMethodWithGivenWhenThenMethodCalls() {
-		Scenario scenario = new RuntimeScenarioFactory(AccountBehaviour.class).create("plainScenario");
+		Scenario scenario = runtimeScenarioFactory.create(AccountBehaviour.class,"plainScenario");
 		assertEquals(new Scenario("givenWhenThen"), scenario);
 	}
 
 	@Test
 	public void shouldAddMethodCallArgumentValuesToTheEndOfEachScenarioPartSeperatedWithAnd() {
-		Scenario scenario = new RuntimeScenarioFactory(AccountBehaviour.class).create("scenarioWithArguments");
+		Scenario scenario = runtimeScenarioFactory.create(AccountBehaviour.class,"scenarioWithArguments");
 		assertEquals(new Scenario("given1When2And3Then4And5And6"), scenario);
 	}
 
 	@Test
 	public void shouldUseTheWordOgForScenariosWrittenInNorwegian() {
-		Scenario scenario = new RuntimeScenarioFactory(AccountBehaviour.class).create("norwegianScenario");
+		Scenario scenario = runtimeScenarioFactory.create(AccountBehaviour.class,"norwegianScenario");
 		assertEquals(new Scenario("gitt1Naar2Og3Saa4Og5Og6"), scenario);
 	}
 }

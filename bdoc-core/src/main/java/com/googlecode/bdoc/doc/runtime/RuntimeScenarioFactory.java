@@ -35,10 +35,7 @@ import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
  */
 public class RuntimeScenarioFactory {
 
-	private RuntimeClassAnalyzer runtimeClassAnalyzer;
-
-	public RuntimeScenarioFactory(Class<?> testClass) {
-		runtimeClassAnalyzer = new RuntimeClassAnalyzer(testClass);
+	public RuntimeScenarioFactory() {
 	}
 
 	public static Scenario create(List<MethodCall> methodCalls) {
@@ -66,8 +63,9 @@ public class RuntimeScenarioFactory {
 		return new Scenario(scenarioParts);
 	}
 
-	public Scenario create(String testMethodName) {
-		return create(runtimeClassAnalyzer.invoke(testMethodName));
+	public Scenario create(Class<?> testClass, String testMethodName) {
+		
+		return create(new RuntimeClassAnalyzer(testClass).invoke(testMethodName));
 	}
 
 }

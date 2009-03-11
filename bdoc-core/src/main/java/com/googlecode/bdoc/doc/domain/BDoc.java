@@ -81,11 +81,15 @@ public class BDoc {
 		this.testAnnotations = new TestAnnotations(testAnnotation, ignoreAnnotation);
 	}
 
+	public BDoc addBehaviourFrom(TestClass testClass, File testSrcDir) {
+		return addBehaviourFrom(testClass, new JavaTestSourceBehaviourParser(testSrcDir));
+	}
+
 	/**
 	 * @param testClass
 	 * @return this instance
 	 */
-	public BDoc addBehaviourFrom(TestClass testClass, File testSrcDir) {
+	public BDoc addBehaviourFrom(TestClass testClass, ScenarioFactory scenarioFactory) {
 		UserStory userStory = null;
 
 		if ((null != storyRefAnnotation) && (testClass.isAnnotationPresent(storyRefAnnotation))) {
@@ -110,7 +114,7 @@ public class BDoc {
 			}
 
 			if (testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks()) {
-				Scenario scenario = testClass.getScenarioFromTestMethodBlock(method.getName(), testSrcDir);
+				Scenario scenario = scenarioFactory.createScenario(testClass, method);
 				if (null != scenario) {
 					classBehaviour.addScenario(scenario);
 				}

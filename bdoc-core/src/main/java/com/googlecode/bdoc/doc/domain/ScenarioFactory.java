@@ -24,34 +24,8 @@
 
 package com.googlecode.bdoc.doc.domain;
 
-import java.io.File;
-import java.util.List;
+public interface ScenarioFactory {
 
-import com.googlecode.bdoc.doc.domain.Scenario.Part;
-import com.googlecode.bdoc.doc.util.JavaCodeUtil;
+	Scenario createScenario(TestClass testClass, TestMethod method);
 
-/**
- * @author Per Otto Bergum Christensen
- */
-public class JavaTestSourceBehaviourParser implements ScenarioFactory {
-
-	private File srcTestJava;
-
-	public JavaTestSourceBehaviourParser(File srcTestJava) {
-		this.srcTestJava = srcTestJava;
-	}
-
-	public Scenario getScenario(String testMethodName,String javaSource) {
-		String testMethodSource = JavaCodeUtil.javaBlockAfter(javaSource, testMethodName);
-		List<Part> scenarioParts = JavaCodeUtil.getGivenWhenThenMethods(testMethodSource);
-		if (scenarioParts.isEmpty()) {
-			return null;
-		}
-
-		return new Scenario(scenarioParts);
-	}
-
-	public Scenario createScenario(TestClass testClass, TestMethod method) {
-		return getScenario(method.getName(), testClass.getSource(srcTestJava) );
-	}
 }

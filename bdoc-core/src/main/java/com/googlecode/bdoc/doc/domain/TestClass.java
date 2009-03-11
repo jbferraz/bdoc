@@ -41,8 +41,6 @@ public class TestClass {
 
 	private Class<? extends Object> clazz;
 
-	private JavaTestSourceBehaviourParser javaTestSourceBehaviourParser;
-
 	public TestClass(Class<? extends Object> clazz) {
 		Validate.notNull(clazz, "clazz can't be null");
 		this.clazz = clazz;
@@ -77,16 +75,6 @@ public class TestClass {
 		return clazz.getMethods();
 	}
 
-	public Scenario getScenarioFromTestMethodBlock(String testMethodName, File testSrcDir) {
-		if (null == javaTestSourceBehaviourParser) {
-			javaTestSourceBehaviourParser = new JavaTestSourceBehaviourParser(getSource(testSrcDir));
-		}
-
-		Scenario scenario = javaTestSourceBehaviourParser.getScenario(testMethodName);
-
-		return scenario;
-	}
-
 	public List<TestMethod> getTestMethods(TestAnnotations testAnnotations) {
 		List<TestMethod> result = new ArrayList<TestMethod>();
 		Method[] methods = getMethods();
@@ -102,8 +90,16 @@ public class TestClass {
 	public boolean classIsAnnotatedWithIgnore(TestAnnotations testAnnotations) {
 		Validate.notNull(testAnnotations, "testAnnotations can't be null");
 		Validate.notNull(testAnnotations.getIgnoreAnnotation());
-		
+
 		return (clazz.isAnnotationPresent(testAnnotations.getIgnoreAnnotation()));
+	}
+
+	public TestMethod getTestMethod(String methodName) {
+		try {
+			return new TestMethod(clazz.getMethod(methodName, new Class[0]));
+		} catch (Exception e) {
+			throw new IllegalStateException("Error getting testmethod [" + methodName + "] from [" + clazz.getName() + "]", e);
+		}
 	}
 
 }

@@ -26,13 +26,15 @@ package com.googlecode.bdoc.doc.domain;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import integrationtestclasses.bankaccount.BankAccountBehavior;
+import integrationtestclasses.calculator.TestCalculatorBehaviour;
+import integrationtestclasses.stack.StackBehavior;
+import integrationtestclasses.stack.TestStack;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -47,13 +49,10 @@ import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestJavaTestSourceBehaviourParser {
 
+	JavaTestSourceBehaviourParser javaTestSourceBehaviourParser = new JavaTestSourceBehaviourParser(BDocTestHelper.SRC_TEST_JAVA);
+
 	@Test
 	public void shouldComposeScenarioFromTestConstructedWithGivenWhenThenAsPartOfTheMethodBlock() throws IOException {
-
-		String stackBehaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
-				+ "/integrationtestclasses/stack/StackBehavior.java"));
-
-		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(stackBehaviorJava);
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
 		expectedScenarioParts.add(new Scenario.Part("givenAnEmptyStack"));
@@ -64,26 +63,16 @@ public class TestJavaTestSourceBehaviourParser {
 		expectedScenarioParts.add(new Scenario.Part("thenTheValueNotRemainsInTheStack"));
 		expectedScenarioParts.add(new Scenario.Part("thenTheStackAreNotEmpty"));
 
-		assertEquals(new Scenario(expectedScenarioParts), sourceClassBehaviourParser.getScenario("shouldPopLastPushedValueFirst"));
+		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(StackBehavior.class, "shouldPopLastPushedValueFirst"));
 	}
 
 	@Test
 	public void shouldReturnNullIfTheMethodBlockDoesNotContainAScenario() throws IOException {
-		String testStackJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
-				+ "/integrationtestclasses/stack/TestStack.java"));
-
-		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(testStackJava);
-
-		assertNull(sourceClassBehaviourParser.getScenario("shouldBeEmptyWhenStackIsNew"));
+		assertNull(scenarioFromFactory(TestStack.class, "shouldBeEmptyWhenStackIsNew"));
 	}
 
 	@Test
 	public void shouldComposeScenarioFromTestConstructedWithMultipleGivenWhenThenAsPartOfTheMethodBlock() throws IOException {
-
-		String behaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
-				+ "/integrationtestclasses/bankaccount/BankAccountBehavior.java"));
-
-		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
 		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance0"));
@@ -93,18 +82,11 @@ public class TestJavaTestSourceBehaviourParser {
 		expectedScenarioParts.add(new Scenario.Part("whenDepositAreCalledWithAmount100"));
 		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo200"));
 
-		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldAddDepositToBalance");
-
-		assertEquals(new Scenario(expectedScenarioParts), scenario);
+		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(BankAccountBehavior.class, "shouldAddDepositToBalance"));
 	}
 
 	@Test
 	public void shouldComposeScenarioFromTestConstructedWithCatchBlockAsPartOfTheMethodBlock() throws IOException {
-
-		String behaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
-				+ "/integrationtestclasses/bankaccount/BankAccountBehavior.java"));
-
-		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
 		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance20"));
@@ -112,42 +94,41 @@ public class TestJavaTestSourceBehaviourParser {
 		expectedScenarioParts.add(new Scenario.Part("thenShouldAnExceptionBeThrown"));
 		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo20"));
 
-		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldNotAffectBalanceIfAttemptToWithdrawOverBalance");
-
-		assertEquals(new Scenario(expectedScenarioParts), scenario);
+		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(BankAccountBehavior.class,
+				"shouldNotAffectBalanceIfAttemptToWithdrawOverBalance"));
 	}
 
 	@Test
 	public void shouldComposeScenarioIncludingParameter() throws IOException {
-
-		String behaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
-				+ "/integrationtestclasses/bankaccount/BankAccountBehavior.java"));
-
-		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
 		expectedScenarioParts.add(new Scenario.Part("givenAnAccountWithInitialBalance100"));
 		expectedScenarioParts.add(new Scenario.Part("whenWithdrawAreCalledWithAmount20"));
 		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo80"));
 
-		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldWithdrawAmountFromBalance");
-
-		assertEquals(new Scenario(expectedScenarioParts), scenario);
+		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(BankAccountBehavior.class, "shouldWithdrawAmountFromBalance"));
 	}
 
 	@Test
 	@Ignore
 	public void shouldHandleArgumentsThatAreVariables() throws IOException {
-		String behaviorJava = FileUtils.readFileToString(new File(BDocTestHelper.SRC_TEST_JAVA
-				+ "/integrationtestclasses/calculator/TestCalculatorBehaviour.java"));
+		Scenario scenario = scenarioFromFactory(TestCalculatorBehaviour.class,"shouldAddADoubleWithAnInteger");
 
-		JavaTestSourceBehaviourParser sourceClassBehaviourParser = new JavaTestSourceBehaviourParser(behaviorJava);
-		Scenario scenario = sourceClassBehaviourParser.getScenario("shouldAddADoubleWithAnInteger");
+		assertEquals("givenOperandOneIs4.5", scenario.getParts().get(0).camelCaseDescription());
+		assertEquals("givenOperandTwoIs10", scenario.getParts().get(1).camelCaseDescription());
 
-		assertEquals("givenOperandOneIs4.5", scenario.getParts().get(0).camelCaseDescription() );
-		assertEquals("givenOperandTwoIs10", scenario.getParts().get(1).camelCaseDescription() );
-		
-		assertEquals("whenTheAddOperationIsExecuted", scenario.getParts().get(2).camelCaseDescription() );
-		assertEquals("thenTheResultShouldEqual14.5", scenario.getParts().get(3).camelCaseDescription() );
+		assertEquals("whenTheAddOperationIsExecuted", scenario.getParts().get(2).camelCaseDescription());
+		assertEquals("thenTheResultShouldEqual14.5", scenario.getParts().get(3).camelCaseDescription());
 	}
+
+	/**
+	 * Helper method to avoid duplicate testcode when testing the scenario factory
+	 */
+	private Scenario scenarioFromFactory(Class<?> clazz, String methodName) {
+		TestClass testClass = new TestClass(clazz);
+		TestMethod testMethod = testClass.getTestMethod(methodName);
+		Scenario scenario = javaTestSourceBehaviourParser.createScenario(testClass, testMethod);
+		return scenario;
+	}
+
 }

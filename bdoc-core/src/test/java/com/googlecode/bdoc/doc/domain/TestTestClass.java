@@ -28,13 +28,9 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.domain.testdata.TestDomainBehavior;
 import com.googlecode.bdoc.doc.domain.testdata.TestDomainBehaviour;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
@@ -63,30 +59,17 @@ public class TestTestClass {
 	}
 
 	@Test
-	public void shouldGetScenarioFromTestMethodBlock() {
-		TestClass testClass = new TestClass(TestDomainBehaviour.class);
-		Scenario scenarioFromTestMethodBlock = testClass.getScenarioFromTestMethodBlock("simpleScenario", BDocTestHelper.SRC_TEST_JAVA);
-
-		List<Part> parts = new ArrayList<Part>();
-		parts.add(new Part("given"));
-		parts.add(new Part("when"));
-		parts.add(new Part("then"));
-
-		assertEquals(new Scenario(parts), scenarioFromTestMethodBlock);
-	}
-
-	@Test
 	public void shouldReturnTestMethods() {
 		TestClass testClass = new TestClass(MyTest.class);
 		assertEquals(1, testClass.getTestMethods(new TestAnnotations()).size());
 	}
-	
+
 	@Test
 	public void shouldTellIfTestClassIsMarkedWithIgnore() {
-		assertFalse( new TestClass(MyTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()) );
-		assertTrue( new TestClass(MyIgnoredTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()) );
+		assertFalse(new TestClass(MyTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()));
+		assertTrue(new TestClass(MyIgnoredTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()));
 	}
-	
+
 	@Ignore
 	public class MyIgnoredTest {
 	}

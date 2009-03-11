@@ -37,11 +37,14 @@ import org.apache.maven.reporting.MavenReportException;
 import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.difflog.DiffLogReport;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
+import com.googlecode.bdoc.doc.domain.ScenarioFactory;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
 import com.googlecode.bdoc.doc.report.HtmlReport;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
+import com.googlecode.bdoc.doc.runtime.RuntimeScenarioFactory;
 
 /**
  * @goal doc
@@ -52,7 +55,7 @@ import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
  * @author Per Otto Bergum Christensen
  * @author Micael Vesterlund
  */
-public class BDocReportsMojo extends AbstractBddDocMojo {
+public class BDocDocMojo extends AbstractBddDocMojo {
 
 	private static final String BDOC_REPORTS_TITLE = "BDoc reports";
 
@@ -120,6 +123,12 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 	 */
 	String storyRefAnnotationClassName;
 
+	/**
+	 * @parameter default-value= "static"
+	 * @required
+	 */
+	String scenarioAnalyzer;
+
 	BDocReportInterface bdocReport = new BDocReportImpl();
 
 	@Override
@@ -151,7 +160,13 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 			bdocReport.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
 		}
 
-		BDoc bdoc = bdocReport.run(testSourceDirectory);
+		getLog().info("scenarioAnalyzer: " + scenarioAnalyzer);
+		ScenarioFactory scenarioFactory = new JavaTestSourceBehaviourParser(testSourceDirectory);
+		if (scenarioAnalyzer.equals("dynamic")) {
+			scenarioFactory = new RuntimeScenarioFactory();
+		}
+		
+		BDoc bdoc = bdocReport.run(scenarioFactory);
 
 		DiffLog diffLog = new DiffLog();
 		if (getBDocChangeLogFile().exists()) {
@@ -171,6 +186,10 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 		makeBDocReportsHtml();
 	}
 
+	protected BDoc bdoc() {
+		return bdocReport.run(new JavaTestSourceBehaviourParser(testSourceDirectory));
+	}
+
 	private void makeBDocReportsHtml() {
 		getSink().head();
 		getSink().title();
@@ -186,19 +205,19 @@ public class BDocReportsMojo extends AbstractBddDocMojo {
 		getSink().lineBreak();
 
 		getSink().list();
-		
+
 		getSink().listItem();
 		getSink().link(BDOC_HTML);
 		getSink().text("BDoc");
 		getSink().link_();
 		getSink().listItem_();
-		
+
 		getSink().listItem();
 		getSink().link(BDOC_DIFF_LOG_HTML);
 		getSink().text("BDocDiffLog");
 		getSink().link_();
 		getSink().listItem_();
-		
+
 		getSink().list_();
 
 		getSink().body_();

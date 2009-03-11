@@ -81,10 +81,6 @@ public class BDoc {
 		this.testAnnotations = new TestAnnotations(testAnnotation, ignoreAnnotation);
 	}
 
-	public BDoc addBehaviourFrom(TestClass testClass, File testSrcDir) {
-		return addBehaviourFrom(testClass, new JavaTestSourceBehaviourParser(testSrcDir));
-	}
-
 	/**
 	 * @param testClass
 	 * @return this instance
@@ -203,11 +199,18 @@ public class BDoc {
 		return (obj instanceof BDoc) && ((BDoc) obj).docTime.equals(docTime) && ((BDoc) obj).projectInfo.equals(projectInfo);
 	}
 
-	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, File testSrcDir) {
+	/**
+	 * For test
+	 */
+	public BDoc addBehaviourFrom(TestClass testClass, File testSrcDir) {
+		return addBehaviourFrom(testClass, new JavaTestSourceBehaviourParser(testSrcDir));
+	}
+
+	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, ScenarioFactory scenarioFactory) {
 		List<String> classes = testClassesDirectory.classes();
 		for (String className : classes) {
 			try {
-				addBehaviourFrom(new TestClass(classLoader.loadClass(className)), testSrcDir);
+				addBehaviourFrom(new TestClass(classLoader.loadClass(className)), scenarioFactory );
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}

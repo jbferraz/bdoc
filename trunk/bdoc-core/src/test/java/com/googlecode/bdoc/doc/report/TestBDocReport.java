@@ -33,30 +33,29 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
+import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
-import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
-
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 @Ref(Story.CREATE_BDOC_FROM_CODE)
 public class TestBDocReport {
 
 	private static final String PROJECT_NAME = "testProject";
-	
+
 	@Test
 	public void shouldExtractDocumentationFromAnyClassThatSpecifiesTests() throws ClassNotFoundException, IOException {
 		BDocReportInterface bdocReport = new BDocReportImpl();
-		bdocReport.setProjectInfo( new ProjectInfo( PROJECT_NAME, "version") );
-		bdocReport.setTestClassDirectory( new File( "target/test-classes"));
-		bdocReport.setClassLoader(getClass().getClassLoader() );
-		bdocReport.setIncludesFilePattern( new String[] { "integrationtestclasses/stack/**" });
-		bdocReport.run( BDocTestHelper.SRC_TEST_JAVA );
+		bdocReport.setProjectInfo(new ProjectInfo(PROJECT_NAME, "version"));
+		bdocReport.setTestClassDirectory(new File("target/test-classes"));
+		bdocReport.setClassLoader(getClass().getClassLoader());
+		bdocReport.setIncludesFilePattern(new String[] { "integrationtestclasses/stack/**" });
+		bdocReport.run(new JavaTestSourceBehaviourParser(BDocTestHelper.SRC_TEST_JAVA));
 		String xml = bdocReport.getXml();
-		
-		assertXPathContains("Stack", "//bddDoc", xml );
-		assertXPathContains("StackBehavior", "//bddDoc", xml );		
+
+		assertXPathContains("Stack", "//bddDoc", xml);
+		assertXPathContains("StackBehavior", "//bddDoc", xml);
 	}
 }

@@ -52,11 +52,9 @@ public class RuntimeClassAnalyzer implements MethodInterceptor {
 		this.initialMethodCall = methodName;
 		methodCalls = new ArrayList<MethodCall>();
 		try {
-			Method method = testInstance.getClass().getMethod(methodName, new Class[0]);
-			method.invoke(testInstance);
-		} catch (Exception e) {
-			throw new IllegalStateException("Error running test named [" + methodName + "] on [" + testInstance.getClass().getName() + "]",
-					e);
+			testInstance.getClass().getMethod(methodName, new Class[0]).invoke(testInstance);
+		} catch (Throwable e) {
+			return null;
 		}
 		return methodCalls;
 	}

@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.doc.runtime;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -69,6 +70,11 @@ public class TestRuntimeClassAnalyzer {
 	public void shouldNotIncludeTheInitialMethodCallToTheTestMethod() {
 		List<MethodCall> methodCalls = runtimeClassAnalyzer.invoke("withdraw");
 		assertFalse(methodCalls.contains(new MethodCall("withdraw")));
+	}
+	
+	@Test
+	public void shouldNotCreateMethodCallsFromTestMethodThatThrowsException() {
+		assertNull( runtimeClassAnalyzer.invoke("shouldThrowException") );
 	}
 	
 }

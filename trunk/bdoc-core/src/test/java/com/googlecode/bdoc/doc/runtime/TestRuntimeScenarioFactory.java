@@ -72,4 +72,14 @@ public class TestRuntimeScenarioFactory {
 		Scenario scenario = runtimeScenarioFactory.create(AccountBehaviour.class,"norwegianScenario");
 		assertEquals(new Scenario("gitt1Naar2Og3Saa4Og5Og6"), scenario);
 	}
+	
+	@Test
+	public void shouldNotCreateAScenarioForTestMethodsThatThrowsException() {
+		assertNull( runtimeScenarioFactory.create(AccountBehaviour.class,"shouldJustBeASimpleSpecification") );
+	}
+	
+	@Test
+	public void shouldNotCreateAScenarioForTestMethodsThatDoNotContainAScenario() {
+		
+	}
 }

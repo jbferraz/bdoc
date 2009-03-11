@@ -49,17 +49,17 @@ import com.googlecode.bdoc.mojo.testdata.TestIt2;
  *  @author Per Otto Bergum Christensen
  */
 @SuppressWarnings("unchecked")
-public class TestBDocReportsMojoBehaviour {
+public class TestBDocDocMojoBehaviour {
 
-	private BDocReportsMojo bdocMojo = null;
+	private BDocDocMojo bdocMojo = null;
 
 	@Before
 	public void resetMojo() {
-		bdocMojo = new BDocReportsMojo() {
+		bdocMojo = new BDocDocMojo() {
 			@SuppressWarnings("deprecation")
 			org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
 			{
-				bdocReportsXmlDirectoryPath = TestBDocReportsMojo.TARGET;
+				bdocReportsXmlDirectoryPath = TestBDocDocMojo.TARGET;
 				project = new MavenProjectMock();
 
 				testAnnotationClassName = Test.class.getName();
@@ -75,6 +75,7 @@ public class TestBDocReportsMojoBehaviour {
 		};
 		
 		bdocMojo.getBDocChangeLogFile().delete();
+		bdocMojo.scenarioAnalyzer = "static";
 	}
 
 	private void givenMavenInjectedValuesForSourceDirectoryAndTestClassDirectoryAndOutputDirectory() {
@@ -116,7 +117,7 @@ public class TestBDocReportsMojoBehaviour {
 	}
 
 	private void thenEnsureABDocHtmlReportHasBeenGenerated() {
-		assertTrue(new File("target/" + BDocReportsMojo.BDOC_HTML).exists());
+		assertTrue(new File("target/" + BDocDocMojo.BDOC_HTML).exists());
 	}
 
 	@Test

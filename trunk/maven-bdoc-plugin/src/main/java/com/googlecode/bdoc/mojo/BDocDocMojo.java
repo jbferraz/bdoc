@@ -37,14 +37,14 @@ import org.apache.maven.reporting.MavenReportException;
 import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.difflog.DiffLogReport;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
-import com.googlecode.bdoc.doc.domain.ScenarioFactory;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
 import com.googlecode.bdoc.doc.report.HtmlReport;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
-import com.googlecode.bdoc.doc.runtime.RuntimeScenarioFactory;
+import com.googlecode.bdoc.doc.runtime.RuntimeBehaviourFactory;
 
 /**
  * @goal doc
@@ -161,12 +161,12 @@ public class BDocDocMojo extends AbstractBddDocMojo {
 		}
 
 		getLog().info("scenarioAnalyzer: " + scenarioAnalyzer);
-		ScenarioFactory scenarioFactory = new JavaTestSourceBehaviourParser(testSourceDirectory);
+		BehaviourFactory behaviourFactory = new JavaTestSourceBehaviourParser(testSourceDirectory);
 		if (scenarioAnalyzer.equals("dynamic")) {
-			scenarioFactory = new RuntimeScenarioFactory();
+			behaviourFactory = new RuntimeBehaviourFactory();
 		}
 		
-		BDoc bdoc = bdocReport.run(scenarioFactory);
+		BDoc bdoc = bdocReport.run(behaviourFactory);
 
 		DiffLog diffLog = new DiffLog();
 		if (getBDocChangeLogFile().exists()) {

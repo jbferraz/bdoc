@@ -126,4 +126,9 @@ public class AccountBehaviour {
 
 	void saa(int i, int j, int k) {
 	}
+
+	@Test
+	public void emptyTest() {
+
+	}
 }

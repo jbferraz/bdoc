@@ -24,11 +24,12 @@
 
 package com.googlecode.bdoc.doc.runtime;
 
+import static com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator.SPACE_CHAR;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.domain.ScenarioFactory;
+import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
@@ -36,7 +37,7 @@ import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class RuntimeScenarioFactory implements ScenarioFactory {
+public class RuntimeBehaviourFactory implements BehaviourFactory {
 
 	public static Scenario create(List<MethodCall> methodCalls) {
 		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
@@ -55,7 +56,7 @@ public class RuntimeScenarioFactory implements ScenarioFactory {
 					camelCaseDescription = camelCaseDescription + locale.and();
 				}
 
-				camelCaseDescription = camelCaseDescription + argument.value();
+				camelCaseDescription = camelCaseDescription + SPACE_CHAR + argument.value() + SPACE_CHAR;
 			}
 
 			scenarioParts.add(new Scenario.Part(camelCaseDescription));

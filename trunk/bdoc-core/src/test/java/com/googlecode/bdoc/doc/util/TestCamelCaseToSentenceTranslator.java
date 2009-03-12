@@ -112,4 +112,16 @@ public class TestCamelCaseToSentenceTranslator {
 	public void shouldLeaveTheFirstCharUnmodifiedIfItIsInUpperCase() {
 		assertEquals("Given", CamelCaseToSentenceTranslator.translate("Given"));
 	}
+
+	@Test
+	public void shouldReplaceUnderscoreWithSpace() {
+		String sentence = CamelCaseToSentenceTranslator.translate("given_a_sentence");
+		assertEquals("Given a sentence", sentence);
+	}
+
+	@Test
+	public void shouldNotAddSpaceInFrontOfCapitalLetterIfUnderscoreIsUsedInFront() {
+		String sentence = CamelCaseToSentenceTranslator.translate("given_A_Sentence");
+		assertEquals("Given a sentence", sentence);
+	}
 }

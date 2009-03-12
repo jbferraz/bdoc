@@ -32,14 +32,17 @@ import java.util.Locale;
  */
 public class CamelCaseToSentenceTranslator {
 
+	public static final Character SPACE_CHAR = '_';
+
 	public static String translate(String camelCaseSentence) {
 
 		StringBuilder sentence = new StringBuilder();
 
 		boolean firstChar = true;
+		Character previousChar = null;
 		for (char character : camelCaseSentence.toCharArray()) {
 
-			if (Character.isUpperCase(character)) {
+			if (Character.isUpperCase(character) && !SPACE_CHAR.equals(previousChar)) {
 				sentence.append(' ');
 			}
 
@@ -49,6 +52,7 @@ public class CamelCaseToSentenceTranslator {
 			} else {
 				sentence.append(Character.toLowerCase(character));
 			}
+			previousChar = character;
 		}
 
 		StringBuilder sentenceWithNumberFormatted = new StringBuilder();
@@ -67,7 +71,7 @@ public class CamelCaseToSentenceTranslator {
 			sentenceWithNumberFormatted.append(c);
 		}
 
-		return sentenceWithNumberFormatted.toString().trim();
+		return sentenceWithNumberFormatted.toString().replace(SPACE_CHAR, ' ').toString().trim();
 	}
 
 	private static boolean isNumber(char c) {

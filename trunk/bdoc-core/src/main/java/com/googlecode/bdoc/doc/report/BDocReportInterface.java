@@ -29,7 +29,7 @@ import java.lang.annotation.Annotation;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
-import com.googlecode.bdoc.doc.domain.ScenarioFactory;
+import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -54,7 +54,7 @@ public interface BDocReportInterface {
 
 	public abstract void setIgnoreAnnotation(Class<? extends Annotation> ignoreAnnotation);
 
-	public abstract BDoc run(ScenarioFactory scenarioFactory);
+	public abstract BDoc run(BehaviourFactory behaviourFactory);
 
 	public abstract String getHtml();
 

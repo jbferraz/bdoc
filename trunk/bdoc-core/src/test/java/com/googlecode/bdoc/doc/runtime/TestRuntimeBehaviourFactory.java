@@ -40,9 +40,9 @@ import com.googlecode.bdoc.doc.runtime.testdata.AccountBehaviour;
  * @author Per Otto Bergum Christensen
  */
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
-public class TestRuntimeScenarioFactory {
+public class TestRuntimeBehaviourFactory {
 	
-	RuntimeScenarioFactory runtimeScenarioFactory = new RuntimeScenarioFactory();
+	RuntimeBehaviourFactory runtimeBehaviourFactory = new RuntimeBehaviourFactory();
 
 	@Test
 	public void shouldCreateAScenarioFromAListOfMethodCalls() {
@@ -51,35 +51,42 @@ public class TestRuntimeScenarioFactory {
 		methodCalls.add(new MethodCall("when"));
 		methodCalls.add(new MethodCall("then"));
 
-		Scenario scenario = RuntimeScenarioFactory.create(methodCalls);
+		Scenario scenario = RuntimeBehaviourFactory.create(methodCalls);
 		assertEquals(new Scenario("givenWhenThen"), scenario);
 	}
 
 	@Test
 	public void shouldCreateAScenarioFromTestMethodWithGivenWhenThenMethodCalls() {
-		Scenario scenario = runtimeScenarioFactory.create(AccountBehaviour.class,"plainScenario");
+		Scenario scenario = runtimeBehaviourFactory.create(AccountBehaviour.class,"plainScenario");
 		assertEquals(new Scenario("givenWhenThen"), scenario);
 	}
 
 	@Test
-	public void shouldAddMethodCallArgumentValuesToTheEndOfEachScenarioPartSeperatedWithAnd() {
-		Scenario scenario = runtimeScenarioFactory.create(AccountBehaviour.class,"scenarioWithArguments");
-		assertEquals(new Scenario("given1When2And3Then4And5And6"), scenario);
+	public void shouldAddMethodCallArgumentValuesToTheEndOfEachScenarioPart() {
+		Scenario scenario = runtimeBehaviourFactory.create(AccountBehaviour.class,"scenarioWithArguments");
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), scenario);
 	}
-
+	
 	@Test
-	public void shouldUseTheWordOgForScenariosWrittenInNorwegian() {
-		Scenario scenario = runtimeScenarioFactory.create(AccountBehaviour.class,"norwegianScenario");
-		assertEquals(new Scenario("gitt1Naar2Og3Saa4Og5Og6"), scenario);
+	public void shouldPutASpaceCharBeforeAndAfterEachArgument() {
+		Scenario scenario = runtimeBehaviourFactory.create(AccountBehaviour.class,"scenarioWithArguments");
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), scenario);		
+	}
+	
+	@Test
+	public void shouldUseTheWordOgBetweenArgumentsForScenariosWrittenInNorwegian() {
+		Scenario scenario = runtimeBehaviourFactory.create(AccountBehaviour.class,"norwegianScenario");
+		assertEquals(new Scenario("gitt_1_Naar_2_Og_3_Saa_4_Og_5_Og_6_"), scenario);
 	}
 	
 	@Test
 	public void shouldNotCreateAScenarioForTestMethodsThatThrowsException() {
-		assertNull( runtimeScenarioFactory.create(AccountBehaviour.class,"shouldJustBeASimpleSpecification") );
+		assertNull( runtimeBehaviourFactory.create(AccountBehaviour.class,"shouldJustBeASimpleSpecification") );
 	}
 	
 	@Test
 	public void shouldNotCreateAScenarioForTestMethodsThatDoNotContainAScenario() {
-		
+		assertNull( runtimeBehaviourFactory.create(AccountBehaviour.class,"emptyTest") );
 	}
+	
 }

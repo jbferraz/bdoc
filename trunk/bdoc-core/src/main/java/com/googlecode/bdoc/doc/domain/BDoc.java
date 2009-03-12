@@ -85,7 +85,7 @@ public class BDoc {
 	 * @param testClass
 	 * @return this instance
 	 */
-	public BDoc addBehaviourFrom(TestClass testClass, ScenarioFactory scenarioFactory) {
+	public BDoc addBehaviourFrom(TestClass testClass, BehaviourFactory behaviourFactory) {
 		UserStory userStory = null;
 
 		if ((null != storyRefAnnotation) && (testClass.isAnnotationPresent(storyRefAnnotation))) {
@@ -110,7 +110,7 @@ public class BDoc {
 			}
 
 			if (testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks()) {
-				Scenario scenario = scenarioFactory.createScenario(testClass, method);
+				Scenario scenario = behaviourFactory.createScenario(testClass, method);
 				if (null != scenario) {
 					classBehaviour.addScenario(scenario);
 				}
@@ -206,11 +206,11 @@ public class BDoc {
 		return addBehaviourFrom(testClass, new JavaTestSourceBehaviourParser(testSrcDir));
 	}
 
-	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, ScenarioFactory scenarioFactory) {
+	public void addBehaviourFrom(ClassesDirectory testClassesDirectory, ClassLoader classLoader, BehaviourFactory behaviourFactory) {
 		List<String> classes = testClassesDirectory.classes();
 		for (String className : classes) {
 			try {
-				addBehaviourFrom(new TestClass(classLoader.loadClass(className)), scenarioFactory );
+				addBehaviourFrom(new TestClass(classLoader.loadClass(className)), behaviourFactory );
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}

@@ -22,10 +22,31 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.domain;
+package com.googlecode.bdoc.doc.runtime.testdata;
 
-public interface ScenarioFactory {
+import static org.junit.Assert.*;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.junit.Test;
 
-	Scenario createScenario(TestClass testClass, TestMethod method);
+/**
+ * Example to demonstrate and test creation of test tables.
+ * 
+ * @author Per Otto Bergum Christensen
+ */
+public class TestConvertUtilsBehaviour {
 
+	@Test
+	public void shouldConvertFromPrimitivToPrimitiv() {
+		assertConversion(Boolean.FALSE, Integer.class, 0);
+		assertConversion(Boolean.TRUE, Integer.class, 1);
+		assertConversion(Integer.MAX_VALUE, Double.class, new Double(Integer.MAX_VALUE));
+		assertConversion(new Double(4444), Integer.class, new Integer(4444));
+
+	}
+
+	void assertConversion(Object sourceValue, Class<?> targetClass, Object expectedValue) {
+		Object outputValue = ConvertUtils.convert(sourceValue, targetClass);
+		assertEquals("Conversion from [" + sourceValue.getClass().getName() + "] to [" + targetClass.getName() + "] failed", expectedValue,
+				outputValue);
+	}
 }

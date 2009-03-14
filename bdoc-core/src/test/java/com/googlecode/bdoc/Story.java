@@ -46,11 +46,13 @@ public enum Story {
 
 	HTML_DIFF_REPORT(8, "As a stakeholder in the project", "I want to generated BDocDiff as html", "so that it opens in a browser"),
 
-	ADVANCED_SCENARIO_SPECIFICATION(9, "As a developer in the project",
-			"I want to write a scenario as a series of given when then methods",
+	ADVANCED_SCENARIO_SPECIFICATION(9, "As a developer in the project", "I want to write a scenario as a series of given when then methods",
 			"so that I can use more than one line to describe the behaviour"),
 
-	DIFF_LOG(10, "As a developer in the project", "I want a bdoc difflog to be generated continuously",
+	TEST_TABLES(10, "As a developer in the project", "I want to write a set of identical tests with differnt data ",
+			"so that BDoc can extract it and present all the differnt testcases"),
+
+	DIFF_LOG(11, "As a developer in the project", "I want a bdoc difflog to be generated continuously",
 			"so that I can keep track of each change in behaviour");
 
 	private Integer id;

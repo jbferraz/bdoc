@@ -37,16 +37,21 @@ public class TestConvertUtilsBehaviour {
 
 	@Test
 	public void shouldConvertFromPrimitivToPrimitiv() {
-		assertConversion(Boolean.FALSE, Integer.class, 0);
-		assertConversion(Boolean.TRUE, Integer.class, 1);
-		assertConversion(Integer.MAX_VALUE, Double.class, new Double(Integer.MAX_VALUE));
-		assertConversion(new Double(4444), Integer.class, new Integer(4444));
-
+		assertPrimitivToPrimitivConversion(Boolean.FALSE, Integer.class, 0);
+		assertPrimitivToPrimitivConversion(Integer.MAX_VALUE, Double.class, new Double(Integer.MAX_VALUE));
+		assertPrimitivToPrimitivConversion(new Double(4444), Integer.class, new Integer(4444));
 	}
 
-	void assertConversion(Object sourceValue, Class<?> targetClass, Object expectedValue) {
+	void assertPrimitivToPrimitivConversion(Object sourceValue, Class<?> targetClass, Object expectedValue) {
 		Object outputValue = ConvertUtils.convert(sourceValue, targetClass);
 		assertEquals("Conversion from [" + sourceValue.getClass().getName() + "] to [" + targetClass.getName() + "] failed", expectedValue,
 				outputValue);
 	}
+
+	@Test
+	public void shouldConvertFromLongToString() {
+		assertEquals(String.valueOf(Long.MAX_VALUE), ConvertUtils.convert(Long.MAX_VALUE, String.class));
+	}
+	
+	
 }

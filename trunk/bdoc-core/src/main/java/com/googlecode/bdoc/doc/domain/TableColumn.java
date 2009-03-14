@@ -22,14 +22,15 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.runtime;
+package com.googlecode.bdoc.doc.domain;
+
 
 public class TableColumn {
 
 	private Object value;
 
-	public TableColumn(Argument argument) {
-		this.value = argument.value();
+	public TableColumn(Object value) {
+		this.value = value;
 	}
 
 	public Object getValue() {

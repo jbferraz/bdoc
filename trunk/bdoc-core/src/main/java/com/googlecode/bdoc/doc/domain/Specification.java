@@ -26,7 +26,6 @@ package com.googlecode.bdoc.doc.domain;
 
 import java.util.Locale;
 
-import com.googlecode.bdoc.doc.runtime.TestTable;
 
 /**
  * @author Per Otto Bergum Christensen

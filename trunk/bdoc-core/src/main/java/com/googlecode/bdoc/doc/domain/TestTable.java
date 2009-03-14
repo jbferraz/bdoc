@@ -22,23 +22,36 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.runtime;
+package com.googlecode.bdoc.doc.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TableRow {
-	private List<TableColumn> columns = new ArrayList<TableColumn>();
+/**
+ * @author Per Otto Bergum Christensen
+ */
+public class TestTable {
 
-	public TableRow(MethodCall methodCall) {
-		List<Argument> arguments = methodCall.getArguments();
-		for (Argument argument : arguments) {
-			columns.add(new TableColumn(argument));
-		}
+	private String camelCaseDescription;
+	private List<TableRow> rows = new ArrayList<TableRow>();
+
+	public TestTable(String camelCaseDescription) {
+		this.camelCaseDescription = camelCaseDescription;
 	}
 
-	public List<TableColumn> getColumns() {
-		return columns;
+	public List<TableRow> getRows() {
+		return rows;
 	}
 
+	public String getCamelCaseDescription() {
+		return camelCaseDescription;
+	}
+
+	public void addRow(TableRow tableRow) {
+		rows.add(tableRow);
+	}
+
+	public List<TableColumn> getHeaderColumns() {
+		return new ArrayList<TableColumn>();
+	}
 }

@@ -24,46 +24,15 @@
 
 package com.googlecode.bdoc.doc.runtime;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Before;
 import org.junit.Test;
 
-import com.googlecode.bdoc.Ref;
-import com.googlecode.bdoc.Story;
-
-/**
- * @author Per Otto Bergum Christensen
- */
-@Ref(Story.TEST_TABLES)
-public class TestTestTable {
-
-	private List<MethodCall> methodCalls;
-
-	@Before
-	public void resetMethodCalls() {
-		methodCalls = new ArrayList<MethodCall>();
-	}
-	
-	@Test
-	public void shouldBeDescribedByTheMethodCallName() {
-		methodCalls.add(new MethodCall("assertTrue", new Object[] { true }));
-		assertEquals( "assertTrue", new TestTable(methodCalls).getCamelCaseDescription() );
-	}
+public class TestTableColumn {
 
 	@Test
-	public void shouldContainOneRowForEachMethodCall() {
-		methodCalls.add(new MethodCall("assertEquals", new Object[] { 1, 1 }));
-		methodCalls.add(new MethodCall("assertEquals", new Object[] { 2, 2 }));
-		assertEquals(2, new TestTable(methodCalls).getRows().size());
+	public void shouldContainValueFromTheMethodArgument() {
+		assertEquals(3, new TableColumn(new Argument(3)).getValue());
 	}
 
-	@Test
-	public void shouldHaveOneColumnForEachArgumentInAMethodCall() {
-		methodCalls.add(new MethodCall("assertValuePlussValueIsSum", new Object[] { 2, 2, 4 }));
-		assertEquals(3, new TestTable(methodCalls).getRows().get(0).getColumns().size());
-	}
 }

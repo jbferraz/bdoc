@@ -32,9 +32,11 @@ import java.util.List;
  */
 public class TestTable {
 
+	private String camelCaseDescription;
 	private List<TableRow> rows = new ArrayList<TableRow>();
 
 	public TestTable(List<MethodCall> methodCalls) {
+		camelCaseDescription = methodCalls.get(0).getName();
 		for (MethodCall methodCall : methodCalls) {
 			rows.add(new TableRow(methodCall));
 		}
@@ -42,5 +44,9 @@ public class TestTable {
 
 	public List<TableRow> getRows() {
 		return rows;
+	}
+
+	public String getCamelCaseDescription() {
+		return camelCaseDescription;
 	}
 }

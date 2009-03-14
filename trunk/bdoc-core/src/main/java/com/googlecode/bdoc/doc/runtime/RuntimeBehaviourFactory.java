@@ -25,11 +25,12 @@
 package com.googlecode.bdoc.doc.runtime;
 
 import static com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator.SPACE_CHAR;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
+import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
@@ -64,7 +65,7 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		return new Scenario(scenarioParts);
 	}
 
-	public Scenario create(Class<?> testClass, String testMethodName) {
+	Scenario createScenarioInternal(Class<?> testClass, String testMethodName) {
 		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(testMethodName);
 
 		if ((null == methodCalls) || (methodCalls.isEmpty())) {
@@ -75,7 +76,16 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 	}
 
 	public Scenario createScenario(TestClass testClass, TestMethod method) {
-		return create(testClass.clazz(), method.getName());
+		return createScenarioInternal(testClass.clazz(), method.getName());
+	}
+
+	public TestTable createTestTable(Class<?> testClass, String testMethodName) {
+		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(testMethodName);
+		if (methodCalls.isEmpty()) {
+			return null;
+		}
+
+		return new TestTable(methodCalls);
 	}
 
 }

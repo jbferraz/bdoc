@@ -24,7 +24,9 @@
 
 package com.googlecode.bdoc.doc.runtime;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +37,14 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.runtime.testdata.AccountBehaviour;
+import com.googlecode.bdoc.doc.runtime.testdata.TestConvertUtilsBehaviour;
 
 /**
  * @author Per Otto Bergum Christensen
  */
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestRuntimeBehaviourFactory {
-	
+
 	RuntimeBehaviourFactory runtimeBehaviourFactory = new RuntimeBehaviourFactory();
 
 	@Test
@@ -57,36 +60,47 @@ public class TestRuntimeBehaviourFactory {
 
 	@Test
 	public void shouldCreateAScenarioFromTestMethodWithGivenWhenThenMethodCalls() {
-		Scenario scenario = runtimeBehaviourFactory.create(AccountBehaviour.class,"plainScenario");
+		Scenario scenario = runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "plainScenario");
 		assertEquals(new Scenario("givenWhenThen"), scenario);
 	}
 
 	@Test
 	public void shouldAddMethodCallArgumentValuesToTheEndOfEachScenarioPart() {
-		Scenario scenario = runtimeBehaviourFactory.create(AccountBehaviour.class,"scenarioWithArguments");
+		Scenario scenario = runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "scenarioWithArguments");
 		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), scenario);
 	}
-	
+
 	@Test
 	public void shouldPutASpaceCharBeforeAndAfterEachArgument() {
-		Scenario scenario = runtimeBehaviourFactory.create(AccountBehaviour.class,"scenarioWithArguments");
-		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), scenario);		
+		Scenario scenario = runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "scenarioWithArguments");
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), scenario);
 	}
-	
+
 	@Test
 	public void shouldUseTheWordOgBetweenArgumentsForScenariosWrittenInNorwegian() {
-		Scenario scenario = runtimeBehaviourFactory.create(AccountBehaviour.class,"norwegianScenario");
+		Scenario scenario = runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "norwegianScenario");
 		assertEquals(new Scenario("gitt_1_Naar_2_Og_3_Saa_4_Og_5_Og_6_"), scenario);
 	}
-	
+
 	@Test
 	public void shouldNotCreateAScenarioForTestMethodsThatThrowsException() {
-		assertNull( runtimeBehaviourFactory.create(AccountBehaviour.class,"shouldJustBeASimpleSpecification") );
+		assertNull(runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "shouldJustBeASimpleSpecification"));
 	}
-	
+
 	@Test
 	public void shouldNotCreateAScenarioForTestMethodsThatDoNotContainAScenario() {
-		assertNull( runtimeBehaviourFactory.create(AccountBehaviour.class,"emptyTest") );
+		assertNull(runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "emptyTest"));
 	}
-	
+
+	@Test
+	@Ref(Story.TEST_TABLES)
+	public void shouldCreateATestTableForWhenTheTestMethodDoesMethodCalls() {
+		assertNotNull(runtimeBehaviourFactory.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv"));
+	}
+
+	@Test
+	@Ref(Story.TEST_TABLES)
+	public void shouldNotATesttableWhenNoMethodCallsAreMadeByTheTestMethod() {
+		assertNull(runtimeBehaviourFactory.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromLongToString"));
+	}
 }

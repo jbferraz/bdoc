@@ -24,53 +24,23 @@
 
 package com.googlecode.bdoc.doc.runtime;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Per Otto Bergum Christensen
  */
-public class MethodCall {
+public class TestTable {
 
-	private final String methodName;
-	private List<Argument> arguments = new ArrayList<Argument>();
+	private List<TableRow> rows = new ArrayList<TableRow>();
 
-	public MethodCall(String methodName) {
-		this(methodName, new Object[0] );
-	}
-
-	public MethodCall(Method method, Object[] args) {
-		this( method.getName(), args );
-	}
-	
-	public MethodCall(String methodName, Object[] args) {
-		this.methodName = methodName;
-		for (Object arg : args) {
-			arguments.add(new Argument(arg));
+	public TestTable(List<MethodCall> methodCalls) {
+		for (MethodCall methodCall : methodCalls) {
+			rows.add(new TableRow(methodCall));
 		}
 	}
 
-
-	public String getName() {
-		return methodName;
+	public List<TableRow> getRows() {
+		return rows;
 	}
-
-	public List<Argument> getArguments() {
-		return arguments;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((methodName == null) ? 0 : methodName.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return (obj instanceof MethodCall) && (((MethodCall) obj).methodName.equals(methodName));
-	}
-
 }

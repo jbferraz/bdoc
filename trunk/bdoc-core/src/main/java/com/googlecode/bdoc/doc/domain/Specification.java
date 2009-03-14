@@ -26,6 +26,8 @@ package com.googlecode.bdoc.doc.domain;
 
 import java.util.Locale;
 
+import com.googlecode.bdoc.doc.runtime.TestTable;
+
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -83,6 +85,10 @@ public class Specification extends Statement {
 	@Override
 	public boolean equals(Object obj) {
 		return (obj instanceof Specification) && ((Specification) obj).camelCaseSentence.equals(camelCaseSentence);
+	}
+
+	public TestTable getTestTable() {
+		return null;
 	}
 
 }

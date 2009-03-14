@@ -33,7 +33,7 @@ public class TableRow {
 	public TableRow(MethodCall methodCall) {
 		List<Argument> arguments = methodCall.getArguments();
 		for (Argument argument : arguments) {
-			columns.add(new TableColumn());
+			columns.add(new TableColumn(argument));
 		}
 	}
 

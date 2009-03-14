@@ -26,4 +26,13 @@ package com.googlecode.bdoc.doc.runtime;
 
 public class TableColumn {
 
+	private Object value;
+
+	public TableColumn(Argument argument) {
+		this.value = argument.value();
+	}
+
+	public Object getValue() {
+		return value;
+	}
 }

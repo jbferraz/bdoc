@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.runtime;
+package com.googlecode.bdoc.doc.dynamic;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -22,8 +22,9 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.runtime;
+package com.googlecode.bdoc.doc.dynamic;
 
+import java.io.File;
 import java.util.List;
 
 import com.googlecode.bdoc.doc.domain.TableColumn;
@@ -34,6 +35,12 @@ import com.googlecode.bdoc.doc.domain.TestTable;
  * @author Per Otto Bergum Christensen
  */
 public class TestTableFactory {
+
+	private File srcTestJava;
+
+	public TestTableFactory(File srcTestJava) {
+		this.srcTestJava = srcTestJava;
+	}
 
 	public TestTable createTestTable(Class<?> testClass, String testMethodName) {
 		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(testMethodName);

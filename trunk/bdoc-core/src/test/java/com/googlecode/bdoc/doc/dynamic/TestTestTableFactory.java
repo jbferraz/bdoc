@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.runtime;
+package com.googlecode.bdoc.doc.dynamic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -33,11 +33,13 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.domain.TestTable;
-import com.googlecode.bdoc.doc.runtime.testdata.TestConvertUtilsBehaviour;
+import com.googlecode.bdoc.doc.dynamic.TestTableFactory;
+import com.googlecode.bdoc.doc.dynamic.testdata.TestConvertUtilsBehaviour;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -45,7 +47,7 @@ import com.googlecode.bdoc.doc.runtime.testdata.TestConvertUtilsBehaviour;
 @Ref(Story.TEST_TABLES)
 public class TestTestTableFactory {
 
-	TestTableFactory testTableFactory = new TestTableFactory();
+	TestTableFactory testTableFactory = new TestTableFactory(BConst.SRC_TEST_JAVA);
 
 	@Test
 	public void shouldCreateATestTableForWhenTheTestMethodDoesMethodCalls() {
@@ -59,29 +61,25 @@ public class TestTestTableFactory {
 
 	@Test
 	public void theTestTableShouldBeDescribedWithTheMethodCallName() {
-		TestTable testTable = testTableFactory
-				.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
+		TestTable testTable = testTableFactory.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
 		assertEquals("assertPrimitivToPrimitivConversion", testTable.getCamelCaseDescription());
 	}
 
 	@Test
 	public void theTestTableShouldContainOneRowForEachMethodCall() {
-		TestTable testTable = testTableFactory
-				.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
+		TestTable testTable = testTableFactory.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
 		assertEquals(3, testTable.getRows().size());
 	}
 
 	@Test
 	public void theTestTableShouldHaveOneColumnForEachArgumentInAMethodCall() {
-		TestTable testTable = testTableFactory
-				.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
+		TestTable testTable = testTableFactory.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
 		assertEquals(3, testTable.getRows().get(0).getColumns().size());
 	}
 
 	@Test
 	public void theTestTableColumnShouldContainValueFromTheMethodArgument() {
-		TestTable testTable = testTableFactory
-				.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
+		TestTable testTable = testTableFactory.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
 		List<TableColumn> firstRowColumns = testTable.getRows().get(0).getColumns();
 
 		assertEquals(Boolean.FALSE, firstRowColumns.get(0).getValue());
@@ -92,8 +90,7 @@ public class TestTestTableFactory {
 	@Test
 	@Ignore
 	public void theTestTableHeaderColumnShouldMatchArgumentNamesFromTheMethodInTheJavaSource() {
-		TestTable testTable = testTableFactory
-				.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
+		TestTable testTable = testTableFactory.createTestTable(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
 
 		List<TableColumn> headerColumns = testTable.getHeaderColumns();
 		assertEquals("sourceValue", headerColumns.get(0));

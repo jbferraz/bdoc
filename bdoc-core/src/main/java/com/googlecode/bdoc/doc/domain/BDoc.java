@@ -109,7 +109,14 @@ public class BDoc {
 				classBehaviour = generalBehaviour.addBehaviour(testClass.clazz(), method.camelCaseSentence());
 			}
 
-			if (testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks()) {
+			if (testClass.shouldBeAnalyzedForExtendedBehaviour()) {
+				//behaviourFactory.analyze(method);
+				//if behaviourFactory.hasCreatedScenario()
+				// classBehaviour.addScenario(scenario);
+				
+				//if behaviourFactory.hasCreatedTestTable()
+				// classBehaviour.addTestTable
+				
 				Scenario scenario = behaviourFactory.createScenario(testClass, method);
 				if (null != scenario) {
 					classBehaviour.addScenario(scenario);

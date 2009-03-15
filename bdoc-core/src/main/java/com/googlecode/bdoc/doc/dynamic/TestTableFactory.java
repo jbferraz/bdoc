@@ -37,9 +37,6 @@ import com.googlecode.bdoc.doc.util.JavaCodeUtil;
  */
 public class TestTableFactory {
 
-	public TestTableFactory() {
-	}
-
 	public TestTable createTestTable(TestClass testClass, String testMethodName) {
 		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass.clazz()).invoke(testMethodName);
 		if (methodCalls.isEmpty()) {

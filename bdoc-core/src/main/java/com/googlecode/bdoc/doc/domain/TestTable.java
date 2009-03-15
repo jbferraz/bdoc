@@ -33,6 +33,7 @@ import java.util.List;
 public class TestTable {
 
 	private String camelCaseDescription;
+	ArrayList<TableColumn> headerColumns = new ArrayList<TableColumn>();
 	private List<TableRow> rows = new ArrayList<TableRow>();
 
 	public TestTable(String camelCaseDescription) {
@@ -52,6 +53,10 @@ public class TestTable {
 	}
 
 	public List<TableColumn> getHeaderColumns() {
-		return new ArrayList<TableColumn>();
+		return headerColumns;
+	}
+
+	public void addHeaderColumn(TableColumn tableColumn) {
+		headerColumns.add(tableColumn);
 	}
 }

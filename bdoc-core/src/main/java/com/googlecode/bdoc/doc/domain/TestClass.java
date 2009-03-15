@@ -42,7 +42,6 @@ public class TestClass {
 	private File testSrcDir;
 	private Class<? extends Object> clazz;
 
-
 	public TestClass(File testSrcDir, Class<? extends Object> clazz) {
 		Validate.notNull(clazz, "clazz can't be null");
 		this.clazz = clazz;
@@ -107,6 +106,11 @@ public class TestClass {
 		} catch (Exception e) {
 			throw new IllegalStateException("Error getting testmethod [" + methodName + "] from [" + clazz.getName() + "]", e);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return clazz.getName();
 	}
 
 }

@@ -24,7 +24,6 @@
 
 package com.googlecode.bdoc.doc.domain;
 
-
 public class TableColumn {
 
 	private Object value;
@@ -35,5 +34,10 @@ public class TableColumn {
 
 	public Object getValue() {
 		return value;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(value);
 	}
 }

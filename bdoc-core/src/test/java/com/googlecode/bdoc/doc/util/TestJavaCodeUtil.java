@@ -106,5 +106,5 @@ public class TestJavaCodeUtil {
 		assertEquals("arg1", argNames.get(0));
 		assertEquals("arg2", argNames.get(1));
 	}
-
+	
 }

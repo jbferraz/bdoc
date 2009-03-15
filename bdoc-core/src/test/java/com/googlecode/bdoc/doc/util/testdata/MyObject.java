@@ -26,9 +26,20 @@ package com.googlecode.bdoc.doc.util.testdata;
 
 public class MyObject {
 
-	public void methodWithOneArgument(String arg1) {
+	public void testMethodWithOneArgument() {
+		methodWithOneArgument("test1");
+		methodWithOneArgument("test2");
+		methodWithOneArgument("test3");
+	}
+
+	public void methodWithOneArgument( String   arg1  ) {
+	}
+
+	public void testMethodWithTwoArguments() {
+		methodWithTwoArguments(   1,3D );
+		methodWithTwoArguments(   2,    4D );
 	}
 	
-	public void methodWithTwoArguments( Integer arg1, Double arg2 ) {
+	public void methodWithTwoArguments(   Integer     arg1, Double    arg2   ) {
 	}
 }

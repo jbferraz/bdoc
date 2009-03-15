@@ -70,7 +70,6 @@ public class AccountBehaviour {
 	void givenAnAccountNameAndInitalBalance(String accountName, int initialBalance) {
 	}
 
-	@Test
 	public void shouldThrowException() {
 		throw new RuntimeException("don't crash because of this");
 	}

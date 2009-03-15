@@ -128,6 +128,17 @@ public class JavaCodeUtil {
 	}
 
 	public static List<String> getArgumentNames(TestClass testClass, String methodName) {
-		return null;
+		List<String> result = new ArrayList<String>();
+
+		String methodSignature = StringUtils.substringBetween(testClass.getSource(), methodName, ")");
+		methodSignature = methodSignature.replace("(", "").replace(",", "").trim();
+		String[] methodSignatureElements = methodSignature.split(" ");
+
+		for (int index = 0; index < methodSignatureElements.length; index++) {
+			if (0 == ((index + 1) % 2)) {
+				result.add(methodSignatureElements[index]);
+			}
+		}
+		return result;
 	}
 }

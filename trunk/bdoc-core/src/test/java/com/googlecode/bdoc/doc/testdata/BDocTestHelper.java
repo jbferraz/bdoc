@@ -26,11 +26,11 @@ package com.googlecode.bdoc.doc.testdata;
 
 import integrationtestclasses.stack.StackBehavior;
 
-import java.io.File;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
@@ -44,29 +44,27 @@ import com.googlecode.bdoc.doc.domain.TestClass;
  */
 public class BDocTestHelper {
 
-	public static final File SRC_TEST_JAVA = new File("src/test/java");
-
 	private BDocTestHelper() {
 	}
 
 	public static BDoc bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour() {
 		BDoc bdoc = bdocWithProject();
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 
 		return bdoc;
 	}
 
 	public static BDoc bdocWithOneSpecification() {
 		BDoc bdoc = bdocWithProject();
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), BConst.SRC_TEST_JAVA);
 		return bdoc;
 	}
 
 	public static BDoc bdocWithOneScenario() {
 		BDoc bdoc = bdocWithProject();
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
 		return bdoc;
 	}
 
@@ -82,7 +80,7 @@ public class BDocTestHelper {
 
 	public static BDoc bdocWithAdvancedScenarioSpecification() {
 		BDoc bddDoc = bdocWithProject();
-		bddDoc.addBehaviourFrom(new TestClass(StackBehavior.class), SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(StackBehavior.class), BConst.SRC_TEST_JAVA);
 
 		return bddDoc;
 	}
@@ -144,7 +142,7 @@ public class BDocTestHelper {
 	}
 
 	public static Scenario addScenario(BDoc bdoc) {
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
 		ClassBehaviour classBehaviour = bdoc.classBehaviourInGeneralBehaviour(TestClassWithOneScenario.class);
 		return classBehaviour.getScenarios().get(0);
 	}

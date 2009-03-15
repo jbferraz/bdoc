@@ -31,9 +31,9 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.doc.domain.testdata.TestDomainBehavior;
 import com.googlecode.bdoc.doc.domain.testdata.TestDomainBehaviour;
-import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -54,7 +54,7 @@ public class TestTestClass {
 
 	@Test
 	public void shouldLoadTheJavaSourceForTheTestClass() {
-		String source = new TestClass(TestDomainBehaviour.class).getSource(BDocTestHelper.SRC_TEST_JAVA);
+		String source = new TestClass(TestDomainBehaviour.class).getSource(BConst.SRC_TEST_JAVA);
 		assertTrue(source.contains("DomainBehaviour"));
 	}
 

@@ -31,11 +31,11 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
-import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -52,7 +52,7 @@ public class TestBDocReport {
 		bdocReport.setTestClassDirectory(new File("target/test-classes"));
 		bdocReport.setClassLoader(getClass().getClassLoader());
 		bdocReport.setIncludesFilePattern(new String[] { "integrationtestclasses/stack/**" });
-		bdocReport.run(new JavaTestSourceBehaviourParser(BDocTestHelper.SRC_TEST_JAVA));
+		bdocReport.run(new JavaTestSourceBehaviourParser(BConst.SRC_TEST_JAVA));
 		String xml = bdocReport.getXml();
 
 		assertXPathContains("Stack", "//bddDoc", xml);

@@ -30,13 +30,13 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocUserStoryDiffDocTestdataHelper.TestWithOnlyGeneralBehaviourContent;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
-import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.ExStory;
 
@@ -80,7 +80,7 @@ public class TestBDocDiff {
 		BDoc bddDocV2 = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDocV2.setProject(new ProjectInfo("name", "1"));
 
-		bddDocV2.addBehaviourFrom(new TestClass(TestWithOnlyGeneralBehaviourContent.class), BDocTestHelper.SRC_TEST_JAVA);
+		bddDocV2.addBehaviourFrom(new TestClass(TestWithOnlyGeneralBehaviourContent.class), BConst.SRC_TEST_JAVA);
 
 		assertTrue(new BDocDiff(bddDocV1, bddDocV2).getGeneralBehaviourDiff().diffExists());
 	}

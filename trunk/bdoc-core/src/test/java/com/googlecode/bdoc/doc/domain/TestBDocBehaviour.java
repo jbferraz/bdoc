@@ -31,9 +31,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.RefClass;
 
 /**
@@ -48,7 +48,7 @@ public class TestBDocBehaviour {
 	}
 
 	private ClassBehaviour whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock(BDoc doc) {
-		doc.addBehaviourFrom(new TestClass(TestBDocBehaviour.class), BDocTestHelper.SRC_TEST_JAVA);
+		doc.addBehaviourFrom(new TestClass(TestBDocBehaviour.class), BConst.SRC_TEST_JAVA);
 		return doc.classBehaviourInGeneralBehaviour(TestBDocBehaviour.class);
 	}
 

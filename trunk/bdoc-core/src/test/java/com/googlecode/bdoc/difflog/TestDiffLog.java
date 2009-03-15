@@ -24,7 +24,6 @@
 
 package com.googlecode.bdoc.difflog;
 
-import static com.googlecode.bdoc.doc.testdata.BDocTestHelper.SRC_TEST_JAVA;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -34,6 +33,7 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -90,9 +90,9 @@ public class TestDiffLog {
 	public void shouldSortDiffListWithLatestChangeFirst() {
 		DiffLog diffLog = new DiffLog();
 
-		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithSpecification.class), SRC_TEST_JAVA));
-		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithStatement.class), SRC_TEST_JAVA));
-		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithScenario.class), SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithSpecification.class), BConst.SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithStatement.class), BConst.SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithScenario.class), BConst.SRC_TEST_JAVA));
 
 		assertFalse(diffLog.getDiffList().get(0).getGeneralBehaviourDiff().getPackageDiff().get(0).getNewScenarios().isEmpty());
 		assertFalse(diffLog.getDiffList().get(1).getGeneralBehaviourDiff().getPackageDiff().get(0).getNewClassStatements().isEmpty());
@@ -103,10 +103,10 @@ public class TestDiffLog {
 		DiffLog diffLog = new DiffLog();
 		diffLog.setNumberOfChangeLogItemsToKeep(2);
 
-		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithSpecification.class), SRC_TEST_JAVA));
-		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithStatement.class), SRC_TEST_JAVA));
-		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithScenario.class), SRC_TEST_JAVA));
-		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithYetAnotherSpecification.class), SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithSpecification.class), BConst.SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithStatement.class), BConst.SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithScenario.class), BConst.SRC_TEST_JAVA));
+		diffLog.scan(new BDoc().addBehaviourFrom(new TestClass(TestWithYetAnotherSpecification.class), BConst.SRC_TEST_JAVA));
 
 		assertEquals(2, diffLog.getDiffList().size());
 		assertFalse("last diff should be kept", diffLog.getDiffList().get(0).getGeneralBehaviourDiff().getPackageDiff().get(0)

@@ -26,7 +26,6 @@ package com.googlecode.bdoc.difflog;
 
 import static com.googlecode.bdoc.doc.report.ReportTestHelper.scenarioPart;
 import static com.googlecode.bdoc.doc.report.ReportTestHelper.sentence;
-import static com.googlecode.bdoc.doc.testdata.BDocTestHelper.SRC_TEST_JAVA;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 
@@ -36,6 +35,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
@@ -54,12 +54,12 @@ public class TestDiffLogReportBehaviour {
 	BDoc emptyBdoc = new BDoc(new ProjectInfo("test", "test"));
 	BDoc bdocWithOneSpecification = new BDoc(new ProjectInfo("test", "test"));
 	{
-		bdocWithOneSpecification.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), SRC_TEST_JAVA);
+		bdocWithOneSpecification.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), BConst.SRC_TEST_JAVA);
 	}
 
 	BDoc bdocWithOneScenario = new BDoc(new ProjectInfo("test", "test"));
 	{
-		bdocWithOneScenario.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), SRC_TEST_JAVA);
+		bdocWithOneScenario.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
 	}
 
 	private DiffLog diffLog = new DiffLog();

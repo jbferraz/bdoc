@@ -25,9 +25,7 @@
 package com.googlecode.bdoc.doc.runtime;
 
 /**
- * 
  * @author Per Otto Bergum Christensen
- *
  */
 public class Argument {
 

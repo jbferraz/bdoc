@@ -52,6 +52,10 @@ public class JavaTestSourceBehaviourParser implements BehaviourFactory {
 	}
 
 	public Scenario createScenario(TestClass testClass, TestMethod method) {
-		return getScenario(method.getName(), testClass.getSource(srcTestJava) );
+		return getScenario(method.getName(), testClass.getSource() );
+	}
+
+	public File javaSourceDir() {
+		return srcTestJava;
 	}
 }

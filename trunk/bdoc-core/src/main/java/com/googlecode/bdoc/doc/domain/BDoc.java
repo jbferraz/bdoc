@@ -210,7 +210,7 @@ public class BDoc {
 		List<String> classes = testClassesDirectory.classes();
 		for (String className : classes) {
 			try {
-				addBehaviourFrom(new TestClass(classLoader.loadClass(className)), behaviourFactory );
+				addBehaviourFrom(new TestClass(behaviourFactory.javaSourceDir(), classLoader.loadClass(className)), behaviourFactory );
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}

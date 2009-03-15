@@ -26,6 +26,7 @@ package com.googlecode.bdoc.doc.dynamic;
 
 import static com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator.SPACE_CHAR;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,12 @@ import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
  * @author Per Otto Bergum Christensen
  */
 public class RuntimeBehaviourFactory implements BehaviourFactory {
+	
+	private File javaSourceDir;
+	
+	public RuntimeBehaviourFactory(File javaSourceDir) {
+		this.javaSourceDir = javaSourceDir;
+	}
 
 	public static Scenario create(List<MethodCall> methodCalls) {
 		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
@@ -77,5 +84,9 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 
 	public Scenario createScenario(TestClass testClass, TestMethod method) {
 		return createScenarioInternal(testClass.clazz(), method.getName());
+	}
+
+	public File javaSourceDir() {
+		return javaSourceDir;
 	}
 }

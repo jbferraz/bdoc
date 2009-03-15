@@ -125,7 +125,7 @@ public class TestJavaTestSourceBehaviourParser {
 	 * Helper method to avoid duplicate testcode when testing the scenario factory
 	 */
 	private Scenario scenarioFromFactory(Class<?> clazz, String methodName) {
-		TestClass testClass = new TestClass(clazz);
+		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA,clazz);
 		TestMethod testMethod = testClass.getTestMethod(methodName);
 		Scenario scenario = javaTestSourceBehaviourParser.createScenario(testClass, testMethod);
 		return scenario;

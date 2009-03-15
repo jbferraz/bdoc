@@ -52,7 +52,7 @@ public class TestClass {
 		return clazz;
 	}
 
-	public boolean isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks() {
+	public boolean shouldBeAnalyzedForExtendedBehaviour() {
 		return clazz.getName().endsWith("Behaviour") || clazz.getName().endsWith("Behavior");
 	}
 

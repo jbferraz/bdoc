@@ -43,13 +43,13 @@ public class TestTestClass {
 	@Test
 	public void shouldSpecifyCheckForScenariosInTestMethodBlockWhenTestClassHasPostfixBehaviour() {
 		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA,TestDomainBehaviour.class);
-		assertTrue(testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks());
+		assertTrue(testClass.shouldBeAnalyzedForExtendedBehaviour());
 	}
 
 	@Test
 	public void shouldSpecifyCheckForScenariosInTestMethodBlockWhenTestClassHasPostfixBehavior() {
 		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA,TestDomainBehavior.class);
-		assertTrue(testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks());
+		assertTrue(testClass.shouldBeAnalyzedForExtendedBehaviour());
 	}
 
 	@Test

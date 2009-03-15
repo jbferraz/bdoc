@@ -28,7 +28,9 @@ import java.util.List;
 
 import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.domain.TableRow;
+import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestTable;
+import com.googlecode.bdoc.doc.util.JavaCodeUtil;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -38,14 +40,24 @@ public class TestTableFactory {
 	public TestTableFactory() {
 	}
 
-	public TestTable createTestTable(Class<?> testClass, String testMethodName) {
-		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(testMethodName);
+	public TestTable createTestTable(TestClass testClass, String testMethodName) {
+		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass.clazz()).invoke(testMethodName);
 		if (methodCalls.isEmpty()) {
 			return null;
 		}
 
 		TestTable testTable = new TestTable(methodCalls.get(0).getName());
+
+		boolean headerAdded = false;
 		for (MethodCall methodCall : methodCalls) {
+
+			if (!headerAdded) {
+
+				for (String argumentName : JavaCodeUtil.getArgumentNames(testClass, methodCall.getName())) {
+					testTable.addHeaderColumn(new TableColumn(argumentName));
+				}
+
+			}
 
 			TableRow tableRow = new TableRow();
 			testTable.addRow(tableRow);

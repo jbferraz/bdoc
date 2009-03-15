@@ -26,6 +26,8 @@ package com.googlecode.bdoc.doc.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -127,18 +129,34 @@ public class JavaCodeUtil {
 		return indexes;
 	}
 
+	/**
+	 * Gets the argument names for the specified methode
+	 * 
+	 * @param testClass
+	 *            specifies source
+	 * @param methodName
+	 *            to look for
+	 * @return name of arguments in methodName
+	 */
 	public static List<String> getArgumentNames(TestClass testClass, String methodName) {
-		List<String> result = new ArrayList<String>();
+		String signaturePostfixRegexp = "\\(.*\\).*\\{";
+		Pattern patternForMethodSignature = Pattern.compile(methodName + signaturePostfixRegexp);
 
-		String methodSignature = StringUtils.substringBetween(testClass.getSource(), methodName, ")");
-		methodSignature = methodSignature.replace("(", "").replace(",", "").trim();
-		String[] methodSignatureElements = methodSignature.split(" ");
-
-		for (int index = 0; index < methodSignatureElements.length; index++) {
-			if (0 == ((index + 1) % 2)) {
-				result.add(methodSignatureElements[index]);
-			}
+		String source = testClass.getSource();
+		Matcher signatureMatcher = patternForMethodSignature.matcher(source);
+		if (!signatureMatcher.find()) {
+			throw new IllegalStateException("Could not find method signature for [" + methodName + "] in [" + testClass + "]");
 		}
+
+		String methodSignature = source.substring(signatureMatcher.start(), signatureMatcher.end());
+		String[] arguments = StringUtils.substringBetween(methodSignature, "(", ")").split(",");
+
+		List<String> result = new ArrayList<String>();
+		for (String rawArgumentDeclaration : arguments) {
+			String arg = rawArgumentDeclaration.trim();
+			result.add(arg.substring(arg.lastIndexOf(' ') + 1, arg.length()));
+		}
+
 		return result;
 	}
 }

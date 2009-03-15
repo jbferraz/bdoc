@@ -40,11 +40,11 @@ import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
+import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
 import com.googlecode.bdoc.doc.report.HtmlReport;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
-import com.googlecode.bdoc.doc.runtime.RuntimeBehaviourFactory;
 
 /**
  * @goal doc
@@ -80,14 +80,16 @@ public class BDocDocMojo extends AbstractBddDocMojo {
 	File testClassDirectory;
 
 	/**
-	 * Specifies files, which are included in the check. By default, all files are included.
+	 * Specifies files, which are included in the check. By default, all files
+	 * are included.
 	 * 
 	 * @parameter
 	 */
 	String[] includes;
 
 	/**
-	 * Specifies files, which are excluded in the check. By default, no files are excluded.
+	 * Specifies files, which are excluded in the check. By default, no files
+	 * are excluded.
 	 * 
 	 * @parameter
 	 */
@@ -106,7 +108,8 @@ public class BDocDocMojo extends AbstractBddDocMojo {
 	String ignoreAnnotationClassName;
 
 	/**
-	 * @parameter default-value= "com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
+	 * @parameter default-value=
+	 *            "com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
 	 * @required
 	 */
 	String scenarioFormatterClassName;
@@ -163,9 +166,9 @@ public class BDocDocMojo extends AbstractBddDocMojo {
 		getLog().info("scenarioAnalyzer: " + scenarioAnalyzer);
 		BehaviourFactory behaviourFactory = new JavaTestSourceBehaviourParser(testSourceDirectory);
 		if (scenarioAnalyzer.equals("dynamic")) {
-			behaviourFactory = new RuntimeBehaviourFactory();
+			behaviourFactory = new RuntimeBehaviourFactory(testSourceDirectory);
 		}
-		
+
 		BDoc bdoc = bdocReport.run(behaviourFactory);
 
 		DiffLog diffLog = new DiffLog();
@@ -178,8 +181,8 @@ public class BDocDocMojo extends AbstractBddDocMojo {
 		getLog().info("Updating file: " + getBDocChangeLogFile());
 		diffLog.writeToFile(getBDocChangeLogFile());
 
-		writeReport(BDOC_HTML,
-				new HtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName).newInstance()).html());
+		writeReport(BDOC_HTML, new HtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
+				.newInstance()).html());
 
 		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog).result());
 

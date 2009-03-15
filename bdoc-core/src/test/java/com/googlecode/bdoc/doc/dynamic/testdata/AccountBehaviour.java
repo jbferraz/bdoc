@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.runtime.testdata;
+package com.googlecode.bdoc.doc.dynamic.testdata;
 
 import org.junit.Test;
 

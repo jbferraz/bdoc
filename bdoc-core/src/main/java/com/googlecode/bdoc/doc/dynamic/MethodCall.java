@@ -22,36 +22,55 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.runtime.testdata;
+package com.googlecode.bdoc.doc.dynamic;
 
-import static org.junit.Assert.*;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.junit.Test;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Example to demonstrate and test creation of test tables.
- * 
  * @author Per Otto Bergum Christensen
  */
-public class TestConvertUtilsBehaviour {
+public class MethodCall {
 
-	@Test
-	public void shouldConvertFromPrimitivToPrimitiv() {
-		assertPrimitivToPrimitivConversion(Boolean.FALSE, Integer.class, 0);
-		assertPrimitivToPrimitivConversion(Integer.MAX_VALUE, Double.class, new Double(Integer.MAX_VALUE));
-		assertPrimitivToPrimitivConversion(new Double(4444), Integer.class, new Integer(4444));
+	private final String methodName;
+	private List<Argument> arguments = new ArrayList<Argument>();
+
+	public MethodCall(String methodName) {
+		this(methodName, new Object[0] );
 	}
 
-	void assertPrimitivToPrimitivConversion(Object sourceValue, Class<?> targetClass, Object expectedValue) {
-		Object outputValue = ConvertUtils.convert(sourceValue, targetClass);
-		assertEquals("Conversion from [" + sourceValue.getClass().getName() + "] to [" + targetClass.getName() + "] failed", expectedValue,
-				outputValue);
-	}
-
-	@Test
-	public void shouldConvertFromLongToString() {
-		assertEquals(String.valueOf(Long.MAX_VALUE), ConvertUtils.convert(Long.MAX_VALUE, String.class));
+	public MethodCall(Method method, Object[] args) {
+		this( method.getName(), args );
 	}
 	
-	
+	public MethodCall(String methodName, Object[] args) {
+		this.methodName = methodName;
+		for (Object arg : args) {
+			arguments.add(new Argument(arg));
+		}
+	}
+
+
+	public String getName() {
+		return methodName;
+	}
+
+	public List<Argument> getArguments() {
+		return arguments;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((methodName == null) ? 0 : methodName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return (obj instanceof MethodCall) && (((MethodCall) obj).methodName.equals(methodName));
+	}
+
 }

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.runtime;
+package com.googlecode.bdoc.doc.dynamic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -35,7 +35,9 @@ import org.junit.Test;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.runtime.testdata.AccountBehaviour;
+import com.googlecode.bdoc.doc.dynamic.MethodCall;
+import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
+import com.googlecode.bdoc.doc.dynamic.testdata.AccountBehaviour;
 
 /**
  * @author Per Otto Bergum Christensen

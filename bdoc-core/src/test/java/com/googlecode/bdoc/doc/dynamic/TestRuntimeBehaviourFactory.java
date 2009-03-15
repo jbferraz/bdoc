@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.Scenario;
@@ -45,7 +46,7 @@ import com.googlecode.bdoc.doc.dynamic.testdata.AccountBehaviour;
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestRuntimeBehaviourFactory {
 
-	RuntimeBehaviourFactory runtimeBehaviourFactory = new RuntimeBehaviourFactory();
+	RuntimeBehaviourFactory runtimeBehaviourFactory = new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA);
 
 	@Test
 	public void shouldCreateAScenarioFromAListOfMethodCalls() {

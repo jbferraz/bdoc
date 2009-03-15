@@ -42,32 +42,32 @@ public class TestTestClass {
 
 	@Test
 	public void shouldSpecifyCheckForScenariosInTestMethodBlockWhenTestClassHasPostfixBehaviour() {
-		TestClass testClass = new TestClass(TestDomainBehaviour.class);
+		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA,TestDomainBehaviour.class);
 		assertTrue(testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks());
 	}
 
 	@Test
 	public void shouldSpecifyCheckForScenariosInTestMethodBlockWhenTestClassHasPostfixBehavior() {
-		TestClass testClass = new TestClass(TestDomainBehavior.class);
+		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA,TestDomainBehavior.class);
 		assertTrue(testClass.isMarkedAsContainerOfScenariosSpecifiedInTestMethodBlocks());
 	}
 
 	@Test
 	public void shouldLoadTheJavaSourceForTheTestClass() {
-		String source = new TestClass(TestDomainBehaviour.class).getSource(BConst.SRC_TEST_JAVA);
+		String source = new TestClass(BConst.SRC_TEST_JAVA, TestDomainBehaviour.class).getSource();
 		assertTrue(source.contains("DomainBehaviour"));
 	}
 
 	@Test
 	public void shouldReturnTestMethods() {
-		TestClass testClass = new TestClass(MyTest.class);
+		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA,MyTest.class);
 		assertEquals(1, testClass.getTestMethods(new TestAnnotations()).size());
 	}
 
 	@Test
 	public void shouldTellIfTestClassIsMarkedWithIgnore() {
-		assertFalse(new TestClass(MyTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()));
-		assertTrue(new TestClass(MyIgnoredTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()));
+		assertFalse(new TestClass(BConst.SRC_TEST_JAVA,MyTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()));
+		assertTrue(new TestClass(BConst.SRC_TEST_JAVA,MyIgnoredTest.class).classIsAnnotatedWithIgnore(new TestAnnotations()));
 	}
 
 	@Ignore

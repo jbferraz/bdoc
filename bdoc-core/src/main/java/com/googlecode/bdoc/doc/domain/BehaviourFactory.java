@@ -24,8 +24,12 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import java.io.File;
+
 public interface BehaviourFactory {
 
 	Scenario createScenario(TestClass testClass, TestMethod method);
+	
+	File javaSourceDir();
 
 }

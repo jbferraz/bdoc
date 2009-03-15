@@ -53,8 +53,8 @@ public class TestTextRenderingInHtmlReport {
 	public TestTextRenderingInHtmlReport() throws IOException {
 		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDoc.setProject(BDocTestHelper.testProject());
-		bddDoc.addBehaviourFrom(new TestClass(TestClassWithASpecification.class), BConst.SRC_TEST_JAVA);
-		bddDoc.addBehaviourFrom(new TestClass(TestClassWithAStatement.class), BConst.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithASpecification.class), BConst.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithAStatement.class), BConst.SRC_TEST_JAVA);
 
 		html = new HtmlReport(bddDoc).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);

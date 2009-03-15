@@ -33,12 +33,10 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.domain.TestTable;
-import com.googlecode.bdoc.doc.dynamic.TestTableFactory;
 import com.googlecode.bdoc.doc.dynamic.testdata.TestConvertUtilsBehaviour;
 
 /**
@@ -47,7 +45,7 @@ import com.googlecode.bdoc.doc.dynamic.testdata.TestConvertUtilsBehaviour;
 @Ref(Story.TEST_TABLES)
 public class TestTestTableFactory {
 
-	TestTableFactory testTableFactory = new TestTableFactory(BConst.SRC_TEST_JAVA);
+	TestTableFactory testTableFactory = new TestTableFactory();
 
 	@Test
 	public void shouldCreateATestTableForWhenTheTestMethodDoesMethodCalls() {

@@ -28,9 +28,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.util.testdata.MyObject;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -89,6 +93,13 @@ public class TestJavaCodeUtil {
 		assertEquals(new Scenario.Part("whenBB"), behaviour.get(4));
 		assertEquals(new Scenario.Part("thenC"), behaviour.get(2));
 		assertEquals(new Scenario.Part("thenCC"), behaviour.get(5));
+	}
+
+	@Test
+	@Ignore
+	public void shouldListArgumentNamesForAGivenMethodName() {
+		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(BConst.SRC_TEST_JAVA,MyObject.class), "methodWithOneArgument");
+		assertEquals("arg1", argNames.get(0));
 	}
 
 }

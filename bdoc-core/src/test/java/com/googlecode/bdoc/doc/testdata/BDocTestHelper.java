@@ -49,22 +49,22 @@ public class BDocTestHelper {
 
 	public static BDoc bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour() {
 		BDoc bdoc = bdocWithProject();
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithFourSpecifications.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 
 		return bdoc;
 	}
 
 	public static BDoc bdocWithOneSpecification() {
 		BDoc bdoc = bdocWithProject();
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneSpecification.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithOneSpecification.class), BConst.SRC_TEST_JAVA);
 		return bdoc;
 	}
 
 	public static BDoc bdocWithOneScenario() {
 		BDoc bdoc = bdocWithProject();
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
 		return bdoc;
 	}
 
@@ -80,7 +80,7 @@ public class BDocTestHelper {
 
 	public static BDoc bdocWithAdvancedScenarioSpecification() {
 		BDoc bddDoc = bdocWithProject();
-		bddDoc.addBehaviourFrom(new TestClass(StackBehavior.class), BConst.SRC_TEST_JAVA);
+		bddDoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,StackBehavior.class), BConst.SRC_TEST_JAVA);
 
 		return bddDoc;
 	}
@@ -142,7 +142,7 @@ public class BDocTestHelper {
 	}
 
 	public static Scenario addScenario(BDoc bdoc) {
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
 		ClassBehaviour classBehaviour = bdoc.classBehaviourInGeneralBehaviour(TestClassWithOneScenario.class);
 		return classBehaviour.getScenarios().get(0);
 	}

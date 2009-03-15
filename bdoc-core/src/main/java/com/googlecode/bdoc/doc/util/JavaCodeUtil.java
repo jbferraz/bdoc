@@ -30,6 +30,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.domain.TestClass;
 
 /**
  * Util-methods for getting data from java source code.
@@ -124,5 +125,9 @@ public class JavaCodeUtil {
 			indexes[keywordIndex] = keywordStart;
 		}
 		return indexes;
+	}
+
+	public static List<String> getArgumentNames(TestClass testClass, String methodName) {
+		return null;
 	}
 }

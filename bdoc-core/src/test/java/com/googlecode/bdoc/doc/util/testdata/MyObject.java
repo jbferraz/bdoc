@@ -22,40 +22,11 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.dynamic;
+package com.googlecode.bdoc.doc.util.testdata;
 
-import java.util.List;
+public class MyObject {
 
-import com.googlecode.bdoc.doc.domain.TableColumn;
-import com.googlecode.bdoc.doc.domain.TableRow;
-import com.googlecode.bdoc.doc.domain.TestTable;
+	public void methodWithOneArgument(String arg1) {
 
-/**
- * @author Per Otto Bergum Christensen
- */
-public class TestTableFactory {
-
-	public TestTableFactory() {
 	}
-
-	public TestTable createTestTable(Class<?> testClass, String testMethodName) {
-		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(testMethodName);
-		if (methodCalls.isEmpty()) {
-			return null;
-		}
-
-		TestTable testTable = new TestTable(methodCalls.get(0).getName());
-		for (MethodCall methodCall : methodCalls) {
-
-			TableRow tableRow = new TableRow();
-			testTable.addRow(tableRow);
-
-			for (Argument argument : methodCall.getArguments()) {
-				tableRow.addColumn(new TableColumn(argument.value()));
-			}
-		}
-
-		return testTable;
-	}
-
 }

@@ -27,6 +27,8 @@ package com.googlecode.bdoc.doc.util.testdata;
 public class MyObject {
 
 	public void methodWithOneArgument(String arg1) {
-
+	}
+	
+	public void methodWithTwoArguments( Integer arg1, Double arg2 ) {
 	}
 }

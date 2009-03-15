@@ -28,7 +28,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -96,10 +95,16 @@ public class TestJavaCodeUtil {
 	}
 
 	@Test
-	@Ignore
-	public void shouldListArgumentNamesForAGivenMethodName() {
-		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(BConst.SRC_TEST_JAVA,MyObject.class), "methodWithOneArgument");
+	public void shouldListArgumentNamesForAMethodWithOneArgument() {
+		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(BConst.SRC_TEST_JAVA, MyObject.class), "methodWithOneArgument");
 		assertEquals("arg1", argNames.get(0));
+	}
+
+	@Test
+	public void shouldListArgumentNamesForAMethodWithTwoArguments() {
+		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(BConst.SRC_TEST_JAVA, MyObject.class), "methodWithTwoArguments");
+		assertEquals("arg1", argNames.get(0));
+		assertEquals("arg2", argNames.get(1));
 	}
 
 }

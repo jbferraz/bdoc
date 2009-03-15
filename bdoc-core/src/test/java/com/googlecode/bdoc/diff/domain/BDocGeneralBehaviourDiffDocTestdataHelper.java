@@ -24,12 +24,12 @@
 
 package com.googlecode.bdoc.diff.domain;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.diff.domain.subpackage.TestClassNewInSubPackage;
 import com.googlecode.bdoc.diff.domain.testpackageremoved.TestClassRepresentsGeneralBehaviourThatIsRemoved;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
-import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.TestWithGeneralBehaviour;
 
@@ -44,16 +44,16 @@ public class BDocGeneralBehaviourDiffDocTestdataHelper {
 	{
 		ProjectInfo projectInfo = new ProjectInfo("test-project", "version1");
 		oldBddDoc.setProject(projectInfo);
-		oldBddDoc.addBehaviourFrom(new TestClass(TestClassRepresentsGeneralBehaviourThatIsRemoved.class), BDocTestHelper.SRC_TEST_JAVA);
-		oldBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BDocTestHelper.SRC_TEST_JAVA);
+		oldBddDoc.addBehaviourFrom(new TestClass(TestClassRepresentsGeneralBehaviourThatIsRemoved.class), BConst.SRC_TEST_JAVA);
+		oldBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
 				"givenAScenarioWhenItIsRemovedThenEnsureItIsReportedAsDeleted");
 
 		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour("shouldReportDeletedSpecifications");
 
 		newBddDoc.setProject(projectInfo);
-		newBddDoc.addBehaviourFrom(new TestClass(TestClassNewInSubPackage.class), BDocTestHelper.SRC_TEST_JAVA);
-		newBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BDocTestHelper.SRC_TEST_JAVA);
+		newBddDoc.addBehaviourFrom(new TestClass(TestClassNewInSubPackage.class), BConst.SRC_TEST_JAVA);
+		newBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 
 		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
 				"givenANewScenario1WhenDiffIsRunThenPackageIsUpdatedWithANewScenario");

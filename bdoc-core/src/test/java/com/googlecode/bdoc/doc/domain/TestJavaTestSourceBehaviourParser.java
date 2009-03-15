@@ -38,9 +38,9 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -49,7 +49,7 @@ import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestJavaTestSourceBehaviourParser {
 
-	JavaTestSourceBehaviourParser javaTestSourceBehaviourParser = new JavaTestSourceBehaviourParser(BDocTestHelper.SRC_TEST_JAVA);
+	JavaTestSourceBehaviourParser javaTestSourceBehaviourParser = new JavaTestSourceBehaviourParser(BConst.SRC_TEST_JAVA);
 
 	@Test
 	public void shouldComposeScenarioFromTestConstructedWithGivenWhenThenAsPartOfTheMethodBlock() throws IOException {

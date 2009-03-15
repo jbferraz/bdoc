@@ -31,11 +31,8 @@ import java.util.List;
 
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.domain.TableColumn;
-import com.googlecode.bdoc.doc.domain.TableRow;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestMethod;
-import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 
 /**
@@ -81,25 +78,4 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 	public Scenario createScenario(TestClass testClass, TestMethod method) {
 		return createScenarioInternal(testClass.clazz(), method.getName());
 	}
-
-	public TestTable createTestTable(Class<?> testClass, String testMethodName) {
-		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(testMethodName);
-		if (methodCalls.isEmpty()) {
-			return null;
-		}
-
-		TestTable testTable = new TestTable(methodCalls.get(0).getName());
-		for (MethodCall methodCall : methodCalls) {
-
-			TableRow tableRow = new TableRow();
-			testTable.addRow(tableRow);
-
-			for (Argument argument : methodCall.getArguments()) {
-				tableRow.addColumn(new TableColumn(argument.value()));
-			}
-		}
-
-		return testTable;
-	}
-
 }

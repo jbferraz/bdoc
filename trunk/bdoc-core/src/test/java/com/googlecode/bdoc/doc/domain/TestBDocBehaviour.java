@@ -43,29 +43,32 @@ import com.googlecode.bdoc.doc.testdata.RefClass;
 @RefClass(BDoc.class)
 public class TestBDocBehaviour {
 
-	private BDoc givenAnEmptyBDoc() {
-		return new BDoc();
-	}
-
-	private ClassBehaviour whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock(BDoc doc) {
-		doc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestBDocBehaviour.class), BConst.SRC_TEST_JAVA);
-		return doc.classBehaviourInGeneralBehaviour(TestBDocBehaviour.class);
-	}
-
-	private void thenEnsureThatTheScenarioIsExtracted(ClassBehaviour behaviour) {
-
-		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
-		expectedScenarioParts.add(new Scenario.Part("givenAnEmptyBDoc"));
-		expectedScenarioParts.add(new Scenario.Part("whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlockDoc"));
-		expectedScenarioParts.add(new Scenario.Part("thenEnsureThatTheScenarioIsExtractedBehaviour"));
-
-		assertTrue(behaviour.getScenarios().contains(new Scenario(expectedScenarioParts)));
-	}
-
 	@Test
 	public void shouldAddScenariosSpecifiedInATestMethodBlock() {
-		BDoc doc = givenAnEmptyBDoc();
-		ClassBehaviour behaviour = whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock(doc);
-		thenEnsureThatTheScenarioIsExtracted(behaviour);
+		givenAnEmptyBdoc();
+		whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock();
+		thenEnsureThatTheScenarioIsExtracted();
+	}
+
+	private BDoc doc;
+	private ClassBehaviour behaviour;
+
+	private void givenAnEmptyBdoc() {
+		doc = new BDoc();
+	}
+
+	private void whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock() {
+		doc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA, TestBDocBehaviour.class), BConst.SRC_TEST_JAVA);
+		behaviour = doc.classBehaviourInGeneralBehaviour(TestBDocBehaviour.class);
+	}
+
+	private void thenEnsureThatTheScenarioIsExtracted() {
+
+		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
+		expectedScenarioParts.add(new Scenario.Part("givenAnEmptyBdoc"));
+		expectedScenarioParts.add(new Scenario.Part("whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock"));
+		expectedScenarioParts.add(new Scenario.Part("thenEnsureThatTheScenarioIsExtracted"));
+
+		assertTrue(behaviour.getScenarios().contains(new Scenario(expectedScenarioParts)));
 	}
 }

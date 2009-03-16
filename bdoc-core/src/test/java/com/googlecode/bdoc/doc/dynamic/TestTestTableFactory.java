@@ -46,7 +46,7 @@ import com.googlecode.bdoc.doc.dynamic.testdata.TestConvertUtilsBehaviour;
 @Ref(Story.TEST_TABLES)
 public class TestTestTableFactory {
 
-	TestTableFactory testTableFactory = new TestTableFactory();
+	TestTableFactory testTableFactory = new TestTableFactory(BConst.SRC_TEST_JAVA);
 
 	@Test
 	public void shouldCreateATestTableForWhenTheTestMethodDoesMethodCalls() {
@@ -97,7 +97,7 @@ public class TestTestTableFactory {
 	}
 
 	private TestTable factoryCreate(Class<?> testClass, String testMethod) {
-		return testTableFactory.createTestTable(new TestClass(BConst.SRC_TEST_JAVA, testClass), testMethod);
+		return testTableFactory.createTestTable(new TestClass(testClass), testMethod);
 	}
 
 }

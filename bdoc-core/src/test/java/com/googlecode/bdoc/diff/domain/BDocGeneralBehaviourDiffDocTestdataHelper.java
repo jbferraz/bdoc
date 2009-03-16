@@ -44,16 +44,16 @@ public class BDocGeneralBehaviourDiffDocTestdataHelper {
 	{
 		ProjectInfo projectInfo = new ProjectInfo("test-project", "version1");
 		oldBddDoc.setProject(projectInfo);
-		oldBddDoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassRepresentsGeneralBehaviourThatIsRemoved.class), BConst.SRC_TEST_JAVA);
-		oldBddDoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
+		oldBddDoc.addBehaviourFrom(new TestClass(TestClassRepresentsGeneralBehaviourThatIsRemoved.class), BConst.SRC_TEST_JAVA);
+		oldBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
 				"givenAScenarioWhenItIsRemovedThenEnsureItIsReportedAsDeleted");
 
 		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour("shouldReportDeletedSpecifications");
 
 		newBddDoc.setProject(projectInfo);
-		newBddDoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassNewInSubPackage.class), BConst.SRC_TEST_JAVA);
-		newBddDoc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
+		newBddDoc.addBehaviourFrom(new TestClass(TestClassNewInSubPackage.class), BConst.SRC_TEST_JAVA);
+		newBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 
 		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
 				"givenANewScenario1WhenDiffIsRunThenPackageIsUpdatedWithANewScenario");

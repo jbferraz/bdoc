@@ -80,7 +80,7 @@ public class TestBDocDiff {
 		BDoc bddDocV2 = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bddDocV2.setProject(new ProjectInfo("name", "1"));
 
-		bddDocV2.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestWithOnlyGeneralBehaviourContent.class), BConst.SRC_TEST_JAVA);
+		bddDocV2.addBehaviourFrom(new TestClass(TestWithOnlyGeneralBehaviourContent.class), BConst.SRC_TEST_JAVA);
 
 		assertTrue(new BDocDiff(bddDocV1, bddDocV2).getGeneralBehaviourDiff().diffExists());
 	}

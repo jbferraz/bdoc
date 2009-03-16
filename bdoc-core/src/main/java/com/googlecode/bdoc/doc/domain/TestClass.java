@@ -39,13 +39,11 @@ import org.apache.commons.lang.Validate;
  */
 public class TestClass {
 
-	private File testSrcDir;
 	private Class<? extends Object> clazz;
 
-	public TestClass(File testSrcDir, Class<? extends Object> clazz) {
+	public TestClass(Class<? extends Object> clazz) {
 		Validate.notNull(clazz, "clazz can't be null");
 		this.clazz = clazz;
-		this.testSrcDir = testSrcDir;
 	}
 
 	public Class<? extends Object> clazz() {
@@ -56,7 +54,7 @@ public class TestClass {
 		return clazz.getName().endsWith("Behaviour") || clazz.getName().endsWith("Behavior");
 	}
 
-	public String getSource() {
+	public String getSource(File testSrcDir) {
 		if (null == testSrcDir) {
 			throw new IllegalStateException("Test source dir must be set on TestClass before getSource can run");
 		}

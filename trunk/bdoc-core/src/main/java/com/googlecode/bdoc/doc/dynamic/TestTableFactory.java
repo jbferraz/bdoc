@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.doc.dynamic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.bdoc.doc.domain.TableColumn;
@@ -43,10 +44,12 @@ public class TestTableFactory {
 			return null;
 		}
 
+		List<MethodCall> methodCallsClone = clone(methodCalls);
+
 		TestTable testTable = new TestTable(methodCalls.get(0).getName());
 
 		boolean headerAdded = false;
-		for (MethodCall methodCall : methodCalls) {
+		for (MethodCall methodCall : methodCallsClone) {
 
 			if (!headerAdded) {
 
@@ -65,6 +68,15 @@ public class TestTableFactory {
 		}
 
 		return testTable;
+	}
+
+	private List<MethodCall> clone(List<MethodCall> methodCalls) {
+		List<MethodCall> methodCallsClone = new ArrayList<MethodCall>();
+		for (MethodCall methodCall : methodCalls) {
+			MethodCall methodCallClone = new MethodCall(methodCall.getName(), methodCall.getArguments());
+			methodCallsClone.add(methodCallClone);
+		}
+		return methodCallsClone;
 	}
 
 }

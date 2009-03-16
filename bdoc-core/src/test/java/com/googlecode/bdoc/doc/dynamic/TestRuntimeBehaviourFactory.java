@@ -25,10 +25,9 @@
 package com.googlecode.bdoc.doc.dynamic;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -36,9 +35,9 @@ import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.dynamic.MethodCall;
-import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
+import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.dynamic.testdata.AccountBehaviour;
+import com.googlecode.bdoc.doc.dynamic.testdata.SimpleBehaviour;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -46,50 +45,59 @@ import com.googlecode.bdoc.doc.dynamic.testdata.AccountBehaviour;
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestRuntimeBehaviourFactory {
 
+	private TestClass simpleTestClass = new TestClass(BConst.SRC_TEST_JAVA, SimpleBehaviour.class);
+	private TestClass accountBehaviourTestClass = new TestClass(BConst.SRC_TEST_JAVA, AccountBehaviour.class);
+
 	RuntimeBehaviourFactory runtimeBehaviourFactory = new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA);
 
 	@Test
 	public void shouldCreateAScenarioFromAListOfMethodCalls() {
-		List<MethodCall> methodCalls = new ArrayList<MethodCall>();
-		methodCalls.add(new MethodCall("given"));
-		methodCalls.add(new MethodCall("when"));
-		methodCalls.add(new MethodCall("then"));
+		runtimeBehaviourFactory.analyze(simpleTestClass.getTestMethod("shouldBeSimple"));
+		assertTrue(runtimeBehaviourFactory.hasCreatedScenario());
+		assertEquals(new Scenario("givenWhenThen"), runtimeBehaviourFactory.getCreatedScenario());
+	}
 
-		Scenario scenario = RuntimeBehaviourFactory.create(methodCalls);
-		assertEquals(new Scenario("givenWhenThen"), scenario);
+	@Test
+	public void shouldResetCreatedScenarioWhenAnalyzeIsRunAgain() {
+		runtimeBehaviourFactory.analyze(simpleTestClass.getTestMethod("shouldBeSimple"));
+		runtimeBehaviourFactory.analyze(simpleTestClass.getTestMethod("shouldNotContainScenario"));
+		assertFalse(runtimeBehaviourFactory.hasCreatedScenario());
+
 	}
 
 	@Test
 	public void shouldCreateAScenarioFromTestMethodWithGivenWhenThenMethodCalls() {
-		Scenario scenario = runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "plainScenario");
-		assertEquals(new Scenario("givenWhenThen"), scenario);
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("plainScenario"));
+		assertEquals(new Scenario("givenWhenThen"), runtimeBehaviourFactory.getCreatedScenario());
 	}
 
 	@Test
 	public void shouldAddMethodCallArgumentValuesToTheEndOfEachScenarioPart() {
-		Scenario scenario = runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "scenarioWithArguments");
-		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), scenario);
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("scenarioWithArguments"));
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenario());
 	}
 
 	@Test
 	public void shouldPutASpaceCharBeforeAndAfterEachArgument() {
-		Scenario scenario = runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "scenarioWithArguments");
-		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), scenario);
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("scenarioWithArguments"));
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenario());
 	}
 
 	@Test
 	public void shouldUseTheWordOgBetweenArgumentsForScenariosWrittenInNorwegian() {
-		Scenario scenario = runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "norwegianScenario");
-		assertEquals(new Scenario("gitt_1_Naar_2_Og_3_Saa_4_Og_5_Og_6_"), scenario);
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("norwegianScenario"));
+		assertEquals(new Scenario("gitt_1_Naar_2_Og_3_Saa_4_Og_5_Og_6_"), runtimeBehaviourFactory.getCreatedScenario());
 	}
 
 	@Test
 	public void shouldNotCreateAScenarioForTestMethodsThatThrowsException() {
-		assertNull(runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "shouldJustBeASimpleSpecification"));
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldJustBeASimpleSpecification"));
+		assertNull(runtimeBehaviourFactory.getCreatedScenario());
 	}
 
 	@Test
 	public void shouldNotCreateAScenarioForTestMethodsThatDoNotContainAScenario() {
-		assertNull(runtimeBehaviourFactory.createScenarioInternal(AccountBehaviour.class, "emptyTest"));
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("emptyTest"));
+		assertNull(runtimeBehaviourFactory.getCreatedScenario());
 	}
 }

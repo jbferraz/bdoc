@@ -36,26 +36,34 @@ import com.googlecode.bdoc.doc.util.JavaCodeUtil;
 public class JavaTestSourceBehaviourParser implements BehaviourFactory {
 
 	private File srcTestJava;
+	private Scenario scenario;
 
 	public JavaTestSourceBehaviourParser(File srcTestJava) {
 		this.srcTestJava = srcTestJava;
 	}
 
-	public Scenario getScenario(String testMethodName,String javaSource) {
+	public void analyze(TestMethod method) {
+		scenario = null;
+		String testMethodName = method.getName();
+		String javaSource = method.getTestClass().getSource();
+		
 		String testMethodSource = JavaCodeUtil.javaBlockAfter(javaSource, testMethodName);
 		List<Part> scenarioParts = JavaCodeUtil.getGivenWhenThenMethods(testMethodSource);
-		if (scenarioParts.isEmpty()) {
-			return null;
+		if (!scenarioParts.isEmpty()) {
+			scenario = new Scenario(scenarioParts);
 		}
-
-		return new Scenario(scenarioParts);
 	}
-
-	public Scenario createScenario(TestClass testClass, TestMethod method) {
-		return getScenario(method.getName(), testClass.getSource() );
-	}
-
+	
 	public File javaSourceDir() {
 		return srcTestJava;
 	}
+
+	public Scenario getCreatedScenario() {
+		return scenario;
+	}
+
+	public boolean hasCreatedScenario() {
+		return null != scenario;
+	}
+
 }

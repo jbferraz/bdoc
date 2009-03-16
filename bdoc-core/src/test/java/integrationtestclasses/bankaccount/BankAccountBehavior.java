@@ -108,6 +108,11 @@ public class BankAccountBehavior {
 			thenShouldBalanceEqualsTo(0);
 		}
 	}
+	
+	@Test
+	public void shouldBeEmptySpecification() {
+		
+	}
 
 	private void thenShouldAnExceptionBeThrown() {
 		fail("method hasn't caused an exception when it should");

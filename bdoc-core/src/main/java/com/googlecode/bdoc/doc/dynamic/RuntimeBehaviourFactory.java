@@ -32,7 +32,6 @@ import java.util.List;
 
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 
@@ -40,14 +39,15 @@ import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
  * @author Per Otto Bergum Christensen
  */
 public class RuntimeBehaviourFactory implements BehaviourFactory {
-	
+
 	private File javaSourceDir;
-	
+	private Scenario scenario;
+
 	public RuntimeBehaviourFactory(File javaSourceDir) {
 		this.javaSourceDir = javaSourceDir;
 	}
 
-	public static Scenario create(List<MethodCall> methodCalls) {
+	private static Scenario create(List<MethodCall> methodCalls) {
 		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
 
 		Pattern locale = null;
@@ -72,7 +72,7 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		return new Scenario(scenarioParts);
 	}
 
-	Scenario createScenarioInternal(Class<?> testClass, String testMethodName) {
+	private Scenario createScenarioInternal(Class<?> testClass, String testMethodName) {
 		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(testMethodName);
 
 		if ((null == methodCalls) || (methodCalls.isEmpty())) {
@@ -82,11 +82,20 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		return create(methodCalls);
 	}
 
-	public Scenario createScenario(TestClass testClass, TestMethod method) {
-		return createScenarioInternal(testClass.clazz(), method.getName());
-	}
 
 	public File javaSourceDir() {
 		return javaSourceDir;
+	}
+
+	public void analyze(TestMethod method) {
+		scenario = createScenarioInternal(method.getTestClass().clazz(), method.getName());
+	}
+
+	public Scenario getCreatedScenario() {
+		return scenario;
+	}
+
+	public boolean hasCreatedScenario() {
+		return null != scenario;
 	}
 }

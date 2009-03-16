@@ -22,18 +22,29 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.domain;
+package com.googlecode.bdoc.doc.dynamic.testdata;
 
-import java.io.File;
+import org.junit.Test;
 
-public interface BehaviourFactory {
+public class SimpleBehaviour {
 
-	File javaSourceDir();
+	@Test
+	public void shouldBeSimple() {
+		given();
+		when();
+		then();
+	}
 
-	void analyze(TestMethod method);
+	void given() {
+	}
 
-	boolean hasCreatedScenario();
-	
-	Scenario getCreatedScenario();
+	void when() {
+	}
 
+	void then() {
+	}
+
+	@Test
+	public void shouldNotContainScenario() {
+	}
 }

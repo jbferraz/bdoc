@@ -85,7 +85,7 @@ public class TestClass {
 		List<TestMethod> result = new ArrayList<TestMethod>();
 		Method[] methods = getMethods();
 		for (Method method : methods) {
-			TestMethod testMethod = new TestMethod(method);
+			TestMethod testMethod = new TestMethod(this,method);
 			if (testMethod.isTest(testAnnotations)) {
 				result.add(testMethod);
 			}
@@ -102,7 +102,7 @@ public class TestClass {
 
 	public TestMethod getTestMethod(String methodName) {
 		try {
-			return new TestMethod(clazz.getMethod(methodName, new Class[0]));
+			return new TestMethod(this,clazz.getMethod(methodName, new Class[0]));
 		} catch (Exception e) {
 			throw new IllegalStateException("Error getting testmethod [" + methodName + "] from [" + clazz.getName() + "]", e);
 		}

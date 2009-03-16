@@ -37,13 +37,13 @@ public class MethodCall {
 	private List<Argument> arguments = new ArrayList<Argument>();
 
 	public MethodCall(String methodName) {
-		this(methodName, new Object[0] );
+		this(methodName, new Object[0]);
 	}
 
 	public MethodCall(Method method, Object[] args) {
-		this( method.getName(), args );
+		this(method.getName(), args);
 	}
-	
+
 	public MethodCall(String methodName, Object[] args) {
 		this.methodName = methodName;
 		for (Object arg : args) {
@@ -51,6 +51,10 @@ public class MethodCall {
 		}
 	}
 
+	public MethodCall(String methodName, List<Argument> arguments) {
+		this.methodName = methodName;
+		this.arguments = arguments;
+	}
 
 	public String getName() {
 		return methodName;

@@ -32,8 +32,10 @@ import java.lang.reflect.Method;
 public class TestMethod {
 
 	private Method method;
+	private TestClass testClass;
 
-	public TestMethod(Method method) {
+	public TestMethod(TestClass testClass,Method method) {
+		this.testClass = testClass;
 		this.method = method;
 	}
 
@@ -103,5 +105,9 @@ public class TestMethod {
 			return true;
 		}
 		return false;
+	}
+
+	public TestClass getTestClass() {
+		return testClass;
 	}
 }

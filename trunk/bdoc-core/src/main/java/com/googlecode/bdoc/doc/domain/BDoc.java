@@ -110,16 +110,10 @@ public class BDoc {
 			}
 
 			if (testClass.shouldBeAnalyzedForExtendedBehaviour()) {
-				//behaviourFactory.analyze(method);
-				//if behaviourFactory.hasCreatedScenario()
-				// classBehaviour.addScenario(scenario);
+				behaviourFactory.analyze(method);
 				
-				//if behaviourFactory.hasCreatedTestTable()
-				// classBehaviour.addTestTable
-				
-				Scenario scenario = behaviourFactory.createScenario(testClass, method);
-				if (null != scenario) {
-					classBehaviour.addScenario(scenario);
+				if (behaviourFactory.hasCreatedScenario()) {
+					classBehaviour.addScenario(behaviourFactory.getCreatedScenario());
 				}
 			}
 		}
@@ -217,7 +211,7 @@ public class BDoc {
 		List<String> classes = testClassesDirectory.classes();
 		for (String className : classes) {
 			try {
-				addBehaviourFrom(new TestClass(behaviourFactory.javaSourceDir(), classLoader.loadClass(className)), behaviourFactory );
+				addBehaviourFrom(new TestClass(behaviourFactory.javaSourceDir(), classLoader.loadClass(className)), behaviourFactory);
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}

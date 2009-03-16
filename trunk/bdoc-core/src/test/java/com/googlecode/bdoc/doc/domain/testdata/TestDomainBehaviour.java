@@ -37,13 +37,13 @@ public class TestDomainBehaviour {
 		then();
 	}
 
-	private void then() {
+	void then() {
 	}
 
-	private void when() {
+	void when() {
 	}
 
-	private void given() {
+	void given() {
 	}
 
 }

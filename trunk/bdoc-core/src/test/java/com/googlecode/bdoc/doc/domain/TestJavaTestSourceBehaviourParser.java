@@ -25,9 +25,9 @@
 package com.googlecode.bdoc.doc.domain;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import integrationtestclasses.bankaccount.BankAccountBehavior;
-import integrationtestclasses.calculator.TestCalculatorBehaviour;
 import integrationtestclasses.stack.StackBehavior;
 import integrationtestclasses.stack.TestStack;
 
@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -110,26 +109,22 @@ public class TestJavaTestSourceBehaviourParser {
 	}
 
 	@Test
-	@Ignore
-	public void shouldHandleArgumentsThatAreVariables() throws IOException {
-		Scenario scenario = scenarioFromFactory(TestCalculatorBehaviour.class, "shouldAddADoubleWithAnInteger");
-
-		assertEquals("givenOperandOneIs4.5", scenario.getParts().get(0).camelCaseDescription());
-		assertEquals("givenOperandTwoIs10", scenario.getParts().get(1).camelCaseDescription());
-
-		assertEquals("whenTheAddOperationIsExecuted", scenario.getParts().get(2).camelCaseDescription());
-		assertEquals("thenTheResultShouldEqual14.5", scenario.getParts().get(3).camelCaseDescription());
+	public void shouldResetCreatedScenarioForEachAnalyze() {
+		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA, BankAccountBehavior.class);
+		javaTestSourceBehaviourParser.analyze(testClass.getTestMethod("shouldAddDepositToBalance"));
+		assertNotNull( javaTestSourceBehaviourParser.getCreatedScenario() );
+		javaTestSourceBehaviourParser.analyze(testClass.getTestMethod("shouldBeEmptySpecification"));
+		assertNull( javaTestSourceBehaviourParser.getCreatedScenario() );
 	}
-
+	
 	/**
-	 * Helper method to avoid duplicate testcode when testing the scenario
-	 * factory
+	 * Helper method to avoid duplicate testcode when testing the scenario factory
 	 */
 	private Scenario scenarioFromFactory(Class<?> clazz, String methodName) {
 		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA, clazz);
 		TestMethod testMethod = testClass.getTestMethod(methodName);
-		Scenario scenario = javaTestSourceBehaviourParser.createScenario(testClass, testMethod);
-		return scenario;
+		javaTestSourceBehaviourParser.analyze(testMethod);
+		return javaTestSourceBehaviourParser.getCreatedScenario();
 	}
 
 }

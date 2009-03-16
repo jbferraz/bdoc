@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.doc.dynamic;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,12 @@ import com.googlecode.bdoc.doc.util.JavaCodeUtil;
  * @author Per Otto Bergum Christensen
  */
 public class TestTableFactory {
+
+	private File srcTestJava;
+
+	public TestTableFactory(File srcTestJava) {
+		this.srcTestJava = srcTestJava;
+	}
 
 	public TestTable createTestTable(TestClass testClass, String testMethodName) {
 		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass.clazz()).invoke(testMethodName);
@@ -53,7 +60,7 @@ public class TestTableFactory {
 
 			if (!headerAdded) {
 
-				for (String argumentName : JavaCodeUtil.getArgumentNames(testClass, methodCall.getName())) {
+				for (String argumentName : JavaCodeUtil.getArgumentNames(testClass, methodCall.getName(),srcTestJava)) {
 					testTable.addHeaderColumn(new TableColumn(argumentName));
 				}
 

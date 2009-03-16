@@ -45,8 +45,8 @@ import com.googlecode.bdoc.doc.dynamic.testdata.SimpleBehaviour;
 @Ref(Story.ADVANCED_SCENARIO_SPECIFICATION)
 public class TestRuntimeBehaviourFactory {
 
-	private TestClass simpleTestClass = new TestClass(BConst.SRC_TEST_JAVA, SimpleBehaviour.class);
-	private TestClass accountBehaviourTestClass = new TestClass(BConst.SRC_TEST_JAVA, AccountBehaviour.class);
+	private TestClass simpleTestClass = new TestClass(SimpleBehaviour.class);
+	private TestClass accountBehaviourTestClass = new TestClass(AccountBehaviour.class);
 
 	RuntimeBehaviourFactory runtimeBehaviourFactory = new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA);
 

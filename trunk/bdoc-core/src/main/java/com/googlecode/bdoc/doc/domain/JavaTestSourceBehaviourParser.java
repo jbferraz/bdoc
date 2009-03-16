@@ -45,7 +45,7 @@ public class JavaTestSourceBehaviourParser implements BehaviourFactory {
 	public void analyze(TestMethod method) {
 		scenario = null;
 		String testMethodName = method.getName();
-		String javaSource = method.getTestClass().getSource();
+		String javaSource = method.getTestClass().getSource(srcTestJava);
 		
 		String testMethodSource = JavaCodeUtil.javaBlockAfter(javaSource, testMethodName);
 		List<Part> scenarioParts = JavaCodeUtil.getGivenWhenThenMethods(testMethodSource);

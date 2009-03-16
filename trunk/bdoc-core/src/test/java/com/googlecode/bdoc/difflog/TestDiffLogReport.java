@@ -43,12 +43,12 @@ public class TestDiffLogReport {
 	BDoc emptyBdoc = new BDoc(new ProjectInfo("test", "test"));
 	BDoc bdocWithTwoSpecifications = new BDoc(new ProjectInfo("test", "test"));
 	{
-		bdocWithTwoSpecifications.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithTwoSpecifications.class), BConst.SRC_TEST_JAVA);
+		bdocWithTwoSpecifications.addBehaviourFrom(new TestClass(TestClassWithTwoSpecifications.class), BConst.SRC_TEST_JAVA);
 	}
 	BDoc bdocWithTwoSpecificationsAndAScenario = new BDoc(new ProjectInfo("test", "test"));
 	{
-		bdocWithTwoSpecificationsAndAScenario.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithTwoSpecifications.class), BConst.SRC_TEST_JAVA);
-		bdocWithTwoSpecificationsAndAScenario.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA,TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
+		bdocWithTwoSpecificationsAndAScenario.addBehaviourFrom(new TestClass(TestClassWithTwoSpecifications.class), BConst.SRC_TEST_JAVA);
+		bdocWithTwoSpecificationsAndAScenario.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
 	}
 
 	private DiffLog diffLog = new DiffLog();

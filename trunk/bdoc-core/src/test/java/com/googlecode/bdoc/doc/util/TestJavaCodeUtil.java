@@ -96,13 +96,13 @@ public class TestJavaCodeUtil {
 
 	@Test
 	public void shouldListArgumentNamesForAMethodWithOneArgument() {
-		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(BConst.SRC_TEST_JAVA, MyObject.class), "methodWithOneArgument");
+		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(MyObject.class), "methodWithOneArgument",BConst.SRC_TEST_JAVA);
 		assertEquals("arg1", argNames.get(0));
 	}
 
 	@Test
 	public void shouldListArgumentNamesForAMethodWithTwoArguments() {
-		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(BConst.SRC_TEST_JAVA, MyObject.class), "methodWithTwoArguments");
+		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(MyObject.class), "methodWithTwoArguments",BConst.SRC_TEST_JAVA);
 		assertEquals("arg1", argNames.get(0));
 		assertEquals("arg2", argNames.get(1));
 	}

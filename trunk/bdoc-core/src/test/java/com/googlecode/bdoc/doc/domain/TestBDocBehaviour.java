@@ -58,7 +58,7 @@ public class TestBDocBehaviour {
 	}
 
 	private void whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock() {
-		doc.addBehaviourFrom(new TestClass(BConst.SRC_TEST_JAVA, TestBDocBehaviour.class), BConst.SRC_TEST_JAVA);
+		doc.addBehaviourFrom(new TestClass(TestBDocBehaviour.class), BConst.SRC_TEST_JAVA);
 		behaviour = doc.classBehaviourInGeneralBehaviour(TestBDocBehaviour.class);
 	}
 

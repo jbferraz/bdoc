@@ -110,7 +110,7 @@ public class TestJavaTestSourceBehaviourParser {
 
 	@Test
 	public void shouldResetCreatedScenarioForEachAnalyze() {
-		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA, BankAccountBehavior.class);
+		TestClass testClass = new TestClass(BankAccountBehavior.class);
 		javaTestSourceBehaviourParser.analyze(testClass.getTestMethod("shouldAddDepositToBalance"));
 		assertNotNull( javaTestSourceBehaviourParser.getCreatedScenario() );
 		javaTestSourceBehaviourParser.analyze(testClass.getTestMethod("shouldBeEmptySpecification"));
@@ -121,7 +121,7 @@ public class TestJavaTestSourceBehaviourParser {
 	 * Helper method to avoid duplicate testcode when testing the scenario factory
 	 */
 	private Scenario scenarioFromFactory(Class<?> clazz, String methodName) {
-		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA, clazz);
+		TestClass testClass = new TestClass(clazz);
 		TestMethod testMethod = testClass.getTestMethod(methodName);
 		javaTestSourceBehaviourParser.analyze(testMethod);
 		return javaTestSourceBehaviourParser.getCreatedScenario();

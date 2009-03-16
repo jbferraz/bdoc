@@ -56,11 +56,11 @@ public class TestJavaTestSourceBehaviourParser {
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
 		expectedScenarioParts.add(new Scenario.Part("givenAnEmptyStack"));
-		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemVALUE_1"));
-		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemVALUE_2"));
+		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemFoo"));
+		expectedScenarioParts.add(new Scenario.Part("givenOnePushedItemBar"));
 		expectedScenarioParts.add(new Scenario.Part("whenPopIsCalled"));
-		expectedScenarioParts.add(new Scenario.Part("thenLastItemPushedAreReturnedFromPop"));
-		expectedScenarioParts.add(new Scenario.Part("thenTheValueNotRemainsInTheStack"));
+		expectedScenarioParts.add(new Scenario.Part("thenPopedValueShouldBeBar"));
+		expectedScenarioParts.add(new Scenario.Part("thenShouldTheValueNotRemainsInTheStack"));
 		expectedScenarioParts.add(new Scenario.Part("thenTheStackAreNotEmpty"));
 
 		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(StackBehavior.class, "shouldPopLastPushedValueFirst"));
@@ -112,7 +112,7 @@ public class TestJavaTestSourceBehaviourParser {
 	@Test
 	@Ignore
 	public void shouldHandleArgumentsThatAreVariables() throws IOException {
-		Scenario scenario = scenarioFromFactory(TestCalculatorBehaviour.class,"shouldAddADoubleWithAnInteger");
+		Scenario scenario = scenarioFromFactory(TestCalculatorBehaviour.class, "shouldAddADoubleWithAnInteger");
 
 		assertEquals("givenOperandOneIs4.5", scenario.getParts().get(0).camelCaseDescription());
 		assertEquals("givenOperandTwoIs10", scenario.getParts().get(1).camelCaseDescription());
@@ -122,10 +122,11 @@ public class TestJavaTestSourceBehaviourParser {
 	}
 
 	/**
-	 * Helper method to avoid duplicate testcode when testing the scenario factory
+	 * Helper method to avoid duplicate testcode when testing the scenario
+	 * factory
 	 */
 	private Scenario scenarioFromFactory(Class<?> clazz, String methodName) {
-		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA,clazz);
+		TestClass testClass = new TestClass(BConst.SRC_TEST_JAVA, clazz);
 		TestMethod testMethod = testClass.getTestMethod(methodName);
 		Scenario scenario = javaTestSourceBehaviourParser.createScenario(testClass, testMethod);
 		return scenario;

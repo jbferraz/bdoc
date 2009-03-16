@@ -44,11 +44,10 @@ public class StackBehavior {
 
 	private Stack<String> stack;
 
-	private static final String VALUE_1 = "1";
-	private static final String VALUE_2 = "2";
+	private static final String foo = "1";
+	private static final String bar = "2";
 
 	private String poped;
-	private String lastPushed;
 	private String peeked;
 	private int sizeBefore;
 	private int sizeAfter;
@@ -62,7 +61,7 @@ public class StackBehavior {
 	@Test
 	public void shouldNotBeEmptyAfterPush() {
 		givenAnEmptyStack();
-		whenPushedIsCalledWith(VALUE_1);
+		whenPushedIsCalledWith(foo);
 		thenTheStackAreNotEmpty();
 	}
 
@@ -83,36 +82,36 @@ public class StackBehavior {
 	@Test
 	public void shouldPopPushedValue() {
 		givenAnEmptyStack();
-		givenOnePushedItem(VALUE_1);
+		givenOnePushedItem(foo);
 		whenPopIsCalled();
-		thenLastItemPushedAreReturnedFromPop();
+		thenPopedValueShouldBe(foo);
 		thenTheStackAreEmpty();
 	}
 
 	@Test
 	public void shouldPopLastPushedValueFirst() {
 		givenAnEmptyStack();
-		givenOnePushedItem(VALUE_1);
-		givenOnePushedItem(VALUE_2);
+		givenOnePushedItem(foo);
+		givenOnePushedItem(bar);
 		whenPopIsCalled();
-		thenLastItemPushedAreReturnedFromPop();
-		thenTheValueNotRemainsInTheStack();
+		thenPopedValueShouldBe(bar);
+		thenShouldTheValueNotRemainsInTheStack();
 		thenTheStackAreNotEmpty();
 	}
 
 	@Test
 	public void shouldLeaveValueOnStackAfterPeep() {
 		givenAnEmptyStack();
-		givenOnePushedItem(VALUE_1);
+		givenOnePushedItem(foo);
+		givenOnePushedItem(bar);
 		whenPeekIsCalled();
-		thenLastItemPushedAreReturnedFromPeek();
+		thenPeekedValueShouldBe(bar);
 		thenTheValueRemainsInTheStack();
 	}
 
 	@Before
 	public void setUp() {
 		poped = null;
-		lastPushed = null;
 		peeked = null;
 		sizeBefore = 0;
 		sizeAfter = 0;
@@ -126,7 +125,6 @@ public class StackBehavior {
 		sizeBefore = stack.size();
 		stack.push(item);
 		sizeAfter = stack.size();
-		lastPushed = item;
 	}
 
 	private void whenPushedIsCalledWith(String item) {
@@ -149,11 +147,11 @@ public class StackBehavior {
 		fail("method hasn't caused an exception when it should");
 	}
 
-	private void thenLastItemPushedAreReturnedFromPop() {
+	private void thenPopedValueShouldBe(String lastPushed) {
 		assertThat(lastPushed, equalTo(poped));
 	}
 
-	private void thenLastItemPushedAreReturnedFromPeek() {
+	private void thenPeekedValueShouldBe(String lastPushed) {
 		assertThat(lastPushed, equalTo(peeked));
 	}
 
@@ -161,7 +159,7 @@ public class StackBehavior {
 		assertThat(sizeAfter, equalTo(sizeBefore));
 	}
 
-	private void thenTheValueNotRemainsInTheStack() {
+	private void thenShouldTheValueNotRemainsInTheStack() {
 		assertThat(sizeAfter, equalTo(sizeBefore - 1));
 	}
 

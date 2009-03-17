@@ -71,7 +71,7 @@ public class TestGeneralBehaviour {
 	}
 
 	@Test
-	public void shouldBeAbleToRetreiveAndAddedScenario() {
+	public void shouldBeAbleToRetreiveAnAddedScenario() {
 		assertTrue(generalBehaviour.getPackages().get(0).getScenarios().contains(
 				new Scenario(GIVEN_SOMETHING_WHEN_AN_ACTION_THEN_VERIFY_RESULT)));
 	}
@@ -95,7 +95,7 @@ public class TestGeneralBehaviour {
 		
 		assertFalse(generalBehaviour.specifications().isEmpty() );
 	}
-
+	
 	/**
 	 * Testdata
 	 */

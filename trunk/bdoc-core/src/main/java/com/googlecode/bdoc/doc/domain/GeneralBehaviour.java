@@ -96,4 +96,8 @@ public class GeneralBehaviour {
 		}
 		return result;
 	}
+
+	public List<TestTable> testTables() {
+		return null;
+	}
 }

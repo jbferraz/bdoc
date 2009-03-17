@@ -49,6 +49,26 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		this.testTableFactory = new TestTableFactory(javaSourceDir);
 	}
 
+	public void analyze(TestMethod method) {
+		scenarios = new ArrayList<Scenario>();
+		testTables = new ArrayList<TestTable>();
+
+		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(method.clazz()).invoke(method.getName());
+		if ((null == methodCalls) || (methodCalls.isEmpty())) {
+			return;
+		}
+
+		Scenario scenario = createScenario(methodCalls);
+		if (null != scenario) {
+			scenarios.add(scenario);
+		}
+
+		TestTable testTable = testTableFactory.createTestTable(method, methodCalls);
+		if (null != testTable) {
+			testTables.add(testTable);
+		}
+	}
+	
 	private static Scenario createScenario(List<MethodCall> methodCalls) {
 		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
 
@@ -75,26 +95,6 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 			scenarioParts.add(new Scenario.Part(camelCaseDescription));
 		}
 		return new Scenario(scenarioParts);
-	}
-
-	public void analyze(TestMethod method) {
-		scenarios = new ArrayList<Scenario>();
-		testTables = new ArrayList<TestTable>();
-
-		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(method.clazz()).invoke(method.getName());
-		if ((null == methodCalls) || (methodCalls.isEmpty())) {
-			return;
-		}
-
-		Scenario scenario = createScenario(methodCalls);
-		if (null != scenario) {
-			scenarios.add(scenario);
-		}
-
-		TestTable testTable = testTableFactory.createTestTable(method, methodCalls);
-		if (null != testTable) {
-			testTables.add(testTable);
-		}
 	}
 
 	public List<Scenario> getCreatedScenarios() {

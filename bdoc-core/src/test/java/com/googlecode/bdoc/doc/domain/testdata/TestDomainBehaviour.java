@@ -25,16 +25,20 @@
 package com.googlecode.bdoc.doc.domain.testdata;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class TestDomainBehaviour {
-	
+
 	@org.junit.Test
-	public void simpleScenario()
-	{
+	public void shouldBeASpecificationWithScenario() {
 		given();
 		when();
 		then();
+	}
+
+	@org.junit.Test
+	public void simpleStatement() {
 	}
 
 	void then() {

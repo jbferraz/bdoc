@@ -128,6 +128,15 @@ public class AccountBehaviour {
 
 	@Test
 	public void emptyTest() {
+	}
 
+	@Test
+	public void shouldContainATestTable() {
+		assertSum( 1,1,2 );
+		assertSum( 2,2,2 );
+		assertSum( 2,0,2 );
+	}
+
+	void assertSum(int i, int j, int k) {
 	}
 }

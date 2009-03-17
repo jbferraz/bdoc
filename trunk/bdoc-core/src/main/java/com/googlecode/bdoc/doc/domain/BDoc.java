@@ -111,8 +111,7 @@ public class BDoc {
 
 			if (testClass.shouldBeAnalyzedForExtendedBehaviour()) {
 				behaviourFactory.analyze(method);
-
-				classBehaviour.addScenarios(behaviourFactory.getCreatedScenario());
+				classBehaviour.addScenarios(behaviourFactory.getCreatedScenarios());
 				
 
 				// if (behaviourFactory.hasCreatedTestTable()) {

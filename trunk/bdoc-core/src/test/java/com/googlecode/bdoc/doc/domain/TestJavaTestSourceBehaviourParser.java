@@ -26,8 +26,7 @@ package com.googlecode.bdoc.doc.domain;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import integrationtestclasses.bankaccount.BankAccountBehavior;
 import integrationtestclasses.stack.StackBehavior;
 import integrationtestclasses.stack.TestStack;
@@ -114,9 +113,9 @@ public class TestJavaTestSourceBehaviourParser {
 	public void shouldResetCreatedScenarioForEachAnalyze() {
 		TestClass testClass = new TestClass(BankAccountBehavior.class);
 		javaTestSourceBehaviourParser.analyze(testClass.getTestMethod("shouldAddDepositToBalance"));
-		assertNotNull( javaTestSourceBehaviourParser.getCreatedScenario() );
+		assertNotNull( javaTestSourceBehaviourParser.getCreatedScenarios() );
 		javaTestSourceBehaviourParser.analyze(testClass.getTestMethod("shouldBeEmptySpecification"));
-		assertTrue( javaTestSourceBehaviourParser.getCreatedScenario().isEmpty() );
+		assertTrue( javaTestSourceBehaviourParser.getCreatedScenarios().isEmpty() );
 	}
 	
 	/**
@@ -126,7 +125,7 @@ public class TestJavaTestSourceBehaviourParser {
 		TestClass testClass = new TestClass(clazz);
 		TestMethod testMethod = testClass.getTestMethod(methodName);
 		javaTestSourceBehaviourParser.analyze(testMethod);
-		return javaTestSourceBehaviourParser.getCreatedScenario();
+		return javaTestSourceBehaviourParser.getCreatedScenarios();
 	}
 
 }

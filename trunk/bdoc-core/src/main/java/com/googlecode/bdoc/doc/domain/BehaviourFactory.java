@@ -26,11 +26,17 @@ package com.googlecode.bdoc.doc.domain;
 
 import java.util.List;
 
-
+/**
+ * Client will first call analyze for a testmethod, then ask for create scenarios and testtables.
+ * 
+ * @author Per Otto Bergum Christensen
+ */
 public interface BehaviourFactory {
 
 	void analyze(TestMethod method);
 
-	List<Scenario> getCreatedScenario();
+	List<Scenario> getCreatedScenarios();
+
+	List<TestTable> getCreatedTestTables();
 
 }

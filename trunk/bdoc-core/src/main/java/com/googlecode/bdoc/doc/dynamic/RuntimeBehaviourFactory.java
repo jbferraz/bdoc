@@ -33,6 +33,7 @@ import java.util.List;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestMethod;
+import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 
 /**
@@ -41,10 +42,13 @@ import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 public class RuntimeBehaviourFactory implements BehaviourFactory {
 
 	private File javaSourceDir;
-	private Scenario scenario;
+	private TestTableFactory testTableFactory;
+	private List<TestTable> testTables;
+	private List<Scenario> scenarios;
 
 	public RuntimeBehaviourFactory(File javaSourceDir) {
 		this.javaSourceDir = javaSourceDir;
+		this.testTableFactory = new TestTableFactory(javaSourceDir);
 	}
 
 	private static Scenario create(List<MethodCall> methodCalls) {
@@ -56,6 +60,9 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 
 			if (null == locale) {
 				locale = Scenario.Pattern.find(camelCaseDescription);
+				if (null == locale) {
+					return null;
+				}
 			}
 
 			for (Argument argument : methodCall.getArguments()) {
@@ -82,20 +89,29 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		return create(methodCalls);
 	}
 
-
 	public File javaSourceDir() {
 		return javaSourceDir;
 	}
 
 	public void analyze(TestMethod method) {
-		scenario = createScenarioInternal(method.getTestClass().clazz(), method.getName());
-	}
-
-	public List<Scenario> getCreatedScenario() {
-		List<Scenario> scenarios = new ArrayList<Scenario>();
-		if( null != scenario) {
+		Scenario scenario = createScenarioInternal(method.getTestClass().clazz(), method.getName());
+		scenarios = new ArrayList<Scenario>();
+		if (null != scenario) {
 			scenarios.add(scenario);
 		}
+
+		TestTable testTable = testTableFactory.createTestTable(method.getTestClass(), method.getName());
+		testTables = new ArrayList<TestTable>();
+		if (null != testTable) {
+			testTables.add(testTable);
+		}
+	}
+
+	public List<Scenario> getCreatedScenarios() {
 		return scenarios;
+	}
+
+	public List<TestTable> getCreatedTestTables() {
+		return testTables;
 	}
 }

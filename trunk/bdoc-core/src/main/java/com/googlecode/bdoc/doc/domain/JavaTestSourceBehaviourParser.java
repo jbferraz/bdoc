@@ -59,12 +59,19 @@ public class JavaTestSourceBehaviourParser implements BehaviourFactory {
 		return srcTestJava;
 	}
 
-	public List<Scenario> getCreatedScenario() {
+	public List<Scenario> getCreatedScenarios() {
 		List<Scenario> scenarios = new ArrayList<Scenario>();
 		if( null != scenario) {
 			scenarios.add(scenario);
 		}
 		return scenarios;
+	}
+
+	/**
+	 * Default implementation - empty
+	 */
+	public List<TestTable> getCreatedTestTables() {
+		return new ArrayList<TestTable>();
 	}
 
 }

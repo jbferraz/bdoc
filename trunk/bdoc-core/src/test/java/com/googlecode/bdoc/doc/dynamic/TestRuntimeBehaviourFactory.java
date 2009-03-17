@@ -26,7 +26,6 @@ package com.googlecode.bdoc.doc.dynamic;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -53,51 +52,69 @@ public class TestRuntimeBehaviourFactory {
 	@Test
 	public void shouldCreateAScenarioFromAListOfMethodCalls() {
 		runtimeBehaviourFactory.analyze(simpleTestClass.getTestMethod("shouldBeSimple"));
-		assertFalse(runtimeBehaviourFactory.getCreatedScenario().isEmpty());
-		assertEquals(new Scenario("givenWhenThen"), runtimeBehaviourFactory.getCreatedScenario().get(0));
+		assertFalse(runtimeBehaviourFactory.getCreatedScenarios().isEmpty());
+		assertEquals(new Scenario("givenWhenThen"), runtimeBehaviourFactory.getCreatedScenarios().get(0));
 	}
 
 	@Test
 	public void shouldResetCreatedScenarioWhenAnalyzeIsRunAgain() {
 		runtimeBehaviourFactory.analyze(simpleTestClass.getTestMethod("shouldBeSimple"));
 		runtimeBehaviourFactory.analyze(simpleTestClass.getTestMethod("shouldNotContainScenario"));
-		assertTrue(runtimeBehaviourFactory.getCreatedScenario().isEmpty());
-
+		assertTrue(runtimeBehaviourFactory.getCreatedScenarios().isEmpty());
 	}
 
 	@Test
 	public void shouldCreateAScenarioFromTestMethodWithGivenWhenThenMethodCalls() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("plainScenario"));
-		assertEquals(new Scenario("givenWhenThen"), runtimeBehaviourFactory.getCreatedScenario().get(0));
+		assertEquals(new Scenario("givenWhenThen"), runtimeBehaviourFactory.getCreatedScenarios().get(0));
 	}
 
 	@Test
 	public void shouldAddMethodCallArgumentValuesToTheEndOfEachScenarioPart() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("scenarioWithArguments"));
-		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenario().get(0));
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(0));
 	}
 
 	@Test
 	public void shouldPutASpaceCharBeforeAndAfterEachArgument() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("scenarioWithArguments"));
-		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenario().get(0));
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(0));
 	}
 
 	@Test
 	public void shouldUseTheWordOgBetweenArgumentsForScenariosWrittenInNorwegian() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("norwegianScenario"));
-		assertEquals(new Scenario("gitt_1_Naar_2_Og_3_Saa_4_Og_5_Og_6_"), runtimeBehaviourFactory.getCreatedScenario().get(0));
+		assertEquals(new Scenario("gitt_1_Naar_2_Og_3_Saa_4_Og_5_Og_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(0));
 	}
 
 	@Test
 	public void shouldNotCreateAScenarioForTestMethodsThatThrowsException() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldJustBeASimpleSpecification"));
-		assertTrue(runtimeBehaviourFactory.getCreatedScenario().isEmpty());
+		assertTrue(runtimeBehaviourFactory.getCreatedScenarios().isEmpty());
 	}
 
 	@Test
 	public void shouldNotCreateAScenarioForTestMethodsThatDoNotContainAScenario() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("emptyTest"));
-		assertTrue(runtimeBehaviourFactory.getCreatedScenario().isEmpty());
+		assertTrue(runtimeBehaviourFactory.getCreatedScenarios().isEmpty());
+	}
+
+	@Test
+	public void shouldCreateTestTablesFromTestMethodWhereCallsAreMadeToAccessibleCustomAssert() {
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldContainATestTable"));
+		assertFalse(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
+		assertEquals("assertSum", runtimeBehaviourFactory.getCreatedTestTables().get(0).getCamelCaseDescription());
+	}
+
+	@Test
+	public void shouldNotCreateATestTablesFromTestMethodWhenNonCallsAreMadeToAccessibleCustomAssert() {
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("emptyTest"));
+		assertTrue(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
+	}
+
+	@Test
+	public void shouldNotCreateAScenarioIfTheFirstMethodDoesntStartWithTheScenarioKeywordGiven() {
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldContainATestTable"));
+		assertTrue(runtimeBehaviourFactory.getCreatedScenarios().isEmpty());
 	}
 }

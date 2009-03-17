@@ -112,12 +112,7 @@ public class BDoc {
 			if (testClass.shouldBeAnalyzedForExtendedBehaviour()) {
 				behaviourFactory.analyze(method);
 				classBehaviour.addScenarios(behaviourFactory.getCreatedScenarios());
-				
-
-				// if (behaviourFactory.hasCreatedTestTable()) {
-				// classBehaviour.addTestTable(behaviourFactory.getCreatedTestTable());
-				// }
-
+				classBehaviour.addTestTables(behaviourFactory.getCreatedTestTables());				
 			}
 		}
 		return this;
@@ -247,5 +242,11 @@ public class BDoc {
 	 */
 	public void setDefaultTestAnnotations() {
 		testAnnotations = new TestAnnotations();
+	}
+
+	public List<TestTable> testTables() {
+		List<TestTable> result = new ArrayList<TestTable>();
+		result.addAll(generalBehaviour.testTables());
+		return result;
 	}
 }

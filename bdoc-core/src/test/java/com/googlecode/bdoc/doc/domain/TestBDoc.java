@@ -38,6 +38,7 @@ import org.junit.Test;
 import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
+import com.googlecode.bdoc.doc.domain.testdata.MyTestTablesBehaviour;
 import com.googlecode.bdoc.doc.domain.testdata.TestDomainBehaviour;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.testdata.ExReference;
@@ -56,16 +57,14 @@ public class TestBDoc {
 	@Before
 	public void resetBddDoc() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
-		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class),
-				BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BConst.SRC_TEST_JAVA);
 	}
 
 	@Test
 	public void shouldRunWithAStoryRefAnnotation() {
 		bdoc = new BDoc(org.junit.Test.class, null, org.junit.Ignore.class);
-		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class),
-				BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BConst.SRC_TEST_JAVA);
 	}
 
@@ -229,11 +228,20 @@ public class TestBDoc {
 
 	@Test
 	public void shouldBeAbleToUseRuntimeBehaviourFactoryToCreateScenarioInMethodBlock() {
-		bdoc = new BDoc();
-		bdoc.addBehaviourFrom(new TestClass(TestDomainBehaviour.class), new RuntimeBehaviourFactory(
-				BConst.SRC_TEST_JAVA));
-		assertFalse(bdoc.scenarios().isEmpty());
+		BDoc bdocWithScenario = new BDoc();
+		bdocWithScenario.addBehaviourFrom(new TestClass(TestDomainBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		assertFalse(bdocWithScenario.scenarios().isEmpty());
 	}
+
+	@Test
+	public void shouldIncludeTestTablesWhenTheRuntimeBehaviourFactoryIsPluggedIn() {
+		bdoc = new BDoc();
+		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		ClassBehaviour classBehaviour = bdoc.classBehaviourInGeneralBehaviour(MyTestTablesBehaviour.class);
+		assertFalse( classBehaviour.getTestTables().isEmpty() );
+	}
+	
+	
 
 	/**
 	 * Testdata

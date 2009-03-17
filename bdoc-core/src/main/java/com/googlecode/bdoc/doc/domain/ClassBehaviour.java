@@ -33,7 +33,13 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Describes behaviour for a Class.
+ * Describes behaviour for a Class. 
+ * 
+ * Could be:
+ *  - scenario
+ *  - specification
+ *  - statement
+ *  - test table
  * 
  * @author Per Otto Bergum Christensen
  */
@@ -48,6 +54,8 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	private List<Specification> specifications = new ArrayList<Specification>();
 
 	private List<Statement> statements = new ArrayList<Statement>();
+
+	private List<TestTable> testTables = new ArrayList<TestTable>();
 
 	public ClassBehaviour(Class<? extends Object> testClass) {
 		this.className = retreiveClassName(testClass);
@@ -127,11 +135,6 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 		statements.add(new Statement(camelCaseSentence));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see bdddoc4j.core.domain.SpecificationContainer#getClassName()
-	 */
 	public String getClassName() {
 		return className;
 	}
@@ -146,11 +149,6 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 		return (obj instanceof ClassBehaviour) && ((ClassBehaviour) obj).className.equals(className);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see bdddoc4j.core.domain.SpecificationContainer#getSpecifications()
-	 */
 	public List<Specification> getSpecifications() {
 		return specifications;
 	}
@@ -162,9 +160,14 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 		return scenarios;
 	}
 
-	/*
-	 * @see bdddoc4j.core.domain.SpecificationContainer#hasSpecifications()
-	 */
+	public List<TestTable> getTestTables() {
+		return testTables;
+	}
+	
+	public boolean hasTestTables() {
+		return !testTables.isEmpty();
+	}
+	
 	public boolean hasSpecifications() {
 		return !specifications.isEmpty();
 	}
@@ -172,10 +175,7 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	public boolean hasScenarios() {
 		return !scenarios.isEmpty();
 	}
-
-	/*
-	 * @see bdddoc4j.core.domain.ClassStatements#getStatements()
-	 */
+	
 	public List<Statement> getStatements() {
 		return statements;
 	}
@@ -184,13 +184,11 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 		return !statements.isEmpty();
 	}
 
-	public void addScenario(Scenario scenario) {
-		scenarios.add(scenario);
+	public void addScenarios(List<Scenario> scenarios) {
+		this.scenarios.addAll(scenarios);
 	}
 
-	public void addScenarios(List<Scenario> scenarios) {
-		for (Scenario scenario : scenarios) {
-			addScenario(scenario);
-		}
+	public void addTestTables(List<TestTable> testTables) {
+		this.testTables.addAll(testTables);
 	}
 }

@@ -96,8 +96,9 @@ public class TestTestTableFactory {
 		assertEquals("expectedValue", headerColumns.get(2).getValue());
 	}
 
-	private TestTable factoryCreate(Class<?> testClass, String testMethod) {
-		return testTableFactory.createTestTable(new TestClass(testClass), testMethod);
+	private TestTable factoryCreate(Class<?> testClass, String methodName) {
+		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(methodName);
+		return testTableFactory.createTestTable(new TestClass(testClass).getTestMethod(methodName), methodCalls);
 	}
 
 }

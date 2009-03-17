@@ -51,7 +51,7 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		this.testTableFactory = new TestTableFactory(javaSourceDir);
 	}
 
-	private static Scenario create(List<MethodCall> methodCalls) {
+	private static Scenario createScenario(List<MethodCall> methodCalls) {
 		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
 
 		Pattern locale = null;
@@ -79,29 +79,21 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		return new Scenario(scenarioParts);
 	}
 
-	private Scenario createScenarioInternal(Class<?> testClass, String testMethodName) {
-		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass).invoke(testMethodName);
-
-		if ((null == methodCalls) || (methodCalls.isEmpty())) {
-			return null;
-		}
-
-		return create(methodCalls);
-	}
-
-	public File javaSourceDir() {
-		return javaSourceDir;
-	}
-
 	public void analyze(TestMethod method) {
-		Scenario scenario = createScenarioInternal(method.getTestClass().clazz(), method.getName());
 		scenarios = new ArrayList<Scenario>();
-		if (null != scenario) {
-			scenarios.add(scenario);
+		testTables = new ArrayList<TestTable>();
+
+
+		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(method.clazz()).invoke(method.getName());
+
+		if (!(null == methodCalls) && (!methodCalls.isEmpty())) {
+			Scenario scenario = createScenario(methodCalls);
+			if (null != scenario) {
+				scenarios.add(scenario);
+			}
 		}
 
 		TestTable testTable = testTableFactory.createTestTable(method.getTestClass(), method.getName());
-		testTables = new ArrayList<TestTable>();
 		if (null != testTable) {
 			testTables.add(testTable);
 		}

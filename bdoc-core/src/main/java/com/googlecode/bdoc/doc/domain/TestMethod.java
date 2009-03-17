@@ -110,4 +110,8 @@ public class TestMethod {
 	public TestClass getTestClass() {
 		return testClass;
 	}
+
+	public Class<?> clazz() {
+		return testClass.clazz();
+	}
 }

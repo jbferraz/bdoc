@@ -111,10 +111,14 @@ public class BDoc {
 
 			if (testClass.shouldBeAnalyzedForExtendedBehaviour()) {
 				behaviourFactory.analyze(method);
+
+				classBehaviour.addScenarios(behaviourFactory.getCreatedScenario());
 				
-				if (behaviourFactory.hasCreatedScenario()) {
-					classBehaviour.addScenario(behaviourFactory.getCreatedScenario());
-				}
+
+				// if (behaviourFactory.hasCreatedTestTable()) {
+				// classBehaviour.addTestTable(behaviourFactory.getCreatedTestTable());
+				// }
+
 			}
 		}
 		return this;

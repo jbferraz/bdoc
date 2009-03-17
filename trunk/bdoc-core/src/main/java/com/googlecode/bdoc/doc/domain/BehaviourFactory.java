@@ -24,16 +24,13 @@
 
 package com.googlecode.bdoc.doc.domain;
 
-import java.io.File;
+import java.util.List;
+
 
 public interface BehaviourFactory {
 
-	File javaSourceDir();
-
 	void analyze(TestMethod method);
 
-	boolean hasCreatedScenario();
-	
-	Scenario getCreatedScenario();
+	List<Scenario> getCreatedScenario();
 
 }

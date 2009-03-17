@@ -91,11 +91,11 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		scenario = createScenarioInternal(method.getTestClass().clazz(), method.getName());
 	}
 
-	public Scenario getCreatedScenario() {
-		return scenario;
-	}
-
-	public boolean hasCreatedScenario() {
-		return null != scenario;
+	public List<Scenario> getCreatedScenario() {
+		List<Scenario> scenarios = new ArrayList<Scenario>();
+		if( null != scenario) {
+			scenarios.add(scenario);
+		}
+		return scenarios;
 	}
 }

@@ -92,8 +92,7 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	}
 
 	/**
-	 * Removes the package and parent className from a fullClassName. Ex:
-	 * com.bdoc.MyClass$SubClass => SubClass
+	 * Removes the package and parent className from a fullClassName. Ex: com.bdoc.MyClass$SubClass => SubClass
 	 * 
 	 * @param name
 	 *            to strip
@@ -187,5 +186,11 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 
 	public void addScenario(Scenario scenario) {
 		scenarios.add(scenario);
+	}
+
+	public void addScenarios(List<Scenario> scenarios) {
+		for (Scenario scenario : scenarios) {
+			addScenario(scenario);
+		}
 	}
 }

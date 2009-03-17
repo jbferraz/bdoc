@@ -27,6 +27,7 @@ package com.googlecode.bdoc.doc.domain;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.*;
 import integrationtestclasses.bankaccount.BankAccountBehavior;
 import integrationtestclasses.stack.StackBehavior;
 import integrationtestclasses.stack.TestStack;
@@ -62,12 +63,13 @@ public class TestJavaTestSourceBehaviourParser {
 		expectedScenarioParts.add(new Scenario.Part("thenShouldTheValueNotRemainsInTheStack"));
 		expectedScenarioParts.add(new Scenario.Part("thenTheStackAreNotEmpty"));
 
-		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(StackBehavior.class, "shouldPopLastPushedValueFirst"));
+		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(StackBehavior.class, "shouldPopLastPushedValueFirst").get(0));
 	}
 
+	
 	@Test
 	public void shouldReturnNullIfTheMethodBlockDoesNotContainAScenario() throws IOException {
-		assertNull(scenarioFromFactory(TestStack.class, "shouldBeEmptyWhenStackIsNew"));
+		assertTrue(scenarioFromFactory(TestStack.class, "shouldBeEmptyWhenStackIsNew").isEmpty());
 	}
 
 	@Test
@@ -81,7 +83,7 @@ public class TestJavaTestSourceBehaviourParser {
 		expectedScenarioParts.add(new Scenario.Part("whenDepositAreCalledWithAmount100"));
 		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo200"));
 
-		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(BankAccountBehavior.class, "shouldAddDepositToBalance"));
+		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(BankAccountBehavior.class, "shouldAddDepositToBalance").get(0));
 	}
 
 	@Test
@@ -94,7 +96,7 @@ public class TestJavaTestSourceBehaviourParser {
 		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo20"));
 
 		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(BankAccountBehavior.class,
-				"shouldNotAffectBalanceIfAttemptToWithdrawOverBalance"));
+				"shouldNotAffectBalanceIfAttemptToWithdrawOverBalance").get(0));
 	}
 
 	@Test
@@ -105,7 +107,7 @@ public class TestJavaTestSourceBehaviourParser {
 		expectedScenarioParts.add(new Scenario.Part("whenWithdrawAreCalledWithAmount20"));
 		expectedScenarioParts.add(new Scenario.Part("thenShouldBalanceEqualsTo80"));
 
-		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(BankAccountBehavior.class, "shouldWithdrawAmountFromBalance"));
+		assertEquals(new Scenario(expectedScenarioParts), scenarioFromFactory(BankAccountBehavior.class, "shouldWithdrawAmountFromBalance").get(0));
 	}
 
 	@Test
@@ -114,13 +116,13 @@ public class TestJavaTestSourceBehaviourParser {
 		javaTestSourceBehaviourParser.analyze(testClass.getTestMethod("shouldAddDepositToBalance"));
 		assertNotNull( javaTestSourceBehaviourParser.getCreatedScenario() );
 		javaTestSourceBehaviourParser.analyze(testClass.getTestMethod("shouldBeEmptySpecification"));
-		assertNull( javaTestSourceBehaviourParser.getCreatedScenario() );
+		assertTrue( javaTestSourceBehaviourParser.getCreatedScenario().isEmpty() );
 	}
 	
 	/**
 	 * Helper method to avoid duplicate testcode when testing the scenario factory
 	 */
-	private Scenario scenarioFromFactory(Class<?> clazz, String methodName) {
+	private List<Scenario> scenarioFromFactory(Class<?> clazz, String methodName) {
 		TestClass testClass = new TestClass(clazz);
 		TestMethod testMethod = testClass.getTestMethod(methodName);
 		javaTestSourceBehaviourParser.analyze(testMethod);

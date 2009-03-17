@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.doc.domain;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
@@ -58,12 +59,12 @@ public class JavaTestSourceBehaviourParser implements BehaviourFactory {
 		return srcTestJava;
 	}
 
-	public Scenario getCreatedScenario() {
-		return scenario;
-	}
-
-	public boolean hasCreatedScenario() {
-		return null != scenario;
+	public List<Scenario> getCreatedScenario() {
+		List<Scenario> scenarios = new ArrayList<Scenario>();
+		if( null != scenario) {
+			scenarios.add(scenario);
+		}
+		return scenarios;
 	}
 
 }

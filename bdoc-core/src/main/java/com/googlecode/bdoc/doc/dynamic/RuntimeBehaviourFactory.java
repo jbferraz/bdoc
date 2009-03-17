@@ -41,13 +41,11 @@ import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
  */
 public class RuntimeBehaviourFactory implements BehaviourFactory {
 
-	private File javaSourceDir;
 	private TestTableFactory testTableFactory;
 	private List<TestTable> testTables;
 	private List<Scenario> scenarios;
 
 	public RuntimeBehaviourFactory(File javaSourceDir) {
-		this.javaSourceDir = javaSourceDir;
 		this.testTableFactory = new TestTableFactory(javaSourceDir);
 	}
 
@@ -83,17 +81,17 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		scenarios = new ArrayList<Scenario>();
 		testTables = new ArrayList<TestTable>();
 
-
 		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(method.clazz()).invoke(method.getName());
-
-		if (!(null == methodCalls) && (!methodCalls.isEmpty())) {
-			Scenario scenario = createScenario(methodCalls);
-			if (null != scenario) {
-				scenarios.add(scenario);
-			}
+		if ((null == methodCalls) || (methodCalls.isEmpty())) {
+			return;
 		}
 
-		TestTable testTable = testTableFactory.createTestTable(method.getTestClass(), method.getName());
+		Scenario scenario = createScenario(methodCalls);
+		if (null != scenario) {
+			scenarios.add(scenario);
+		}
+
+		TestTable testTable = testTableFactory.createTestTable(method, methodCalls);
 		if (null != testTable) {
 			testTables.add(testTable);
 		}

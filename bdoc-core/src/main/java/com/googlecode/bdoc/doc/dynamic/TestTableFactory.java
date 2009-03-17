@@ -30,7 +30,7 @@ import java.util.List;
 
 import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.domain.TableRow;
-import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.util.JavaCodeUtil;
 
@@ -45,8 +45,7 @@ public class TestTableFactory {
 		this.srcTestJava = srcTestJava;
 	}
 
-	public TestTable createTestTable(TestClass testClass, String testMethodName) {
-		List<MethodCall> methodCalls = new RuntimeClassAnalyzer(testClass.clazz()).invoke(testMethodName);
+	public TestTable createTestTable(TestMethod testMethod, List<MethodCall> methodCalls) {
 		if (methodCalls.isEmpty()) {
 			return null;
 		}
@@ -59,11 +58,9 @@ public class TestTableFactory {
 		for (MethodCall methodCall : methodCallsClone) {
 
 			if (!headerAdded) {
-
-				for (String argumentName : JavaCodeUtil.getArgumentNames(testClass, methodCall.getName(),srcTestJava)) {
+				for (String argumentName : JavaCodeUtil.getArgumentNames(testMethod.getTestClass(), methodCall.getName(), srcTestJava)) {
 					testTable.addHeaderColumn(new TableColumn(argumentName));
 				}
-
 			}
 
 			TableRow tableRow = new TableRow();

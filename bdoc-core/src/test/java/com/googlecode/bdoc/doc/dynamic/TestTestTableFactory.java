@@ -61,7 +61,7 @@ public class TestTestTableFactory {
 	@Test
 	public void theTestTableShouldBeDescribedWithTheMethodCallName() {
 		TestTable testTable = factoryCreate(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
-		assertEquals("assertPrimitivToPrimitivConversion", testTable.getCamelCaseDescription());
+		assertEquals("assertPrimitivToPrimitivConversion", testTable.getSentence());
 	}
 
 	@Test
@@ -94,6 +94,7 @@ public class TestTestTableFactory {
 		assertEquals("sourceValue", headerColumns.get(0).getValue());
 		assertEquals("targetClass", headerColumns.get(1).getValue());
 		assertEquals("expectedValue", headerColumns.get(2).getValue());
+		assertEquals(3, headerColumns.size() );
 	}
 
 	private TestTable factoryCreate(Class<?> testClass, String methodName) {

@@ -61,6 +61,7 @@ public class TestTableFactory {
 				for (String argumentName : JavaCodeUtil.getArgumentNames(testMethod.getTestClass(), methodCall.getName(), srcTestJava)) {
 					testTable.addHeaderColumn(new TableColumn(argumentName));
 				}
+				headerAdded = true;
 			}
 
 			TableRow tableRow = new TableRow();

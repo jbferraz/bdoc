@@ -30,22 +30,17 @@ import java.util.List;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class TestTable {
+public class TestTable extends Statement {
 
-	private String camelCaseDescription;
 	ArrayList<TableColumn> headerColumns = new ArrayList<TableColumn>();
 	private List<TableRow> rows = new ArrayList<TableRow>();
 
 	public TestTable(String camelCaseDescription) {
-		this.camelCaseDescription = camelCaseDescription;
+		super(camelCaseDescription);
 	}
 
 	public List<TableRow> getRows() {
 		return rows;
-	}
-
-	public String getCamelCaseDescription() {
-		return camelCaseDescription;
 	}
 
 	public void addRow(TableRow tableRow) {

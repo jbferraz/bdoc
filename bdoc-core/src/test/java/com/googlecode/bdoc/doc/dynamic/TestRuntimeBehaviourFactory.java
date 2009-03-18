@@ -103,7 +103,7 @@ public class TestRuntimeBehaviourFactory {
 	public void shouldCreateTestTablesFromTestMethodWhereCallsAreMadeToAccessibleCustomAssert() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldContainATestTable"));
 		assertFalse(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
-		assertEquals("assertSum", runtimeBehaviourFactory.getCreatedTestTables().get(0).getCamelCaseDescription());
+		assertEquals("assertSum", runtimeBehaviourFactory.getCreatedTestTables().get(0).getSentence());
 	}
 
 	@Test

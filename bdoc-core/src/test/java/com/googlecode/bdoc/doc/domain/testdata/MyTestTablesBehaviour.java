@@ -24,6 +24,9 @@
 
 package com.googlecode.bdoc.doc.domain.testdata;
 
+import com.googlecode.bdoc.doc.testdata.ExReference;
+import com.googlecode.bdoc.doc.testdata.ExStory;
+
 public class MyTestTablesBehaviour {
 
 	@Test
@@ -34,6 +37,16 @@ public class MyTestTablesBehaviour {
 	}
 
 	void assertSum(int i, int j, int k) {
+	}
+
+	@Test
+	@ExReference(ExStory.STORY1)
+	public void shouldIncludeTestTableReferencedToAStory() {
+		assertDivison(1, 1, 1);
+		assertDivison(2, 2, 1);
+	}
+
+	void assertDivison(int i, int j, int k) {
 	}
 
 }

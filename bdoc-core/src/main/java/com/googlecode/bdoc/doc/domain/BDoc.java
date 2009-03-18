@@ -247,6 +247,10 @@ public class BDoc {
 	public List<TestTable> testTables() {
 		List<TestTable> result = new ArrayList<TestTable>();
 		result.addAll(generalBehaviour.testTables());
+		for (UserStory userStory : userStories) {
+			result.addAll(userStory.getTestTables());
+		}
+
 		return result;
 	}
 }

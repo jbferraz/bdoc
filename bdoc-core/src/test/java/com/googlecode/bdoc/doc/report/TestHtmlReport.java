@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.doc.report;
 
 import static com.googlecode.bdoc.doc.report.ReportTestHelper.scenarioPart;
+import static com.googlecode.bdoc.doc.report.ReportTestHelper.sentence;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 
@@ -42,13 +43,10 @@ import com.googlecode.bdoc.doc.domain.ClassSpecifications;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
+import com.googlecode.bdoc.doc.domain.TableColumn;
+import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.UserStoryDescription.Narrative;
-import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
-import com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter;
-import com.googlecode.bdoc.doc.report.HtmlReport;
-import com.googlecode.bdoc.doc.report.XmlReport;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
-
 
 /**
  * @author Per Otto Bergum Christensen
@@ -60,7 +58,7 @@ public class TestHtmlReport {
 	private BDoc bdoc;
 
 	public TestHtmlReport() throws IOException {
-		bdoc = BDocTestHelper.bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour();
+		bdoc = BDocTestHelper.bdocWithTwoStoriesThreeScenariosFourSpecificationsGeneralBehaviourAndTestTables();
 		html = new HtmlReport(bdoc).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 		writeStringToFile(new File("target/" + getClass().getName() + ".xml"), new XmlReport(bdoc).xml());
@@ -91,13 +89,13 @@ public class TestHtmlReport {
 	@Test
 	public void shouldPresentTheSpecificationsAssociatedWithTheStory() {
 		List<Specification> specifications = bdoc.getUserstories().get(0).getClassSpecifications().get(0).getSpecifications();
-		assertXPathContains(ReportTestHelper.sentence(specifications.get(0)), "//ul[@class='specifications']", html);
+		assertXPathContains(sentence(specifications.get(0)), "//ul[@class='specifications']", html);
 	}
 
 	@Test
 	public void shouldPresentTheStatementsAssociatedWithTheStory() {
 		List<Statement> statements = bdoc.getUserstories().get(0).getClassStatements().get(0).getStatements();
-		assertXPathContains(ReportTestHelper.sentence(statements.get(0)), "//ul[@class='statements']", html);
+		assertXPathContains(sentence(statements.get(0)), "//ul[@class='statements']", html);
 	}
 
 	@Test
@@ -119,15 +117,14 @@ public class TestHtmlReport {
 
 	@Test
 	public void shouldPresentSpecificationsNotAssociatedWithAnyStories() {
-		List<Specification> specifications = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0)
-				.getSpecifications();
-		assertXPathContains(ReportTestHelper.sentence(specifications.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
+		List<Specification> specifications = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getSpecifications();
+		assertXPathContains(sentence(specifications.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
 	public void shouldPresentStatementsNotAssociatedWithAnyStories() {
 		List<Statement> statements = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getStatements();
-		assertXPathContains(ReportTestHelper.sentence(statements.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
+		assertXPathContains(sentence(statements.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
@@ -137,4 +134,26 @@ public class TestHtmlReport {
 		String htmlEachOnNewLine = new HtmlReport(bdoc, new EachOnNewLineScenarioLinesFormatter()).html();
 		Assert.assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
 	}
+
+	@Test
+	public void shouldPresentTestTablesForGeneralBehaviour() {
+		List<TestTable> testTables = bdoc.testTables();
+		assertXPathContains(sentence(testTables.get(0)), "//ul[@class='testTable']", html);
+	}
+
+	@Test
+	public void shouldPresentHeaderColumnsOfTestTables() {
+		List<TestTable> testTables = bdoc.testTables();
+		assertXPathContains(testTables.get(0).getHeaderColumns().get(0).getValue().toString(), "//ul[@class='testTable']", html);
+	}
+
+	@Test
+	public void shouldPresentColumnValuesOfTestTables() {
+		List<TableColumn> columns = bdoc.testTables().get(0).getRows().get(0).getColumns();
+		assertXPathContains(columns.get(0).getValue().toString(), "//ul[@class='testTable']", html);
+		assertXPathContains(columns.get(1).getValue().toString(), "//ul[@class='testTable']", html);
+		assertXPathContains(columns.get(2).getValue().toString(), "//ul[@class='testTable']", html);
+		
+	}
+
 }

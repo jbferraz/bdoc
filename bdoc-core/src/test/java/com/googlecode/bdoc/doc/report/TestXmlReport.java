@@ -51,7 +51,7 @@ public class TestXmlReport {
 
 	@Before
 	public void setupTestdata() throws IOException {
-		bddDoc = BDocTestHelper.bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour();
+		bddDoc = BDocTestHelper.bdocWithTwoStoriesThreeScenariosFourSpecificationsGeneralBehaviourAndTestTables();
 		xml = new XmlReport(bddDoc).xml();
 		FileUtils.writeStringToFile(new File("target/" + getClass().getName() + ".xml"), xml);
 	}
@@ -78,7 +78,7 @@ public class TestXmlReport {
 
 	@Test
 	public void shouldContainGeneralBehaviourWithSpecifications() {
-		assertXpathEvaluatesTo("2", "count(//generalBehaviour//specifications/specification)", xml);
+		assertXpathEvaluatesTo("4", "count(//generalBehaviour//specifications/specification)", xml);
 	}
 
 	@Test

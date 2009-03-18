@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.doc.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -93,5 +94,15 @@ public class UserStory extends GeneralBehaviour implements UserStoryDescription 
 			}
 		}
 		return result;
+	}
+
+	public List<TestTable> getTestTables() {
+		List<TestTable> testTables = new ArrayList<TestTable>();
+
+		for (Package javaPackage : getPackages()) {
+			testTables.addAll(javaPackage.getTestTables());
+		}
+
+		return Collections.unmodifiableList(testTables);
 	}
 }

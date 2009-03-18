@@ -27,7 +27,6 @@ package com.googlecode.bdoc.doc.domain;
 import static com.googlecode.bdoc.doc.util.Select.from;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

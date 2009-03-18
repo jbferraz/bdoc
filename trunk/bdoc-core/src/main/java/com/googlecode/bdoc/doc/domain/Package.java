@@ -27,6 +27,7 @@ package com.googlecode.bdoc.doc.domain;
 import static com.googlecode.bdoc.doc.util.Select.from;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -124,6 +125,17 @@ public class Package {
 		for (ClassBehaviour classBehaviour : classBehaviourList) {
 			if (classBehaviour.hasStatements()) {
 				result.add(classBehaviour);
+			}
+		}
+
+		return result;
+	}
+
+	public List<TestTable> getTestTables() {
+		List<TestTable> result = new ArrayList<TestTable>();
+		for (ClassBehaviour classBehaviour : classBehaviourList) {
+			if (classBehaviour.hasTestTables()) {
+				result.addAll(classBehaviour.getTestTables());
 			}
 		}
 

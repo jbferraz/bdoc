@@ -241,7 +241,20 @@ public class TestBDoc {
 		assertFalse( classBehaviour.getTestTables().isEmpty() );
 	}
 	
-	
+
+	@Test
+	public void listOfTestTablesShouldIncludeGeneralBehaviour() {
+		bdoc = new BDoc();
+		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		assertTrue( bdoc.testTables().contains( new TestTable( "assertSum")) );		
+	}
+
+	@Test
+	public void listOfTestTablesShouldIncludeUserStories() {
+		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		assertTrue( bdoc.testTables().contains( new TestTable( "assertDivison")) );		
+	}
 
 	/**
 	 * Testdata

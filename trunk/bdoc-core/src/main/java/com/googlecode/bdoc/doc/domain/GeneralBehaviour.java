@@ -98,6 +98,10 @@ public class GeneralBehaviour {
 	}
 
 	public List<TestTable> testTables() {
-		return null;
+		List<TestTable> result = new ArrayList<TestTable>();
+		for (Package javaPackage : packages) {
+			result.addAll(javaPackage.getTestTables());
+		}
+		return result;
 	}
 }

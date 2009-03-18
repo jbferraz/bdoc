@@ -46,7 +46,42 @@
 <#macro list_behaviour module>
 	<@list_scenarios textKey="scenarios" scenarios=module.getScenarios()/>
 	<@list_class_specifications textKey="specifications" list=module.getClassSpecifications()/>
-	<@list_class_statements textKey="statements" list=module.getClassStatements()/>				
+	<@list_class_statements textKey="statements" list=module.getClassStatements()/>
+	<@list_test_tables textKey="test_tables" testTables=module.getTestTables()/>				
+</#macro>
+
+<#macro list_test_tables testTables textKey="">
+	<#if 0 < testTables?size >
+		<div class="classBehaviour">
+			<#if !(textKey=="") >
+				<i><@bdddoc.text key="${textKey}" /></i>
+			</#if>
+
+			<div class="testTables"> 
+				<#list testTables as testTable>													
+					<ul class="testTable">
+						${bdocMacroHelper.format(testTable)}
+							
+						<table border='1' cellpadding='5'>
+							<tr>
+							<#list testTable.getHeaderColumns() as headerColumn>
+								<th>${headerColumn}</th>							
+							</#list>
+							</tr>
+							
+							<#list testTable.getRows() as row>
+							<tr>							
+								<#list row.getColumns() as column>
+									<td>${column}</td>							
+								</#list>
+							</tr>
+							</#list>							
+						</table>								
+					</ul>
+				</#list>
+			</div>
+		</div>
+	</#if>
 </#macro>
 
 <#macro list_scenarios scenarios textKey="">

@@ -26,7 +26,6 @@ package com.googlecode.bdoc.doc.testdata;
 
 import integrationtestclasses.stack.StackBehavior;
 
-
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -36,6 +35,7 @@ import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 
 /**
  * Class with static helper methods for generating testdata.
@@ -47,11 +47,12 @@ public class BDocTestHelper {
 	private BDocTestHelper() {
 	}
 
-	public static BDoc bdocWithTwoStoriesThreeScenariosFourSpecificationsAndGeneralBehaviour() {
+	public static BDoc bdocWithTwoStoriesThreeScenariosFourSpecificationsGeneralBehaviourAndTestTables() {
 		BDoc bdoc = bdocWithProject();
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
 
 		return bdoc;
 	}

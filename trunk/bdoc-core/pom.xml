@@ -104,7 +104,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.8.4-SNAPSHOT</version>
+				<version>0.8.3</version>
 				<configuration>
 					<storyRefAnnotationClassName>
 						com.googlecode.bdoc.Ref

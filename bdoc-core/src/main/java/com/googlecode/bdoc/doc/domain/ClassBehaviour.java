@@ -33,13 +33,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Describes behaviour for a Class. 
+ * Describes behaviour for a Class.
  * 
- * Could be:
- *  - scenario
- *  - specification
- *  - statement
- *  - test table
+ * Could be: - scenario - specification - statement - test table
  * 
  * @author Per Otto Bergum Christensen
  */
@@ -161,13 +157,16 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	}
 
 	public List<TestTable> getTestTables() {
+		if (null == testTables) {
+			testTables = new ArrayList<TestTable>();
+		}
 		return testTables;
 	}
-	
+
 	public boolean hasTestTables() {
-		return !testTables.isEmpty();
+		return !getTestTables().isEmpty();
 	}
-	
+
 	public boolean hasSpecifications() {
 		return !specifications.isEmpty();
 	}
@@ -175,7 +174,7 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	public boolean hasScenarios() {
 		return !scenarios.isEmpty();
 	}
-	
+
 	public List<Statement> getStatements() {
 		return statements;
 	}

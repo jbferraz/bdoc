@@ -41,4 +41,9 @@ public class ReportTestHelper {
 	public static String sentence(Statement statement) {
 		return CamelCaseToSentenceTranslator.translate(statement.getSentence());
 	}
+	
+	public static String sentence(String camelCaseSentence) {
+		return CamelCaseToSentenceTranslator.translate(camelCaseSentence);
+	}
+	
 }

@@ -123,4 +123,10 @@ public class TestRuntimeBehaviourFactory {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldContainATestTable"));
 		assertTrue(runtimeBehaviourFactory.getCreatedScenarios().isEmpty());
 	}
+	
+	@Test
+	public void shouldNotCreateATestTableIfTheMethodCallsDescribesScenarios() {
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("withdraw"));
+		assertTrue(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
+	}
 }

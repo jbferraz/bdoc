@@ -29,6 +29,7 @@ import java.util.ResourceBundle;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Statement;
+import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator;
 
 /**
@@ -51,13 +52,16 @@ public class BddDocMacroHelper {
 		bundle = ResourceBundle.getBundle("com.googlecode.bdoc.text");
 	}
 
-
 	public String text(String key) {
 		return bundle.getString(key);
 	}
 
 	public String format(Statement statement) {
 		return CamelCaseToSentenceTranslator.translate(statement.getSentence());
+	}
+
+	public String format(TableColumn column) {
+		return CamelCaseToSentenceTranslator.translate(String.valueOf(column.getValue()));
 	}
 
 	public String scenarioLines(Scenario scenario) {

@@ -64,11 +64,13 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		Scenario scenario = createScenario(methodCalls);
 		if (null != scenario) {
 			scenarios.add(scenario);
+			return;
 		}
 
 		createOneTestTableForEachMethodThatOccursMoreThanOnce(method, methodCalls);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void createOneTestTableForEachMethodThatOccursMoreThanOnce(TestMethod method, List<MethodCall> methodCalls) {
 		TreeBag methodsBag = new TreeBag();
 		for (MethodCall methodCall : methodCalls) {

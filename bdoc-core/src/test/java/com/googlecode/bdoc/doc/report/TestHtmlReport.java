@@ -142,9 +142,9 @@ public class TestHtmlReport {
 	}
 
 	@Test
-	public void shouldPresentHeaderColumnsOfTestTables() {
+	public void shouldPresentFormatedHeaderColumnsOfTestTables() {
 		List<TestTable> testTables = bdoc.testTables();
-		assertXPathContains(testTables.get(0).getHeaderColumns().get(0).getValue().toString(), "//ul[@class='testTable']", html);
+		assertXPathContains(sentence(testTables.get(0).getHeaderColumns().get(0).getValue().toString()), "//ul[@class='testTable']", html);
 	}
 
 	@Test

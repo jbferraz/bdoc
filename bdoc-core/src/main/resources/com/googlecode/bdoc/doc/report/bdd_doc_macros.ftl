@@ -65,7 +65,7 @@
 						<table border='1' cellpadding='5'>
 							<tr>
 							<#list testTable.getHeaderColumns() as headerColumn>
-								<th>${headerColumn}</th>							
+								<th>${bdocMacroHelper.format(headerColumn)}</th>							
 							</#list>
 							</tr>
 							

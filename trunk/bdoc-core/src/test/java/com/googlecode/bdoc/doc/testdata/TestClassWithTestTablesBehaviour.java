@@ -33,10 +33,18 @@ public class TestClassWithTestTablesBehaviour {
 		exampleOnSumOfTwoValues(1, 1, 2);
 		exampleOnSumOfTwoValues(2, 2, 4);
 		exampleOnSumOfTwoValues(2, 4, 6);
+		
+		exampleOnResultOfMultiply(1,1,1);
+		exampleOnResultOfMultiply(2,2,4);
+		exampleOnResultOfMultiply(2,4,8);
 	}
 
 	void exampleOnSumOfTwoValues(int value1, int value2, int sum) {
 	}
+	
+	void exampleOnResultOfMultiply(int value1, int value2, int sum) {
+	}
+	
 	
 	@Test
 	public void shouldSubtractTwoValues() {

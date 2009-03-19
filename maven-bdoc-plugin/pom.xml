@@ -178,7 +178,7 @@
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-core</artifactId>
-			<version>0.8.3</version>
+			<version>0.8.4-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

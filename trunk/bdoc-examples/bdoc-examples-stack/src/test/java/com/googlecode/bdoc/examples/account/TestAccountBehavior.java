@@ -63,27 +63,27 @@ public class TestAccountBehavior {
 		thenShouldBalanceBeEqualTo(102);
 	}
 
-	private void thenShouldBalanceBeEqualTo(double balance) {
+	void thenShouldBalanceBeEqualTo(double balance) {
 		assertEquals(balance, account.balance(),.01);
 	}
 
-	private void whenDepositAreCalledWith(int amount) {
+	void whenDepositAreCalledWith(int amount) {
 		account.deposit(amount);
 	}
 
-	private void givenAnAccountWithInitialBalanceEqualsTo(double initialBalance) {
+	void givenAnAccountWithInitialBalanceEqualsTo(double initialBalance) {
 		account = new Account(initialBalance);
 	}
 
-	private void givenAnAccountWithInitialBalanceEqualsTo0() {
+	void givenAnAccountWithInitialBalanceEqualsTo0() {
 		givenAnAccountWithInitialBalanceEqualsTo(0);
 	}
 
-	private void when100AreDepositToAccount() {
+	void when100AreDepositToAccount() {
 		whenDepositAreCalledWith(100);
 	}
 
-	private void thenShouldBalanceBeEqualTo100() {
+	void thenShouldBalanceBeEqualTo100() {
 		thenShouldBalanceBeEqualTo(100);
 	}
 

@@ -29,6 +29,9 @@ import static com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator.SPACE_C
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.collections.bag.TreeBag;
 
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.Scenario;
@@ -63,12 +66,33 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 			scenarios.add(scenario);
 		}
 
-		TestTable testTable = testTableFactory.createTestTable(method, methodCalls);
-		if (null != testTable) {
-			testTables.add(testTable);
+		createOneTestTableForEachMethodThatOccursMoreThanOnce(method, methodCalls);
+	}
+
+	private void createOneTestTableForEachMethodThatOccursMoreThanOnce(TestMethod method, List<MethodCall> methodCalls) {
+		TreeBag methodsBag = new TreeBag();
+		for (MethodCall methodCall : methodCalls) {
+			methodsBag.add(methodCall.getName());
+		}
+		Set uniqueSet = methodsBag.uniqueSet();
+		for (Object object : uniqueSet) {
+			String name = (String) object;
+			int count = methodsBag.getCount(name);
+			if (count > 1) {
+				List<MethodCall> testTableMethodCalls = new ArrayList<MethodCall>();
+				for (MethodCall methodCall : methodCalls) {
+					if (name.equals(methodCall.getName())) {
+						testTableMethodCalls.add(methodCall);
+					}
+				}
+				TestTable testTable = testTableFactory.createTestTable(method, testTableMethodCalls);
+				if (null != testTable) {
+					testTables.add(testTable);
+				}
+			}
 		}
 	}
-	
+
 	private static Scenario createScenario(List<MethodCall> methodCalls) {
 		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
 

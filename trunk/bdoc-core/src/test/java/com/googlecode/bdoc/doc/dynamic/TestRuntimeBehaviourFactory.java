@@ -113,6 +113,12 @@ public class TestRuntimeBehaviourFactory {
 	}
 
 	@Test
+	public void shouldNotCreateATestTablesFromTestMethodWhenCallsAreMadeToAccessibleCustomAssertOnlyOnce() {
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("withdraw"));
+		assertTrue(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
+	}
+
+	@Test
 	public void shouldNotCreateAScenarioIfTheFirstMethodDoesntStartWithTheScenarioKeywordGiven() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldContainATestTable"));
 		assertTrue(runtimeBehaviourFactory.getCreatedScenarios().isEmpty());

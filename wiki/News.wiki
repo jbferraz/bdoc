@@ -1,3 +1,6 @@
+_20 March 2009 - Features in the pipline_
+ BDoc can now be configured to also run the tests, and inspect the results. Read more on NextFeatures   
+
 _08 March 2009 - Release 0.8.1_
  Version 0.8.1 is released with changes in the underlying persistence mechanism, the doc and diff report is merged into one, and advanced scenarios has had an upgrade. Persistence was earlier a configuration option, this is no longer an option and bdoc will always save a copy of the the bdoc (under 'user.home'/bdoc). The goal _bdoc:diff_ is removed, now the _bdoc:doc_ will both produce a bdoc report and a bdoc change log report. This change will give the users less configuration and full functionality of bdoc in each run. The goal _bdoc:generate_ has been changed to _bdoc:init_, which better communicates the intent of the goal. Read more about _bdoc:init_ in the [HowTo]. There are 2 minor bugfixes for the advanced scenario, first it now accepts try/catch statements and secondly it it accepts multiples of given/when/then blocks.
 

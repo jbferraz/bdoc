@@ -1,7 +1,7 @@
 BDoc is evolving and its next features are implemented (but not stable for the moment).
 
 This is what to expect:
-
+{{{
 ----------------------------------------------------------------------------------
 Given the two operands 4 and 5
 When the add operation is executed
@@ -57,3 +57,4 @@ public void shouldAddTwoNumbers() {
 void exampleOnAddOperation(int a, int b, int sum ) {
     assertEquals( sum, calc.add( a,b) );
 }
+}}}

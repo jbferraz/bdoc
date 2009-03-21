@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
+import static com.googlecode.bdoc.doc.report.BddDocMacroHelper.TableCellFormatter;
+
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
@@ -42,20 +44,21 @@ public class HtmlReport {
 
 	private Map<String, Object> model;
 	private Configuration cfg;
+	private BddDocMacroHelper bddDocMacroHelper;
 
 	public HtmlReport(BDoc bddDoc) {
+		this(bddDoc, new AndInBetweenScenarioLinesFormatter());
+	}
+
+	public HtmlReport(BDoc bddDoc, ScenarioLinesFormatter scenarioLinesFormatter) {
 		cfg = new Configuration();
 		cfg.setTemplateLoader(new ClassTemplateLoader(HtmlReport.class, ""));
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 
 		model = new HashMap<String, Object>();
 		model.put("bddDoc", bddDoc);
-		model.put("bdocMacroHelper", new BddDocMacroHelper());
-	}
-
-	public HtmlReport(BDoc bddDoc, ScenarioLinesFormatter scenarioLinesFormatter) {
-		this(bddDoc);
-		model.put("bdocMacroHelper", new BddDocMacroHelper(scenarioLinesFormatter));
+		bddDocMacroHelper = new BddDocMacroHelper(scenarioLinesFormatter);
+		model.put("bdocMacroHelper", bddDocMacroHelper);
 	}
 
 	public String html() {
@@ -69,5 +72,9 @@ public class HtmlReport {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void setCustomObjectFormatters(HashMap<Class<?>, TableCellFormatter> tableCellFormatters) {
+		bddDocMacroHelper.setCustomObjectFormatters(tableCellFormatters);
 	}
 }

@@ -30,27 +30,35 @@ public class TestClassWithTestTablesBehaviour {
 
 	@Test
 	public void shouldAddTwoNumbers() {
-		exampleOnSumOfTwoValues(1, 1, 2);
-		exampleOnSumOfTwoValues(2, 2, 4);
-		exampleOnSumOfTwoValues(2, 4, 6);
-		
-		exampleOnResultOfMultiply(1,1,1);
-		exampleOnResultOfMultiply(2,2,4);
-		exampleOnResultOfMultiply(2,4,8);
+		exampleOnSumOfTwoValues(10, 10, 20);
+		exampleOnSumOfTwoValues(20, 20, 40);
+		exampleOnSumOfTwoValues(20, 40, 60);
+
+		exampleOnResultOfMultiply(1, 1000, 1000);
+		exampleOnResultOfMultiply(200, 200, 4000);
+		exampleOnResultOfMultiply(2000, 4, 8000);
+	}
+
+	@Test
+	public void shouldConvertValuesBetweenTypes() {
+		exampleOnTypeConversionSuppert(Long.class, String.class);
+		exampleOnTypeConversionSuppert(Integer.class, String.class);
+	}
+
+	void exampleOnTypeConversionSuppert(Class<?> class1, Class<?> class2) {
 	}
 
 	void exampleOnSumOfTwoValues(int value1, int value2, int sum) {
 	}
-	
+
 	void exampleOnResultOfMultiply(int value1, int value2, int sum) {
 	}
-	
-	
+
 	@Test
 	public void shouldSubtractTwoValues() {
 		exampleOnSubtractionBetweenValueOneAndValueTwo(3, 1, 2);
 		exampleOnSubtractionBetweenValueOneAndValueTwo(6, 2, 4);
-		exampleOnSubtractionBetweenValueOneAndValueTwo(10, 4, 6);		
+		exampleOnSubtractionBetweenValueOneAndValueTwo(10, 4, 6);
 	}
 
 	void exampleOnSubtractionBetweenValueOneAndValueTwo(int value1, int value2, int result) {

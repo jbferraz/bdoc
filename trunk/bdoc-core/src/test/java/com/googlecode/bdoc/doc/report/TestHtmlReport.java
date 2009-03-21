@@ -31,11 +31,13 @@ import static org.apache.commons.io.FileUtils.writeStringToFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -43,10 +45,16 @@ import com.googlecode.bdoc.doc.domain.ClassSpecifications;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
-import com.googlecode.bdoc.doc.domain.TableColumn;
+import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.UserStoryDescription.Narrative;
+import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
+import com.googlecode.bdoc.doc.report.BddDocMacroHelper.TableCellFormatter;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.TestClassWithFourSpecifications;
+import com.googlecode.bdoc.doc.testdata.TestClassWithGeneralBehaviour;
+import com.googlecode.bdoc.doc.testdata.TestClassWithTestTablesBehaviour;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -58,8 +66,26 @@ public class TestHtmlReport {
 	private BDoc bdoc;
 
 	public TestHtmlReport() throws IOException {
-		bdoc = BDocTestHelper.bdocWithTwoStoriesThreeScenariosFourSpecificationsGeneralBehaviourAndTestTables();
-		html = new HtmlReport(bdoc).html();
+		bdoc = BDocTestHelper.bdocWithProject();
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+
+		HtmlReport htmlReport = new HtmlReport(bdoc);
+
+		TableCellFormatter customClassFormatter = new TableCellFormatter() {
+			public String format(Object object) {
+				return "custom";
+			}
+		};
+
+		HashMap<Class<?>, TableCellFormatter> tableCellFormatters = new HashMap<Class<?>, TableCellFormatter>();
+		tableCellFormatters.put(Class.class, customClassFormatter);
+		htmlReport.setCustomObjectFormatters(tableCellFormatters);
+
+		html = htmlReport.html();
+
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 		writeStringToFile(new File("target/" + getClass().getName() + ".xml"), new XmlReport(bdoc).xml());
 	}
@@ -148,12 +174,8 @@ public class TestHtmlReport {
 	}
 
 	@Test
-	public void shouldPresentColumnValuesOfTestTables() {
-		List<TableColumn> columns = bdoc.testTables().get(0).getRows().get(0).getColumns();
-		assertXPathContains(columns.get(0).getValue().toString(), "//ul[@class='testTable']", html);
-		assertXPathContains(columns.get(1).getValue().toString(), "//ul[@class='testTable']", html);
-		assertXPathContains(columns.get(2).getValue().toString(), "//ul[@class='testTable']", html);
-		
+	public void shouldPresentColumnValuesOfTestTablesWithATableCellFormatter() {
+		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
+		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
 	}
-
 }

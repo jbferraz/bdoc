@@ -60,23 +60,25 @@
 			<div class="testTables"> 
 				<#list testTables as testTable>													
 					<ul class="testTable">
-						${bdocMacroHelper.format(testTable)}
-							
-						<table border='1' cellpadding='5'>
-							<tr>
-							<#list testTable.getHeaderColumns() as headerColumn>
-								<th>${bdocMacroHelper.format(headerColumn)}</th>							
-							</#list>
-							</tr>
-							
-							<#list testTable.getRows() as row>
-							<tr>							
-								<#list row.getColumns() as column>
-									<td>${column}</td>							
+						<div class="${testTable.sentence}">
+							<p>${bdocMacroHelper.format(testTable)}</p>
+								
+							<table border='1' cellpadding='5'>
+								<tr>
+								<#list testTable.getHeaderColumns() as headerColumn>
+									<th>${bdocMacroHelper.format(headerColumn)}</th>							
 								</#list>
-							</tr>
-							</#list>							
-						</table>								
+								</tr>
+								
+								<#list testTable.getRows() as row>
+								<tr>							
+									<#list row.getColumns() as column>
+										<td>${bdocMacroHelper.formatTableColumn(column)}</td>							
+									</#list>
+								</tr>
+								</#list>							
+							</table>
+						</div>								
 					</ul>
 				</#list>
 			</div>

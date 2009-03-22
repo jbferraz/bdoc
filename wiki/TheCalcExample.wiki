@@ -64,3 +64,18 @@ public class TestCalcBehaviour {
 	}
 }
 }}}
+
+===How to configre BDoc for the report above==
+For now BDoc must be configured to make the report above: 
+{{{
+<configuration>
+	<storyRefAnnotationClassName>
+		com.googlecode.bdoc.calc.bdoc.Ref
+	</storyRefAnnotationClassName>
+	<scenarioAnalyzer>dynamic</scenarioAnalyzer>
+</configuration>
+}}}
+
+You could also take a look at the sample code: http://bdoc.googlecode.com/svn/trunk/bdoc-examples/bdoc-examples-calc/
+
+Normal test starting with Test or Ending with Test will not be analyzed for the behaviour above. To trigger BDoc to take an extra look you ned to name your test "Test.Class.Behaviour".

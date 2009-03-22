@@ -1,7 +1,7 @@
 ===Addition===
-As a person,
-I want a calculator to add two numbers,
-so that I avoid silly math mistakes
+ As a person,
+ I want a calculator to add two numbers, 
+ so that I avoid silly math mistakes
 
 Scenarios
 

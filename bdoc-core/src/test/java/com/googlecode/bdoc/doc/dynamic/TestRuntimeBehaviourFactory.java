@@ -28,6 +28,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -35,8 +38,10 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.dynamic.testdata.AccountBehaviour;
 import com.googlecode.bdoc.doc.dynamic.testdata.SimpleBehaviour;
+import com.googlecode.bdoc.doc.dynamic.testdata.TestMyObjectBehaviour;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -123,10 +128,21 @@ public class TestRuntimeBehaviourFactory {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldContainATestTable"));
 		assertTrue(runtimeBehaviourFactory.getCreatedScenarios().isEmpty());
 	}
-	
+
 	@Test
-	public void shouldNotCreateATestTableIfTheMethodCallsDescribesScenarios() {
-		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("withdraw"));
+	public void shouldCreateBothScenariosAndTestTablesDeclaredInTheSameTestMethod() {
+		runtimeBehaviourFactory.analyze(new TestClass(TestMyObjectBehaviour.class).getTestMethod("shouldAddTwoNumbers"));
+
+		List<Scenario> createdScenarios = runtimeBehaviourFactory.getCreatedScenarios();
+		List<TestTable> createdTestTables = runtimeBehaviourFactory.getCreatedTestTables();
+
+		assertTrue(createdScenarios.contains(new Scenario("givenWhenThen")));
+		assertTrue(createdTestTables.contains(new TestTable("example")));
+	}
+
+	@Test
+	public void shouldNotCreateTestTablesWhenMethodCallsDoNotIncludeArguments() {
+		runtimeBehaviourFactory.analyze(new TestClass(TestMyObjectBehaviour.class).getTestMethod("shouldMakeACallWithoutArguments"));
 		assertTrue(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
 	}
 }

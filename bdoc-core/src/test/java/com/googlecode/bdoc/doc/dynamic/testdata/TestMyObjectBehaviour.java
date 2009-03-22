@@ -22,63 +22,47 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.dynamic;
+package com.googlecode.bdoc.doc.dynamic.testdata;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.Test;
 
 /**
  * @author Per Otto Bergum Christensen
  */
-public class MethodCall {
+public class TestMyObjectBehaviour {
 
-	private final String methodName;
-	private List<Argument> arguments = new ArrayList<Argument>();
+	@Test
+	public void shouldAddTwoNumbers() {
+		given();
+		when();
+		then();
 
-	public MethodCall(String methodName) {
-		this(methodName, new Object[0]);
+		example(1);
+		example(1);
+		example(2);
 	}
 
-	public MethodCall(Method method, Object[] args) {
-		this(method.getName(), args);
+	void example(int i) {
 	}
 
-	public MethodCall(String methodName, Object[] args) {
-		this.methodName = methodName;
-		for (Object arg : args) {
-			arguments.add(new Argument(arg));
-		}
+	void then() {
 	}
 
-	public MethodCall(String methodName, List<Argument> arguments) {
-		this.methodName = methodName;
-		this.arguments = arguments;
+	void when() {
 	}
 
-	public String getName() {
-		return methodName;
+	void given() {
 	}
 
-	public List<Argument> getArguments() {
-		return arguments;
+	void exampleOnAddition(int value) {
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((methodName == null) ? 0 : methodName.hashCode());
-		return result;
+	@Test
+	public void shouldMakeACallWithoutArguments() {
+		examleWithoutArgument();
+		examleWithoutArgument();
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		return (obj instanceof MethodCall) && (((MethodCall) obj).methodName.equals(methodName));
+	void examleWithoutArgument() {
 	}
-
-	public boolean hasArguments() {
-		return !arguments.isEmpty();
-	}
-
 }

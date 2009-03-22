@@ -25,7 +25,9 @@
 package com.googlecode.bdoc.doc.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,11 +105,22 @@ public class TestScenario {
 		assertNotNull(Pattern.valueOf("NO"));
 		assertNotNull(Pattern.valueOf("SV"));
 	}
-	
+
 	@Test
 	public void shouldFindTheCorrespondingLocaleGivenTheScenarioText() {
-		assertEquals( Pattern.EN, Pattern.find("givenBlaBla.. .") );
-		assertEquals( Pattern.NO, Pattern.find("gittBlaBla.. .") );
-		assertEquals( Pattern.SV, Pattern.find("givetBlaBla.. .") );
+		assertEquals(Pattern.EN, Pattern.find("givenBlaBla.. ."));
+		assertEquals(Pattern.NO, Pattern.find("gittBlaBla.. ."));
+		assertEquals(Pattern.SV, Pattern.find("givetBlaBla.. ."));
+	}
+
+	@Test
+	public void shouldTelllIfAScenarioKeywordMatchesAGivenPattern() {
+		assertTrue(Pattern.EN.keywordMatch("given"));
+		assertTrue(Pattern.EN.keywordMatch("GIVEN"));
+		assertTrue(Pattern.EN.keywordMatch("when"));
+		assertTrue(Pattern.EN.keywordMatch("Then"));
+		
+		assertFalse(Pattern.EN.keywordMatch("asdf"));
+		assertFalse(Pattern.EN.keywordMatch("1111"));
 	}
 }

@@ -1,3 +1,6 @@
+_23 March 2009 - Release 0.8.5_
+ Version 0.8.5 is released with support for test tables and more scenario support. By configuring BDoc in "dynamic" mode it will now run tests that ends with Behaviour. Read more in [TheCalcExample]
+
 _20 March 2009 - Features in the pipline_
  BDoc can now be configured to also run the tests, and inspect the results. Read more on NextFeatures   
 

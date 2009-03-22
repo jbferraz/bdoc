@@ -63,4 +63,28 @@ public class TestClassWithTestTablesBehaviour {
 
 	void exampleOnSubtractionBetweenValueOneAndValueTwo(int value1, int value2, int result) {
 	}
+
+	@Test
+	public void shouldHandleBothScenarioAndTestTableInOneTest() {
+		given();
+		when();
+		then();
+
+		exampleOnNumber(1);
+		exampleOnNumber(2);
+		exampleOnNumber(3);
+		exampleOnNumber(4);
+	}
+
+	void given() {
+	}
+
+	void when() {
+	}
+
+	void then() {
+	}
+
+	void exampleOnNumber(int i) {
+	}
 }

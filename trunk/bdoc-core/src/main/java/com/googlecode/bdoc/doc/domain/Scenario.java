@@ -106,6 +106,15 @@ public class Scenario {
 			return null;
 		}
 
+		public boolean keywordMatch(String camelCaseSentence) {
+			for (String keyword : keywords) {
+				if (camelCaseSentence.toLowerCase().startsWith(keyword.toLowerCase())) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 		public static int indexOfScenarioKeyword(String string, int scenarioKeyWord) {
 			for (Pattern pattern : Pattern.values()) {
 				int index = string.indexOf(pattern.keywords[scenarioKeyWord].toLowerCase());

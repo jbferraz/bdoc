@@ -64,7 +64,6 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		Scenario scenario = createScenario(methodCalls);
 		if (null != scenario) {
 			scenarios.add(scenario);
-			return;
 		}
 
 		createOneTestTableForEachMethodThatOccursMoreThanOnce(method, methodCalls);
@@ -73,9 +72,15 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 	@SuppressWarnings("unchecked")
 	private void createOneTestTableForEachMethodThatOccursMoreThanOnce(TestMethod method, List<MethodCall> methodCalls) {
 		TreeBag methodsBag = new TreeBag();
-		for (MethodCall methodCall : methodCalls) {
-			methodsBag.add(methodCall.getName());
+
+		// for som strange reason, a testrun in maven gives a ConcurentBlaBlaException if for each is used.. .
+		for (int i = 0; i < methodCalls.size(); i++) {
+			MethodCall methodCall = methodCalls.get(i);
+			if (methodCall.hasArguments()) {
+				methodsBag.add(methodCall.getName());
+			}
 		}
+
 		Set uniqueSet = methodsBag.uniqueSet();
 		for (Object object : uniqueSet) {
 			String name = (String) object;
@@ -95,7 +100,7 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		}
 	}
 
-	private static Scenario createScenario(List<MethodCall> methodCalls) {
+	private Scenario createScenario(List<MethodCall> methodCalls) {
 		List<Scenario.Part> scenarioParts = new ArrayList<Scenario.Part>();
 
 		Pattern locale = null;
@@ -107,6 +112,10 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 				if (null == locale) {
 					return null;
 				}
+			}
+
+			if (!locale.keywordMatch(camelCaseDescription)) {
+				break;
 			}
 
 			for (Argument argument : methodCall.getArguments()) {

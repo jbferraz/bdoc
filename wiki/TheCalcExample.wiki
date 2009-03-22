@@ -1,18 +1,18 @@
-===Addition===
- As a person,
- I want a calculator to add two numbers, 
- so that I avoid silly math mistakes
+=Addition==
+===As a person===
+===I want a calculator to add two numbers===
+===so that I avoid silly math mistakes===
 
 Scenarios
 
-    * Given the two values 4 and 5
-    * When the add operation is executed
-    * Then the result should be 9
+       * Given the two values 4 and 5
+       * When the add operation is executed
+       * Then the result should be 9
 
 Specifications
 
-    * CalcBehaviour
-          o Should add two numbers
+       * CalcBehaviour
+             o Should add two numbers
 
 Test tables
 
@@ -23,7 +23,8 @@ Example on addition
 || 2         ||	2 	  || 4              ||    
 
 
-Generated from the following code: 
+==The report above is generated from the following code:==
+
 {{{
 @Ref(Story.ADDITION)
 public class TestCalcBehaviour {

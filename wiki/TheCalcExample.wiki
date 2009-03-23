@@ -11,7 +11,7 @@ Scenarios
 
 Specifications
 
-       * CalcBehaviour
+       * Calc
              o Should add two numbers
 
 Test tables

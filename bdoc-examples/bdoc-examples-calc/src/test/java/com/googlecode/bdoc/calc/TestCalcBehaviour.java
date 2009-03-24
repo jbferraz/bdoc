@@ -29,12 +29,14 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.googlecode.bdoc.calc.bdoc.Ref;
+import com.googlecode.bdoc.calc.bdoc.RefClass;
 import com.googlecode.bdoc.calc.bdoc.Story;
 
 /**
  * @author Per Otto Bergum Christensen
  */
 @Ref(Story.ADDITION)
+@RefClass(Calc.class)
 public class TestCalcBehaviour {
 
 	private Calc calc = new Calc();

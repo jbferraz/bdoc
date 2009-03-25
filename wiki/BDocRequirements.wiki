@@ -3,7 +3,7 @@
   * Support behaviour driven development, help "getting the words right"
   * Present a cheaper documentation solution, compared to the “fitnesse documentation approach” 
 
- _BDoc_
+_BDoc_
 
   * _should support "existing ways of doing things"_
   * _should support different languages_

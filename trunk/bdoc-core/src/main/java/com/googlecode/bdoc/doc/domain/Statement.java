@@ -24,23 +24,36 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Statement defines behaviour that can't be described by a Specification or a
  * Scenario.
  * 
  * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class Statement {
+
+	List<Scenario> scenarios = new ArrayList<Scenario>();
 
 	protected String camelCaseSentence;
 
 	public Statement(String camelCaseSentence) {
-		this.camelCaseSentence = camelCaseSentence;		
+		this.camelCaseSentence = camelCaseSentence;
 	}
 
 	public String getSentence() {
 		return camelCaseSentence;
+	}
+
+	public List<Scenario> getScenarios() {
+		return scenarios;
+	}
+
+	public void addScenarios(List<Scenario> scenarios) {
+		this.scenarios.addAll(scenarios);
 	}
 
 	@Override

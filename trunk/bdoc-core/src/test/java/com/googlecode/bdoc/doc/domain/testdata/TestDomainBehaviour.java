@@ -38,6 +38,17 @@ public class TestDomainBehaviour {
 	}
 
 	@org.junit.Test
+	public void shouldBeASpecificationWithTwoScenario() {
+		given();
+		when();
+		then();
+
+		given2();
+		when2();
+		then2();
+	}
+
+	@org.junit.Test
 	public void simpleStatement() {
 	}
 
@@ -48,6 +59,15 @@ public class TestDomainBehaviour {
 	}
 
 	void given() {
+	}
+
+	void then2() {
+	}
+
+	void when2() {
+	}
+
+	void given2() {
 	}
 
 }

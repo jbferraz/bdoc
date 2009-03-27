@@ -48,6 +48,7 @@ import com.googlecode.bdoc.doc.testdata.TestClassWithExStory2Reference;
 
 /**
  * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 @Ref(Story.CREATE_BDOC_FROM_CODE)
 public class TestBDoc {
@@ -116,13 +117,15 @@ public class TestBDoc {
 
 	@Test
 	public void givenATestclassWhenATestmethodDescribingBehaviourIsMarkedAsASpecificationThenEnsureTheSpecificationIsCreated() {
-		ClassBehaviour behaviour = bdoc.userStoryFor(ExStory.STORY1).classBehaviourFor(TestExampleAnnotatedScenariosAndSpecifications.class);
+		ClassBehaviour behaviour = bdoc.userStoryFor(ExStory.STORY1)
+				.classBehaviourFor(TestExampleAnnotatedScenariosAndSpecifications.class);
 		assertTrue(behaviour.getSpecifications().contains(new Specification("shouldBehaveLikeThat")));
 	}
 
 	@Test
 	public void givenATestmethodMarkedAsBehaviourWhenTheTestmethodIsAnnotatedWithAReferenceToAUserstoryThenEnsureTheCreatedBehaviourIsAddedToThatUserstory() {
-		ClassBehaviour behaviour = bdoc.userStoryFor(ExStory.STORY2).classBehaviourFor(TestExampleAnnotatedScenariosAndSpecifications.class);
+		ClassBehaviour behaviour = bdoc.userStoryFor(ExStory.STORY2)
+				.classBehaviourFor(TestExampleAnnotatedScenariosAndSpecifications.class);
 		assertTrue(behaviour.getSpecifications().contains(new Specification("shouldBehaveLikeThisIfThat")));
 	}
 
@@ -238,22 +241,30 @@ public class TestBDoc {
 		bdoc = new BDoc();
 		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
 		ClassBehaviour classBehaviour = bdoc.classBehaviourInGeneralBehaviour(MyTestTablesBehaviour.class);
-		assertFalse( classBehaviour.getTestTables().isEmpty() );
+		assertFalse(classBehaviour.getTestTables().isEmpty());
 	}
-	
 
 	@Test
 	public void listOfTestTablesShouldIncludeGeneralBehaviour() {
 		bdoc = new BDoc();
 		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
-		assertTrue( bdoc.testTables().contains( new TestTable( "assertSum")) );		
+		assertTrue(bdoc.testTables().contains(new TestTable("assertSum")));
 	}
 
 	@Test
 	public void listOfTestTablesShouldIncludeUserStories() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
-		assertTrue( bdoc.testTables().contains( new TestTable( "assertDivison")) );		
+		assertTrue(bdoc.testTables().contains(new TestTable("assertDivison")));
+	}
+
+	@Test
+	public void statementShouldKnowItsScenarios() {
+		BDoc bdocWithScenario = new BDoc();
+		bdocWithScenario.addBehaviourFrom(new TestClass(TestDomainBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		List<Specification> specifications = bdocWithScenario.specifications();
+		assertFalse(specifications.get(0).getScenarios().isEmpty());
+		assertFalse(specifications.get(1).getScenarios().isEmpty());
 	}
 
 	/**

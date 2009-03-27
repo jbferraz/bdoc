@@ -41,6 +41,7 @@ import com.googlecode.bdoc.doc.util.ClassesDirectory;
 
 /**
  * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class BDoc {
 
@@ -112,7 +113,7 @@ public class BDoc {
 			if (testClass.shouldBeAnalyzedForExtendedBehaviour()) {
 				behaviourFactory.analyze(method);
 				classBehaviour.addScenarios(behaviourFactory.getCreatedScenarios());
-				classBehaviour.addTestTables(behaviourFactory.getCreatedTestTables());				
+				classBehaviour.addTestTables(behaviourFactory.getCreatedTestTables());
 			}
 		}
 		return this;
@@ -238,7 +239,8 @@ public class BDoc {
 	}
 
 	/**
-	 * Helper method for test - when default annotations should be set, after serializing the BDoc, since annotations are transient
+	 * Helper method for test - when default annotations should be set, after
+	 * serializing the BDoc, since annotations are transient
 	 */
 	public void setDefaultTestAnnotations() {
 		testAnnotations = new TestAnnotations();

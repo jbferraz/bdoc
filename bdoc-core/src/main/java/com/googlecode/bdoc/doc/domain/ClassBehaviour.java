@@ -38,6 +38,7 @@ import org.apache.commons.lang.StringUtils;
  * Could be: - scenario - specification - statement - test table
  * 
  * @author Per Otto Bergum Christensen
+ * @author Micael Vesterlund
  */
 public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 
@@ -52,6 +53,8 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	private List<Statement> statements = new ArrayList<Statement>();
 
 	private List<TestTable> testTables = new ArrayList<TestTable>();
+
+	private Statement current;
 
 	public ClassBehaviour(Class<? extends Object> testClass) {
 		this.className = retreiveClassName(testClass);
@@ -96,7 +99,8 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	}
 
 	/**
-	 * Removes the package and parent className from a fullClassName. Ex: com.bdoc.MyClass$SubClass => SubClass
+	 * Removes the package and parent className from a fullClassName. Ex:
+	 * com.bdoc.MyClass$SubClass => SubClass
 	 * 
 	 * @param name
 	 *            to strip
@@ -124,11 +128,13 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 		}
 
 		if (Specification.Pattern.match(camelCaseSentence)) {
-			specifications.add(new Specification(camelCaseSentence));
+			current = new Specification(camelCaseSentence);
+			specifications.add((Specification) current);
 			return;
 		}
 
-		statements.add(new Statement(camelCaseSentence));
+		current = new Statement(camelCaseSentence);
+		statements.add(current);
 	}
 
 	public String getClassName() {
@@ -185,9 +191,17 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 
 	public void addScenarios(List<Scenario> scenarios) {
 		this.scenarios.addAll(scenarios);
+		if (current != null) {
+			current.addScenarios(scenarios);
+		}
 	}
 
 	public void addTestTables(List<TestTable> testTables) {
 		this.testTables.addAll(testTables);
 	}
+
+	public Statement getCurrent() {
+		return current;
+	}
+
 }

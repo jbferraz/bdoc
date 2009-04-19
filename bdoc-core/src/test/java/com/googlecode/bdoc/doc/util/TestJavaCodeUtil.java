@@ -26,6 +26,7 @@ package com.googlecode.bdoc.doc.util;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -94,17 +95,29 @@ public class TestJavaCodeUtil {
 		assertEquals(new Scenario.Part("thenCC"), behaviour.get(5));
 	}
 
+
 	@Test
 	public void shouldListArgumentNamesForAMethodWithOneArgument() {
-		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(MyObject.class), "methodWithOneArgument",BConst.SRC_TEST_JAVA);
+		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(MyObject.class), "methodWithOneArgument", BConst.SRC_TEST_JAVA);
 		assertEquals("arg1", argNames.get(0));
 	}
 
 	@Test
 	public void shouldListArgumentNamesForAMethodWithTwoArguments() {
-		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(MyObject.class), "methodWithTwoArguments",BConst.SRC_TEST_JAVA);
+		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(MyObject.class), "methodWithTwoArguments", BConst.SRC_TEST_JAVA);
 		assertEquals("arg1", argNames.get(0));
 		assertEquals("arg2", argNames.get(1));
 	}
-	
+
+	@Test
+	public void shouldListArgumentNamesForAMethodWithASignatureThatSpansTwoLines() {
+		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(MyObject.class), "methodWithSignatureThatSpansTwoLines",
+				BConst.SRC_TEST_JAVA);
+
+		List<String> expectedArgumentNames = Arrays.asList(new String[] { "myByte", "myBoolean", "myLong", "myInteger", "myString",
+				"myDate", "myCharacter", "myChar" });
+
+		assertEquals(expectedArgumentNames, argNames);
+	}
+
 }

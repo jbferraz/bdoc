@@ -27,8 +27,6 @@ package com.googlecode.bdoc.doc.util;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -132,7 +130,7 @@ public class JavaCodeUtil {
 
 	/**
 	 * Gets the argument names for the specified methode
-	 * 
+	 * Uses regular expression: http://java.sun.com/docs/books/tutorial/essential/regex/intro.html
 	 * @param testClass
 	 *            specifies source
 	 * @param methodName
@@ -140,16 +138,9 @@ public class JavaCodeUtil {
 	 * @return name of arguments in methodName
 	 */
 	public static List<String> getArgumentNames(TestClass testClass, String methodName, File srcTestJava) {
-		String signaturePostfixRegexp = "\\(.*\\).*\\{";
-		Pattern patternForMethodSignature = Pattern.compile(methodName + signaturePostfixRegexp);
-
-		String javaSource = testClass.getSource(srcTestJava);
-		Matcher signatureMatcher = patternForMethodSignature.matcher(javaSource);
-		if (!signatureMatcher.find()) {
-			throw new IllegalStateException("Could not find method signature for [" + methodName + "] in [" + testClass + "]");
-		}
-
-		String methodSignature = javaSource.substring(signatureMatcher.start(), signatureMatcher.end());
+		
+		String methodSignature = JavaSourceMethodSignatureFinder.getSignature(methodName, testClass.getSource(srcTestJava));
+		
 		String[] arguments = StringUtils.substringBetween(methodSignature, "(", ")").split(",");
 
 		List<String> result = new ArrayList<String>();

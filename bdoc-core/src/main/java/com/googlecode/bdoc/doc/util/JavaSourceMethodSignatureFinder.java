@@ -37,7 +37,8 @@ import java.util.regex.Pattern;
 public class JavaSourceMethodSignatureFinder {
 
 	public static String getSignature(String methodName, String javaSource) {
-		String signaturePostfixRegexp = "\\(" + "[a-z || A-Z || \\d || _ || , || \\n || \\t || < || > || ?]+" + "\\)[\\s]*\\{";
+		String signaturePostfixRegexp = "\\("
+				+ "[a-z || A-Z || \\d || _ || , || \t || < || > || ? || \n || \r || \u0085 || \u2028 || \u2029]+" + "\\)[\\s]*\\{";
 
 		Pattern patternForMethodSignature = Pattern.compile(methodName + signaturePostfixRegexp);
 

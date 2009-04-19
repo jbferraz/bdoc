@@ -58,9 +58,6 @@ public class TestJavaSourceMethodSignatureFinderBehaviour {
 		exampleOnMethodSignatureFound("Method calls with variables", "public void test() { method(a); method(b); } method( char value ){ }",
 				"method", "method( char value )");
 
-		exampleOnMethodSignatureFound("Signature with newline", "method( char my_value \n, int iVal ){ }", "method",
-				"method( char my_value \n, int iVal )");
-
 		exampleOnMethodSignatureFound("Signature with tab", "method( char my_value \t, int iVal ){ }", "method",
 				"method( char my_value \t, int iVal )");
 
@@ -75,6 +72,35 @@ public class TestJavaSourceMethodSignatureFinderBehaviour {
 
 	void exampleOnMethodSignatureFound(String testComment, String partialJavaSource, String methodName, String expectedSignature) {
 		assertEquals(testComment, expectedSignature, JavaSourceMethodSignatureFinder.getSignature(methodName, partialJavaSource));
+	}
+
+	@Test
+	public void shouldHandleNewLineInMethodSignature() {
+
+		exampleOnLineTerminatorsThatAreHandled("A newline (line feed) character", "\n", "void method( int a, \n int b){}", "method",
+				"method( int a, \n int b)");
+
+		exampleOnLineTerminatorsThatAreHandled("A carriage-return character followed immediately by a newline character", "\r\n",
+				"void method( int a, \r\n int b){}", "method", "method( int a, \r\n int b)");
+
+		exampleOnLineTerminatorsThatAreHandled("A standalone carriage-return character", "\r", "void method( int a, \r int b){}", "method",
+				"method( int a, \r int b)");
+
+		exampleOnLineTerminatorsThatAreHandled("A next-line character", "\u0085", "void method( int a, \u0085 int b){}", "method",
+				"method( int a, \u0085 int b)");
+
+		exampleOnLineTerminatorsThatAreHandled("A line-separator character", "\u2028", "void method( int a, \u2028 int b){}", "method",
+				"method( int a, \u2028 int b)");
+
+		exampleOnLineTerminatorsThatAreHandled("A paragraph-separator character", "\u2029", "void method( int a, \u2029 int b){}", "method",
+				"method( int a, \u2029 int b)");
+	}
+
+	void exampleOnLineTerminatorsThatAreHandled(String newLineDescription, String newLineCode, String partialJavaSource, String methodName,
+			String expectedMethodSignature) {
+
+		assertEquals(newLineDescription + " code: " + newLineCode, expectedMethodSignature, JavaSourceMethodSignatureFinder.getSignature(
+				methodName, partialJavaSource));
 	}
 
 }

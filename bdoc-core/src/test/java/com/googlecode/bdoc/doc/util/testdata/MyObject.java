@@ -48,4 +48,9 @@ public class MyObject {
 	public void methodWithSignatureThatSpansTwoLines(byte myByte, boolean myBoolean, Long myLong, Integer myInteger, String myString,
 			Date myDate, Character myCharacter, char myChar) {
 	}
+
+	void eksempelPaaTilleggspensjonsberegning(double sluttPoengtall, int poengFoer92, 
+			int poentEtter91, double forventetTilleggspensjon) {
+	}
+
 }

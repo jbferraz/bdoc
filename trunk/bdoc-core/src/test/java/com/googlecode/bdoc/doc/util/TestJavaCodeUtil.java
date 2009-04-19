@@ -95,7 +95,6 @@ public class TestJavaCodeUtil {
 		assertEquals(new Scenario.Part("thenCC"), behaviour.get(5));
 	}
 
-
 	@Test
 	public void shouldListArgumentNamesForAMethodWithOneArgument() {
 		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(MyObject.class), "methodWithOneArgument", BConst.SRC_TEST_JAVA);
@@ -119,5 +118,4 @@ public class TestJavaCodeUtil {
 
 		assertEquals(expectedArgumentNames, argNames);
 	}
-
 }

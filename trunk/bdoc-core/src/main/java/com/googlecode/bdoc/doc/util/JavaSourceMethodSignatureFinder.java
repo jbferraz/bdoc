@@ -22,30 +22,31 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.util.testdata;
+package com.googlecode.bdoc.doc.util;
 
-import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class MyObject {
+/**
+ * 
+ * Help: http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html
+ * 
+ * @author Per Otto Bergum Christensen
+ * 
+ */
+public class JavaSourceMethodSignatureFinder {
 
-	public void testMethodWithOneArgument() {
-		methodWithOneArgument("test1");
-		methodWithOneArgument("test2");
-		methodWithOneArgument("test3");
-	}
+	public static String getSignature(String methodName, String javaSource) {
+		String signaturePostfixRegexp = "\\(" + "[a-z || A-Z || \\d || _ || , || \\n || \\t || < || > || ?]+" + "\\)[\\s]*\\{";
 
-	public void methodWithOneArgument(String arg1) {
-	}
+		Pattern patternForMethodSignature = Pattern.compile(methodName + signaturePostfixRegexp);
 
-	public void testMethodWithTwoArguments() {
-		methodWithTwoArguments(1, 3D);
-		methodWithTwoArguments(2, 4D);
-	}
+		Matcher signatureMatcher = patternForMethodSignature.matcher(javaSource);
+		if (!signatureMatcher.find()) {
+			throw new IllegalStateException("Could not find method signature (or signature not supported):  [" + methodName + "] in ["
+					+ javaSource + "]");
+		}
 
-	public void methodWithTwoArguments(Integer arg1, Double arg2) {
-	}
-
-	public void methodWithSignatureThatSpansTwoLines(byte myByte, boolean myBoolean, Long myLong, Integer myInteger, String myString,
-			Date myDate, Character myCharacter, char myChar) {
+		return javaSource.substring(signatureMatcher.start(), signatureMatcher.end() - 1).trim();
 	}
 }

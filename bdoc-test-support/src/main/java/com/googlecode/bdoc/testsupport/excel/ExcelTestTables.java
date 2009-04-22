@@ -1,18 +1,21 @@
 package com.googlecode.bdoc.testsupport.excel;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class ExcelTestTables {
 
+	private String xlsFilePath;
 	private HSSFWorkbook workbook;
 
 	public ExcelTestTables(String xlsFilePath) {
+		this.xlsFilePath = xlsFilePath;
 		try {
 			workbook = new HSSFWorkbook(new FileInputStream(xlsFilePath));
 		} catch (Exception e) {
@@ -31,4 +34,31 @@ public class ExcelTestTables {
 		return result;
 	}
 
+	public Table getTable(String tableDescription) {
+
+		HSSFSheet sheet = workbook.getSheetAt(0);
+		int rowIndex = -1;
+		int cellnum = -1;
+		HSSFCell cell = null;
+		try {
+			for (rowIndex = 0; rowIndex < sheet.getLastRowNum(); rowIndex++) {
+				HSSFRow row = sheet.getRow(rowIndex);
+				if( null == row ) {
+					continue;
+				}
+				for (cellnum = 0; cellnum < row.getLastCellNum(); cellnum++) {
+					cell = row.getCell(cellnum);
+					if ((HSSFCell.CELL_TYPE_STRING == cell.getCellType())
+							&& tableDescription.equals(cell.getRichStringCellValue().getString())) {
+						return new Table(sheet, rowIndex, cellnum);
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException("Problem with cell (row=" + rowIndex + ",cellnum=" + cellnum + ",val=" + cell
+					+ ") getting table [" + tableDescription + "] from [" + xlsFilePath + "]", e);
+
+		}
+		throw new IllegalArgumentException("Can't find [" + tableDescription + "] in [" + xlsFilePath + "]");
+	}
 }

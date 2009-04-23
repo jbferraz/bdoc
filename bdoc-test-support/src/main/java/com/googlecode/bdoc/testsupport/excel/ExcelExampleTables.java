@@ -9,12 +9,12 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-public class ExcelTestTables {
+public class ExcelExampleTables {
 
 	private String xlsFilePath;
 	private HSSFWorkbook workbook;
 
-	public ExcelTestTables(String xlsFilePath) {
+	public ExcelExampleTables(String xlsFilePath) {
 		this.xlsFilePath = xlsFilePath;
 		try {
 			workbook = new HSSFWorkbook(new FileInputStream(xlsFilePath));
@@ -34,7 +34,7 @@ public class ExcelTestTables {
 		return result;
 	}
 
-	public Table getTable(String tableDescription) {
+	public ExcelExampleTable getTable(String tableDescription) {
 
 		HSSFSheet sheet = workbook.getSheetAt(0);
 		int rowIndex = -1;
@@ -50,7 +50,7 @@ public class ExcelTestTables {
 					cell = row.getCell(cellnum);
 					if ((HSSFCell.CELL_TYPE_STRING == cell.getCellType())
 							&& tableDescription.equals(cell.getRichStringCellValue().getString())) {
-						return new Table(sheet, rowIndex, cellnum);
+						return new ExcelExampleTable(sheet, rowIndex, cellnum);
 					}
 				}
 			}

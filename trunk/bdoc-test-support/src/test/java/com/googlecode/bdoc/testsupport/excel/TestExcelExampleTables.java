@@ -1,9 +1,8 @@
 package com.googlecode.bdoc.testsupport.excel;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,12 +14,12 @@ import org.junit.Test;
  * @author Per Otto Bergum Christensen
  * 
  */
-public class TestExcelTestTables {
+public class TestExcelExampleTables {
 
-	private ExcelTestTables testTables;
+	private ExcelExampleTables testTables;
 
-	public TestExcelTestTables() {
-		testTables = new ExcelTestTables("./src/test/resources/calc-operation-examples.xls");
+	public TestExcelExampleTables() {
+		testTables = new ExcelExampleTables("./src/test/resources/calc-operation-examples.xls");
 	}
 
 	@Test
@@ -35,18 +34,16 @@ public class TestExcelTestTables {
 	}
 
 	@Test
-	@Ignore
 	public void shouldReturnAListWithTestdataValuesForEachRowWithTestdata() {
-		Table table = testTables.getTable("Example on addition");
-		assertEquals(2, table.rowCount());
-		assertEquals(asList(1, 1, 2), table.getRow(0) );
-		assertEquals(asList(2, 2, 4), table.getRow(1) );
+		ExcelExampleTable excelExampleTable = testTables.getTable("Example on addition");
+		assertEquals(2, excelExampleTable.rowCount());
+		assertEquals(asList(1D, 1D, 2D), excelExampleTable.getRow(0));
+		assertEquals(asList(2D, 2D, 4D), excelExampleTable.getRow(1));
 		
+		excelExampleTable = testTables.getTable("Example on subtraction");
+		assertEquals(3, excelExampleTable.rowCount());
+		assertEquals(asList(4D, 4D, 0D), excelExampleTable.getRow(0));
+		assertEquals(asList(3D, 1D, 2D), excelExampleTable.getRow(1));
+		assertEquals(asList(9D, 6D, 3D), excelExampleTable.getRow(2));
 	}
-
-	// shouldCreateTestTables based on example runs
-	// should add testTables based on example runs
-	// put marker on test and run bdoc:excel, add arguments, such as file name on excel file
-
-	// testTables.run( "exampleOnAddition", this );
 }

@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-core</artifactId>
-			<version>0.8.6-SNAPSHOT</version>
+			<version>0.8.8-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

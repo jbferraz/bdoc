@@ -31,7 +31,7 @@
 
 <#setting date_format="short">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>${bdocDiff.projectDiff.nameDiff.newValue}</title>
 		<#include "css.ftl">					
@@ -39,8 +39,7 @@
 	<body>	
 		<div id="projectInfo">
 			<h1>${bdocDiff.projectDiff.nameDiff.newValue} ${bdocDiff.projectDiff.versionDiff.newValue}</h1>
-		</div>
-		
+		</div>		
 		<#include "html_diff_report_content.ftl">		
 	</body>
 </html>

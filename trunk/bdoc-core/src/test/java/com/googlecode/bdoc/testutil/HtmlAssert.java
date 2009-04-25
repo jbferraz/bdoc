@@ -32,13 +32,14 @@ import org.w3c.dom.Document;
 
 import com.googlecode.bdoc.doc.util.SysProp;
 
-
 /**
  * Custom asserts for tests on html-documents.
  * 
  * @author Per Otto Bergum Christensen
  */
 public class HtmlAssert {
+
+	public static final String XMLNS_XHTML = "xmlns=\"http://www.w3.org/1999/xhtml\"";
 
 	private HtmlAssert() {
 	}
@@ -47,10 +48,10 @@ public class HtmlAssert {
 		Validate.notNull(expected, "expected");
 		Validate.notNull(xpath, "xpath");
 		Validate.notNull(xhtml, "xhtml");
-		
+
 		String result = null;
 		try {
-			Document document = XMLUnit.buildControlDocument(HtmlAssert.removeDocType(xhtml));
+			Document document = XMLUnit.buildControlDocument(removeDocType(xhtml));
 			XpathEngine simpleXpathEngine = XMLUnit.newXpathEngine();
 			result = simpleXpathEngine.evaluate(xpath, document);
 			if (result.contains(expected)) {
@@ -64,7 +65,7 @@ public class HtmlAssert {
 
 	public static void assertXpathEvaluatesTo(String expectedValue, String xpath, String xhtml) {
 		try {
-			XMLAssert.assertXpathEvaluatesTo(expectedValue, xpath, HtmlAssert.removeDocType(xhtml));
+			XMLAssert.assertXpathEvaluatesTo(expectedValue, xpath, removeDocType(xhtml));
 		} catch (AssertionError e) {
 			throw new AssertionError(e.getMessage() + " for xpath \"" + xpath + "\" and XML " + SysProp.NL + xhtml);
 		} catch (Exception e) {
@@ -73,11 +74,18 @@ public class HtmlAssert {
 	}
 
 	public static String removeDocType(String xhtmlPage) {
+		String result = xhtmlPage;
 		if (xhtmlPage.trim().startsWith("<!DOCTYPE")) {
 			int indexDoctypeEnd = xhtmlPage.indexOf(">");
-			return xhtmlPage.substring(indexDoctypeEnd + 1);
+			result = xhtmlPage.substring(indexDoctypeEnd + 1);
 		}
-		return xhtmlPage;
+
+		int xmlnsIndex = result.indexOf(XMLNS_XHTML);
+		if (0 < xmlnsIndex) {
+			result = result.substring(0, xmlnsIndex - 1) + result.substring(xmlnsIndex + XMLNS_XHTML.length());
+		}
+
+		return result;
 	}
 
 }

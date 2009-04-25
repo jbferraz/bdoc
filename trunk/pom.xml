@@ -73,20 +73,20 @@
 	</pluginRepositories>
    
   <modules>
-	 <module>bdoc-core</module>
+	 <module>bdoc</module>
 	 <module>bdoc-examples</module>
-	 <module>maven-bdoc-plugin</module>
 	 <module>bdoc-test</module>
-    <module>bdoc-test-support</module>
   </modules>
   
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.5</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
 
+	<dependencies>
+
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.5</version>
+		<scope>test</scope>
+	</dependency>
+	</dependencies>
+  
 </project>

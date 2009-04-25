@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <project>
 	<parent>
-		<artifactId>bdoc-base</artifactId>
+		<artifactId>bdoc-pom</artifactId>
 		<groupId>com.googlecode.bdoc</groupId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.8.8-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>bdoc-test-support</artifactId>
-	<name>bdoc-test-support</name>
-	<version>0.1-SNAPSHOT</version>
+	
+	<artifactId>bdoc-acceptance-test-support</artifactId>
+	<name>Behaviour documentation - Acceptance test support</name>
 	<url>http://maven.apache.org</url>
 
 	<licenses>

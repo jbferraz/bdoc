@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TableColumn;
-import com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator;
+import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 
 /**
  * @author Per Otto Bergum Christensen

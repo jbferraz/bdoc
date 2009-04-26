@@ -1,19 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<artifactId>bdoc-pom</artifactId>
-		<groupId>com.googlecode.bdoc</groupId>
-		<version>0.8.8-SNAPSHOT</version>
-	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>maven-bdoc-plugin</artifactId>
+	<version>0.8.8-SNAPSHOT</version>	
 	<packaging>maven-plugin</packaging>
 	<name>Behaviour Documentation - Maven plugin</name>
+	<url>http://bdoc.googlecode.com</url>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/maven-bdoc-plugin</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/maven-bdoc-plugin</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/trunk/maven-bdoc-plugin</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/maven-bdoc-plugin</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/maven-bdoc-plugin</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk/bdoc/maven-bdoc-plugin</url>
 	</scm>
 
 	<organization>
@@ -182,7 +179,7 @@
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-core</artifactId>
-			<version>0.8.7</version>
+			<version>0.8.8-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

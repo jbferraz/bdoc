@@ -1,16 +1,18 @@
 <?xml version="1.0"?>
 <project>
-	<parent>
-		<artifactId>bdoc-pom</artifactId>
-		<groupId>com.googlecode.bdoc</groupId>
-		<version>0.8.8-SNAPSHOT</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-	
+	<modelVersion>4.0.0</modelVersion>	
+	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-acceptance-test-support</artifactId>
+	<version>0.1.0-SNAPSHOT</version>	
 	<name>Behaviour documentation - Acceptance test support</name>
-	<url>http://maven.apache.org</url>
+	<url>http://bdoc.googlecode.com</url>
 
+	<scm>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-acceptance-test-support</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-acceptance-test-support/</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk/bdoc-acceptance-test-support/</url>
+	</scm>
+	
 	<licenses>
 		<license>
 			<name>MIT License</name>
@@ -42,6 +44,14 @@
 	</developers>
 
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -51,6 +61,33 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>com.google.code.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.2.5</version>
+				<configuration>
+					<header>src/main/etc/header.txt</header>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.0-beta-9</version>
+				<configuration>
+					<tagBase>https://bdoc.googlecode.com/svn/tags</tagBase>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

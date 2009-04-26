@@ -24,7 +24,7 @@
 
 package com.googlecode.bdoc.doc.dynamic;
 
-import static com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator.SPACE_CHAR;
+import static com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator.SPACE_CHAR;
 
 import java.io.File;
 import java.util.ArrayList;

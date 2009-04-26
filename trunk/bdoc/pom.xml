@@ -85,6 +85,7 @@
 	 <module>bdoc-core</module>
 	 <module>maven-bdoc-plugin</module>
      <module>bdoc-acceptance-test-support</module>
+    <module>bdoc-utils</module>
   </modules>
   
 	<dependencies>

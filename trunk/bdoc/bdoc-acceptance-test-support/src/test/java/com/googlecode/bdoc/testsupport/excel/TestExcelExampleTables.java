@@ -1,3 +1,27 @@
+/**
+ * The MIT License
+ * 
+ * Copyright (c) 2008, 2009 @Author(s)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.googlecode.bdoc.testsupport.excel;
 
 import static java.util.Arrays.asList;
@@ -12,6 +36,13 @@ import org.junit.Test;
  * Learn to Read and Write Microsoft Excel Documents with Jakarta's POI - http://www.devx.com/Java/Article/17301/1954
  * 
  * @author Per Otto Bergum Christensen
+ * 
+ * Useful links:
+ * http://studios.thoughtworks.com/twist-agile-test-automation/1.0beta/help/working_with_a_scenario.html
+ * http://schuchert.wikispaces.com/FitNesse.Tutorials.ScenarioTables
+ * http://www.testearly.com/2007/04/13/take-heed-of-mixing-junit-4s-parameterized-tests/
+ * http://junit.sourceforge.net/javadoc_40/org/junit/runners/Parameterized.html
+ * http://junit.sourceforge.net/javadoc_40/org/junit/runner/JUnitCore.html
  * 
  */
 public class TestExcelExampleTables {

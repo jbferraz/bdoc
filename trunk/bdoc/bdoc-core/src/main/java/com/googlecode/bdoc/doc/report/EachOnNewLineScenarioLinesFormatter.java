@@ -30,7 +30,7 @@ import java.util.List;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
-import com.googlecode.bdoc.doc.util.CamelCaseToSentenceTranslator;
+import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 
 /**
  * @author Micael Vesterlund 

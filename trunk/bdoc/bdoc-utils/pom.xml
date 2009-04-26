@@ -1,16 +1,16 @@
-<?xml version="1.0"?><project>
+<?xml version="1.0"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.googlecode.bdoc</groupId>
   <artifactId>bdoc-utils</artifactId>
-  <version>0.8.7-SNAPSHOT</version>
+  <version>0.8.7</version>
   <name>Behaviour Documentation - Utils</name>
   <description>Util code shared for the differnt bdoc projects</description>
   <url>http://bdoc.googlecode.com</url>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-utils</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-utils</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-utils</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-utils-0.8.7</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-utils-0.8.7</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/tags/bdoc-utils-0.8.7</url>
 	</scm>
 
 	<organization>

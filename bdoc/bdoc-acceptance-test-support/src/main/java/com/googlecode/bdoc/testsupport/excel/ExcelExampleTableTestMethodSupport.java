@@ -24,14 +24,32 @@
 
 package com.googlecode.bdoc.testsupport.excel;
 
-public class ExcelExampleTableRunner {
+import static org.apache.commons.beanutils.MethodUtils.invokeExactMethod;
 
-	public ExcelExampleTableRunner(String xlsFilePath, Object testClass) {
+import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
+
+public class ExcelExampleTableTestMethodSupport {
+
+	private ExcelExampleTables excelExampleTables;
+	private Object testObject;
+
+	public ExcelExampleTableTestMethodSupport(String xlsFilePath, Object testObject) {
+		this.excelExampleTables = new ExcelExampleTables(xlsFilePath);
+		this.testObject = testObject;
 	}
 
 	public void verify(String exampleMethod) {
-		// TODO Auto-generated method stub
-		
+
+		ExcelExampleTable table = excelExampleTables.getTable(CamelCaseToSentenceTranslator.translate(exampleMethod));
+
+		try {
+			for (int rowIndex = 0; rowIndex < table.rowCount(); rowIndex++) {
+				Object[] args = table.getRow(rowIndex).toArray();
+				invokeExactMethod(testObject, exampleMethod, args);
+			}
+		} catch (Exception e) {
+			throw new IllegalStateException("Error invoking [" + exampleMethod + "]:" + e, e);
+		}
 	}
 
 }

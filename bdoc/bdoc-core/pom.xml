@@ -148,7 +148,6 @@
 					<header>src/main/etc/header.txt</header>
 					<excludes>
 						<exclude>target/**</exclude>
-						<exclude>bddlog/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>

@@ -93,6 +93,10 @@
 				<version>1.2.5</version>
 				<configuration>
 					<header>src/main/etc/header.txt</header>
+					<excludes>
+						<exclude>target/**</exclude>
+						<exclude>**/*.xls</exclude>
+					</excludes>
 				</configuration>
 				<executions>
 					<execution>

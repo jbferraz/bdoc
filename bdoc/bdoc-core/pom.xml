@@ -252,7 +252,7 @@
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-utils</artifactId>
-			<version>0.8.7-SNAPSHOT</version>
+			<version>0.8.9-SNAPSHOT</version>
 		</dependency>
 		
 	</dependencies>

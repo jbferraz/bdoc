@@ -27,6 +27,7 @@ package com.googlecode.bdoc.testsupport.excel;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
@@ -51,16 +52,48 @@ public class ExcelExampleTable {
 	}
 
 	public int rowCount() {
-		int count =0;
-		while( null != sheet.getRow(startingRowIndex + 3 + count++) );
-		return count;		
+		int count = 0;
+		while (null != sheet.getRow(startingRowIndex + 3 + count++))
+			;
+		return count;
 	}
 
-	public List<Object> getRow(int rowIndex) {
+	/**
+	 * Gets cell values from row
+	 * 
+	 * @param relativRowIndex
+	 *            to the description and cell headers
+	 * @return cell values for the given row
+	 */
+	public List<Object> getRow(int relativRowIndex) {
 		List<Object> result = new ArrayList<Object>();
-		HSSFRow headerRow = sheet.getRow(startingRowIndex + 2 + rowIndex);
-		for (int cellnum = 0; cellnum < headerRow.getLastCellNum(); cellnum++) {
-			result.add(headerRow.getCell(cellnum).getNumericCellValue());
+		HSSFRow row = sheet.getRow(startingRowIndex + 2 + relativRowIndex);
+		for (int cellnum = 0; cellnum < row.getLastCellNum(); cellnum++) {
+			HSSFCell cell = row.getCell(cellnum);
+
+			try {
+				int cellType = cell.getCellType();
+				switch (cellType) {
+				case HSSFCell.CELL_TYPE_NUMERIC: {
+					result.add(cell.getNumericCellValue());
+					continue;
+				}
+				case HSSFCell.CELL_TYPE_FORMULA: {
+					result.add(cell.getNumericCellValue());
+					continue;
+				}
+				case HSSFCell.CELL_TYPE_STRING: {
+					result.add(cell.getRichStringCellValue().getString());
+					continue;
+				}
+				default: {
+					throw new IllegalStateException("can't handle value");
+				}
+				}
+
+			} catch (Exception e) {
+				throw new ExcelTableCellReadException(row.getRowNum() + 1, cellnum, cell, e);
+			}
 		}
 		return result;
 	}

@@ -27,13 +27,17 @@ package com.googlecode.bdoc.testsupport.excel;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * TODO: - Add license information - Add bdoc plugin - Add story for testing with excel as source of testdata - Add reference to story for
- * this test - Use reflection and index of method arguments on testmethod in order to execute tests
+ * TODO: - Add license information - Add bdoc plugin - Add story for testing
+ * with excel as source of testdata - Add reference to story for this test - Use
+ * reflection and index of method arguments on testmethod in order to execute
+ * tests
  * 
- * Learn to Read and Write Microsoft Excel Documents with Jakarta's POI - http://www.devx.com/Java/Article/17301/1954
+ * Learn to Read and Write Microsoft Excel Documents with Jakarta's POI -
+ * http://www.devx.com/Java/Article/17301/1954
  * 
  * @author Per Otto Bergum Christensen
  * 
@@ -70,11 +74,17 @@ public class TestExcelExampleTables {
 		assertEquals(2, excelExampleTable.rowCount());
 		assertEquals(asList(1D, 1D, 2D), excelExampleTable.getRow(0));
 		assertEquals(asList(2D, 2D, 4D), excelExampleTable.getRow(1));
-		
+
 		excelExampleTable = testTables.getTable("Example on subtraction");
 		assertEquals(3, excelExampleTable.rowCount());
 		assertEquals(asList(4D, 4D, 0D), excelExampleTable.getRow(0));
 		assertEquals(asList(3D, 1D, 2D), excelExampleTable.getRow(1));
 		assertEquals(asList(9D, 6D, 3D), excelExampleTable.getRow(2));
+	}
+
+	@Test
+	@Ignore
+	public void shouldFindTableThatStartsAttCellNumThree() {
+		// .. .
 	}
 }

@@ -24,7 +24,7 @@
 
 package com.googlecode.bdoc.testsupport.excel;
 
-import static org.apache.commons.beanutils.MethodUtils.invokeExactMethod;
+import org.apache.commons.beanutils.MethodUtils;
 
 import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 
@@ -45,7 +45,8 @@ public class ExcelExampleTableTestMethodSupport {
 		try {
 			for (int rowIndex = 0; rowIndex < table.rowCount(); rowIndex++) {
 				Object[] args = table.getRow(rowIndex).toArray();
-				invokeExactMethod(testObject, exampleMethod, args);
+				
+				MethodUtils.invokeMethod(testObject, exampleMethod, args);				
 			}
 		} catch (Exception e) {
 			throw new IllegalStateException("Error invoking [" + exampleMethod + "]:" + e, e);

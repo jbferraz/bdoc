@@ -24,12 +24,13 @@
 
 package com.googlecode.bdoc.testsupport.excel;
 
-import java.util.ArrayList;
 import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -40,30 +41,58 @@ public class TestExcelExampleTableTestMethodSupport {
 
 	private ExcelExampleTableTestMethodSupport excelExampleTableTestMethodSupport = new ExcelExampleTableTestMethodSupport(
 			"./src/test/resources/calc-operation-examples.xls", this);
-	private List<List<Double>> arguments;
+	private List<List<Double>> doubleArguments;
+	private List<List<String>> stringArguments;
+
+	@Before
+	public void resetArgumentsCollector() {
+		doubleArguments = new ArrayList<List<Double>>();
+		stringArguments = new ArrayList<List<String>>();
+	}
 
 	@Test
-	public void shouldUseTestMethodNameToIdentifyExampleTableAndVerifyEachRowByRunningTheTestMethodWithItsArguments() {
-		arguments = new ArrayList<List<Double>>();
+	public void shouldUseTestMethodNameToIdentifyExampleTableAndVerifyEachRowByRunningTheTestMethodWithTableColoumsAsArguments() {
 		excelExampleTableTestMethodSupport.verify("exampleOnAddition");
-		assertEquals(asList(1D, 1D, 2D), arguments.get(0));
-		assertEquals(asList(2D, 2D, 4D), arguments.get(1));
-
-		arguments = new ArrayList<List<Double>>();
-		excelExampleTableTestMethodSupport.verify("exampleOnSubtraction");
-		assertEquals(asList(4D, 4D, 0D), arguments.get(0));
-		assertEquals(asList(3D, 1D, 2D), arguments.get(1));
-		assertEquals(asList(9D, 6D, 3D), arguments.get(2));
+		assertEquals(asList(1D, 1D, 2D), doubleArguments.get(0));
+		assertEquals(asList(2D, 2D, 4D), doubleArguments.get(1));
 	}
 
 	public void exampleOnAddition(Double a, Double b, Double sum) {
-		arguments.add(asList(a, b, sum));
+		doubleArguments.add(asList(a, b, sum));
 	}
 
-	public void exampleOnSubtraction(Double x, Double y, Double result) {
-		arguments.add(asList(x, y, result));
+	@Test
+	public void shouldSupportPrimitivTypesInTestMethod() {
+		excelExampleTableTestMethodSupport.verify("exampleOnSubtraction");
+		assertEquals(asList(4D, 4D, 0D), doubleArguments.get(0));
+		assertEquals(asList(3D, 1D, 2D), doubleArguments.get(1));
+		assertEquals(asList(9D, 6D, 3D), doubleArguments.get(2));
 	}
 
-	// utvid eksempelprosjekt
+	public void exampleOnSubtraction(double x, double y, double result) {
+		doubleArguments.add(asList(x, y, result));
+	}
+
+	@Test
+	public void shouldHandleFormulaInTableCell() {
+		excelExampleTableTestMethodSupport.verify("exampleOnDivision");
+		assertEquals(asList(6D, 3D, 2D), doubleArguments.get(0));
+		assertEquals(asList(2D, 2D, 1D), doubleArguments.get(1));
+	}
+
+	public void exampleOnDivision(double dividend, double divisor, double quotient) {
+		doubleArguments.add(asList(dividend, divisor, quotient));
+	}
+
+	@Test
+	public void shouldHandleStringValues() {
+		excelExampleTableTestMethodSupport.verify("exampleOnConcatenation");
+		assertEquals(asList("a", "b", "ab"), stringArguments.get(0));
+		assertEquals(asList("abc", "def", "abcdef"), stringArguments.get(1));
+	}
+
+	public void exampleOnConcatenation(String string1, String string2, String resultString) {
+		stringArguments.add(asList(string1, string2, resultString));
+	}
 
 }

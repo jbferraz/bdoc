@@ -44,6 +44,20 @@
 		</developer>
 	</developers>
 	
+	<distributionManagement>
+		<repository>
+			<id>perottobc-release</id>
+			<name>Local Maven repository of releases</name>
+			<url>dav:https://perottobc-repository.googlecode.com/svn/maven2/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>perottobc-snapshot</id>
+			<name>Local Maven repository of snapshots</name>
+			<url>dav:https://perottobc-repository.googlecode.com/svn/maven2/snapshots</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>	
+	
 	<repositories>
 		<repository>
 			<id>perottobc-release</id>                       

@@ -43,7 +43,7 @@
 			</roles>
 		</developer>
 	</developers>
-
+	
 	<build>
 		<extensions>
 			<extension>
@@ -105,19 +105,19 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.8.0</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.googlecode.bdoc</groupId>
-			<artifactId>bdoc-utils</artifactId>
-			<version>0.8.8</version>
-		</dependency>
-
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.5</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.googlecode.bdoc</groupId>
+			<artifactId>bdoc-utils</artifactId>
+			<version>0.8.9-SNAPSHOT</version>
+		</dependency>		
 
 	</dependencies>
 

@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>	
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-acceptance-test-support</artifactId>
-	<version>0.1.1</version>	
+	<version>0.1.2-SNAPSHOT</version>	
 	<name>Behaviour documentation - Acceptance test support</name>
 	<url>http://bdoc.googlecode.com</url>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-acceptance-test-support-0.1.1</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-acceptance-test-support-0.1.1</developerConnection>
-		<url>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-acceptance-test-support-0.1.1</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-acceptance-test-support</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-acceptance-test-support/</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk/bdoc-acceptance-test-support/</url>
 	</scm>
 	
 	<licenses>

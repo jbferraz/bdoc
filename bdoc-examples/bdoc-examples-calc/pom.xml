@@ -84,5 +84,17 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	
+	<dependencies>
+
+		<dependency>
+			<groupId>com.googlecode.bdoc</groupId>
+			<artifactId>bdoc-acceptance-test-support</artifactId>
+			<version>0.1.1</version>	
+		</dependency>
+		
+	</dependencies>
+
+	
 
 </project>

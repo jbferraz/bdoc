@@ -33,7 +33,7 @@ public class Calc {
 		return i + j;
 	}
 
-	public int subtract(int i, int j) {
+	public double subtract(double i, double j) {
 		return i - j;
 	}
 

@@ -31,6 +31,7 @@ import org.junit.Test;
 import com.googlecode.bdoc.calc.bdoc.Ref;
 import com.googlecode.bdoc.calc.bdoc.RefClass;
 import com.googlecode.bdoc.calc.bdoc.Story;
+import com.googlecode.bdoc.testsupport.excel.ExcelExampleTableTestMethodSupport;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -38,6 +39,9 @@ import com.googlecode.bdoc.calc.bdoc.Story;
 @Ref(Story.ADDITION)
 @RefClass(Calc.class)
 public class TestCalcBehaviour {
+
+	private ExcelExampleTableTestMethodSupport excelExampleTableTestMethodSupport = new ExcelExampleTableTestMethodSupport(
+			"./src/test/resources/calc-operation-examples.xls", this);
 
 	private Calc calc = new Calc();
 
@@ -72,4 +76,14 @@ public class TestCalcBehaviour {
 	void exampleOnAddition(int value1, int value2, int expectedSum) {
 		assertEquals(expectedSum, new Calc().add(value1, value2));
 	}
+
+	@Test
+	public void shouldSubtractTwoNumbers() {
+		excelExampleTableTestMethodSupport.verify("exampleOnSubtraction");
+	}
+
+	public void exampleOnSubtraction(double x, double y, double result) {
+		assertEquals(result, calc.subtract(x, y), 0.01);
+	}
+
 }

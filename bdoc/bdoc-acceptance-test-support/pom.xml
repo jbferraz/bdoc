@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>	
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-acceptance-test-support</artifactId>
-	<version>0.1.1-SNAPSHOT</version>	
+	<version>0.1.1</version>	
 	<name>Behaviour documentation - Acceptance test support</name>
 	<url>http://bdoc.googlecode.com</url>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-acceptance-test-support</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-acceptance-test-support/</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/trunk/bdoc-acceptance-test-support/</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-acceptance-test-support-0.1.1</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-acceptance-test-support-0.1.1</developerConnection>
+		<url>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-acceptance-test-support-0.1.1</url>
 	</scm>
 	
 	<licenses>

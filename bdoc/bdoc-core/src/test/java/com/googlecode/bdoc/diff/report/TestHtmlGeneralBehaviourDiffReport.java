@@ -79,61 +79,61 @@ public class TestHtmlGeneralBehaviourDiffReport {
 
 	@Test
 	public void shouldPresentNewPackages() {
-		assertXPathContains(generalBehaviourDiff.getNewPackages().get(0).getName(), "//div[@id='newPackages']", html);
+		assertXPathContains(generalBehaviourDiff.getNewPackages().get(0).getName(), "//div[@class='newPackages']", html);
 	}
 
 	@Test
 	public void shouldPresentScenariosInNewPackages() {
 		assertXPathContains(scenarioPart(0, generalBehaviourDiff.getNewPackages().get(0).getClassBehaviour().get(0).getScenarios().get(0)),
-				"//div[@id='newPackages']", html);
+				"//div[@class='newPackages']", html);
 	}
 
 	@Test
 	public void shouldPresentSpecificationsInNewPackages() {
 
 		assertXPathContains(ReportTestHelper.sentence(generalBehaviourDiff.getNewPackages().get(0).getClassBehaviour().get(0)
-				.getSpecifications().get(0)), "//div[@id='newPackages']", html);
+				.getSpecifications().get(0)), "//div[@class='newPackages']", html);
 	}
 
 	@Test
 	public void shouldPresentDeletedPackages() {
-		assertXPathContains(generalBehaviourDiff.getDeletedPackages().get(0).getName(), "//div[@id='deletedPackages']", html);
+		assertXPathContains(generalBehaviourDiff.getDeletedPackages().get(0).getName(), "//div[@class='deletedPackages']", html);
 	}
 
 	@Test
 	public void shouldPresentSpecificationsInDeletedPackages() {
 		assertXPathContains(ReportTestHelper.sentence(generalBehaviourDiff.getDeletedPackages().get(0).getClassBehaviour().get(0)
-				.getSpecifications().get(0)), "//div[@id='deletedPackages']", html);
+				.getSpecifications().get(0)), "//div[@class='deletedPackages']", html);
 	}
 
 	@Test
 	public void shouldPresentScenariosInDeletedPackages() {
 		assertXPathContains(scenarioPart(0, generalBehaviourDiff.getDeletedPackages().get(0).getClassBehaviour().get(0).getScenarios().get(
-				0)), "//div[@id='deletedPackages']", html);
+				0)), "//div[@class='deletedPackages']", html);
 	}
 
 	@Test
 	public void shouldPresentNewScenariosInUpdatedPackages() {
 		assertXPathContains(scenarioPart(0, generalBehaviourDiff.getPackageDiff().get(0).getNewScenarios().get(0)),
-				"//div[@id='updatedPackages']", html);
+				"//div[@class='updatedPackages']", html);
 	}
 
 	@Test
 	public void shouldPresentDeletedScenariosInUpdatedPackages() {
 		assertXPathContains(scenarioPart(0, generalBehaviourDiff.getPackageDiff().get(0).getDeletedScenarios().get(0)),
-				"//div[@id='updatedPackages']", html);
+				"//div[@class='updatedPackages']", html);
 	}
 
 	@Test
 	public void shouldPresentNewSpecificationsInUpdatedPackages() {
 		assertXPathContains(ReportTestHelper.sentence(generalBehaviourDiff.getPackageDiff().get(0).getNewClassSpecifications().get(0)
-				.getSpecifications().get(0)), "//div[@id='updatedPackages']", html);
+				.getSpecifications().get(0)), "//div[@class='updatedPackages']", html);
 	}
 
 	@Test
 	public void shouldPresentDeletedSpecificationsInUpdatedPackages() {
 		assertXPathContains(ReportTestHelper.sentence(generalBehaviourDiff.getPackageDiff().get(0).getDeletedClassSpecifications().get(0)
-				.getSpecifications().get(0)), "//div[@id='updatedPackages']", html);
+				.getSpecifications().get(0)), "//div[@class='updatedPackages']", html);
 	}
 
 }

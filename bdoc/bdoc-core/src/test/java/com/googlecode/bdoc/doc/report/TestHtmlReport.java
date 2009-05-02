@@ -132,25 +132,25 @@ public class TestHtmlReport {
 
 	@Test
 	public void shouldPresentPackagesWithBehaviourNotAssociatedWityAnyStories() {
-		assertXPathContains(bdoc.getGeneralBehaviour().getPackages().get(0).getName(), "//div[@id='generalBehaviour']", html);
+		assertXPathContains(bdoc.getGeneralBehaviour().getPackages().get(0).getName(), "//div[@class='generalBehaviour']", html);
 	}
 
 	@Test
 	public void shouldPresentScenariosNotAssociatedWithAnyStories() {
 		List<Scenario> scenarios = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getScenarios();
-		assertXPathContains(scenarioPart(0, scenarios.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
+		assertXPathContains(scenarioPart(0, scenarios.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
 	public void shouldPresentSpecificationsNotAssociatedWithAnyStories() {
 		List<Specification> specifications = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getSpecifications();
-		assertXPathContains(sentence(specifications.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
+		assertXPathContains(sentence(specifications.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
 	public void shouldPresentStatementsNotAssociatedWithAnyStories() {
 		List<Statement> statements = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getStatements();
-		assertXPathContains(sentence(statements.get(0)), "//div[@id='generalBehaviour']/div[@class='package']", html);
+		assertXPathContains(sentence(statements.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test

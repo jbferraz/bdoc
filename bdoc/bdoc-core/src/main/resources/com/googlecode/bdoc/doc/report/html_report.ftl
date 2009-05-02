@@ -45,7 +45,7 @@
 			<hr/>
 		</#list>
 		
-		<div id="generalBehaviour">
+		<div class="generalBehaviour">
 			<h2><@bdddoc.text key="general.behaviour"/></h2>
 		
 			<#list bddDoc.generalBehaviour.packages as package>

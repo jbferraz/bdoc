@@ -27,7 +27,7 @@
 	@author Per Otto Bergum Christensen
 -->
 
-<div id="docTimeDiff"> 
+<div class="docTimeDiff"> 
 	<@bdddoc.text key="date.periode" />: ${bdocDiff.docTimeDiff.time1?datetime} - ${bdocDiff.docTimeDiff.time2?datetime} <br/> 
 	<@bdddoc.text key="time.periode" />: 
 	${bdocDiff.docTimeDiff.days} <@bdddoc.text key="days" />, 
@@ -38,7 +38,7 @@
 <#if bdocDiff.getProjectDiff().diffExists() >
 	<hr/>
 	<h2><@bdddoc.text key="updated.project.info" /></h2>
-	<ul id="projectDiff">
+	<ul class="projectDiff">
 		<#if bdocDiff.getProjectDiff().getNameDiff().diffExists()>
 			<li class="projectInfo">
 				<i><@bdddoc.text key="project.name"/></i>
@@ -59,11 +59,11 @@
 </#if>
 
 <#if bdocDiff.hasUserStoryDiff()>
-	<div id="userStoryDiff">
+	<div class="userStoryDiff">
 			
 		<#if bdocDiff.hasNewStories()>
 			<hr/>
-			<div id="newStories">
+			<div class="newStories">
 				<h2><@bdddoc.text key="new.user.stories" /></h2>
 				
 				<ul>
@@ -78,7 +78,7 @@
 			
 		<#if bdocDiff.hasUpdatedStories()>
 			<hr/>		
-			<div id="updatedStories">
+			<div class="updatedStories">
 				<h2><@bdddoc.text key="updated.user.stories"/></h2>
 				<ul>
 					<#list bdocDiff.updatedStories as userStoryDiff>
@@ -125,7 +125,7 @@
 		<#if bdocDiff.hasDeletedStories()>
 			<hr/>
 
-			<div id="deletedStories">	
+			<div class="deletedStories">	
 				<h2><@bdddoc.text key="deleted.user.stories" /></h2>
 				<ul>
 				<#list bdocDiff.deletedStories as userstory>	
@@ -141,11 +141,11 @@
 </#if>	
 
 <#if bdocDiff.hasGeneralBehaviourDiff() >	
-	<div id="generalBehaviourDiff">
+	<div class="generalBehaviourDiff">
 		<h2><@bdddoc.text key="general.behaviour"/></h2>
 		
 		<#if bdocDiff.getGeneralBehaviourDiff().hasNewPackages() >
-			<div id="newPackages">
+			<div class="newPackages">
 				<h3><@bdddoc.text key="new.packages"/></h3>
 				<ul>
 					<#list bdocDiff.generalBehaviourDiff.newPackages as package>
@@ -156,7 +156,7 @@
 		</#if>
 
 		<#if bdocDiff.getGeneralBehaviourDiff().hasUpdatedPackages() >			
-			<div id="updatedPackages">
+			<div class="updatedPackages">
 				<h3><@bdddoc.text key="updated.packages"/></h3>
 				<ul>				
 					<#list bdocDiff.generalBehaviourDiff.packageDiff as packageDiff>
@@ -171,7 +171,7 @@
 		</#if>
 	
 		<#if bdocDiff.getGeneralBehaviourDiff().hasDeletedPackages() >
-			<div id="deletedPackages">
+			<div class="deletedPackages">
 				<h3><@bdddoc.text key="deleted.packages"/></h3>
 				<ul>
 					<#list bdocDiff.generalBehaviourDiff.deletedPackages as package>

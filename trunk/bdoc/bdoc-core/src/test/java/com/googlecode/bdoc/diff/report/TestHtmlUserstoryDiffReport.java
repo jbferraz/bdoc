@@ -79,9 +79,9 @@ public class TestHtmlUserstoryDiffReport {
 	@Test
 	public void shouldPresentDocTimeDiff() {
 		TimeDiff docTimeDiff = bDocDiff.getDocTimeDiff();
-		assertXPathContains(String.valueOf(docTimeDiff.getDays()), "//div[@id='docTimeDiff']", html);
-		assertXPathContains(String.valueOf(docTimeDiff.getHours()), "//div[@id='docTimeDiff']", html);
-		assertXPathContains(String.valueOf(docTimeDiff.getMinutes()), "//div[@id='docTimeDiff']", html);
+		assertXPathContains(String.valueOf(docTimeDiff.getDays()), "//div[@class='docTimeDiff']", html);
+		assertXPathContains(String.valueOf(docTimeDiff.getHours()), "//div[@class='docTimeDiff']", html);
+		assertXPathContains(String.valueOf(docTimeDiff.getMinutes()), "//div[@class='docTimeDiff']", html);
 	}
 
 	@Test
@@ -92,25 +92,25 @@ public class TestHtmlUserstoryDiffReport {
 
 	@Test
 	public void shouldPresentUpdatedProjectInfo() {
-		assertXPathContains(bDocDiff.getProjectDiff().getNameDiff().getOldValue(), "//ul[@id='projectDiff']", html);
-		assertXPathContains(bDocDiff.getProjectDiff().getNameDiff().getNewValue(), "//ul[@id='projectDiff']", html);
-		assertXPathContains(bDocDiff.getProjectDiff().getVersionDiff().getOldValue(), "//ul[@id='projectDiff']", html);
-		assertXPathContains(bDocDiff.getProjectDiff().getVersionDiff().getNewValue(), "//ul[@id='projectDiff']", html);
+		assertXPathContains(bDocDiff.getProjectDiff().getNameDiff().getOldValue(), "//ul[@class='projectDiff']", html);
+		assertXPathContains(bDocDiff.getProjectDiff().getNameDiff().getNewValue(), "//ul[@class='projectDiff']", html);
+		assertXPathContains(bDocDiff.getProjectDiff().getVersionDiff().getOldValue(), "//ul[@class='projectDiff']", html);
+		assertXPathContains(bDocDiff.getProjectDiff().getVersionDiff().getNewValue(), "//ul[@class='projectDiff']", html);
 	}
 
 	@Test
 	public void shouldPresentNewStories() {
-		assertXPathContains(bDocDiff.getNewStories().get(0).getTitle(), "//div[@id='newStories']", html);
+		assertXPathContains(bDocDiff.getNewStories().get(0).getTitle(), "//div[@class='newStories']", html);
 	}
 
 	@Test
 	public void shouldPresentUpdatedStories() {
-		assertXPathContains(bDocDiff.getUpdatedStories().get(0).getTitle(), "//div[@id='updatedStories']", html);
+		assertXPathContains(bDocDiff.getUpdatedStories().get(0).getTitle(), "//div[@class='updatedStories']", html);
 	}
 
 	@Test
 	public void shouldPresentDeletedStories() {
-		assertXPathContains(bDocDiff.getDeletedStories().get(0).getTitle(), "//div[@id='deletedStories']", html);
+		assertXPathContains(bDocDiff.getDeletedStories().get(0).getTitle(), "//div[@class='deletedStories']", html);
 	}
 
 	@Test

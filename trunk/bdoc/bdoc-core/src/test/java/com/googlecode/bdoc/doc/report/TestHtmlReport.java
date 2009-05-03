@@ -47,6 +47,7 @@ import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestTable;
+import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.domain.UserStoryDescription.Narrative;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.report.BddDocMacroHelper.TableCellFormatter;
@@ -179,7 +180,17 @@ public class TestHtmlReport {
 		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
 	}
 	@Test
-	public void shouldPresentATableOfContentsWithUserStoryTitles() {
-
+	public void shouldPresentATableOfContentsWithAllUserStoryTitles() {
+		List<UserStory> stories = bdoc.getUserstories();
+		for (UserStory story : stories) {
+			assertXPathContains(story.getTitle(), "//ul[@class='toc']", html);
+		}
+	}
+	@Test
+	public void shouldAddBackToTopLinkWithAllUserStories() {
+		List<UserStory> stories = bdoc.getUserstories();
+		for (int i=0; i < stories.size(); i++) {
+			assertXPathContains("< Back to top", "//a[@href=\"#top\"]", html);
+		}
 	}
 }

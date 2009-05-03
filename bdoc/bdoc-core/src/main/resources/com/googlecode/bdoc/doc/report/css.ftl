@@ -30,8 +30,8 @@
 
 <style type="text/css">
 	body { margin: 0px; font-family: helvetica, verdana, arial,sans-serif;}		
-	h1 {  }
-
+	
+	h1, h2 { margin-top: 0px; }
 	div.classBehaviour {
 		padding-left: 5px;
 	}
@@ -66,6 +66,14 @@
 	#projectInfo h1 {
 		margin: 0px;
 	}
+	.navigation {
+		width: 20%;
+		float: left;
+	}
+	.content {
+		width: 79%;
+		float: left;
+	}
 	.scenarioTitle {
 		font-style: italic;
 		font-size: 110%;
@@ -83,8 +91,10 @@
 	}
 	.reportInfo {
 		background-color: #f0f0f0;
+		border-bottom: 4px solid #e0e0e0;
 		padding: 2px;
 		width: 100%;
+		margin-bottom: 8px;
 	}
 	.userstory .narrative {
 		font-style: italic;

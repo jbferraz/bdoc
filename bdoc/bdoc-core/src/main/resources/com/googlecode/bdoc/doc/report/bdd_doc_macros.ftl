@@ -48,14 +48,15 @@
 	<@list_scenarios textKey="scenarios" scenarios=module.getScenarios()/>
 	<@list_class_specifications textKey="specifications" list=module.getClassSpecifications()/>
 	<@list_class_statements textKey="statements" list=module.getClassStatements()/>
-	<@list_test_tables textKey="test_tables" testTables=module.getTestTables()/>				
+	<@list_test_tables textKey="test_tables" testTables=module.getTestTables()/>
+	<a href="#top">&lt; Back to top</a>				
 </#macro>
 
 <#macro list_test_tables testTables textKey="">
 	<#if 0 < testTables?size >
 		<div class="classBehaviour">
 			<#if !(textKey=="") >
-				<i><@bdddoc.text key="${textKey}" /></i>
+				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
 			</#if>
 
 			<div class="testTables"> 
@@ -63,7 +64,6 @@
 					<ul class="testTable">
 						<div class="${testTable.sentence}">
 							<p>${bdocMacroHelper.format(testTable)}</p>
-								
 							<table>
 								<thead>
 									<tr>
@@ -96,7 +96,6 @@
 			<#if !(textKey=="") >
 				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
 			</#if>
-
 			<div class="scenarios"> 
 				<#list scenarios as scenario>													
 					<ul class="scenario">
@@ -113,7 +112,7 @@
 	
 		<div class="classBehaviour">
 			<#if !(textKey=="") >
-				<i><@bdddoc.text key="${textKey}" /></i>
+				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
 			</#if>
 			
 			<ul class="specifications">
@@ -138,7 +137,7 @@
 		
 		<div class="classBehaviour">
 			<#if !(textKey=="") >
-				<i><@bdddoc.text key="${textKey}" /></i>
+				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
 			</#if>
 
 			<ul class="statements">

@@ -37,13 +37,14 @@
 		<#include "css.ftl">
 	</head>
 	<body>
+		<a name="top"></a>
 		<div class="reportInfo">
 			<h1>${bddDoc.project.name} ${bddDoc.project.version}</h1>
 			<p class="dateTime">${bddDoc.docTime?datetime}</p>
 		</div>
-		<div class="toc">
+		<div class="navigation">
 			<strong>User stories:</strong>
-			<ul>
+			<ul class="toc">
 				<#list bddDoc.userstories as tocStory>
 					<li class="userstory">
 						<a href="#${tocStory.title}">${tocStory.title}</a>
@@ -51,19 +52,19 @@
 				</#list>
 			</ul>
 		</div>
-		
-		<#list bddDoc.userstories as userstory>
-			<@bdddoc.story userstory=userstory/> 		
-			<hr/>
-		</#list>
-		
-		<div class="generalBehaviour">
-			<h2><@bdddoc.text key="general.behaviour"/></h2>
-		
-			<#list bddDoc.generalBehaviour.packages as package>
-				<@bdddoc.present_package_behaviour package=package/>
+		<div class="content">
+			<#list bddDoc.userstories as userstory>
+				<@bdddoc.story userstory=userstory/> 		
+				<hr/>
 			</#list>
-								
-		</div>		
+			
+			<div class="generalBehaviour">
+				<h2><@bdddoc.text key="general.behaviour"/></h2>
+			
+				<#list bddDoc.generalBehaviour.packages as package>
+					<@bdddoc.present_package_behaviour package=package/>
+				</#list>
+			</div>
+		</div>
 	</body>
 </html>

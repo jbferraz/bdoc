@@ -1,3 +1,6 @@
+_3 May 2009 - Release 0.8.8_
+ Version 0.8.8 is released with the reports pimped by [http://dallokken.com/espen Espen]. It amazing to see a GUI professional at work. Try the new version!
+
 _19 April 2009 - Release 0.8.7_
  Version 0.8.7 is released with some bugfixes on test tables. Support for different types of line termination in testtable-examplemethods are added.
 

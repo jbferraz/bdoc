@@ -79,9 +79,9 @@ public class TestHtmlUserstoryDiffReport {
 	@Test
 	public void shouldPresentDocTimeDiff() {
 		TimeDiff docTimeDiff = bDocDiff.getDocTimeDiff();
-		assertXPathContains(String.valueOf(docTimeDiff.getDays()), "//div[@class='docTimeDiff']", html);
-		assertXPathContains(String.valueOf(docTimeDiff.getHours()), "//div[@class='docTimeDiff']", html);
-		assertXPathContains(String.valueOf(docTimeDiff.getMinutes()), "//div[@class='docTimeDiff']", html);
+		assertXPathContains(String.valueOf(docTimeDiff.getDays()), "//div[@class='docTimeDiff dateTime']", html);
+		assertXPathContains(String.valueOf(docTimeDiff.getHours()), "//div[@class='docTimeDiff dateTime']", html);
+		assertXPathContains(String.valueOf(docTimeDiff.getMinutes()), "//div[@class='docTimeDiff dateTime']", html);
 	}
 
 	@Test

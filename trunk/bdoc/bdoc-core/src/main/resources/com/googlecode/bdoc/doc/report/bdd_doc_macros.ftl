@@ -30,6 +30,7 @@
 
 <#macro story userstory header="h2">
 	<div class="userstory">
+		<a name="${userstory.title}"></a>
 		<${header}>${userstory.title}</${header}>
 		<@bdddoc.narrative value=userstory.getNarrative()/>		
 		<@list_behaviour module=userstory/>
@@ -63,20 +64,23 @@
 						<div class="${testTable.sentence}">
 							<p>${bdocMacroHelper.format(testTable)}</p>
 								
-							<table border='1' cellpadding='5'>
-								<tr>
-								<#list testTable.getHeaderColumns() as headerColumn>
-									<th>${bdocMacroHelper.format(headerColumn)}</th>							
-								</#list>
-								</tr>
-								
-								<#list testTable.getRows() as row>
-								<tr>							
-									<#list row.getColumns() as column>
-										<td>${bdocMacroHelper.formatTableColumn(column)}</td>							
+							<table>
+								<thead>
+									<tr>
+									<#list testTable.getHeaderColumns() as headerColumn>
+										<th>${bdocMacroHelper.format(headerColumn)}</th>							
 									</#list>
-								</tr>
-								</#list>							
+									</tr>
+								</thead>
+								<tbody>
+									<#list testTable.getRows() as row>
+									<tr>							
+										<#list row.getColumns() as column>
+											<td>${bdocMacroHelper.formatTableColumn(column)}</td>							
+										</#list>
+									</tr>
+									</#list>
+								</tbody>							
 							</table>
 						</div>								
 					</ul>
@@ -90,7 +94,7 @@
 	<#if 0 < scenarios?size >
 		<div class="classBehaviour">
 			<#if !(textKey=="") >
-				<i><@bdddoc.text key="${textKey}" /></i>
+				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
 			</#if>
 
 			<div class="scenarios"> 

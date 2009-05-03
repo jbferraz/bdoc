@@ -37,15 +37,15 @@
 		<#include "css.ftl">					
 	</head>
 	<body>
-		<div id="diffLogs">
-			<h1><@bdddoc.text key="diff.log.title" /></h1>
-			<hr/>
-			<hr/>
-			<#list diffLog.diffList as bdocDiff>
-				<#include "html_diff_report_content.ftl">
-				<hr/>
-				<hr/>
-			</#list>
+		<div class="diffLogs">
+			<div class="diffLogTitle">
+				<h1><@bdddoc.text key="diff.log.title" /></h1>
+			</div>
+			<div class="content">
+				<#list diffLog.diffList as bdocDiff>
+					<#include "html_diff_report_content.ftl">
+				</#list>
+			</div>
 		</div>
 	</body>
 </html>

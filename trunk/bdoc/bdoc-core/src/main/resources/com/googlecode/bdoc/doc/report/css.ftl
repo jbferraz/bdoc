@@ -28,8 +28,9 @@
 -->
 
 
-<style type="text/css">		
-	h1 { font-family:arial,sans-serif; }
+<style type="text/css">
+	body { margin: 0px; font-family: helvetica, verdana, arial,sans-serif;}		
+	h1 {  }
 
 	div.classBehaviour {
 		padding-left: 5px;
@@ -57,5 +58,62 @@
 	
 	li.projectInfo {
 		padding-bottom: 13px;
-	}			
+	}
+	#projectInfo {
+		background-color: #f0f0f0;
+		padding: 2px;
+	}
+	#projectInfo h1 {
+		margin: 0px;
+	}
+	.scenarioTitle {
+		font-style: italic;
+		font-size: 110%;
+	}
+	.dateTime {
+		font-style: itallic;
+		font-size: 70%;
+	}
+	.diffLogs .content {
+		margin-left: 2px;
+	}
+	.reportInfo h1 {
+		margin: 0px;
+		padding: 0px;
+	}
+	.reportInfo {
+		background-color: #f0f0f0;
+		padding: 2px;
+		width: 100%;
+	}
+	.userstory .narrative {
+		font-style: italic;
+		font-size: 90%;
+	}
+	.diffLogTitle {
+		background-color: #f0f0f0;
+		width: 100%;
+		border-bottom: 1px solid black;
+	}
+	.diffLogTitle h1 {
+		margin: 0px;
+		padding: 0px;
+		padding-left: 2px;
+	}
+	.testTables table {
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	.testTables thead {
+		font-weight: bold;
+		background-color: #f0f0f0;
+	}
+	.testTables table th {
+		border: 1px solid black;
+		padding: 3px;
+	}
+	.testTables table td {
+		border: 1px solid black;
+		padding: 3px;
+	}
 </style>		

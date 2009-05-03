@@ -178,4 +178,8 @@ public class TestHtmlReport {
 		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
 		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
 	}
+	@Test
+	public void shouldPresentATableOfContentsWithUserStoryTitles() {
+
+	}
 }

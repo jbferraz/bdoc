@@ -266,6 +266,38 @@ public class TestBDoc {
 		assertFalse(specifications.get(0).getScenarios().isEmpty());
 		assertFalse(specifications.get(1).getScenarios().isEmpty());
 	}
+	
+	@Test
+	public void shouldSortUserStoriesById() {
+		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		bdoc.addBehaviourFrom(new TestClass(TestWithManyUserStories.class), BConst.SRC_TEST_JAVA);
+		
+		assertEquals( ExStory.STORY1.getId(), bdoc.getUserstories().get(0).getId() );
+		assertEquals( ExStory.STORY2.getId(), bdoc.getUserstories().get(1).getId() );
+		assertEquals( ExStory.STORY3.getId(), bdoc.getUserstories().get(2).getId() );
+	}
+	
+	/**
+	 * Testdata
+	 */
+	public class TestWithManyUserStories {
+		
+		@Test
+		@ExReference(ExStory.STORY2)
+		public void test1() {
+		}
+
+		@Test
+		@ExReference(ExStory.STORY3)
+		public void test2() {
+		}
+
+		@Test
+		@ExReference(ExStory.STORY1)
+		public void test3() {
+		}
+		
+	}
 
 	/**
 	 * Testdata

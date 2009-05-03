@@ -158,7 +158,8 @@ public class BDoc {
 	 * @return an unmodifiable list of the userstories
 	 */
 	public List<UserStory> getUserstories() {
-		return Collections.unmodifiableList(userStories);
+		Collections.sort(userStories);
+		return userStories;
 	}
 
 	public Date getDocTime() {

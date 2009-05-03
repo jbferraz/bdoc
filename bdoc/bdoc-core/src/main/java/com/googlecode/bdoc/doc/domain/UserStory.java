@@ -33,7 +33,7 @@ import org.apache.commons.lang.Validate;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class UserStory extends GeneralBehaviour implements UserStoryDescription {
+public class UserStory extends GeneralBehaviour implements UserStoryDescription, Comparable<UserStory> {
 
 	private final Integer id;
 	private final String title;
@@ -103,5 +103,9 @@ public class UserStory extends GeneralBehaviour implements UserStoryDescription 
 		}
 
 		return Collections.unmodifiableList(testTables);
+	}
+
+	public int compareTo(UserStory otherUserStory) {
+		return id.compareTo(otherUserStory.getId());
 	}
 }

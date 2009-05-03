@@ -27,13 +27,6 @@
 	@author Per Otto Bergum Christensen
 -->
 
-<div class="docTimeDiff"> 
-	<@bdddoc.text key="date.periode" />: ${bdocDiff.docTimeDiff.time1?datetime} - ${bdocDiff.docTimeDiff.time2?datetime} <br/> 
-	<@bdddoc.text key="time.periode" />: 
-	${bdocDiff.docTimeDiff.days} <@bdddoc.text key="days" />, 
-	${bdocDiff.docTimeDiff.hours} <@bdddoc.text key="hours" />, 
-	${bdocDiff.docTimeDiff.minutes} <@bdddoc.text key="minutes" />
-</div>
 
 <#if bdocDiff.getProjectDiff().diffExists() >
 	<hr/>

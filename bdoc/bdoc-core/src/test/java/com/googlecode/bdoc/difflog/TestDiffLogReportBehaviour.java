@@ -90,12 +90,12 @@ public class TestDiffLogReportBehaviour {
 	private void thenEnsureTheReportContainsTheDiffWithTheAddedSpecification() throws IOException {
 		String html = diffLogReport.result();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
-		assertXPathContains(sentence(bdocWithOneSpecification.specifications().get(0)), "//div[@id='diffLogs']", html);
+		assertXPathContains(sentence(bdocWithOneSpecification.specifications().get(0)), "//div[@class='diffLogs']", html);
 	}
 
 	private void thenEnsureTheReportContainsTheDiffWithTheAddedScenario() throws IOException {
 		String html = diffLogReport.result();
-		assertXPathContains(scenarioPart(1,bdocWithOneScenario.scenarios().get(0)), "//div[@id='diffLogs']", html);
+		assertXPathContains(scenarioPart(1,bdocWithOneScenario.scenarios().get(0)), "//div[@class='diffLogs']", html);
 	}
 
 	@Test

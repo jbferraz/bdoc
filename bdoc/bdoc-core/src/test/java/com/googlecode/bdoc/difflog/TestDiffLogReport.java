@@ -68,8 +68,8 @@ public class TestDiffLogReport {
 
 	@Test
 	public void shouldContainNewSpecificationsInABdocDiff() {
-		assertXPathContains(sentence(bdocWithTwoSpecifications.specifications().get(0)), "//div[@id='diffLogs']", html);
-		assertXPathContains(sentence(bdocWithTwoSpecifications.specifications().get(1)), "//div[@id='diffLogs']", html);
+		assertXPathContains(sentence(bdocWithTwoSpecifications.specifications().get(0)), "//div[@class='diffLogs']", html);
+		assertXPathContains(sentence(bdocWithTwoSpecifications.specifications().get(1)), "//div[@class='diffLogs']", html);
 	}
 
 	public class TestClassWithTwoSpecifications {

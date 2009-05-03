@@ -39,7 +39,15 @@
 	<body>	
 		<div id="projectInfo">
 			<h1>${bdocDiff.projectDiff.nameDiff.newValue} ${bdocDiff.projectDiff.versionDiff.newValue}</h1>
-		</div>		
+			
+			<div class="docTimeDiff dateTime"> 
+				<@bdddoc.text key="date.periode" />: ${bdocDiff.docTimeDiff.time1?datetime} - ${bdocDiff.docTimeDiff.time2?datetime} <br/> 
+				<@bdddoc.text key="time.periode" />: 
+				${bdocDiff.docTimeDiff.days} <@bdddoc.text key="days" />, 
+				${bdocDiff.docTimeDiff.hours} <@bdddoc.text key="hours" />, 
+				${bdocDiff.docTimeDiff.minutes} <@bdddoc.text key="minutes" />
+			</div>
+		</div>
 		<#include "html_diff_report_content.ftl">		
 	</body>
 </html>

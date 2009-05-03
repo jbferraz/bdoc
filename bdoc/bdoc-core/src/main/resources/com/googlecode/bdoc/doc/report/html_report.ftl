@@ -37,8 +37,20 @@
 		<#include "css.ftl">
 	</head>
 	<body>
-		<h1>${bddDoc.project.name} ${bddDoc.project.version}</h1>
-		<p>${bddDoc.docTime?datetime}</p>
+		<div class="reportInfo">
+			<h1>${bddDoc.project.name} ${bddDoc.project.version}</h1>
+			<p class="dateTime">${bddDoc.docTime?datetime}</p>
+		</div>
+		<div class="toc">
+			<strong>User stories:</strong>
+			<ul>
+				<#list bddDoc.userstories as tocStory>
+					<li class="userstory">
+						<a href="#${tocStory.title}">${tocStory.title}</a>
+					</li>
+				</#list>
+			</ul>
+		</div>
 		
 		<#list bddDoc.userstories as userstory>
 			<@bdddoc.story userstory=userstory/> 		

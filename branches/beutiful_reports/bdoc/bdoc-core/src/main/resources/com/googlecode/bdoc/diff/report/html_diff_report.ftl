@@ -25,6 +25,7 @@
 -->
 <#--
 	@author Per Otto Bergum Christensen
+	@author Espen Dalløkken
 -->
 
 <#import "bdd_doc_macros.ftl" as bdddoc />

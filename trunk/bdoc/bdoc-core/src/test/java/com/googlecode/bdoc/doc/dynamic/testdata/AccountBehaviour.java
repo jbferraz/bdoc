@@ -24,6 +24,9 @@
 
 package com.googlecode.bdoc.doc.dynamic.testdata;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -41,6 +44,52 @@ import org.junit.Test;
  * 
  */
 public class AccountBehaviour {
+
+	private Account account;
+
+	@Before
+	public void setUp() {
+		account = null;
+	}
+
+	@Test
+	public void shouldAddDepositToBalance() {
+		givenAnAccountWithInitialBalanceEqualsTo0();
+		when100AreDepositToAccount();
+		thenShouldBalanceBeEqualTo100();
+	}
+
+	void thenShouldBalanceBeEqualTo(double balance) {
+		assertIsEquals(balance, account.balance(), .01);
+	}
+
+	private void assertIsEquals(double balance, Double balance2, double d) {
+		assertEquals(balance, account.balance(), .01);
+	}
+
+	void whenDepositAreCalledWith(int amount) {
+		account.deposit(amount);
+	}
+
+	void givenAnAccountWithInitialBalanceEqualsTo(double initialBalance) {
+		createAccount(initialBalance);
+	}
+
+	private void createAccount(double initialBalance) {
+		account = new Account(initialBalance);
+	}
+
+	void givenAnAccountWithInitialBalanceEqualsTo0() {
+		givenAnAccountWithInitialBalanceEqualsTo(0);
+	}
+
+	void when100AreDepositToAccount() {
+		whenDepositAreCalledWith(100);
+	}
+
+	void thenShouldBalanceBeEqualTo100() {
+		thenShouldBalanceBeEqualTo(100);
+	}
 
 	@Test
 	public void withdraw() {
@@ -132,9 +181,9 @@ public class AccountBehaviour {
 
 	@Test
 	public void shouldContainATestTable() {
-		assertSum( 1,1,2 );
-		assertSum( 2,2,2 );
-		assertSum( 2,0,2 );
+		assertSum(1, 1, 2);
+		assertSum(2, 2, 2);
+		assertSum(2, 0, 2);
 	}
 
 	void assertSum(int i, int j, int k) {

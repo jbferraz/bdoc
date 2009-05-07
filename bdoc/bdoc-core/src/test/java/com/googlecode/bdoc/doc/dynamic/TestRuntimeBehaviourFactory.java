@@ -30,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -52,6 +53,13 @@ public class TestRuntimeBehaviourFactory {
 	private TestClass accountBehaviourTestClass = new TestClass(AccountBehaviour.class);
 
 	RuntimeBehaviourFactory runtimeBehaviourFactory = new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA);
+
+	@Ignore
+	@Test
+	public void shouldCreateOneScenarioPartPerMethodCall() {
+		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldAddDepositToBalance"));
+		assertEquals(3, runtimeBehaviourFactory.getCreatedScenarios().get(0).getParts().size());
+	}
 
 	@Test
 	public void shouldCreateAScenarioFromAListOfMethodCalls() {

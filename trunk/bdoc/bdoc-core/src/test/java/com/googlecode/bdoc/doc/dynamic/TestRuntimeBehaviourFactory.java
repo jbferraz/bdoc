@@ -54,7 +54,6 @@ public class TestRuntimeBehaviourFactory {
 
 	RuntimeBehaviourFactory runtimeBehaviourFactory = new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA);
 
-	@Ignore
 	@Test
 	public void shouldCreateOneScenarioPartPerMethodCall() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldAddDepositToBalance"));
@@ -84,13 +83,15 @@ public class TestRuntimeBehaviourFactory {
 	@Test
 	public void shouldAddMethodCallArgumentValuesToTheEndOfEachScenarioPart() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("scenarioWithArguments"));
-		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(0));
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(
+				0));
 	}
 
 	@Test
 	public void shouldPutASpaceCharBeforeAndAfterEachArgument() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("scenarioWithArguments"));
-		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(0));
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(
+				0));
 	}
 
 	@Test
@@ -149,7 +150,8 @@ public class TestRuntimeBehaviourFactory {
 
 	@Test
 	public void shouldNotCreateTestTablesWhenMethodCallsDoNotIncludeArguments() {
-		runtimeBehaviourFactory.analyze(new TestClass(TestMyObjectBehaviour.class).getTestMethod("shouldMakeACallWithoutArguments"));
+		runtimeBehaviourFactory.analyze(new TestClass(TestMyObjectBehaviour.class)
+				.getTestMethod("shouldMakeACallWithoutArguments"));
 		assertTrue(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
 	}
 }

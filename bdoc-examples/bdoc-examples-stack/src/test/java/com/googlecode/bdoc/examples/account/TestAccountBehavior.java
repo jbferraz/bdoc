@@ -33,7 +33,7 @@ import bdddoc4j.examples.Ref;
 import bdddoc4j.examples.Story;
 
 /**
- *  @author Micael Vesterlund 
+ * @author Micael Vesterlund
  */
 @Ref(Story.DEPOSIT_AND_WITHDRAW_FUNDS)
 public class TestAccountBehavior {
@@ -63,27 +63,27 @@ public class TestAccountBehavior {
 		thenShouldBalanceBeEqualTo(102);
 	}
 
-	void thenShouldBalanceBeEqualTo(double balance) {
-		assertEquals(balance, account.balance(),.01);
+	private void thenShouldBalanceBeEqualTo(double balance) {
+		assertEquals(balance, account.balance(), .01);
 	}
 
-	void whenDepositAreCalledWith(int amount) {
+	private void whenDepositAreCalledWith(int amount) {
 		account.deposit(amount);
 	}
 
-	void givenAnAccountWithInitialBalanceEqualsTo(double initialBalance) {
+	private void givenAnAccountWithInitialBalanceEqualsTo(double initialBalance) {
 		account = new Account(initialBalance);
 	}
 
-	void givenAnAccountWithInitialBalanceEqualsTo0() {
+	private void givenAnAccountWithInitialBalanceEqualsTo0() {
 		givenAnAccountWithInitialBalanceEqualsTo(0);
 	}
 
-	void when100AreDepositToAccount() {
+	private void when100AreDepositToAccount() {
 		whenDepositAreCalledWith(100);
 	}
 
-	void thenShouldBalanceBeEqualTo100() {
+	private void thenShouldBalanceBeEqualTo100() {
 		thenShouldBalanceBeEqualTo(100);
 	}
 

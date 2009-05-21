@@ -70,10 +70,6 @@ public class TestHtmlReport {
 		bdoc = BDocTestHelper.bdocWithProject();
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class),
 				BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(
-				BConst.SRC_TEST_JAVA));
 
 		HtmlReport htmlReport = new HtmlReport(bdoc);
 

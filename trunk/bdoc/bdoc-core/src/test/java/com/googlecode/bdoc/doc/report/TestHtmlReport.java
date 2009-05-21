@@ -68,10 +68,12 @@ public class TestHtmlReport {
 
 	public TestHtmlReport() throws IOException {
 		bdoc = BDocTestHelper.bdocWithProject();
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class),
+				BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(
+				BConst.SRC_TEST_JAVA));
 
 		HtmlReport htmlReport = new HtmlReport(bdoc);
 
@@ -115,7 +117,8 @@ public class TestHtmlReport {
 
 	@Test
 	public void shouldPresentTheSpecificationsAssociatedWithTheStory() {
-		List<Specification> specifications = bdoc.getUserstories().get(0).getClassSpecifications().get(0).getSpecifications();
+		List<Specification> specifications = bdoc.getUserstories().get(0).getClassSpecifications().get(0)
+				.getSpecifications();
 		assertXPathContains(sentence(specifications.get(0)), "//ul[@class='specifications']", html);
 	}
 
@@ -132,64 +135,17 @@ public class TestHtmlReport {
 	}
 
 	@Test
-	public void shouldPresentPackagesWithBehaviourNotAssociatedWityAnyStories() {
-		assertXPathContains(bdoc.getGeneralBehaviour().getPackages().get(0).getName(), "//div[@class='generalBehaviour']", html);
-	}
-
-	@Test
-	public void shouldPresentScenariosNotAssociatedWithAnyStories() {
-		List<Scenario> scenarios = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getScenarios();
-		assertXPathContains(scenarioPart(0, scenarios.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
-	}
-
-	@Test
-	public void shouldPresentSpecificationsNotAssociatedWithAnyStories() {
-		List<Specification> specifications = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getSpecifications();
-		assertXPathContains(sentence(specifications.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
-	}
-
-	@Test
-	public void shouldPresentStatementsNotAssociatedWithAnyStories() {
-		List<Statement> statements = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0).getStatements();
-		assertXPathContains(sentence(statements.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
-	}
-
-	@Test
-	public void shouldBePossibleToChangeFormattingForAdvancedScenarioSpecification() throws IOException {
-		bdoc = BDocTestHelper.bdocWithAdvancedScenarioSpecification();
-		String htmlAndInBetween = new HtmlReport(bdoc, new AndInBetweenScenarioLinesFormatter()).html();
-		String htmlEachOnNewLine = new HtmlReport(bdoc, new EachOnNewLineScenarioLinesFormatter()).html();
-		Assert.assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
-	}
-
-	@Test
-	public void shouldPresentTestTablesForGeneralBehaviour() {
-		List<TestTable> testTables = bdoc.testTables();
-		assertXPathContains(sentence(testTables.get(0)), "//ul[@class='testTable']", html);
-	}
-
-	@Test
-	public void shouldPresentFormatedHeaderColumnsOfTestTables() {
-		List<TestTable> testTables = bdoc.testTables();
-		assertXPathContains(sentence(testTables.get(0).getHeaderColumns().get(0).getValue().toString()), "//ul[@class='testTable']", html);
-	}
-
-	@Test
-	public void shouldPresentColumnValuesOfTestTablesWithATableCellFormatter() {
-		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
-		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
-	}
-	@Test
 	public void shouldPresentATableOfContentsWithAllUserStoryTitles() {
 		List<UserStory> stories = bdoc.getUserstories();
 		for (UserStory story : stories) {
 			assertXPathContains(story.getTitle(), "//ul[@class='toc']", html);
 		}
 	}
+
 	@Test
 	public void shouldAddBackToTopLinkWithAllUserStories() {
 		List<UserStory> stories = bdoc.getUserstories();
-		for (int i=0; i < stories.size(); i++) {
+		for (int i = 0; i < stories.size(); i++) {
 			assertXPathContains("< Back to top", "//a[@href=\"#top\"]", html);
 		}
 	}

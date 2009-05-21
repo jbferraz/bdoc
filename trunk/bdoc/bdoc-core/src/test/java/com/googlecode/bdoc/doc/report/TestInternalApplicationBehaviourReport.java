@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -95,41 +96,6 @@ public class TestInternalApplicationBehaviourReport {
 	}
 
 	@Test
-	public void shouldPresentTheNarrativeOfTheStory() {
-		Narrative narrative = bdoc.getUserstories().get(0).getNarrative();
-		assertXPathContains(narrative.getRole(), "//div[@class='userstory']", html);
-		assertXPathContains(narrative.getAction(), "//div[@class='userstory']", html);
-		assertXPathContains(narrative.getBenefit(), "//div[@class='userstory']", html);
-	}
-
-	@Test
-	public void shouldPresentTheScenariosOfTheStory() {
-		Scenario scenario = bdoc.getUserstories().get(0).getScenarios().get(0);
-		assertXPathContains(scenarioPart(0, scenario), "//ul[@class='scenario']", html);
-		assertXPathContains(scenarioPart(1, scenario), "//ul[@class='scenario']", html);
-		assertXPathContains(scenarioPart(2, scenario), "//ul[@class='scenario']", html);
-	}
-
-	@Test
-	public void shouldPresentTheSpecificationsAssociatedWithTheStory() {
-		List<Specification> specifications = bdoc.getUserstories().get(0).getClassSpecifications().get(0)
-				.getSpecifications();
-		assertXPathContains(sentence(specifications.get(0)), "//ul[@class='specifications']", html);
-	}
-
-	@Test
-	public void shouldPresentTheStatementsAssociatedWithTheStory() {
-		List<Statement> statements = bdoc.getUserstories().get(0).getClassStatements().get(0).getStatements();
-		assertXPathContains(sentence(statements.get(0)), "//ul[@class='statements']", html);
-	}
-
-	@Test
-	public void shouldPresentTheNameOfTheClassWithTheSpecifications() {
-		ClassSpecifications classBehaviour = bdoc.getUserstories().get(0).getClassSpecifications().get(0);
-		assertXPathContains(classBehaviour.getClassName(), "//ul[@class='specifications']", html);
-	}
-
-	@Test
 	public void shouldPresentPackagesWithBehaviourNotAssociatedWityAnyStories() {
 		assertXPathContains(bdoc.getGeneralBehaviour().getPackages().get(0).getName(),
 				"//div[@class='generalBehaviour']", html);
@@ -186,21 +152,5 @@ public class TestInternalApplicationBehaviourReport {
 	public void shouldPresentColumnValuesOfTestTablesWithATableCellFormatter() {
 		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
 		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
-	}
-
-	@Test
-	public void shouldPresentATableOfContentsWithAllUserStoryTitles() {
-		List<UserStory> stories = bdoc.getUserstories();
-		for (UserStory story : stories) {
-			assertXPathContains(story.getTitle(), "//ul[@class='toc']", html);
-		}
-	}
-
-	@Test
-	public void shouldAddBackToTopLinkWithAllUserStories() {
-		List<UserStory> stories = bdoc.getUserstories();
-		for (int i = 0; i < stories.size(); i++) {
-			assertXPathContains("< Back to top", "//a[@href=\"#top\"]", html);
-		}
 	}
 }

@@ -41,11 +41,13 @@ import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestTable;
+import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper.TableCellFormatter;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
@@ -147,4 +149,13 @@ public class TestInternalApplicationBehaviourReport {
 		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
 		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
 	}
+	
+	@Test
+	public void shouldPresentATableOfContentsWithAllPackageNames() {
+		List<Package> packages = bdoc.getGeneralBehaviour().getPackages();
+		for (Package javaPackage : packages) {
+			assertXPathContains(javaPackage.getName(), "//ul[@class='toc']", html);
+		}
+	}
+	
 }

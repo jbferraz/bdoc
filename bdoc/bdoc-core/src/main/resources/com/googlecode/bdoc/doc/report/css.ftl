@@ -67,11 +67,11 @@
 		margin: 0px;
 	}
 	.navigation {
-		width: 20%;
+		width: 30%;
 		float: left;
 	}
 	.content {
-		width: 79%;
+		width: 69%;
 		float: left;
 	}
 	.scenarioTitle {

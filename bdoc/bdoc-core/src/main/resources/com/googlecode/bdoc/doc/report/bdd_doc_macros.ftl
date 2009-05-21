@@ -39,6 +39,7 @@
 
 <#macro present_package_behaviour package>
 	<div class="package">
+		<a name="${package.name}"></a>
 		<h3>${package.name}</h3>
 		<@list_behaviour module=package/>
 	</div>				

@@ -35,26 +35,20 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.domain.ClassSpecifications;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestTable;
-import com.googlecode.bdoc.doc.domain.UserStory;
-import com.googlecode.bdoc.doc.domain.UserStoryDescription.Narrative;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.report.BddDocMacroHelper.TableCellFormatter;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
-import com.googlecode.bdoc.doc.testdata.TestClassWithFourSpecifications;
 import com.googlecode.bdoc.doc.testdata.TestClassWithGeneralBehaviour;
 import com.googlecode.bdoc.doc.testdata.TestClassWithTestTablesBehaviour;
-import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements;
 
 public class TestInternalApplicationBehaviourReport {
 
@@ -63,9 +57,6 @@ public class TestInternalApplicationBehaviourReport {
 
 	public TestInternalApplicationBehaviourReport() throws IOException {
 		bdoc = BDocTestHelper.bdocWithProject();
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class),
-				BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithFourSpecifications.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(
 				BConst.SRC_TEST_JAVA));

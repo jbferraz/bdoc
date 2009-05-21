@@ -24,7 +24,11 @@
 
 package com.googlecode.bdoc.doc.report;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.UserStory;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -36,7 +40,15 @@ public class UserStoryHtmlReport extends AbstractHtmlReport {
 	}
 
 	public UserStoryHtmlReport(BDoc bdoc, ScenarioLinesFormatter scenarioLinesFormatter) {
-		super(bdoc, "user_story_html_report_content.ftl", scenarioLinesFormatter);
+		super(bdoc, "user_story_html_report_content.ftl", "toc.userstories",createToc(bdoc), scenarioLinesFormatter);
+	}
+
+	private static List<TocItem> createToc(BDoc bdoc) {
+		List<TocItem> toc = new ArrayList<TocItem>();
+		for (UserStory userStory : bdoc.getUserstories()) {
+			toc.add(new TocItem(userStory));
+		}
+		return toc;
 	}
 
 }

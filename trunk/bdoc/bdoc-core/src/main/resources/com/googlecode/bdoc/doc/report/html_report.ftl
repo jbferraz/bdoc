@@ -43,11 +43,11 @@
 			<p class="dateTime">${bddDoc.docTime?datetime}</p>
 		</div>
 		<div class="navigation">
-			<strong>User stories:</strong>
+			<strong><@bdddoc.text key="${tocHeader}"/></strong>
 			<ul class="toc">
-				<#list bddDoc.userstories as tocStory>
+				<#list toc as tocItem>
 					<li class="userstory">
-						<a href="#${tocStory.title}">${tocStory.title}</a>
+						<a href="#${tocItem.title}">${tocItem.title}</a>
 					</li>
 				</#list>
 			</ul>

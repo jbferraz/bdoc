@@ -26,6 +26,7 @@ package com.googlecode.bdoc.doc.report;
 
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -45,13 +46,17 @@ public class AbstractHtmlReport {
 	private Configuration cfg;
 	private BDocMacroHelper bddDocMacroHelper;
 
-	public AbstractHtmlReport(BDoc bddDoc, String reportContentTemplate, ScenarioLinesFormatter scenarioLinesFormatter) {
+	public AbstractHtmlReport(BDoc bddDoc, String reportContentTemplate, String tocHeaderKey, List<TocItem> toc,
+			ScenarioLinesFormatter scenarioLinesFormatter) {
+
 		cfg = new Configuration();
 		cfg.setTemplateLoader(new ClassTemplateLoader(AbstractHtmlReport.class, ""));
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 
 		model = new HashMap<String, Object>();
 		model.put("bddDoc", bddDoc);
+		model.put("toc", toc);
+		model.put("tocHeader", tocHeaderKey);		
 		model.put("report_content_template", reportContentTemplate);
 		bddDocMacroHelper = new BDocMacroHelper(scenarioLinesFormatter);
 		model.put("bdocMacroHelper", bddDocMacroHelper);

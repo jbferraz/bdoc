@@ -24,7 +24,11 @@
 
 package com.googlecode.bdoc.doc.report;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.Package;
 
 public class InternalApplicationBehaviourReport extends AbstractHtmlReport {
 
@@ -33,6 +37,16 @@ public class InternalApplicationBehaviourReport extends AbstractHtmlReport {
 	}
 
 	public InternalApplicationBehaviourReport(BDoc bdoc, ScenarioLinesFormatter scenarioLinesFormatter) {
-		super(bdoc, "internal_application_html_report_content.ftl", scenarioLinesFormatter);
+		super(bdoc, "internal_application_html_report_content.ftl", "toc.packages",createToc(bdoc), scenarioLinesFormatter);
 	}
+
+	private static List<TocItem> createToc(BDoc bdoc) {
+		List<TocItem> toc = new ArrayList<TocItem>();
+
+		for (Package javaPackage : bdoc.getGeneralBehaviour().getPackages()) {
+			toc.add(new TocItem( javaPackage ));
+		}
+		return toc;
+	}
+
 }

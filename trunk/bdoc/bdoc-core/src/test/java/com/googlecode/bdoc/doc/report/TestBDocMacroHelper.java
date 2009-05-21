@@ -28,22 +28,22 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.googlecode.bdoc.doc.report.BddDocMacroHelper;
+import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 import com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter;
 
 /**
  *  @author Per Otto Bergum Christensen
  */
-public class TestBddDocMacroHelper {
+public class TestBDocMacroHelper {
 
 	@Test
 	public void shouldFindTextForAGivenKey() {
-		assertEquals("New user stories", new BddDocMacroHelper().text("new.user.stories"));
+		assertEquals("New user stories", new BDocMacroHelper().text("new.user.stories"));
 	}
 
 	@Test
 	public void shouldBePossibleToSetScenarioFormatter() throws Exception {
-		new BddDocMacroHelper(new EachOnNewLineScenarioLinesFormatter());
+		new BDocMacroHelper(new EachOnNewLineScenarioLinesFormatter());
 	}
 
 }

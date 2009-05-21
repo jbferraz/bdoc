@@ -44,8 +44,8 @@ import com.googlecode.bdoc.doc.testdata.RefClass;
 /**
  * @author Per Otto Bergum Christensen
  */
-@Ref(Story.HTML_REPORT)
-@RefClass(HtmlReport.class)
+@Ref(Story.HTML_USERSTORY_REPORT)
+@RefClass(UserStoryHtmlReport.class)
 public class TestTextRenderingInHtmlReport {
 
 	private String html;
@@ -56,7 +56,7 @@ public class TestTextRenderingInHtmlReport {
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithASpecification.class), BConst.SRC_TEST_JAVA);
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithAStatement.class), BConst.SRC_TEST_JAVA);
 
-		html = new HtmlReport(bddDoc).html();
+		html = new InternalApplicationBehaviourReport(bddDoc).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 	}
 

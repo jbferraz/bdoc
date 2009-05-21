@@ -29,8 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
-import static com.googlecode.bdoc.doc.report.BddDocMacroHelper.TableCellFormatter;
-
+import com.googlecode.bdoc.doc.report.BDocMacroHelper.TableCellFormatter;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
@@ -40,29 +39,27 @@ import freemarker.template.Template;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class HtmlReport {
+public class AbstractHtmlReport {
 
 	private Map<String, Object> model;
 	private Configuration cfg;
-	private BddDocMacroHelper bddDocMacroHelper;
+	private BDocMacroHelper bddDocMacroHelper;
 
-	public HtmlReport(BDoc bddDoc) {
-		this(bddDoc, new AndInBetweenScenarioLinesFormatter());
-	}
-
-	public HtmlReport(BDoc bddDoc, ScenarioLinesFormatter scenarioLinesFormatter) {
+	public AbstractHtmlReport(BDoc bddDoc, String reportContentTemplate, ScenarioLinesFormatter scenarioLinesFormatter) {
 		cfg = new Configuration();
-		cfg.setTemplateLoader(new ClassTemplateLoader(HtmlReport.class, ""));
+		cfg.setTemplateLoader(new ClassTemplateLoader(AbstractHtmlReport.class, ""));
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 
 		model = new HashMap<String, Object>();
 		model.put("bddDoc", bddDoc);
-		bddDocMacroHelper = new BddDocMacroHelper(scenarioLinesFormatter);
+		model.put("report_content_template", reportContentTemplate);
+		bddDocMacroHelper = new BDocMacroHelper(scenarioLinesFormatter);
 		model.put("bdocMacroHelper", bddDocMacroHelper);
 	}
 
 	public String html() {
 		try {
+
 			Template template = cfg.getTemplate("html_report.ftl");
 
 			StringWriter xhtml = new StringWriter();

@@ -29,8 +29,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.googlecode.bdoc.diff.report.HtmlDiffReport;
-import com.googlecode.bdoc.doc.report.BddDocMacroHelper;
-import com.googlecode.bdoc.doc.report.HtmlReport;
+import com.googlecode.bdoc.doc.report.BDocMacroHelper;
+import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -54,7 +54,7 @@ public class DiffLogReport {
 		cfg = new Configuration();
 
 		final MultiTemplateLoader multiTemplateLoader = new MultiTemplateLoader(new TemplateLoader[] {
-				new ClassTemplateLoader(HtmlDiffReport.class, ""), new ClassTemplateLoader(HtmlReport.class, ""),
+				new ClassTemplateLoader(HtmlDiffReport.class, ""), new ClassTemplateLoader(UserStoryHtmlReport.class, ""),
 				new ClassTemplateLoader(DiffLogReport.class, "") });
 
 		cfg.setTemplateLoader(multiTemplateLoader);
@@ -62,7 +62,7 @@ public class DiffLogReport {
 
 		model = new HashMap<String, Object>();
 		model.put("diffLog", diffLog);
-		model.put("bdocMacroHelper", new BddDocMacroHelper());
+		model.put("bdocMacroHelper", new BDocMacroHelper());
 		
 		return this;
 	}

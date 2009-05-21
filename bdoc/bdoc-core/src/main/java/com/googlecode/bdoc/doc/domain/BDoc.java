@@ -53,7 +53,7 @@ public class BDoc {
 	protected ProjectInfo projectInfo = new ProjectInfo("unnamed", "unknown");
 	protected Calendar docTime = Calendar.getInstance();
 	protected List<UserStory> userStories = new ArrayList<UserStory>();
-	protected GeneralBehaviour generalBehaviour = new GeneralBehaviour();
+	protected JavaModuleBehaviour generalBehaviour = new JavaModuleBehaviour();
 
 	/**
 	 * Constructor - for test
@@ -187,7 +187,7 @@ public class BDoc {
 		return from(userStories).equalTo(new UserStory(userStoryDescription));
 	}
 
-	public GeneralBehaviour getGeneralBehaviour() {
+	public JavaModuleBehaviour getGeneralBehaviour() {
 		return generalBehaviour;
 	}
 

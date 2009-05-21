@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class GeneralBehaviour {
+public class JavaModuleBehaviour {
 
 	private final List<Package> packages = new ArrayList<Package>();
 

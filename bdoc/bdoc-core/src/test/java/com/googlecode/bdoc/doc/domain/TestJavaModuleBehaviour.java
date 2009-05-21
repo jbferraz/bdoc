@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.googlecode.bdoc.doc.domain.GeneralBehaviour;
+import com.googlecode.bdoc.doc.domain.JavaModuleBehaviour;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
@@ -38,16 +38,16 @@ import com.googlecode.bdoc.doc.domain.Statement;
 /**
  *  @author Per Otto Bergum Christensen
  */
-public class TestGeneralBehaviour {
+public class TestJavaModuleBehaviour {
 
 	private static final String GIVEN_SOMETHING_WHEN_AN_ACTION_THEN_VERIFY_RESULT = "givenSomethingWhenAnActionThenVerifyResult";
 	private static final String SHOULD_VERIFY_THE_IMPORTANT_STUFF = "shouldVerifyTheImportantStuff";
 	private static final String TEST_DATA_IS_IMPORTENT = "testDataIsImportent";
-	private GeneralBehaviour generalBehaviour;
+	private JavaModuleBehaviour generalBehaviour;
 
 	@Before
 	public void setup() {
-		generalBehaviour = new GeneralBehaviour();
+		generalBehaviour = new JavaModuleBehaviour();
 		generalBehaviour.addBehaviour(TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF);
 		generalBehaviour.addBehaviour(TestExample.class, GIVEN_SOMETHING_WHEN_AN_ACTION_THEN_VERIFY_RESULT);
 		generalBehaviour.addBehaviour(TestExample.class, TEST_DATA_IS_IMPORTENT);
@@ -55,7 +55,7 @@ public class TestGeneralBehaviour {
 
 	@Test
 	public void shouldNotSpecifyAnyStatementsForCodeWithoutBehaviourAdded() {
-		assertFalse(new GeneralBehaviour().hasClassStatements());
+		assertFalse(new JavaModuleBehaviour().hasClassStatements());
 	}
 
 	@Test
@@ -78,19 +78,19 @@ public class TestGeneralBehaviour {
 
 	@Test
 	public void shouldNotSpecifyAnySpecificationsForCodeWithoutBehaviourAdded() {
-		assertFalse(new GeneralBehaviour().hasClassSpecifications());
+		assertFalse(new JavaModuleBehaviour().hasClassSpecifications());
 	}
 
 	@Test
 	public void shouldSpecifySpecificationsWhenSpecificationsAreAdded() {
-		GeneralBehaviour packages = new GeneralBehaviour();
+		JavaModuleBehaviour packages = new JavaModuleBehaviour();
 		packages.addBehaviour(TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF);
 		assertTrue(packages.hasClassSpecifications());
 	}
 	
 	@Test
 	public void supportsListingOfAllSpecifications() {
-		GeneralBehaviour generalBehaviour = new GeneralBehaviour();
+		JavaModuleBehaviour generalBehaviour = new JavaModuleBehaviour();
 		generalBehaviour.addBehaviour(TestExample.class, "shouldRepresentASpecification");
 		
 		assertFalse(generalBehaviour.specifications().isEmpty() );

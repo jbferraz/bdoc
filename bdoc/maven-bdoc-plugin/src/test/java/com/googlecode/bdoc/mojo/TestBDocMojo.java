@@ -56,7 +56,7 @@ import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
  *  @author Per Otto Bergum Christensen
  */
 @SuppressWarnings("unchecked")
-public class TestBDocDocMojo {
+public class TestBDocMojo {
 
 	public static final String TARGET = "target";
 
@@ -65,17 +65,15 @@ public class TestBDocDocMojo {
 	private BDocReportInterface bdocReport;
 	private BDoc bdoc;
 
-	private BDocDocMojo bdocDocMojo = new BDocDocMojo() {
-		@SuppressWarnings("deprecation")
+	private BDocMojo bdocDocMojo = new BDocMojo() {
 		org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
-		@SuppressWarnings("deprecation")
 		@Override
 		public org.codehaus.doxia.sink.Sink getSink() {			
 			return sinkStub;
 		};
 	};
 
-	public TestBDocDocMojo() {
+	public TestBDocMojo() {
 		bdocDocMojo.bdocReportsXmlDirectoryPath = TARGET;
 		bdocDocMojo.outputDirectory = new File(TARGET);
 
@@ -137,19 +135,19 @@ public class TestBDocDocMojo {
 
 	@Test
 	public void shouldUseTheUserHomeDirectoryConcatenatedWithBDocAsRootDirectoryForPersistedBDocChangeLogs() {
-		assertEquals(System.getProperty("user.home") + "/bdoc", new BDocDocMojo().getBDocChangeLogRootDirectoryPath());
+		assertEquals(System.getProperty("user.home") + "/bdoc", new BDocMojo().getBDocChangeLogRootDirectoryPath());
 	}
 
 	@Test
 	public void shouldChangeRootDirectoryForPersistedBDocChangesIfThisIsSpecifiedInConfiguration() {
-		BDocDocMojo bdocReportsMojo2 = new BDocDocMojo();
+		BDocMojo bdocReportsMojo2 = new BDocMojo();
 		bdocReportsMojo2.bdocReportsXmlDirectoryPath = "mypath";
 		assertEquals("mypath", bdocReportsMojo2.getBDocChangeLogRootDirectoryPath());
 	}
 
 	@Test
 	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
-		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocDocMojo.BDOC_REPORTS_XML);
+		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocMojo.BDOC_REPORTS_XML);
 		assertEquals(expectedChangeLogFile, bdocDocMojo.getBDocChangeLogFile());
 	}
 	

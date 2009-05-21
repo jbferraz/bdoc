@@ -182,7 +182,7 @@ public class TestBDoc {
 	public void shouldIgnoreMethodsAnnotatedWithIgnore() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleIgnoreMethods.class), BConst.SRC_TEST_JAVA);
-		GeneralBehaviour behaviour = bdoc.getGeneralBehaviour();
+		JavaModuleBehaviour behaviour = bdoc.getGeneralBehaviour();
 		List<Package> packages = behaviour.getPackages();
 		Package package1 = packages.get(0);
 		List<ClassBehaviour> classBehaviours = package1.getClassBehaviour();
@@ -196,7 +196,7 @@ public class TestBDoc {
 	public void shouldIgnoreClassAnnotatedWithIgnore() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleIgnoreClass.class), BConst.SRC_TEST_JAVA);
-		GeneralBehaviour behaviour = bdoc.getGeneralBehaviour();
+		JavaModuleBehaviour behaviour = bdoc.getGeneralBehaviour();
 		List<Package> packages = behaviour.getPackages();
 		assertEquals(0, packages.size());
 	}

@@ -34,12 +34,10 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 public class ExcelExampleTable {
 	private HSSFSheet sheet;
 	private int startingRowIndex;
-	private int startingCellnum;
 
 	public ExcelExampleTable(HSSFSheet sheet, int startingRowIndex, int startingCellnum) {
 		this.sheet = sheet;
 		this.startingRowIndex = startingRowIndex;
-		this.startingCellnum = startingCellnum;
 	}
 
 	public List<String> columnNames() {

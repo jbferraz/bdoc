@@ -55,7 +55,7 @@ import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
  * @author Per Otto Bergum Christensen
  * @author Micael Vesterlund
  */
-public class BDocDocMojo extends AbstractBddDocMojo {
+public class BDocDocMojo extends AbstractBDocMojo {
 
 	private static final String BDOC_REPORTS_TITLE = "BDoc reports";
 

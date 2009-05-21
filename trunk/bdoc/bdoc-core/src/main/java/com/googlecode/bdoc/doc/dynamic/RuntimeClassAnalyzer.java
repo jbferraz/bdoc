@@ -61,8 +61,6 @@ public class RuntimeClassAnalyzer implements MethodInterceptor {
 
 	public Object intercept(Object obj, java.lang.reflect.Method method, Object[] args, MethodProxy proxy) throws Throwable {
 		Object retValFromSuper = proxy.invokeSuper(obj, args);
-		String superName = proxy.getSuperName();
-		int superIndex = proxy.getSuperIndex();
 
 		if (!method.getName().equals(initialMethodCall)) {
 			methodCalls.add(new MethodCall(method, args));

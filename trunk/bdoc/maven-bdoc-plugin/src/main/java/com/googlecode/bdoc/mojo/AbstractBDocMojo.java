@@ -35,7 +35,7 @@ import org.codehaus.doxia.site.renderer.SiteRenderer;
 /**
  *  @author Per Otto Bergum Christensen
  */
-public abstract class AbstractBddDocMojo extends AbstractMavenReport {
+public abstract class AbstractBDocMojo extends AbstractMavenReport {
 
 	/**
 	 * @parameter default-value="${project.reporting.outputDirectory}"
@@ -62,7 +62,7 @@ public abstract class AbstractBddDocMojo extends AbstractMavenReport {
 	 */
 	SiteRenderer siteRenderer;
 
-	public AbstractBddDocMojo() {
+	public AbstractBDocMojo() {
 		super();
 	}
 

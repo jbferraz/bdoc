@@ -32,8 +32,8 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.diff.domain.GeneralBehaviourDiff;
-import com.googlecode.bdoc.doc.domain.GeneralBehaviour;
+import com.googlecode.bdoc.diff.domain.JavaModuleBehaviourDiff;
+import com.googlecode.bdoc.doc.domain.JavaModuleBehaviour;
 import com.googlecode.bdoc.doc.domain.Package;
 
 
@@ -47,26 +47,26 @@ public class TestGeneralBehaviourDiff {
 	private static final String SHOULD_BEHAVE = "shouldBehave";
 	private static final String GIVEN_TWO_WHEN_THEN = "givenTwoWhenThen";
 	private static final String GIVEN_WHEN_THEN = "givenWhenThen";
-	private final GeneralBehaviour oldVersion = new GeneralBehaviour();
-	private final GeneralBehaviour newVersion = new GeneralBehaviour();
+	private final JavaModuleBehaviour oldVersion = new JavaModuleBehaviour();
+	private final JavaModuleBehaviour newVersion = new JavaModuleBehaviour();
 	{
 		newVersion.addBehaviour(TestAsTestdata.class, SHOULD_BEHAVE);
 	}
 
-	private GeneralBehaviour emptyGeneralBehaviour = new GeneralBehaviour();
-	private GeneralBehaviour generalBehaviourWithBehaviour = new GeneralBehaviour();
+	private JavaModuleBehaviour emptyGeneralBehaviour = new JavaModuleBehaviour();
+	private JavaModuleBehaviour generalBehaviourWithBehaviour = new JavaModuleBehaviour();
 	{
 		generalBehaviourWithBehaviour.addBehaviour(TestAsTestdata.class, SHOULD_BEHAVE);
 		generalBehaviourWithBehaviour.addBehaviour(TestAsTestdata.class, GIVEN_WHEN_THEN);
 	}
 
-	private GeneralBehaviour generalBehaviourWithDeletedAndNewBehaviour = new GeneralBehaviour();
+	private JavaModuleBehaviour generalBehaviourWithDeletedAndNewBehaviour = new JavaModuleBehaviour();
 	{
 		generalBehaviourWithDeletedAndNewBehaviour.addBehaviour(TestAsTestdata.class, SHOULD_JUST_BEHAVE);
 		generalBehaviourWithDeletedAndNewBehaviour.addBehaviour(TestAsTestdata.class, "givenJustWhenThen");
 	}
 
-	private GeneralBehaviour generalBehaviourWithBehaviourUpdated = new GeneralBehaviour();
+	private JavaModuleBehaviour generalBehaviourWithBehaviourUpdated = new JavaModuleBehaviour();
 	{
 		generalBehaviourWithBehaviourUpdated.addBehaviour(TestAsTestdata.class, SHOULD_BEHAVE);
 		generalBehaviourWithBehaviourUpdated.addBehaviour(TestAsTestdata.class, "shouldBehaveNewOne");
@@ -74,39 +74,39 @@ public class TestGeneralBehaviourDiff {
 		generalBehaviourWithBehaviourUpdated.addBehaviour(TestAsTestdata.class, GIVEN_TWO_WHEN_THEN);
 	}
 
-	private GeneralBehaviour generalBehaviourWithUpdatedBehaviour = new GeneralBehaviour();
+	private JavaModuleBehaviour generalBehaviourWithUpdatedBehaviour = new JavaModuleBehaviour();
 	{
 		generalBehaviourWithUpdatedBehaviour.addBehaviour(TestAsTestdata.class, "shouldBehaveLikeThatAsWell");
 	}
 
 	@Test
 	public void shouldTellIfThereAreNewPackages() {
-		GeneralBehaviourDiff diff = new GeneralBehaviourDiff(emptyGeneralBehaviour, generalBehaviourWithBehaviour);
+		JavaModuleBehaviourDiff diff = new JavaModuleBehaviourDiff(emptyGeneralBehaviour, generalBehaviourWithBehaviour);
 		assertTrue(diff.hasNewPackages());
 		assertEquals(Package.forClass(TestAsTestdata.class), diff.getNewPackages().get(0));
 	}
 
 	@Test
 	public void shouldTellIfThereAreDeletedPackages() {
-		GeneralBehaviourDiff diff = new GeneralBehaviourDiff(generalBehaviourWithBehaviour, emptyGeneralBehaviour);
+		JavaModuleBehaviourDiff diff = new JavaModuleBehaviourDiff(generalBehaviourWithBehaviour, emptyGeneralBehaviour);
 		assertTrue(diff.hasDeletedPackages());
 		assertEquals(Package.forClass(TestAsTestdata.class), diff.getDeletedPackages().get(0));
 	}
 
 	@Test
 	public void shouldTellIfThereAreUpdatedPackages() {
-		GeneralBehaviourDiff diff = new GeneralBehaviourDiff(generalBehaviourWithBehaviour, generalBehaviourWithUpdatedBehaviour);
+		JavaModuleBehaviourDiff diff = new JavaModuleBehaviourDiff(generalBehaviourWithBehaviour, generalBehaviourWithUpdatedBehaviour);
 		assertTrue(diff.hasUpdatedPackages());
 	}
 
 	@Test
 	public void shouldReportDiffForChangedGeneralBehaviour() {
-		assertTrue(new GeneralBehaviourDiff(oldVersion, newVersion).diffExists());
+		assertTrue(new JavaModuleBehaviourDiff(oldVersion, newVersion).diffExists());
 	}
 
 	@Test
 	public void shouldNotReportDiffForUnchangedGeneralBehaviour() {
-		assertFalse(new GeneralBehaviourDiff(newVersion, newVersion).diffExists());
+		assertFalse(new JavaModuleBehaviourDiff(newVersion, newVersion).diffExists());
 	}
 
 	public class TestAsTestdata {

@@ -43,8 +43,9 @@ import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
-import com.googlecode.bdoc.doc.report.HtmlReport;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
+import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
+import com.googlecode.bdoc.doc.report.JavaModuleBehaviourReport;
 
 /**
  * @goal doc
@@ -55,7 +56,7 @@ import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
  * @author Per Otto Bergum Christensen
  * @author Micael Vesterlund
  */
-public class BDocDocMojo extends AbstractBDocMojo {
+public class BDocMojo extends AbstractBDocMojo {
 
 	private static final String BDOC_REPORTS_TITLE = "BDoc reports";
 
@@ -63,7 +64,9 @@ public class BDocDocMojo extends AbstractBDocMojo {
 
 	static final String BDOC_REPORTS_XML = "bdoc-reports.xml";
 
-	static final String BDOC_HTML = "bdoc.html";
+	static final String BDOC_USERSTORY_REPORT = "bdoc-userstory-report.html";
+	
+	static final String BDOC_JAVA_MODULE_REPORT = "bdoc-java-module-report.html";
 
 	private static final String BDOC_DIFF_LOG_HTML = "bdoc_diff_log.html";
 
@@ -181,9 +184,12 @@ public class BDocDocMojo extends AbstractBDocMojo {
 		getLog().info("Updating file: " + getBDocChangeLogFile());
 		diffLog.writeToFile(getBDocChangeLogFile());
 
-		writeReport(BDOC_HTML, new HtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
+		writeReport(BDOC_USERSTORY_REPORT, new UserStoryHtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
 				.newInstance()).html());
-
+		
+		writeReport(BDOC_JAVA_MODULE_REPORT, new JavaModuleBehaviourReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
+				.newInstance()).html());		
+		
 		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog).result());
 
 		makeBDocReportsHtml();
@@ -210,14 +216,20 @@ public class BDocDocMojo extends AbstractBDocMojo {
 		getSink().list();
 
 		getSink().listItem();
-		getSink().link(BDOC_HTML);
-		getSink().text("BDoc");
+		getSink().link(BDOC_USERSTORY_REPORT);
+		getSink().text("User stories");
+		getSink().link_();
+		getSink().listItem_();
+
+		getSink().listItem();
+		getSink().link(BDOC_JAVA_MODULE_REPORT);
+		getSink().text("Java modules");
 		getSink().link_();
 		getSink().listItem_();
 
 		getSink().listItem();
 		getSink().link(BDOC_DIFF_LOG_HTML);
-		getSink().text("BDocDiffLog");
+		getSink().text("Changelog");
 		getSink().link_();
 		getSink().listItem_();
 

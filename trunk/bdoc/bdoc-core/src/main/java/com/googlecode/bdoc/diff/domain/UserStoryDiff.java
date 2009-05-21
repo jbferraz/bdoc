@@ -36,7 +36,7 @@ import com.googlecode.bdoc.doc.domain.UserStory;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class UserStoryDiff extends GeneralBehaviourDiff implements ModuleDiff {
+public class UserStoryDiff extends JavaModuleBehaviourDiff implements ModuleDiff {
 
 	private final Integer userStoryId;
 	private final NarrativeDiff narrativeDiff;
@@ -146,7 +146,6 @@ public class UserStoryDiff extends GeneralBehaviourDiff implements ModuleDiff {
 		return !getDeletedClassSpecifications().isEmpty();
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<ClassSpecifications> getDeletedClassSpecifications() {
 		List<ClassSpecifications> result = new ArrayList<ClassSpecifications>();
 
@@ -165,7 +164,6 @@ public class UserStoryDiff extends GeneralBehaviourDiff implements ModuleDiff {
 		return result;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Scenario> getDeletedScenarios() {
 
 		List<Scenario> result = new ArrayList<Scenario>();

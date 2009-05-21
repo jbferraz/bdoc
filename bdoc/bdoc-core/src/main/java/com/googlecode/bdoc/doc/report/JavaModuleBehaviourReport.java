@@ -30,13 +30,13 @@ import java.util.List;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Package;
 
-public class InternalApplicationBehaviourReport extends AbstractHtmlReport {
+public class JavaModuleBehaviourReport extends AbstractHtmlReport {
 
-	public InternalApplicationBehaviourReport(BDoc bdoc) {
+	public JavaModuleBehaviourReport(BDoc bdoc) {
 		this(bdoc, new AndInBetweenScenarioLinesFormatter());
 	}
 
-	public InternalApplicationBehaviourReport(BDoc bdoc, ScenarioLinesFormatter scenarioLinesFormatter) {
+	public JavaModuleBehaviourReport(BDoc bdoc, ScenarioLinesFormatter scenarioLinesFormatter) {
 		super(bdoc, "internal_application_html_report_content.ftl", "toc.packages",createToc(bdoc), scenarioLinesFormatter);
 	}
 

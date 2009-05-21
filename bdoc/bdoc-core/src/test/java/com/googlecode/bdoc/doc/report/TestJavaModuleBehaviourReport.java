@@ -47,26 +47,25 @@ import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestTable;
-import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper.TableCellFormatter;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.TestClassWithGeneralBehaviour;
 import com.googlecode.bdoc.doc.testdata.TestClassWithTestTablesBehaviour;
 
-@Ref(Story.HTML_INTERNAL_APPLICATION_REPORT)
-public class TestInternalApplicationBehaviourReport {
+@Ref(Story.HTML_JAVA_MODULE_REPORT)
+public class TestJavaModuleBehaviourReport {
 
 	private String html;
 	private BDoc bdoc;
 
-	public TestInternalApplicationBehaviourReport() throws IOException {
+	public TestJavaModuleBehaviourReport() throws IOException {
 		bdoc = BDocTestHelper.bdocWithProject();
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(
 				BConst.SRC_TEST_JAVA));
 
-		InternalApplicationBehaviourReport InternalApplicationBehaviourReport = new InternalApplicationBehaviourReport(
+		JavaModuleBehaviourReport InternalApplicationBehaviourReport = new JavaModuleBehaviourReport(
 				bdoc);
 
 		TableCellFormatter customClassFormatter = new TableCellFormatter() {
@@ -123,9 +122,9 @@ public class TestInternalApplicationBehaviourReport {
 	@Test
 	public void shouldBePossibleToChangeFormattingForAdvancedScenarioSpecification() throws IOException {
 		bdoc = BDocTestHelper.bdocWithAdvancedScenarioSpecification();
-		String htmlAndInBetween = new InternalApplicationBehaviourReport(bdoc, new AndInBetweenScenarioLinesFormatter())
+		String htmlAndInBetween = new JavaModuleBehaviourReport(bdoc, new AndInBetweenScenarioLinesFormatter())
 				.html();
-		String htmlEachOnNewLine = new InternalApplicationBehaviourReport(bdoc,
+		String htmlEachOnNewLine = new JavaModuleBehaviourReport(bdoc,
 				new EachOnNewLineScenarioLinesFormatter()).html();
 		Assert.assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
 

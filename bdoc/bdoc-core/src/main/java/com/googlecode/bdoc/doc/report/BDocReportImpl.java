@@ -144,9 +144,9 @@ public class BDocReportImpl implements BDocReportInterface {
 
 		xml = new XmlReport(bdoc).xml();
 		if (scenarioLinesFormatter != null) {
-			html = new HtmlReport(bdoc, scenarioLinesFormatter).html();
+			html = new UserStoryHtmlReport(bdoc, scenarioLinesFormatter).html();
 		} else {
-			html = new HtmlReport(bdoc).html();
+			html = new UserStoryHtmlReport(bdoc).html();
 		}
 		return bdoc;
 

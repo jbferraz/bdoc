@@ -29,24 +29,32 @@ package com.googlecode.bdoc;
  */
 public enum Story {
 
-	CREATE_BDOC_FROM_CODE(1, "As a developer", "I want to implement a userstory", "so that a BDoc can be extracted from the code"),
+	CREATE_BDOC_FROM_CODE(1, "As a developer", "I want to implement a userstory",
+			"so that a BDoc can be extracted from the code"),
 
 	XML_REPORT(2, "As a developer in the project", "I want to open the BDoc", "so that it opens in an XML editor"),
 
-	HTML_REPORT(3, "As a stakeholder in the project", "I want to generated BDoc as html", "so that it opens in a browser"),
+	HTML_USERSTORY_REPORT(3, "As project owner of the project", "I want to generate a userstory report from the code",
+			"so that I can read what kind of behaviour the applications supports"),
+
+	HTML_INTERNAL_APPLICATION_REPORT(4, "As a developer in the project",
+			"I want to generate a report with internal application behaviour",
+			"so that I can get an overview of the internal workings of the application"),
 
 	CLASS_DIAGRAM(5, "As a developer in the project", "I want to generated a class diagram of the domain model",
 			"so that it opens in a browser"),
 
-	STORY_REFERENCE_CODE_GENERATOR(6, "As a developer in the project", "I want to generate an example of the story and ref class",
-			"so that I can start using it in the code"),
+	STORY_REFERENCE_CODE_GENERATOR(6, "As a developer in the project",
+			"I want to generate an example of the story and ref class", "so that I can start using it in the code"),
 
 	DIFF_OF_BDOCS(7, "As a developer in the project", "I want to diff to versions of a BDoc",
 			"so that I can see the difference between the two versions"),
 
-	HTML_DIFF_REPORT(8, "As a stakeholder in the project", "I want to generated BDocDiff as html", "so that it opens in a browser"),
+	HTML_DIFF_REPORT(8, "As a stakeholder in the project", "I want to generated BDocDiff as html",
+			"so that it opens in a browser"),
 
-	ADVANCED_SCENARIO_SPECIFICATION(9, "As a developer in the project", "I want to write a scenario as a series of given when then methods",
+	ADVANCED_SCENARIO_SPECIFICATION(9, "As a developer in the project",
+			"I want to write a scenario as a series of given when then methods",
 			"so that I can use more than one line to describe the behaviour"),
 
 	TEST_TABLES(10, "As a developer in the project", "I want to write a set of identical tests with differnt data ",

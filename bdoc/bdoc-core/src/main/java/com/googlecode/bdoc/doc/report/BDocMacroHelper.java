@@ -36,7 +36,7 @@ import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class BddDocMacroHelper {
+public class BDocMacroHelper {
 
 	public interface TableCellFormatter {
 		public String format(Object object);
@@ -44,11 +44,11 @@ public class BddDocMacroHelper {
 
 	private ScenarioLinesFormatter formatter;
 
-	public BddDocMacroHelper() {
+	public BDocMacroHelper() {
 		this.formatter = new AndInBetweenScenarioLinesFormatter();
 	}
 
-	public BddDocMacroHelper(ScenarioLinesFormatter formatter) {
+	public BDocMacroHelper(ScenarioLinesFormatter formatter) {
 		this.formatter = formatter;
 	}
 

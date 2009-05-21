@@ -24,30 +24,15 @@
 
 package com.googlecode.bdoc.doc.report;
 
-import java.util.HashMap;
-
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.report.BddDocMacroHelper.TableCellFormatter;
 
-public class InternalApplicationBehaviourReport {
-
-	HtmlReport htmlReport;
+public class InternalApplicationBehaviourReport extends AbstractHtmlReport {
 
 	public InternalApplicationBehaviourReport(BDoc bdoc) {
-		htmlReport = new HtmlReport(bdoc);
+		this(bdoc, new AndInBetweenScenarioLinesFormatter());
 	}
 
 	public InternalApplicationBehaviourReport(BDoc bdoc, ScenarioLinesFormatter scenarioLinesFormatter) {
-		htmlReport = new HtmlReport(bdoc, scenarioLinesFormatter);
+		super(bdoc, "internal_application_html_report_content.ftl", scenarioLinesFormatter);
 	}
-
-	public void setCustomObjectFormatters(HashMap<Class<?>, TableCellFormatter> tableCellFormatters) {
-		htmlReport.setCustomObjectFormatters(tableCellFormatters);
-
-	}
-
-	public String html() {
-		return htmlReport.html();
-	}
-
 }

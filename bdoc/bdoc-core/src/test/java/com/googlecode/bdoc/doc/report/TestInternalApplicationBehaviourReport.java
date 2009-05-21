@@ -38,6 +38,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.Ref;
+import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
@@ -45,11 +47,12 @@ import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
-import com.googlecode.bdoc.doc.report.BddDocMacroHelper.TableCellFormatter;
+import com.googlecode.bdoc.doc.report.BDocMacroHelper.TableCellFormatter;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.TestClassWithGeneralBehaviour;
 import com.googlecode.bdoc.doc.testdata.TestClassWithTestTablesBehaviour;
 
+@Ref(Story.HTML_INTERNAL_APPLICATION_REPORT)
 public class TestInternalApplicationBehaviourReport {
 
 	private String html;

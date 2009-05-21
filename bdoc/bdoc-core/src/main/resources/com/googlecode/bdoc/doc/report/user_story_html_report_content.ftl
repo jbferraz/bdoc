@@ -29,31 +29,10 @@
 
 
 <#import "bdd_doc_macros.ftl" as bdddoc />
-<#setting date_format="short">
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-	<head>
-		<title>${bddDoc.project.name}</title>
-		<#include "css.ftl">
-	</head>
-	<body>
-		<a name="top"></a>
-		<div class="reportInfo">
-			<h1>${bddDoc.project.name} ${bddDoc.project.version}</h1>
-			<p class="dateTime">${bddDoc.docTime?datetime}</p>
-		</div>
-		<div class="navigation">
-			<strong>User stories:</strong>
-			<ul class="toc">
-				<#list bddDoc.userstories as tocStory>
-					<li class="userstory">
-						<a href="#${tocStory.title}">${tocStory.title}</a>
-					</li>
-				</#list>
-			</ul>
-		</div>
-						
-		<#include "${report_content_template}">			
-		
-	</body>
-</html>
+
+<div class="content">			
+	<#list bddDoc.userstories as userstory>
+		<@bdddoc.story userstory=userstory/> 		
+		<hr/>
+	</#list>			
+</div>

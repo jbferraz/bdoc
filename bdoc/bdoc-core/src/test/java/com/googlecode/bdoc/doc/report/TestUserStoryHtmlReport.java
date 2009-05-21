@@ -34,7 +34,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -46,32 +45,27 @@ import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestClass;
-import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.domain.UserStoryDescription.Narrative;
-import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
-import com.googlecode.bdoc.doc.report.BddDocMacroHelper.TableCellFormatter;
+import com.googlecode.bdoc.doc.report.BDocMacroHelper.TableCellFormatter;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
-import com.googlecode.bdoc.doc.testdata.TestClassWithFourSpecifications;
-import com.googlecode.bdoc.doc.testdata.TestClassWithGeneralBehaviour;
-import com.googlecode.bdoc.doc.testdata.TestClassWithTestTablesBehaviour;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements;
 
 /**
  * @author Per Otto Bergum Christensen
  */
-@Ref(Story.HTML_REPORT)
-public class TestHtmlReport {
+@Ref(Story.HTML_USERSTORY_REPORT)
+public class TestUserStoryHtmlReport {
 
 	private String html;
 	private BDoc bdoc;
 
-	public TestHtmlReport() throws IOException {
+	public TestUserStoryHtmlReport() throws IOException {
 		bdoc = BDocTestHelper.bdocWithProject();
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class),
 				BConst.SRC_TEST_JAVA);
 
-		HtmlReport htmlReport = new HtmlReport(bdoc);
+		UserStoryHtmlReport htmlReport = new UserStoryHtmlReport(bdoc);
 
 		TableCellFormatter customClassFormatter = new TableCellFormatter() {
 			public String format(Object object) {

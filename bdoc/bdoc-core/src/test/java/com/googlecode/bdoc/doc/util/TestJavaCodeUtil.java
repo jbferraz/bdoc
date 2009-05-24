@@ -60,8 +60,8 @@ public class TestJavaCodeUtil {
 
 	@Test
 	public void shouldReturnTheBlockAfterASpecifiedToken() {
-		assertEquals("givenA();", JavaCodeUtil.javaBlockAfter(JAVA_BLOCK_CODE_SNIPPET, "shouldVerify"));
-		assertEquals("try {givenA();} catch {thenInsideCatch();} thenAfterCatch();", JavaCodeUtil.javaBlockAfter(
+		assertEquals("{ givenA();", JavaCodeUtil.javaBlockAfter(JAVA_BLOCK_CODE_SNIPPET, "shouldVerify"));
+		assertEquals("{ try {givenA();} catch {thenInsideCatch();} thenAfterCatch();", JavaCodeUtil.javaBlockAfter(
 				JAVA_BLOCK_WITH_TRY_CATCH_CODE_SNIPPET, "shouldVerify"));
 	}
 

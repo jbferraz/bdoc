@@ -55,7 +55,7 @@
 	</developers>
 
 	<properties>
-		<maven.bdoc.plugin.version>0.8.9-SNAPSHOT</maven.bdoc.plugin.version>
+		<maven.bdoc.plugin.version>0.8.10-SNAPSHOT</maven.bdoc.plugin.version>
 	</properties>
 
 	<build>

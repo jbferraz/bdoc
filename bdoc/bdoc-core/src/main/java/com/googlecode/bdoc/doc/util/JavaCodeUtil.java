@@ -41,17 +41,56 @@ import com.googlecode.bdoc.doc.domain.TestClass;
  */
 public class JavaCodeUtil {
 
-	static final char LEFT = '{';
-	static final char RIGHT = '}';
+	static final char LEFT_BRACE = '{';
+	static final char RIGHT_BRACE = '}';
+	static final char LEFT_BRACKET = '(';
+	static final char RIGHT_BRACKET = ')';
+	static String NEWLINE = System.getProperty("line.separator");
 
 	private JavaCodeUtil() {
 	}
 
 	public static String javaBlockAfter(String javaSourceCode, String token) {
 		String cutCode = StringUtils.substringAfter(javaSourceCode, token);
-		int startIndex = StringUtils.indexOf(cutCode, LEFT) + 1;
+		int startIndex = findIndexWhereMethodsBlockStarts(cutCode, token);
+		cutCode = StringUtils.substring(cutCode, startIndex, cutCode.length());
 		int endIndex = findIndexWhereMethodsBlockEnds(cutCode);
-		return StringUtils.substring(cutCode, startIndex, endIndex).trim();
+		return StringUtils.substring(cutCode, 0, endIndex).trim();
+	}
+
+	private static int findIndexWhereMethodsBlockStarts(String javaSourceCode, String token) {
+		boolean leftBracket = false;
+		boolean rightBracket = false;
+		for (int index = 0; index < javaSourceCode.length(); index++) {
+			char charAt = javaSourceCode.charAt(index);
+			String string = Character.toString(charAt);
+			if (!StringUtils.isWhitespace(string) && !string.equals(NEWLINE)) {
+				if (!leftBracket) {
+					if (charAt == LEFT_BRACKET) {
+						leftBracket = true;
+					} else {
+						return nextIndex(javaSourceCode, token);
+					}
+				} else if (!rightBracket) {
+					if (charAt == RIGHT_BRACKET) {
+						rightBracket = true;
+					} else {
+						return nextIndex(javaSourceCode, token);
+					}
+				} else if (charAt == LEFT_BRACE) {
+					return index;
+				} else {
+					return nextIndex(javaSourceCode, token);
+				}
+			}
+		}
+		return 0;
+	}
+
+	private static int nextIndex(String javaSourceCode, String token) {
+		int nextIndex = StringUtils.indexOf(javaSourceCode, token);
+		String cutCode = StringUtils.substringAfter(javaSourceCode, token);
+		return nextIndex + findIndexWhereMethodsBlockStarts(cutCode, token) + token.length();
 	}
 
 	public static int findIndexWhereMethodsBlockEnds(String javaSourceCode) {
@@ -61,9 +100,9 @@ public class JavaCodeUtil {
 
 		for (int index = 0; index < javaSourceCode.length(); index++) {
 			char charAt = javaSourceCode.charAt(index);
-			if (charAt == LEFT) {
+			if (charAt == LEFT_BRACE) {
 				nrOfLeft++;
-			} else if (charAt == RIGHT) {
+			} else if (charAt == RIGHT_BRACE) {
 				nrOfRight++;
 			}
 			if (balance(nrOfLeft, nrOfRight)) {

@@ -31,6 +31,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * It should not break the logic if i write shouldAddDepositToBalance()
+ * 
  * @author Micael Vesterlund
  */
 public class BankAccountBehavior {

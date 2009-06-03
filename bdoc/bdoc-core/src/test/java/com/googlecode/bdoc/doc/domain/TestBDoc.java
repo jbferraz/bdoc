@@ -63,13 +63,6 @@ public class TestBDoc {
 	}
 
 	@Test
-	public void shouldRunWithAStoryRefAnnotation() {
-		bdoc = new BDoc(org.junit.Test.class, null, org.junit.Ignore.class);
-		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class), BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BConst.SRC_TEST_JAVA);
-	}
-
-	@Test
 	public void shouldCreateTheDistinctNumberOfUserStories() {
 		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BConst.SRC_TEST_JAVA);
 		assertEquals(3, bdoc.getUserstories().size());
@@ -91,7 +84,7 @@ public class TestBDoc {
 	public void shouldExtractBehaviourFromMetodsAnnotatedWithAnAnnotationClassCalledTest() {
 		BDoc bdoc = new BDoc(null, null, null);
 		bdoc.addBehaviourFrom(new TestClass(TestTestsAnnotatedWithTest.class), BConst.SRC_TEST_JAVA);
-		Specification specification = bdoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
+		Specification specification = bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
 				.get(0);
 
 		assertEquals(new Specification("shouldBePickedUpByBDoc"), specification);
@@ -102,10 +95,10 @@ public class TestBDoc {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleJunit3.class), BConst.SRC_TEST_JAVA);
 
-		assertTrue(bdoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
+		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
 				new Specification("shouldShowThatJUnit3IsSupported")));
 
-		List<Scenario> scenarios = bdoc.getGeneralBehaviour().getPackages().get(0).getScenarios();
+		List<Scenario> scenarios = bdoc.getModuleBehaviour().getPackages().get(0).getScenarios();
 		assertTrue(scenarios.contains(new Scenario("givenAJunit3TestWhenBddDocIsRunThenEnsureTheJUnit3TestIsExtracted")));
 	}
 
@@ -166,9 +159,9 @@ public class TestBDoc {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BConst.SRC_TEST_JAVA);
 
-		assertTrue(bdoc.getGeneralBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
+		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
 				new Specification("shouldVerifyTheImportantStuff")));
-		assertTrue(bdoc.getGeneralBehaviour().getPackages().get(0).getScenarios().contains(
+		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getScenarios().contains(
 				new Scenario("givenSomethingWhenAnActionThenVerifyResult")));
 
 	}
@@ -182,7 +175,7 @@ public class TestBDoc {
 	public void shouldIgnoreMethodsAnnotatedWithIgnore() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleIgnoreMethods.class), BConst.SRC_TEST_JAVA);
-		ModuleBehaviour behaviour = bdoc.getGeneralBehaviour();
+		ModuleBehaviour behaviour = bdoc.getModuleBehaviour();
 		List<Package> packages = behaviour.getPackages();
 		Package package1 = packages.get(0);
 		List<ClassBehaviour> classBehaviours = package1.getClassBehaviour();
@@ -196,7 +189,7 @@ public class TestBDoc {
 	public void shouldIgnoreClassAnnotatedWithIgnore() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleIgnoreClass.class), BConst.SRC_TEST_JAVA);
-		ModuleBehaviour behaviour = bdoc.getGeneralBehaviour();
+		ModuleBehaviour behaviour = bdoc.getModuleBehaviour();
 		List<Package> packages = behaviour.getPackages();
 		assertEquals(0, packages.size());
 	}
@@ -266,6 +259,14 @@ public class TestBDoc {
 		assertEquals( ExStory.STORY1.getId(), bdoc.getUserstories().get(0).getId() );
 		assertEquals( ExStory.STORY2.getId(), bdoc.getUserstories().get(1).getId() );
 		assertEquals( ExStory.STORY3.getId(), bdoc.getUserstories().get(2).getId() );
+	}
+	
+	@Test
+	public void shouldIncludeAllClassBehaviourInModuleBehaviour() {
+		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		bdoc.addBehaviourFrom(new TestClass(TestWithManyUserStories.class), BConst.SRC_TEST_JAVA);
+		
+		bdoc.getModuleBehaviour();
 	}
 	
 	

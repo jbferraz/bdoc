@@ -65,7 +65,7 @@ public class TestHtmlGeneralBehaviourDiffReport {
 
 		bDocDiff.setDocTimeDiff(new TimeDiff(time1, time2));
 	}
-	private ModuleBehaviourDiff generalBehaviourDiff = bDocDiff.getGeneralBehaviourDiff();
+	private ModuleBehaviourDiff generalBehaviourDiff = bDocDiff.getModuleBehaviourDiff();
 
 	private String html;
 

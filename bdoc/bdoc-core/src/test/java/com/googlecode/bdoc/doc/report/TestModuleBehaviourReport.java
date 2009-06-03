@@ -92,13 +92,13 @@ public class TestModuleBehaviourReport {
 
 	@Test
 	public void shouldPresentPackagesWithBehaviourNotAssociatedWityAnyStories() {
-		assertXPathContains(bdoc.getGeneralBehaviour().getPackages().get(0).getName(),
+		assertXPathContains(bdoc.getModuleBehaviour().getPackages().get(0).getName(),
 				"//div[@class='generalBehaviour']", html);
 	}
 
 	@Test
 	public void shouldPresentScenariosNotAssociatedWithAnyStories() {
-		List<Scenario> scenarios = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0)
+		List<Scenario> scenarios = bdoc.getModuleBehaviour().getPackages().get(0).getClassBehaviour().get(0)
 				.getScenarios();
 		assertXPathContains(scenarioPart(0, scenarios.get(0)),
 				"//div[@class='generalBehaviour']/div[@class='package']", html);
@@ -106,7 +106,7 @@ public class TestModuleBehaviourReport {
 
 	@Test
 	public void shouldPresentSpecificationsNotAssociatedWithAnyStories() {
-		List<Specification> specifications = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0)
+		List<Specification> specifications = bdoc.getModuleBehaviour().getPackages().get(0).getClassBehaviour().get(0)
 				.getSpecifications();
 		assertXPathContains(sentence(specifications.get(0)), "//div[@class='generalBehaviour']/div[@class='package']",
 				html);
@@ -114,7 +114,7 @@ public class TestModuleBehaviourReport {
 
 	@Test
 	public void shouldPresentStatementsNotAssociatedWithAnyStories() {
-		List<Statement> statements = bdoc.getGeneralBehaviour().getPackages().get(0).getClassBehaviour().get(0)
+		List<Statement> statements = bdoc.getModuleBehaviour().getPackages().get(0).getClassBehaviour().get(0)
 				.getStatements();
 		assertXPathContains(sentence(statements.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
 	}
@@ -151,7 +151,7 @@ public class TestModuleBehaviourReport {
 	
 	@Test
 	public void shouldPresentATableOfContentsWithAllPackageNames() {
-		List<Package> packages = bdoc.getGeneralBehaviour().getPackages();
+		List<Package> packages = bdoc.getModuleBehaviour().getPackages();
 		for (Package javaPackage : packages) {
 			assertXPathContains(javaPackage.getName(), "//ul[@class='toc']", html);
 		}

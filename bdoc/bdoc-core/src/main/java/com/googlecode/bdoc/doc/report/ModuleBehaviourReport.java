@@ -43,7 +43,7 @@ public class ModuleBehaviourReport extends AbstractHtmlReport {
 	private static List<TocItem> createToc(BDoc bdoc) {
 		List<TocItem> toc = new ArrayList<TocItem>();
 
-		for (Package javaPackage : bdoc.getGeneralBehaviour().getPackages()) {
+		for (Package javaPackage : bdoc.getModuleBehaviour().getPackages()) {
 			toc.add(new TocItem( javaPackage ));
 		}
 		return toc;

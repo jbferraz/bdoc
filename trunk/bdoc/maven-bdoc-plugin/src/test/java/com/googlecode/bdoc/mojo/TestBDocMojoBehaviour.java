@@ -170,14 +170,14 @@ public class TestBDocMojoBehaviour {
 
 	private void bdocInChangeLogShouldContain(Class testClass) {
 		DiffLog diffLog = DiffLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
-		ClassBehaviour classBehaviourFromFile = diffLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
+		ClassBehaviour classBehaviourFromFile = diffLog.latestBDoc().getModuleBehaviour().classBehaviourFor(testClass);
 		assertEquals(new ClassBehaviour(testClass), classBehaviourFromFile);
 	}
 
 	private void bdocInChangeLogShouldNotContain(Class testClass) {
 		DiffLog diffLog = DiffLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
 		try {
-			diffLog.latestBDoc().getGeneralBehaviour().classBehaviourFor(testClass);
+			diffLog.latestBDoc().getModuleBehaviour().classBehaviourFor(testClass);
 			fail("testclass did exist in bdoc: " + testClass);
 		} catch (ItemInListNotFoundException e) {
 			// should occur

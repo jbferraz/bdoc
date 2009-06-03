@@ -43,9 +43,10 @@ import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.report.BDocReportImpl;
 import com.googlecode.bdoc.doc.report.BDocReportInterface;
+import com.googlecode.bdoc.doc.report.ModuleBehaviourReport;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
-import com.googlecode.bdoc.doc.report.JavaModuleBehaviourReport;
+import com.thoughtworks.xstream.converters.ConversionException;
 
 /**
  * @goal doc
@@ -65,8 +66,8 @@ public class BDocMojo extends AbstractBDocMojo {
 	static final String BDOC_REPORTS_XML = "bdoc-reports.xml";
 
 	static final String BDOC_USERSTORY_REPORT = "bdoc-userstory-report.html";
-	
-	static final String BDOC_JAVA_MODULE_REPORT = "bdoc-java-module-report.html";
+
+	static final String BDOC_MODULE_REPORT = "bdoc-module-report.html";
 
 	private static final String BDOC_DIFF_LOG_HTML = "bdoc_diff_log.html";
 
@@ -141,6 +142,13 @@ public class BDocMojo extends AbstractBDocMojo {
 	protected void executeReport(Locale arg0) throws MavenReportException {
 		try {
 			executeInternal();
+		} catch (ConversionException e) {
+			String msg = "BDoc has had an internal error related to xml persistence. "
+					+ "This could happen if a new version of bdoc has been used, which could have changes in the underlying model. "
+					+ "Currently there are two solutions: 1. Don't upgrade, 2. Delete " + getBDocChangeLogFile().getAbsolutePath()
+					+ " and try again. Detailed message: " + e.getMessage();
+
+			getLog().error(msg, e);
 		} catch (Exception e) {
 			getLog().error("BDoc error:" + e, e);
 		}
@@ -184,12 +192,12 @@ public class BDocMojo extends AbstractBDocMojo {
 		getLog().info("Updating file: " + getBDocChangeLogFile());
 		diffLog.writeToFile(getBDocChangeLogFile());
 
-		writeReport(BDOC_USERSTORY_REPORT, new UserStoryHtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
-				.newInstance()).html());
-		
-		writeReport(BDOC_JAVA_MODULE_REPORT, new JavaModuleBehaviourReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
-				.newInstance()).html());		
-		
+		writeReport(BDOC_USERSTORY_REPORT, new UserStoryHtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(
+				scenarioFormatterClassName).newInstance()).html());
+
+		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(
+				scenarioFormatterClassName).newInstance()).html());
+
 		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog).result());
 
 		makeBDocReportsHtml();
@@ -222,8 +230,8 @@ public class BDocMojo extends AbstractBDocMojo {
 		getSink().listItem_();
 
 		getSink().listItem();
-		getSink().link(BDOC_JAVA_MODULE_REPORT);
-		getSink().text("Java modules");
+		getSink().link(BDOC_MODULE_REPORT);
+		getSink().text("Modules");
 		getSink().link_();
 		getSink().listItem_();
 

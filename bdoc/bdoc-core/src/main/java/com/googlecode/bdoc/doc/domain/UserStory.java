@@ -108,4 +108,5 @@ public class UserStory extends ModuleBehaviour implements UserStoryDescription, 
 	public int compareTo(UserStory otherUserStory) {
 		return id.compareTo(otherUserStory.getId());
 	}
+
 }

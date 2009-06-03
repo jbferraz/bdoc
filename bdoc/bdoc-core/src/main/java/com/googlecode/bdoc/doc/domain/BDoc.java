@@ -103,18 +103,20 @@ public class BDoc {
 				userStory = userStory(method.getAnnotation(storyRefAnnotation));
 			}
 
-			ClassBehaviour classBehaviour = null;
-			if (null != userStory) {
-				classBehaviour = userStory.addBehaviour(testClass.clazz(), method.camelCaseSentence());
-			} else {
-				classBehaviour = moduleBehaviour.addBehaviour(testClass.clazz(), method.camelCaseSentence());
-			}
+			List<Scenario> scenarios = new ArrayList<Scenario>();
+			List<TestTable> testTables = new ArrayList<TestTable>();
 
 			if (testClass.shouldBeAnalyzedForExtendedBehaviour()) {
 				behaviourFactory.analyze(method);
-				classBehaviour.addScenarios(behaviourFactory.getCreatedScenarios());
-				classBehaviour.addTestTables(behaviourFactory.getCreatedTestTables());
+				scenarios = behaviourFactory.getCreatedScenarios();
+				testTables = behaviourFactory.getCreatedTestTables();
 			}
+
+			if (null != userStory) {
+				userStory.addBehaviour(testClass, method, scenarios, testTables);
+			}
+
+			moduleBehaviour.addBehaviour(testClass, method, scenarios, testTables);
 		}
 		return this;
 	}

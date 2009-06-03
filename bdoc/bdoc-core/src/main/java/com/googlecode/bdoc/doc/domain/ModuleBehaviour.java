@@ -40,6 +40,15 @@ public class ModuleBehaviour {
 		return from(packages).equalTo(Package.forClass(testClass)).getBehaviourFor(testClass);
 	}
 
+	public ClassBehaviour addBehaviour(TestClass testClass, TestMethod method, List<Scenario> scenarios, List<TestTable> testTables) {
+		ClassBehaviour classBehaviour = addBehaviour(testClass.clazz(), method.camelCaseSentence());
+
+		classBehaviour.addScenarios(scenarios);
+		classBehaviour.addTestTables(testTables);
+
+		return classBehaviour;
+	}
+
 	public ClassBehaviour addBehaviour(Class<? extends Object> testClass, String camelCaseSentence) {
 
 		Package classPackage = Package.forClass(testClass);

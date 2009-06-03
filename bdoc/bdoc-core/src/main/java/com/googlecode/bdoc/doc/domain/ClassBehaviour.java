@@ -53,7 +53,7 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	private List<Statement> statements = new ArrayList<Statement>();
 
 	private List<TestTable> testTables = new ArrayList<TestTable>();
-
+	
 	public ClassBehaviour(Class<? extends Object> testClass) {
 		this.className = retreiveClassName(testClass);
 	}

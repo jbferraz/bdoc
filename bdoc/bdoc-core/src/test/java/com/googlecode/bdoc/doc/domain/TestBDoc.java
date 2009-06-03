@@ -257,15 +257,6 @@ public class TestBDoc {
 		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
 		assertTrue(bdoc.testTables().contains(new TestTable("assertDivison")));
 	}
-
-	@Test
-	public void statementShouldKnowItsScenarios() {
-		BDoc bdocWithScenario = new BDoc();
-		bdocWithScenario.addBehaviourFrom(new TestClass(TestDomainBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
-		List<Specification> specifications = bdocWithScenario.specifications();
-		assertFalse(specifications.get(0).getScenarios().isEmpty());
-		assertFalse(specifications.get(1).getScenarios().isEmpty());
-	}
 	
 	@Test
 	public void shouldSortUserStoriesById() {

@@ -53,7 +53,7 @@ public class BDoc {
 	protected ProjectInfo projectInfo = new ProjectInfo("unnamed", "unknown");
 	protected Calendar docTime = Calendar.getInstance();
 	protected List<UserStory> userStories = new ArrayList<UserStory>();
-	protected JavaModuleBehaviour generalBehaviour = new JavaModuleBehaviour();
+	protected JavaModuleBehaviour javaModuleBehaviour = new JavaModuleBehaviour();
 
 	/**
 	 * Constructor - for test
@@ -107,7 +107,7 @@ public class BDoc {
 			if (null != userStory) {
 				classBehaviour = userStory.addBehaviour(testClass.clazz(), method.camelCaseSentence());
 			} else {
-				classBehaviour = generalBehaviour.addBehaviour(testClass.clazz(), method.camelCaseSentence());
+				classBehaviour = javaModuleBehaviour.addBehaviour(testClass.clazz(), method.camelCaseSentence());
 			}
 
 			if (testClass.shouldBeAnalyzedForExtendedBehaviour()) {
@@ -188,11 +188,11 @@ public class BDoc {
 	}
 
 	public JavaModuleBehaviour getGeneralBehaviour() {
-		return generalBehaviour;
+		return javaModuleBehaviour;
 	}
 
 	public ClassBehaviour classBehaviourInGeneralBehaviour(Class<? extends Object> testClass) {
-		return generalBehaviour.classBehaviourFor(testClass);
+		return javaModuleBehaviour.classBehaviourFor(testClass);
 	}
 
 	@Override
@@ -221,7 +221,7 @@ public class BDoc {
 	public List<Specification> specifications() {
 		List<Specification> result = new ArrayList<Specification>();
 
-		result.addAll(generalBehaviour.specifications());
+		result.addAll(javaModuleBehaviour.specifications());
 		for (UserStory userStory : userStories) {
 			result.addAll(userStory.specifications());
 		}
@@ -231,7 +231,7 @@ public class BDoc {
 	public List<Scenario> scenarios() {
 		List<Scenario> result = new ArrayList<Scenario>();
 
-		result.addAll(generalBehaviour.scenarios());
+		result.addAll(javaModuleBehaviour.scenarios());
 
 		for (UserStory userStory : userStories) {
 			result.addAll(userStory.getScenarios());
@@ -249,7 +249,7 @@ public class BDoc {
 
 	public List<TestTable> testTables() {
 		List<TestTable> result = new ArrayList<TestTable>();
-		result.addAll(generalBehaviour.testTables());
+		result.addAll(javaModuleBehaviour.testTables());
 		for (UserStory userStory : userStories) {
 			result.addAll(userStory.getTestTables());
 		}

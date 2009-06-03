@@ -37,8 +37,8 @@ public enum Story {
 	HTML_USERSTORY_REPORT(3, "As project owner of the project", "I want to generate a userstory report from the code",
 			"so that I can read what kind of behaviour the applications supports"),
 
-	HTML_JAVA_MODULE_REPORT(4, "As a developer in the project",
-			"I want to generate a report with internal application behaviour",
+	HTML_MODULE_REPORT(4, "As a developer in the project",
+			"I want to generate a report with application module behaviour",
 			"so that I can get an overview of the internal workings of the application"),
 
 	CLASS_DIAGRAM(5, "As a developer in the project", "I want to generated a class diagram of the domain model",

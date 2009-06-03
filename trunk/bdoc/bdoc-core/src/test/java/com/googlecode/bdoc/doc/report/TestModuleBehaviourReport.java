@@ -53,7 +53,7 @@ import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.TestClassWithGeneralBehaviour;
 import com.googlecode.bdoc.doc.testdata.TestClassWithTestTablesBehaviour;
 
-@Ref(Story.HTML_JAVA_MODULE_REPORT)
+@Ref(Story.HTML_MODULE_REPORT)
 public class TestModuleBehaviourReport {
 
 	private String html;

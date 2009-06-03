@@ -82,13 +82,13 @@ public class TestBDocDiff {
 
 		bddDocV2.addBehaviourFrom(new TestClass(TestWithOnlyGeneralBehaviourContent.class), BConst.SRC_TEST_JAVA);
 
-		assertTrue(new BDocDiff(bddDocV1, bddDocV2).getGeneralBehaviourDiff().diffExists());
+		assertTrue(new BDocDiff(bddDocV1, bddDocV2).getModuleBehaviourDiff().diffExists());
 	}
 
 	@Test
 	public void shouldNotReportDiffForUnchangedGeneralBehaviour() {
 		BDocDiff bDocDiff = new BDocDiff(bddDocWithGeneralBehaviourAndAStory, bddDocWithGeneralBehaviourAndAStory);
-		assertFalse(bDocDiff.getGeneralBehaviourDiff().diffExists());
+		assertFalse(bDocDiff.getModuleBehaviourDiff().diffExists());
 	}
 
 	@Test

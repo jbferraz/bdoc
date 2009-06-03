@@ -46,7 +46,7 @@ public class BDocDiff {
 	public BDocDiff(BDoc oldVersion, BDoc newVersion) {
 		Validate.notNull(oldVersion, "oldVersion");
 		Validate.notNull(newVersion, "newVersion");
-		generalBehaviourDiff = new ModuleBehaviourDiff(oldVersion.getGeneralBehaviour(), newVersion.getGeneralBehaviour());
+		generalBehaviourDiff = new ModuleBehaviourDiff(oldVersion.getModuleBehaviour(), newVersion.getModuleBehaviour());
 		userStories = DiffFactory.create(oldVersion.getUserstories(), newVersion.getUserstories());
 		projectDiff = new ProjectDiff(oldVersion.getProject(), newVersion.getProject());
 		docTimeDiff = new TimeDiff(calendar(oldVersion.getDocTime()), calendar(newVersion.getDocTime()));
@@ -86,12 +86,12 @@ public class BDocDiff {
 		return userStories.getUpdatedItems();
 	}
 
-	public ModuleBehaviourDiff getGeneralBehaviourDiff() {
+	public ModuleBehaviourDiff getModuleBehaviourDiff() {
 		return generalBehaviourDiff;
 	}
 
 	public boolean hasGeneralBehaviourDiff() {
-		return getGeneralBehaviourDiff().diffExists();
+		return getModuleBehaviourDiff().diffExists();
 	}
 
 	public boolean hasUserStoryDiff() {

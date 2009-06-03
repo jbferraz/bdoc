@@ -31,7 +31,7 @@
 
 <div class="content">			
 	<div class="generalBehaviour">
-		<#list bddDoc.generalBehaviour.packages as package>
+		<#list bddDoc.moduleBehaviour.packages as package>
 			<@bdddoc.present_package_behaviour package=package/>
 		</#list>
 	</div>

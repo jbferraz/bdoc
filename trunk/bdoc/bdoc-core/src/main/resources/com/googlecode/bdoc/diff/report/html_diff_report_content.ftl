@@ -137,22 +137,22 @@
 	<div class="generalBehaviourDiff">
 		<h2><@bdddoc.text key="internal.app.behaviour"/></h2>
 		
-		<#if bdocDiff.getGeneralBehaviourDiff().hasNewPackages() >
+		<#if bdocDiff.getModuleBehaviourDiff().hasNewPackages() >
 			<div class="newPackages">
 				<h3><@bdddoc.text key="new.packages"/></h3>
 				<ul>
-					<#list bdocDiff.generalBehaviourDiff.newPackages as package>
+					<#list bdocDiff.moduleBehaviourDiff.newPackages as package>
 						<@bdddoc.present_package_behaviour package=package/>
 					</#list>
 				</ul>					
 			</div>
 		</#if>
 
-		<#if bdocDiff.getGeneralBehaviourDiff().hasUpdatedPackages() >			
+		<#if bdocDiff.getModuleBehaviourDiff().hasUpdatedPackages() >			
 			<div class="updatedPackages">
 				<h3><@bdddoc.text key="updated.packages"/></h3>
 				<ul>				
-					<#list bdocDiff.generalBehaviourDiff.packageDiff as packageDiff>
+					<#list bdocDiff.moduleBehaviourDiff.packageDiff as packageDiff>
 						<h3>${packageDiff.name}</h3>
 						<ul>
 							<#assign moduleDiff = packageDiff>				
@@ -163,11 +163,11 @@
 			</div>
 		</#if>
 	
-		<#if bdocDiff.getGeneralBehaviourDiff().hasDeletedPackages() >
+		<#if bdocDiff.getModuleBehaviourDiff().hasDeletedPackages() >
 			<div class="deletedPackages">
 				<h3><@bdddoc.text key="deleted.packages"/></h3>
 				<ul>
-					<#list bdocDiff.generalBehaviourDiff.deletedPackages as package>
+					<#list bdocDiff.moduleBehaviourDiff.deletedPackages as package>
 						<@bdddoc.present_package_behaviour package=package/>
 					</#list>
 				</ul>					

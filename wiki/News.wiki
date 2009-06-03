@@ -1,3 +1,6 @@
+_4 June 2009 - Release 0.8.10_
+ Version 0.8.10 is released with some adjustments on the module report, describing class behaviour. The report now contains all classes. Earlier a class referenced by a user story was only shown in the user story report.  
+
 _2 June 2009 - Release 0.8.9_
  Version 0.8.9 is released with the bdoc report split into two. One with behaviour releated to userstories and one related to Java modules. A new split is in the pipeline, for a report focused mainly on the automated acceptance tests.
 

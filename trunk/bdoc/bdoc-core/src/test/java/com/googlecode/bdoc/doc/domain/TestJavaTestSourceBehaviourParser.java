@@ -118,15 +118,6 @@ public class TestJavaTestSourceBehaviourParser {
 		assertTrue( javaTestSourceBehaviourParser.getCreatedScenarios().isEmpty() );
 	}
 
-	@Test
-	public void shouldOnlyFindScenariosFromInsideMethod() {
-		BDoc bdocWithScenario = new BDoc();
-		bdocWithScenario
-				.addBehaviourFrom(new TestClass(BankAccountBehavior.class), new JavaTestSourceBehaviourParser(BConst.SRC_TEST_JAVA));
-		List<Specification> specifications = bdocWithScenario.specifications();
-		assertEquals(6, specifications.get(0).getScenarios().get(0).getParts().size());
-	}
-
 	/**
 	 * Helper method to avoid duplicate testcode when testing the scenario factory
 	 */

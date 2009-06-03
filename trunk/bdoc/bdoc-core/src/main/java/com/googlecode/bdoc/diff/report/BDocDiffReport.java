@@ -27,7 +27,7 @@ package com.googlecode.bdoc.diff.report;
 
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.ClassBehaviourDiff;
-import com.googlecode.bdoc.diff.domain.JavaModuleBehaviourDiff;
+import com.googlecode.bdoc.diff.domain.ModuleBehaviourDiff;
 import com.googlecode.bdoc.diff.domain.NarrativeDiff;
 import com.googlecode.bdoc.diff.domain.PackageDiff;
 import com.googlecode.bdoc.diff.domain.UserStoryDiff;
@@ -57,8 +57,8 @@ public class BDocDiffReport {
 		xstream.alias("userStoryDiff", UserStoryDiff.class);
 		xstream.alias("packageDiff", PackageDiff.class);
 		xstream.alias("bddDocDiff", BDocDiff.class);
-		xstream.alias("codeBehaviourDiff", JavaModuleBehaviourDiff.class);
-		xstream.alias("generalBehaviourDiff", JavaModuleBehaviourDiff.class);
+		xstream.alias("codeBehaviourDiff", ModuleBehaviourDiff.class);
+		xstream.alias("generalBehaviourDiff", ModuleBehaviourDiff.class);
 		xstream.alias("narrativeDiff", NarrativeDiff.class);
 		xstream.alias("classBehaviourDiff", ClassBehaviourDiff.class);
 

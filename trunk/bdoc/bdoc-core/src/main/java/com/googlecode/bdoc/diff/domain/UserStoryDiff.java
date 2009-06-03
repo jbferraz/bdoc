@@ -36,7 +36,7 @@ import com.googlecode.bdoc.doc.domain.UserStory;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class UserStoryDiff extends JavaModuleBehaviourDiff implements ModuleDiff {
+public class UserStoryDiff extends ModuleBehaviourDiff implements ModuleDiff {
 
 	private final Integer userStoryId;
 	private final NarrativeDiff narrativeDiff;

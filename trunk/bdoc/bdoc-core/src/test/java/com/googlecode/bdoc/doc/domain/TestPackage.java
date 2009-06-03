@@ -34,7 +34,7 @@ import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
-import com.googlecode.bdoc.doc.domain.TestJavaModuleBehaviour.TestExample;
+import com.googlecode.bdoc.doc.domain.TestModuleBehaviour.TestExample;
 
 
 /**

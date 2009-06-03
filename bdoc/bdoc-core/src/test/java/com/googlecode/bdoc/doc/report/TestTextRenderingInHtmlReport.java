@@ -56,7 +56,7 @@ public class TestTextRenderingInHtmlReport {
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithASpecification.class), BConst.SRC_TEST_JAVA);
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithAStatement.class), BConst.SRC_TEST_JAVA);
 
-		html = new JavaModuleBehaviourReport(bddDoc).html();
+		html = new ModuleBehaviourReport(bddDoc).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 	}
 

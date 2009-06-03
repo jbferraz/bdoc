@@ -26,17 +26,17 @@ package com.googlecode.bdoc.diff.domain;
 
 import java.util.List;
 
-import com.googlecode.bdoc.doc.domain.JavaModuleBehaviour;
+import com.googlecode.bdoc.doc.domain.ModuleBehaviour;
 import com.googlecode.bdoc.doc.domain.Package;
 
 /**
  * @author Per Otto Bergum Christensen
  */
-public class JavaModuleBehaviourDiff implements Diff {
+public class ModuleBehaviourDiff implements Diff {
 
 	protected final ListDiff<Package, PackageDiff> packages;
 
-	public JavaModuleBehaviourDiff(JavaModuleBehaviour oldCodeBehaviour, JavaModuleBehaviour newCodeBehaviour) {
+	public ModuleBehaviourDiff(ModuleBehaviour oldCodeBehaviour, ModuleBehaviour newCodeBehaviour) {
 		packages = DiffFactory.create(oldCodeBehaviour.getPackages(), newCodeBehaviour.getPackages());
 	}
 

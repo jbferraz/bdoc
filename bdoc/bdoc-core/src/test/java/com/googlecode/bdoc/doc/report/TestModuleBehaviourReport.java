@@ -54,18 +54,18 @@ import com.googlecode.bdoc.doc.testdata.TestClassWithGeneralBehaviour;
 import com.googlecode.bdoc.doc.testdata.TestClassWithTestTablesBehaviour;
 
 @Ref(Story.HTML_JAVA_MODULE_REPORT)
-public class TestJavaModuleBehaviourReport {
+public class TestModuleBehaviourReport {
 
 	private String html;
 	private BDoc bdoc;
 
-	public TestJavaModuleBehaviourReport() throws IOException {
+	public TestModuleBehaviourReport() throws IOException {
 		bdoc = BDocTestHelper.bdocWithProject();
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(
 				BConst.SRC_TEST_JAVA));
 
-		JavaModuleBehaviourReport InternalApplicationBehaviourReport = new JavaModuleBehaviourReport(
+		ModuleBehaviourReport InternalApplicationBehaviourReport = new ModuleBehaviourReport(
 				bdoc);
 
 		TableCellFormatter customClassFormatter = new TableCellFormatter() {
@@ -122,9 +122,9 @@ public class TestJavaModuleBehaviourReport {
 	@Test
 	public void shouldBePossibleToChangeFormattingForAdvancedScenarioSpecification() throws IOException {
 		bdoc = BDocTestHelper.bdocWithAdvancedScenarioSpecification();
-		String htmlAndInBetween = new JavaModuleBehaviourReport(bdoc, new AndInBetweenScenarioLinesFormatter())
+		String htmlAndInBetween = new ModuleBehaviourReport(bdoc, new AndInBetweenScenarioLinesFormatter())
 				.html();
-		String htmlEachOnNewLine = new JavaModuleBehaviourReport(bdoc,
+		String htmlEachOnNewLine = new ModuleBehaviourReport(bdoc,
 				new EachOnNewLineScenarioLinesFormatter()).html();
 		Assert.assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
 

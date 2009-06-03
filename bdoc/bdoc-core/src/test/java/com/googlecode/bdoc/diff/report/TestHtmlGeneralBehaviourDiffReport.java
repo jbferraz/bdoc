@@ -38,7 +38,7 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.BDocGeneralBehaviourDiffDocTestdataHelper;
-import com.googlecode.bdoc.diff.domain.JavaModuleBehaviourDiff;
+import com.googlecode.bdoc.diff.domain.ModuleBehaviourDiff;
 import com.googlecode.bdoc.diff.domain.TimeDiff;
 import com.googlecode.bdoc.diff.report.BDocDiffReport;
 import com.googlecode.bdoc.diff.report.HtmlDiffReport;
@@ -65,7 +65,7 @@ public class TestHtmlGeneralBehaviourDiffReport {
 
 		bDocDiff.setDocTimeDiff(new TimeDiff(time1, time2));
 	}
-	private JavaModuleBehaviourDiff generalBehaviourDiff = bDocDiff.getGeneralBehaviourDiff();
+	private ModuleBehaviourDiff generalBehaviourDiff = bDocDiff.getGeneralBehaviourDiff();
 
 	private String html;
 

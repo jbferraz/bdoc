@@ -26,7 +26,7 @@ package com.googlecode.bdoc.doc.report;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
-import com.googlecode.bdoc.doc.domain.JavaModuleBehaviour;
+import com.googlecode.bdoc.doc.domain.ModuleBehaviour;
 import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
@@ -69,7 +69,7 @@ public class XmlReport {
 		xstream.alias("userStory", UserStory.class);
 		xstream.alias("scenario", Scenario.class);
 		xstream.alias("classBehaviour", ClassBehaviour.class);
-		xstream.alias("codeBehaviour", JavaModuleBehaviour.class);
+		xstream.alias("codeBehaviour", ModuleBehaviour.class);
 		xstream.alias("package", Package.class);
 		xstream.alias("specification", Specification.class);
 		xstream.alias("statement", Statement.class);

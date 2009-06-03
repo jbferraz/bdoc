@@ -58,7 +58,9 @@ public class TestBDoc {
 	@Before
 	public void resetBddDoc() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
-		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class), BConst.SRC_TEST_JAVA);
+		bdoc
+				.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class),
+						BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BConst.SRC_TEST_JAVA);
 	}
 
@@ -75,7 +77,8 @@ public class TestBDoc {
 
 	@Test
 	public void shouldExtractBehaviourFromMetodsAnnotatedAsAJunitTest() {
-		ClassBehaviour classBehaviour = bdoc.userStoryFor(ExStory.STORY3).classBehaviourFor(TestExampleAnnotatedClass.class);
+		ClassBehaviour classBehaviour = bdoc.userStoryFor(ExStory.STORY3).classBehaviourFor(
+				TestExampleAnnotatedClass.class);
 		assertEquals(0, classBehaviour.getSpecifications().size());
 		assertEquals(1, classBehaviour.getScenarios().size());
 	}
@@ -84,8 +87,8 @@ public class TestBDoc {
 	public void shouldExtractBehaviourFromMetodsAnnotatedWithAnAnnotationClassCalledTest() {
 		BDoc bdoc = new BDoc(null, null, null);
 		bdoc.addBehaviourFrom(new TestClass(TestTestsAnnotatedWithTest.class), BConst.SRC_TEST_JAVA);
-		Specification specification = bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
-				.get(0);
+		Specification specification = bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0)
+				.getSpecifications().get(0);
 
 		assertEquals(new Specification("shouldBePickedUpByBDoc"), specification);
 	}
@@ -95,11 +98,12 @@ public class TestBDoc {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleJunit3.class), BConst.SRC_TEST_JAVA);
 
-		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
-				new Specification("shouldShowThatJUnit3IsSupported")));
+		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
+				.contains(new Specification("shouldShowThatJUnit3IsSupported")));
 
 		List<Scenario> scenarios = bdoc.getModuleBehaviour().getPackages().get(0).getScenarios();
-		assertTrue(scenarios.contains(new Scenario("givenAJunit3TestWhenBddDocIsRunThenEnsureTheJUnit3TestIsExtracted")));
+		assertTrue(scenarios
+				.contains(new Scenario("givenAJunit3TestWhenBddDocIsRunThenEnsureTheJUnit3TestIsExtracted")));
 	}
 
 	@Test
@@ -110,15 +114,15 @@ public class TestBDoc {
 
 	@Test
 	public void givenATestclassWhenATestmethodDescribingBehaviourIsMarkedAsASpecificationThenEnsureTheSpecificationIsCreated() {
-		ClassBehaviour behaviour = bdoc.userStoryFor(ExStory.STORY1)
-				.classBehaviourFor(TestExampleAnnotatedScenariosAndSpecifications.class);
+		ClassBehaviour behaviour = bdoc.userStoryFor(ExStory.STORY1).classBehaviourFor(
+				TestExampleAnnotatedScenariosAndSpecifications.class);
 		assertTrue(behaviour.getSpecifications().contains(new Specification("shouldBehaveLikeThat")));
 	}
 
 	@Test
 	public void givenATestmethodMarkedAsBehaviourWhenTheTestmethodIsAnnotatedWithAReferenceToAUserstoryThenEnsureTheCreatedBehaviourIsAddedToThatUserstory() {
-		ClassBehaviour behaviour = bdoc.userStoryFor(ExStory.STORY2)
-				.classBehaviourFor(TestExampleAnnotatedScenariosAndSpecifications.class);
+		ClassBehaviour behaviour = bdoc.userStoryFor(ExStory.STORY2).classBehaviourFor(
+				TestExampleAnnotatedScenariosAndSpecifications.class);
 		assertTrue(behaviour.getSpecifications().contains(new Specification("shouldBehaveLikeThisIfThat")));
 	}
 
@@ -159,8 +163,8 @@ public class TestBDoc {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BConst.SRC_TEST_JAVA);
 
-		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
-				new Specification("shouldVerifyTheImportantStuff")));
+		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications()
+				.contains(new Specification("shouldVerifyTheImportantStuff")));
 		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getScenarios().contains(
 				new Scenario("givenSomethingWhenAnActionThenVerifyResult")));
 
@@ -168,7 +172,8 @@ public class TestBDoc {
 
 	@Test
 	public void shouldFindPackageOfAddedTestClassWithBehaviour() {
-		assertTrue(bdoc.userStoryFor(ExStory.STORY1).getPackages().contains(Package.forClass(TestExampleAnnotatedClass.class)));
+		assertTrue(bdoc.userStoryFor(ExStory.STORY1).getPackages().contains(
+				Package.forClass(TestExampleAnnotatedClass.class)));
 	}
 
 	@Test
@@ -225,14 +230,16 @@ public class TestBDoc {
 	@Test
 	public void shouldBeAbleToUseRuntimeBehaviourFactoryToCreateScenarioInMethodBlock() {
 		BDoc bdocWithScenario = new BDoc();
-		bdocWithScenario.addBehaviourFrom(new TestClass(TestDomainBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		bdocWithScenario.addBehaviourFrom(new TestClass(TestDomainBehaviour.class), new RuntimeBehaviourFactory(
+				BConst.SRC_TEST_JAVA));
 		assertFalse(bdocWithScenario.scenarios().isEmpty());
 	}
 
 	@Test
 	public void shouldIncludeTestTablesWhenTheRuntimeBehaviourFactoryIsPluggedIn() {
 		bdoc = new BDoc();
-		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(
+				BConst.SRC_TEST_JAVA));
 		ClassBehaviour classBehaviour = bdoc.classBehaviourInGeneralBehaviour(MyTestTablesBehaviour.class);
 		assertFalse(classBehaviour.getTestTables().isEmpty());
 	}
@@ -240,41 +247,42 @@ public class TestBDoc {
 	@Test
 	public void listOfTestTablesShouldIncludeGeneralBehaviour() {
 		bdoc = new BDoc();
-		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(
+				BConst.SRC_TEST_JAVA));
 		assertTrue(bdoc.testTables().contains(new TestTable("assertSum")));
 	}
 
 	@Test
 	public void listOfTestTablesShouldIncludeUserStories() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
-		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(
+				BConst.SRC_TEST_JAVA));
 		assertTrue(bdoc.testTables().contains(new TestTable("assertDivison")));
 	}
-	
+
 	@Test
 	public void shouldSortUserStoriesById() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestWithManyUserStories.class), BConst.SRC_TEST_JAVA);
-		
-		assertEquals( ExStory.STORY1.getId(), bdoc.getUserstories().get(0).getId() );
-		assertEquals( ExStory.STORY2.getId(), bdoc.getUserstories().get(1).getId() );
-		assertEquals( ExStory.STORY3.getId(), bdoc.getUserstories().get(2).getId() );
+
+		assertEquals(ExStory.STORY1.getId(), bdoc.getUserstories().get(0).getId());
+		assertEquals(ExStory.STORY2.getId(), bdoc.getUserstories().get(1).getId());
+		assertEquals(ExStory.STORY3.getId(), bdoc.getUserstories().get(2).getId());
 	}
-	
+
 	@Test
 	public void shouldIncludeAllClassBehaviourInModuleBehaviour() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(TestWithManyUserStories.class), BConst.SRC_TEST_JAVA);
-		
-		bdoc.getModuleBehaviour();
+
+		assertNotNull(bdoc.getModuleBehaviour().classBehaviourFor(TestWithManyUserStories.class));
 	}
-	
-	
+
 	/**
 	 * Testdata
 	 */
 	public class TestWithManyUserStories {
-		
+
 		@Test
 		@ExReference(ExStory.STORY2)
 		public void test1() {
@@ -289,7 +297,7 @@ public class TestBDoc {
 		@ExReference(ExStory.STORY1)
 		public void test3() {
 		}
-		
+
 	}
 
 	/**

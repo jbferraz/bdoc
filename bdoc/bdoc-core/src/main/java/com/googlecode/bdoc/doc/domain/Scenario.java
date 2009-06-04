@@ -99,8 +99,10 @@ public class Scenario {
 
 		public static Pattern find(String camelCaseSentence) {
 			for (Pattern pattern : Pattern.values()) {
-				if (camelCaseSentence.startsWith(pattern.keywords[0])) {
-					return pattern;
+				for (String keyword : pattern.keywords) {
+					if (camelCaseSentence.startsWith(keyword.toLowerCase())) {
+						return pattern;
+					}
 				}
 			}
 			return null;

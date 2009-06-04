@@ -54,6 +54,9 @@ public class JavaCodeUtil {
 		String cutCode = StringUtils.substringAfter(javaSourceCode, token);
 		int startIndex = findIndexWhereMethodsBlockStarts(cutCode, token);
 		cutCode = StringUtils.substring(cutCode, startIndex, cutCode.length());
+		if (!cutCode.startsWith(Character.toString(LEFT_BRACE))) {
+			cutCode = LEFT_BRACE + cutCode;
+		}
 		int endIndex = findIndexWhereMethodsBlockEnds(cutCode);
 		return StringUtils.substring(cutCode, 0, endIndex).trim();
 	}
@@ -80,7 +83,13 @@ public class JavaCodeUtil {
 				} else if (charAt == LEFT_BRACE) {
 					return index;
 				} else {
-					return nextIndex(javaSourceCode, token);
+					int nextIndex = nextIndex(javaSourceCode, token);
+					if (nextIndex != -1) {
+						return nextIndex;
+					} else {
+						int indexOfLeftBrace = StringUtils.indexOf(javaSourceCode, Character.toString(LEFT_BRACE));
+						return indexOfLeftBrace;
+					}
 				}
 			}
 		}
@@ -89,6 +98,9 @@ public class JavaCodeUtil {
 
 	private static int nextIndex(String javaSourceCode, String token) {
 		int nextIndex = StringUtils.indexOf(javaSourceCode, token);
+		if (nextIndex == -1) {
+			return -1;
+		}
 		String cutCode = StringUtils.substringAfter(javaSourceCode, token);
 		return nextIndex + findIndexWhereMethodsBlockStarts(cutCode, token) + token.length();
 	}

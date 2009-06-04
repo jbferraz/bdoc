@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>	
+	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-acceptance-test-support</artifactId>
-	<version>0.1.2-SNAPSHOT</version>	
+	<version>0.1.2-SNAPSHOT</version>
 	<name>Behaviour documentation - Acceptance test support</name>
 	<url>http://bdoc.googlecode.com</url>
 
@@ -12,7 +12,7 @@
 		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-acceptance-test-support/</developerConnection>
 		<url>https://bdoc.googlecode.com/svn/trunk/bdoc-acceptance-test-support/</url>
 	</scm>
-	
+
 	<licenses>
 		<license>
 			<name>MIT License</name>
@@ -27,7 +27,7 @@
 		<name>Per Otto Bergum Christensen</name>
 		<url>http://blog.perottobc.com</url>
 	</organization>
-	
+
 
 	<developers>
 		<developer>
@@ -43,7 +43,7 @@
 			</roles>
 		</developer>
 	</developers>
-	
+
 	<distributionManagement>
 		<repository>
 			<id>perottobc-release</id>
@@ -56,15 +56,15 @@
 			<url>dav:https://perottobc-repository.googlecode.com/svn/maven2/snapshots</url>
 			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
-	</distributionManagement>	
-	
+	</distributionManagement>
+
 	<repositories>
 		<repository>
-			<id>perottobc-release</id>                       
+			<id>perottobc-release</id>
 			<url>http://perottobc-repository.googlecode.com/svn/maven2/releases</url>
 		</repository>
-	</repositories>	
-	
+	</repositories>
+
 	<build>
 		<extensions>
 			<extension>
@@ -120,24 +120,24 @@
 			<artifactId>poi</artifactId>
 			<version>3.2-FINAL</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.8.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.5</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-utils</artifactId>
-			<version>0.8.10-SNAPSHOT</version>
+			<version>0.8.11-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

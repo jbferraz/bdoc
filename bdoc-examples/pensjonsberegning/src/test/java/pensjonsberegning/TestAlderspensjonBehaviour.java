@@ -9,7 +9,7 @@ import pensjonsberegning.bdoc.RefClass;
 import pensjonsberegning.bdoc.Story;
 
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
-@RefClass( Alderspensjon.class )
+@RefClass(Alderspensjon.class)
 public class TestAlderspensjonBehaviour {
 
 	private Grunnpensjon grunnpensjon;
@@ -17,11 +17,11 @@ public class TestAlderspensjonBehaviour {
 	private Alderspensjon alderspensjon;
 
 	@Test
-	public void alderspensjonBestaarAvGrunnpensjonPlussTilleggspensjon() {
+	public void alderspensjonErLikGrunnpensjonPlussTilleggspensjon() {
 		gittEnGrunnpensjonLik(70256);
 		gittEnTilleggspensjonLik(159056);
 		naarAlderspensjonBeregnes();
-		saaSkalResultatetVeare(70256 + 159056);
+		saaSkalAlderspensjonPrAarVaereLik(70256 + 159056);
 	}
 
 	void gittEnGrunnpensjonLik(double verdi) {
@@ -36,7 +36,7 @@ public class TestAlderspensjonBehaviour {
 		alderspensjon = new Alderspensjon(grunnpensjon, tilleggspensjon);
 	}
 
-	void saaSkalResultatetVeare(double forventetAlderspensjon) {
+	void saaSkalAlderspensjonPrAarVaereLik(double forventetAlderspensjon) {
 		assertEquals(forventetAlderspensjon, alderspensjon.verdi(), .001);
 	}
 }

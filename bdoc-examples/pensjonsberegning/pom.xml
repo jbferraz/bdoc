@@ -34,13 +34,17 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.8.10</version>
- 
+				<version>0.8.11-SNAPSHOT</version>
+
 				<configuration>
 					<storyRefAnnotationClassName>pensjonsberegning.bdoc.Ref</storyRefAnnotationClassName>
-					<scenarioAnalyzer>dynamic</scenarioAnalyzer>	
+					<scenarioAnalyzer>dynamic</scenarioAnalyzer>
+
+					<scenarioFormatterClassName>
+						com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter
+					</scenarioFormatterClassName>
 				</configuration>
- 				
+
 				<executions>
 					<execution>
 						<phase>install</phase>
@@ -62,5 +66,5 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-	
+
 </project>

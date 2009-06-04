@@ -42,6 +42,8 @@ import com.googlecode.bdoc.doc.util.testdata.MyObject;
  */
 public class TestJavaCodeUtil {
 
+	private final static String JAVA_BLOCK_WITH_TRY_CATCH_CODE_SNIPPET2 = "public void testShouldBePossibleToBlaha() throws RemoteException { givenAn(idea); givenAn(null); givenAn(); try { whenBlaha(); } catch (ValidationException e) { thenBlaha(e); } }";
+
 	private final static String JAVA_BLOCK_CODE_SNIPPET = "{ public void shouldVerify() { givenA(); } }";
 
 	private final static String JAVA_BLOCK_WITH_TRY_CATCH_CODE_SNIPPET = "{ public void shouldVerify() { try {givenA();} catch {thenInsideCatch();} thenAfterCatch();} }";
@@ -63,6 +65,21 @@ public class TestJavaCodeUtil {
 		assertEquals("{ givenA();", JavaCodeUtil.javaBlockAfter(JAVA_BLOCK_CODE_SNIPPET, "shouldVerify"));
 		assertEquals("{ try {givenA();} catch {thenInsideCatch();} thenAfterCatch();", JavaCodeUtil.javaBlockAfter(
 				JAVA_BLOCK_WITH_TRY_CATCH_CODE_SNIPPET, "shouldVerify"));
+	}
+
+	@Test
+	public void shouldExtractMethodsStartingWithGivenWhenThenWithTryCatchBlocks() {
+		String javaBlockAfter = JavaCodeUtil.javaBlockAfter(JAVA_BLOCK_WITH_TRY_CATCH_CODE_SNIPPET, "shouldVerify");
+		List<Scenario.Part> behaviour = JavaCodeUtil.getGivenWhenThenMethods(javaBlockAfter);
+		assertEquals(new Scenario.Part("givenA"), behaviour.get(0));
+		assertEquals(new Scenario.Part("thenInsideCatch"), behaviour.get(1));
+		assertEquals(new Scenario.Part("thenAfterCatch"), behaviour.get(2));
+
+		javaBlockAfter = JavaCodeUtil.javaBlockAfter(JAVA_BLOCK_WITH_TRY_CATCH_CODE_SNIPPET2, "testShouldBePossibleToBlaha");
+		behaviour = JavaCodeUtil.getGivenWhenThenMethods(javaBlockAfter);
+		assertEquals(new Scenario.Part("givenAnIdea"), behaviour.get(0));
+		assertEquals(new Scenario.Part("whenBlaha"), behaviour.get(3));
+		assertEquals(new Scenario.Part("thenBlahaE"), behaviour.get(4));
 	}
 
 	@Test
@@ -103,7 +120,8 @@ public class TestJavaCodeUtil {
 
 	@Test
 	public void shouldListArgumentNamesForAMethodWithTwoArguments() {
-		List<String> argNames = JavaCodeUtil.getArgumentNames(new TestClass(MyObject.class), "methodWithTwoArguments", BConst.SRC_TEST_JAVA);
+		List<String> argNames = JavaCodeUtil
+				.getArgumentNames(new TestClass(MyObject.class), "methodWithTwoArguments", BConst.SRC_TEST_JAVA);
 		assertEquals("arg1", argNames.get(0));
 		assertEquals("arg2", argNames.get(1));
 	}

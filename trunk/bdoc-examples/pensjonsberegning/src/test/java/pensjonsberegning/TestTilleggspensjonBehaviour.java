@@ -11,13 +11,13 @@ import pensjonsberegning.bdoc.Story;
 public class TestTilleggspensjonBehaviour {
 
 	@Test
-	public void tilleggspensjonErLikGrunnbeloepet_x_Sluttpoengtallet_x_PensjonsProsenten() {
+	public void tilleggspensjonErLikGrunnbeloepet_x_Sluttpoengtallet_x_Pensjonsprosent() {
 		gittEnGrunnpensjonLik(70256);
 		gittEtSluttpoengtallLik(5.16);
-		gittAntallAarMed42SomPensjonsProsent(25);
+		gittAntallAarMed45SomPensjonsProsent(25);
 		gittAntallAarMed42SomPensjonsProsent(15);
-		naarBeregningAvTilleggspensjonUtfores();
-		saaTilleggspensjonPerAarVeareLik(159056);
+		naarBeregningAvTilleggspensjonUtfoeres();
+		saaSkalTilleggspensjonPerAarVaereLik(159056);
 	}
 
 	void gittEnGrunnpensjonLik(int i) {
@@ -29,9 +29,12 @@ public class TestTilleggspensjonBehaviour {
 	void gittAntallAarMed42SomPensjonsProsent(int i) {
 	}
 
-	void naarBeregningAvTilleggspensjonUtfores() {
+	void gittAntallAarMed45SomPensjonsProsent(int i) {
 	}
 
-	void saaTilleggspensjonPerAarVeareLik(double d) {
+	void naarBeregningAvTilleggspensjonUtfoeres() {
+	}
+
+	void saaSkalTilleggspensjonPerAarVaereLik(double d) {
 	}
 }

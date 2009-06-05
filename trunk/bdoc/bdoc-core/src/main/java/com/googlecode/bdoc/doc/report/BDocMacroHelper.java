@@ -63,7 +63,19 @@ public class BDocMacroHelper {
 	}
 
 	public String format(Statement statement) {
-		return CamelCaseToSentenceTranslator.translate(statement.getSentence());
+		return formatTwoLetterCodeToNorwegianSpecialCharacters(CamelCaseToSentenceTranslator.translate(statement.getSentence()));
+	}
+
+	private String formatTwoLetterCodeToNorwegianSpecialCharacters(String result) {
+		result = result.replace("aa", "å");
+		result = result.replace("Aa", "Å");
+		result = result.replace("ae", "æ");
+		result = result.replace("Ae", "Æ");
+		result = result.replace("oe", "ø");
+		result = result.replace("Oe", "Ø");
+
+		result = result.replace("øng", "oeng");
+		return result;
 	}
 
 	public String format(TableColumn column) {
@@ -75,7 +87,7 @@ public class BDocMacroHelper {
 		StringBuilder scenarioHtmlSnippet = new StringBuilder();
 		for (String line : lines) {
 			scenarioHtmlSnippet.append("<li>");
-			scenarioHtmlSnippet.append(line);
+			scenarioHtmlSnippet.append(formatTwoLetterCodeToNorwegianSpecialCharacters(line));
 			scenarioHtmlSnippet.append("</li>");
 		}
 		return scenarioHtmlSnippet.toString();

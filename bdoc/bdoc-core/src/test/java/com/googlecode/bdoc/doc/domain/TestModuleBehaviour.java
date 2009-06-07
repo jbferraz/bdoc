@@ -24,8 +24,11 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,21 +39,21 @@ import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 public class TestModuleBehaviour {
 
 	private static final String GIVEN_SOMETHING_WHEN_AN_ACTION_THEN_VERIFY_RESULT = "givenSomethingWhenAnActionThenVerifyResult";
 	private static final String SHOULD_VERIFY_THE_IMPORTANT_STUFF = "shouldVerifyTheImportantStuff";
-	private static final String TEST_DATA_IS_IMPORTENT = "testDataIsImportent";
+	private static final String MY_TEST_DATA_IS_IMPORTENT = "myTestDataIsImportent";
 	private ModuleBehaviour generalBehaviour;
 
 	@Before
 	public void setup() {
 		generalBehaviour = new ModuleBehaviour();
-		generalBehaviour.addBehaviour(TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF);
-		generalBehaviour.addBehaviour(TestExample.class, GIVEN_SOMETHING_WHEN_AN_ACTION_THEN_VERIFY_RESULT);
-		generalBehaviour.addBehaviour(TestExample.class, TEST_DATA_IS_IMPORTENT);
+		generalBehaviour.addBehaviour(new TestMethod(TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF));
+		generalBehaviour.addBehaviour(new TestMethod(TestExample.class, GIVEN_SOMETHING_WHEN_AN_ACTION_THEN_VERIFY_RESULT));
+		generalBehaviour.addBehaviour(new TestMethod(TestExample.class, MY_TEST_DATA_IS_IMPORTENT));
 	}
 
 	@Test
@@ -60,8 +63,8 @@ public class TestModuleBehaviour {
 
 	@Test
 	public void shouldBeAbleToRetreiveAndAddedStatement() {
-		assertTrue(generalBehaviour.getPackages().get(0).getClassStatements().get(0).getStatements().contains(
-				new Statement(TEST_DATA_IS_IMPORTENT)));
+		assertEquals(Arrays.asList(new Statement(MY_TEST_DATA_IS_IMPORTENT)), generalBehaviour.getPackages().get(0)
+				.getClassStatements().get(0).getStatements());
 	}
 
 	@Test
@@ -84,22 +87,39 @@ public class TestModuleBehaviour {
 	@Test
 	public void shouldSpecifySpecificationsWhenSpecificationsAreAdded() {
 		ModuleBehaviour packages = new ModuleBehaviour();
-		packages.addBehaviour(TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF);
+		packages.addBehaviour(new TestMethod(TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF));
 		assertTrue(packages.hasClassSpecifications());
 	}
-	
+
 	@Test
 	public void supportsListingOfAllSpecifications() {
 		ModuleBehaviour generalBehaviour = new ModuleBehaviour();
-		generalBehaviour.addBehaviour(TestExample.class, "shouldRepresentASpecification");
-		
-		assertFalse(generalBehaviour.specifications().isEmpty() );
+		generalBehaviour.addBehaviour(new TestMethod(TestExample.class, "shouldRepresentASpecification"));
+
+		assertFalse(generalBehaviour.specifications().isEmpty());
 	}
-	
+
 	/**
 	 * Testdata
 	 */
 	public class TestExample {
+
+		@Test
+		public void shouldVerifyTheImportantStuff() {
+		}
+
+		@Test
+		public void myTestDataIsImportent() {
+		}
+
+		@Test
+		public void givenSomethingWhenAnActionThenVerifyResult() {
+		}
+
+		@Test
+		public void shouldRepresentASpecification() {
+		}
+
 	}
 
 }

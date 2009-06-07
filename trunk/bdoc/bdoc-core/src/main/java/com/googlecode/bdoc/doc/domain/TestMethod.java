@@ -34,9 +34,23 @@ public class TestMethod {
 	private Method method;
 	private TestClass testClass;
 
-	public TestMethod(TestClass testClass,Method method) {
+	public TestMethod(TestClass testClass, Method method) {
 		this.testClass = testClass;
 		this.method = method;
+	}
+
+	/**
+	 * Constructor made for test purpose
+	 * @param testClass
+	 * @param method
+	 */
+	public TestMethod(Class<? extends Object> testClass, String method) {
+		this.testClass = new TestClass(testClass);
+		try {
+			this.method = testClass.getDeclaredMethod(method);
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Could not acces method [" + method + "] for class [" + testClass.getName() + "]", e);
+		}
 	}
 
 	public Method method() {
@@ -56,7 +70,8 @@ public class TestMethod {
 	}
 
 	/**
-	 * Gets the camelCaseSentence from the testmethod, removing 'test' if JUnit 3 is used
+	 * Gets the camelCaseSentence from the testmethod, removing 'test' if JUnit
+	 * 3 is used
 	 * 
 	 * @param testMethod
 	 *            that specifies the test
@@ -66,11 +81,12 @@ public class TestMethod {
 		String camelCaseSentence = getName();
 		if (camelCaseSentence.startsWith(TEST_METHOD_PREFIX)) {
 			camelCaseSentence = camelCaseSentence.substring(TEST_METHOD_PREFIX.length());
-			camelCaseSentence = camelCaseSentence.substring(0, 1).toLowerCase() + camelCaseSentence.substring(1, camelCaseSentence.length());
+			camelCaseSentence = camelCaseSentence.substring(0, 1).toLowerCase()
+					+ camelCaseSentence.substring(1, camelCaseSentence.length());
 		}
 		return camelCaseSentence;
 	}
-	
+
 	/**
 	 * Tells if the metod is a testMethod
 	 * 

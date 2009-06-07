@@ -30,6 +30,10 @@ package com.googlecode.bdoc.doc.domain;
  * @author Per Otto Bergum Christensen
  * @author Micael Vesterlund
  */
+/**
+ * @author Per Otto
+ *
+ */
 public class Statement {
 
 	private static final String $SPEC$ = "$spec$";
@@ -74,5 +78,9 @@ public class Statement {
 	public String getSpec() {
 		return spec;
 	}
-
+	
+	@Override
+	public String toString() {
+		return camelCaseSentence;
+	}
 }

@@ -32,13 +32,12 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
-import com.googlecode.bdoc.diff.domain.ModuleBehaviourDiff;
 import com.googlecode.bdoc.doc.domain.ModuleBehaviour;
 import com.googlecode.bdoc.doc.domain.Package;
-
+import com.googlecode.bdoc.doc.domain.TestMethod;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 @Ref(Story.DIFF_OF_BDOCS)
 public class TestGeneralBehaviourDiff {
@@ -50,33 +49,33 @@ public class TestGeneralBehaviourDiff {
 	private final ModuleBehaviour oldVersion = new ModuleBehaviour();
 	private final ModuleBehaviour newVersion = new ModuleBehaviour();
 	{
-		newVersion.addBehaviour(TestAsTestdata.class, SHOULD_BEHAVE);
+		newVersion.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_BEHAVE));
 	}
 
 	private ModuleBehaviour emptyGeneralBehaviour = new ModuleBehaviour();
 	private ModuleBehaviour generalBehaviourWithBehaviour = new ModuleBehaviour();
 	{
-		generalBehaviourWithBehaviour.addBehaviour(TestAsTestdata.class, SHOULD_BEHAVE);
-		generalBehaviourWithBehaviour.addBehaviour(TestAsTestdata.class, GIVEN_WHEN_THEN);
+		generalBehaviourWithBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_BEHAVE));
+		generalBehaviourWithBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_WHEN_THEN));
 	}
 
 	private ModuleBehaviour generalBehaviourWithDeletedAndNewBehaviour = new ModuleBehaviour();
 	{
-		generalBehaviourWithDeletedAndNewBehaviour.addBehaviour(TestAsTestdata.class, SHOULD_JUST_BEHAVE);
-		generalBehaviourWithDeletedAndNewBehaviour.addBehaviour(TestAsTestdata.class, "givenJustWhenThen");
+		generalBehaviourWithDeletedAndNewBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_JUST_BEHAVE));
+		generalBehaviourWithDeletedAndNewBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, "givenJustWhenThen"));
 	}
 
 	private ModuleBehaviour generalBehaviourWithBehaviourUpdated = new ModuleBehaviour();
 	{
-		generalBehaviourWithBehaviourUpdated.addBehaviour(TestAsTestdata.class, SHOULD_BEHAVE);
-		generalBehaviourWithBehaviourUpdated.addBehaviour(TestAsTestdata.class, "shouldBehaveNewOne");
-		generalBehaviourWithBehaviourUpdated.addBehaviour(TestAsTestdata.class, GIVEN_WHEN_THEN);
-		generalBehaviourWithBehaviourUpdated.addBehaviour(TestAsTestdata.class, GIVEN_TWO_WHEN_THEN);
+		generalBehaviourWithBehaviourUpdated.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_BEHAVE));
+		generalBehaviourWithBehaviourUpdated.addBehaviour(new TestMethod(TestAsTestdata.class, "shouldBehaveNewOne"));
+		generalBehaviourWithBehaviourUpdated.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_WHEN_THEN));
+		generalBehaviourWithBehaviourUpdated.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_TWO_WHEN_THEN));
 	}
 
 	private ModuleBehaviour generalBehaviourWithUpdatedBehaviour = new ModuleBehaviour();
 	{
-		generalBehaviourWithUpdatedBehaviour.addBehaviour(TestAsTestdata.class, "shouldBehaveLikeThatAsWell");
+		generalBehaviourWithUpdatedBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, "shouldBehaveLikeThatAsWell"));
 	}
 
 	@Test
@@ -110,5 +109,34 @@ public class TestGeneralBehaviourDiff {
 	}
 
 	public class TestAsTestdata {
+
+		@Test
+		public void shouldJustBehave() {
+		}
+
+		@Test
+		public void shouldBehave() {
+		}
+
+		@Test
+		public void shouldBehaveNewOne() {
+			
+		}
+
+		@Test
+		public void givenTwoWhenThen() {
+		}
+
+		@Test
+		public void givenWhenThen() {
+		}
+
+		@Test
+		public void shouldBehaveLikeThatAsWell() {
+		}
+
+		@Test
+		public void givenJustWhenThen() {
+		}
 	}
 }

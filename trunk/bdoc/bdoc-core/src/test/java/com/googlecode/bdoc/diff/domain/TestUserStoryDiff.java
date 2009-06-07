@@ -35,6 +35,7 @@ import com.googlecode.bdoc.diff.domain.UserStoryDiff;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
+import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.domain.UserStoryDescription;
 
@@ -55,29 +56,29 @@ public class TestUserStoryDiff {
 	private final UserStory emptyUserStory = new UserStory(TestStory.STORY1_OLD_VERSION);
 	private UserStory updatedUserStory = new UserStory(TestStory.STORY1_NEW_VERSION);
 	{
-		updatedUserStory.addBehaviour(TestAsTestdata.class, SHOULD_BEHAVE);
-		updatedUserStory.addBehaviour(TestAsTestdata.class, GIVEN_WHEN_THEN);
-		updatedUserStory.addBehaviour(TestAsTestdata.class, THE_STATEMENT);
+		updatedUserStory.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_BEHAVE));
+		updatedUserStory.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_WHEN_THEN));
+		updatedUserStory.addBehaviour(new TestMethod(TestAsTestdata.class, THE_STATEMENT));
 	}
 
 	private UserStory userStoryWithDeletedAndNewBehaviour = new UserStory(TestStory.STORY1_OLD_VERSION);
 	{
-		userStoryWithDeletedAndNewBehaviour.addBehaviour(TestAsTestdata.class, SHOULD_JUST_BEHAVE);
-		userStoryWithDeletedAndNewBehaviour.addBehaviour(TestAsTestdata.class, ANOTHER_STATEMENT);
-		userStoryWithDeletedAndNewBehaviour.addBehaviour(TestAsTestdata.class, GIVEN_JUST_WHEN_THEN);
+		userStoryWithDeletedAndNewBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_JUST_BEHAVE));
+		userStoryWithDeletedAndNewBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, ANOTHER_STATEMENT));
+		userStoryWithDeletedAndNewBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_JUST_WHEN_THEN));
 	}
 
 	private UserStory userStoryWithEvenMoreUpdates = new UserStory(TestStory.STORY1_OLD_VERSION);
 	{
-		userStoryWithEvenMoreUpdates.addBehaviour(TestAsTestdata.class, SHOULD_BEHAVE);
-		userStoryWithEvenMoreUpdates.addBehaviour(TestAsTestdata.class, "shouldBehaveNewOne");
-		userStoryWithEvenMoreUpdates.addBehaviour(TestAsTestdata.class, GIVEN_WHEN_THEN);
-		userStoryWithEvenMoreUpdates.addBehaviour(TestAsTestdata.class, GIVEN_TWO_WHEN_THEN);
+		userStoryWithEvenMoreUpdates.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_BEHAVE));
+		userStoryWithEvenMoreUpdates.addBehaviour(new TestMethod(TestAsTestdata.class, "shouldBehaveNewOne"));
+		userStoryWithEvenMoreUpdates.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_WHEN_THEN));
+		userStoryWithEvenMoreUpdates.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_TWO_WHEN_THEN));
 	}
 
 	private UserStory userStoryWithUpdatedBehaviour = new UserStory(TestStory.STORY1_OLD_VERSION);
 	{
-		userStoryWithUpdatedBehaviour.addBehaviour(TestAsTestdata.class, "shouldBehaveLikeThatAsWell");
+		userStoryWithUpdatedBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, "shouldBehaveLikeThatAsWell"));
 	}
 
 	UserStoryDiff diff = new UserStoryDiff(emptyUserStory, updatedUserStory);
@@ -132,8 +133,8 @@ public class TestUserStoryDiff {
 
 	@Test
 	public void shouldReturnSpecificationsAsNewWhenFoundInNewPackages() {
-		assertTrue(new UserStoryDiff(emptyUserStory, updatedUserStory).getNewClassSpecifications().get(0).getSpecifications().contains(
-				new Specification(SHOULD_BEHAVE)));
+		assertTrue(new UserStoryDiff(emptyUserStory, updatedUserStory).getNewClassSpecifications().get(0).getSpecifications()
+				.contains(new Specification(SHOULD_BEHAVE)));
 	}
 
 	@Test
@@ -144,8 +145,8 @@ public class TestUserStoryDiff {
 
 	@Test
 	public void shouldReturnClassSpecificationsAsDeletedWhenFoundInDeletedPackages() {
-		assertTrue(new UserStoryDiff(updatedUserStory, emptyUserStory).getDeletedClassSpecifications().get(0).getSpecifications().contains(
-				new Specification(SHOULD_BEHAVE)));
+		assertTrue(new UserStoryDiff(updatedUserStory, emptyUserStory).getDeletedClassSpecifications().get(0).getSpecifications()
+				.contains(new Specification(SHOULD_BEHAVE)));
 	}
 
 	@Test
@@ -162,8 +163,8 @@ public class TestUserStoryDiff {
 
 	@Test
 	public void shouldReturnStatementsAsNewWhenReturnedAsNewFromThePackageDiff() {
-		assertTrue(new UserStoryDiff(updatedUserStory, userStoryWithDeletedAndNewBehaviour).getNewClassStatements().get(0).getStatements()
-				.contains(new Statement(ANOTHER_STATEMENT)));
+		assertTrue(new UserStoryDiff(updatedUserStory, userStoryWithDeletedAndNewBehaviour).getNewClassStatements().get(0)
+				.getStatements().contains(new Statement(ANOTHER_STATEMENT)));
 	}
 
 	@Test
@@ -180,6 +181,40 @@ public class TestUserStoryDiff {
 	}
 
 	public class TestAsTestdata {
+		
+		@Test
+		public void shouldBehave() {
+		}
+
+		@Test
+		public void givenWhenThen() {
+		}
+
+		@Test
+		public void theStatement() {
+		}
+		
+		@Test
+		public void shouldJustBehave() {
+		}
+		
+		@Test
+		public void anotherStatement() {
+		}
+		
+		@Test
+		public void givenJustWhenThen() {
+		}
+		
+		@Test
+		public void shouldBehaveNewOne() {
+		}
+		
+		@Test
+		public void givenTwoWhenThen() {}
+		
+		@Test
+		public void shouldBehaveLikeThatAsWell() {}
 	}
 
 	public enum TestStory implements UserStoryDescription {

@@ -397,6 +397,14 @@ public class TestBDoc {
 		@Test
 		public void shouldNotBeAnnotatedWithAStory() {
 		}
+		
+		@Test
+		public void shouldDoThat() {
+		}
+		
+		@Test
+		public void statmentAboutIt() {
+		}
 
 	}
 

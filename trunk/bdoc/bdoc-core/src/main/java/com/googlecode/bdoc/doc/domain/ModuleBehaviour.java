@@ -40,6 +40,10 @@ public class ModuleBehaviour {
 		return from(packages).equalTo(Package.forClass(testClass)).getBehaviourFor(testClass);
 	}
 
+	public ClassBehaviour addBehaviour( TestMethod method ) {
+		return addBehaviour(method.clazz(), method.camelCaseSentence());
+	}
+
 	public ClassBehaviour addBehaviour(TestClass testClass, TestMethod method, List<Scenario> scenarios, List<TestTable> testTables) {
 		ClassBehaviour classBehaviour = addBehaviour(testClass.clazz(), method.camelCaseSentence());
 
@@ -49,7 +53,8 @@ public class ModuleBehaviour {
 		return classBehaviour;
 	}
 
-	public ClassBehaviour addBehaviour(Class<? extends Object> testClass, String camelCaseSentence) {
+
+	private ClassBehaviour addBehaviour(Class<? extends Object> testClass, String camelCaseSentence) {
 
 		Package classPackage = Package.forClass(testClass);
 		if (packages.contains(classPackage)) {

@@ -36,10 +36,10 @@ import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
-
+import com.googlecode.bdoc.doc.domain.TestMethod;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 @Ref(Story.DIFF_OF_BDOCS)
 public class TestPackageDiff {
@@ -59,26 +59,26 @@ public class TestPackageDiff {
 	private final Package emptyPackage = Package.forClass(TestAsTestdata.class);
 	private final Package packageWithClassBehaviour = Package.forClass(TestAsTestdata.class);
 	{
-		packageWithClassBehaviour.addBehaviour(TestAsTestdata.class, SHOULD_DO_LIKE_THAT);
-		packageWithClassBehaviour.addBehaviour(TestAsTestdata.class, GIVEN_WHEN_THEN);
-		packageWithClassBehaviour.addBehaviour(TestAsTestdata.class, ASTATEMENT_ABOUT_TEST_DATA);
+		packageWithClassBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_DO_LIKE_THAT));
+		packageWithClassBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_WHEN_THEN));
+		packageWithClassBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, ASTATEMENT_ABOUT_TEST_DATA));
 	}
 
 	private final Package packageWithOneClassBehaviourWhereScenarioAndSpecificationIsReplaced = Package.forClass(TestAsTestdata.class);
 	{
-		packageWithOneClassBehaviourWhereScenarioAndSpecificationIsReplaced.addBehaviour(TestAsTestdata.class,
-				"shouldDoLikeThatVersion2");
-		packageWithOneClassBehaviourWhereScenarioAndSpecificationIsReplaced
-				.addBehaviour(TestAsTestdata.class, "givenWhenThenVersion2");
+		packageWithOneClassBehaviourWhereScenarioAndSpecificationIsReplaced.addBehaviour(new TestMethod(TestAsTestdata.class,
+				"shouldDoLikeThatVersion2"));
+		packageWithOneClassBehaviourWhereScenarioAndSpecificationIsReplaced.addBehaviour(new TestMethod(TestAsTestdata.class,
+				"givenWhenThenVersion2"));
 	}
 
 	private final Package packageWithUpdatedClassBehaviour = Package.forClass(TestAsTestdata.class);
 	{
-		packageWithUpdatedClassBehaviour.addBehaviour(TestAsTestdata.class, SHOULD_DO_LIKE_THAT);
-		packageWithUpdatedClassBehaviour.addBehaviour(TestAsTestdata.class, SHOULD_DO_LIKE_THAT_ALSO);
-		packageWithUpdatedClassBehaviour.addBehaviour(TestAsTestdata.class, ANOTHER_STATEMENT);
-		packageWithUpdatedClassBehaviour.addBehaviour(TestAsTestdata.class, GIVEN_WHEN_THEN);
-		packageWithUpdatedClassBehaviour.addBehaviour(TestAsTestdata.class, GIVEN_XYZ_WHEN_THEN);
+		packageWithUpdatedClassBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_DO_LIKE_THAT));
+		packageWithUpdatedClassBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, SHOULD_DO_LIKE_THAT_ALSO));
+		packageWithUpdatedClassBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, ANOTHER_STATEMENT));
+		packageWithUpdatedClassBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_WHEN_THEN));
+		packageWithUpdatedClassBehaviour.addBehaviour(new TestMethod(TestAsTestdata.class, GIVEN_XYZ_WHEN_THEN));
 	}
 
 	@Test
@@ -181,5 +181,41 @@ public class TestPackageDiff {
 	}
 
 	public class TestAsTestdata {
+
+		@Test
+		public void anotherStatement() {
+		}
+
+		@Test
+		public void aStatementAboutTestData() {
+		}
+
+		@Test
+		public void shouldDoLikeThatAlso() {
+		}
+
+		@Test
+		public void shouldDoLikeThat() {
+		}
+
+		@Test
+		public void givenXyzWhenThen() {
+		}
+
+		@Test
+		public void givenWhenThen() {
+		}
+		
+		@Test
+		public void shouldDoLikeThatVersion2() {
+		}
+		
+		@Test
+		public void givenWhenThenVersion2() {
+		}
+		
+		
+		
+
 	}
 }

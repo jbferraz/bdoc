@@ -47,7 +47,11 @@ public class Package {
 		return from(classBehaviourList).equalTo(new ClassBehaviour(testClass));
 	}
 
-	public ClassBehaviour addBehaviour(Class<? extends Object> testClass, String camelCaseSentence) {
+	public ClassBehaviour addBehaviour(TestMethod testMethod ) {
+		return addBehaviour(testMethod.clazz(), testMethod.camelCaseSentence() );
+	}
+	
+	private ClassBehaviour addBehaviour(Class<? extends Object> testClass, String camelCaseSentence) {
 		ClassBehaviour classBehaviour = new ClassBehaviour(testClass);
 		if (classBehaviourList.contains(classBehaviour)) {
 			classBehaviour = from(classBehaviourList).equalTo(classBehaviour);

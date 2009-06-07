@@ -24,41 +24,55 @@
 
 package com.googlecode.bdoc.doc.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * A Statement defines behaviour that can't be described by a Specification or a
- * Scenario.
+ * A Statement defines loose behaviour, without the classic 'should'
  * 
  * @author Per Otto Bergum Christensen
  * @author Micael Vesterlund
  */
 public class Statement {
 
-	List<Scenario> scenarios = new ArrayList<Scenario>();
+	private static final String $SPEC$ = "$spec$";
+
+	private static final String SPACE = " ";
 
 	protected String camelCaseSentence;
+
+	/** Spec is referenced inside the camelCaseSentence */
+	protected String spec;
 
 	public Statement(String camelCaseSentence) {
 		this.camelCaseSentence = camelCaseSentence;
 	}
 
+	public Statement(String camelCaseSentence, String spec) {
+		if (!camelCaseSentence.contains($SPEC$)) {
+			throw new IllegalArgumentException("$spec$ is missing from " + camelCaseSentence);
+		}
+
+		this.camelCaseSentence = camelCaseSentence;
+		this.spec = spec;
+	}
+
 	public String getSentence() {
-		return camelCaseSentence;
-	}
-
-	public List<Scenario> getScenarios() {
-		return scenarios;
-	}
-
-	public void addScenarios(List<Scenario> scenarios) {
-		this.scenarios.addAll(scenarios);
+		String result = camelCaseSentence;
+		if (hasSpec()) {
+			result = camelCaseSentence.replace($SPEC$, SPACE + spec + SPACE);
+		}
+		return result.trim();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		return (obj instanceof Statement) && ((Statement) obj).camelCaseSentence.equals(camelCaseSentence);
+	}
+
+	public boolean hasSpec() {
+		return null != spec;
+	}
+
+	public String getSpec() {
+		return spec;
 	}
 
 }

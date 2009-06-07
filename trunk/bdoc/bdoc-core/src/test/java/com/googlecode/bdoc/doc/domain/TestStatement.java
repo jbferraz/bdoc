@@ -24,9 +24,14 @@
 
 package com.googlecode.bdoc.doc.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.googlecode.bdoc.Ref;
+import com.googlecode.bdoc.Story;
 
 public class TestStatement {
 
@@ -48,6 +53,7 @@ public class TestStatement {
 	}
 
 	@Test
+	@Ref(Story.NATURAL_LANGUAGE)
 	public void shouldReplaceSpecRefInCamelCaseSentenceWithSpecContent() {
 		Statement statement = new Statement("behaviourIsSpecifiedBy$spec$", "mySpec");
 		assertFalse(statement.getSentence().contains("$spec$"));

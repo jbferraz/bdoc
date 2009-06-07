@@ -113,10 +113,10 @@ public class BDoc {
 			}
 
 			if (null != userStory) {
-				userStory.addBehaviour(testClass, method, scenarios, testTables);
+				userStory.addBehaviour(method, scenarios, testTables);
 			}
 
-			moduleBehaviour.addBehaviour(testClass, method, scenarios, testTables);
+			moduleBehaviour.addBehaviour(method, scenarios, testTables);
 		}
 		return this;
 	}

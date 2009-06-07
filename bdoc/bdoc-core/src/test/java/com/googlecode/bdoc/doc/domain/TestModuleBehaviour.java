@@ -24,7 +24,7 @@
 
 package com.googlecode.bdoc.doc.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -32,11 +32,6 @@ import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import com.googlecode.bdoc.doc.domain.ModuleBehaviour;
-import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.domain.Specification;
-import com.googlecode.bdoc.doc.domain.Statement;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -118,6 +113,14 @@ public class TestModuleBehaviour {
 
 		@Test
 		public void shouldRepresentASpecification() {
+		}
+
+		@Test
+		public void itsAllAboutBehaviour() {
+		}
+
+		@Test
+		public void givenWhenThen() {
 		}
 
 	}

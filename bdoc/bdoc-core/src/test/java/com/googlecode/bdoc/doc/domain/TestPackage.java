@@ -65,14 +65,14 @@ public class TestPackage {
 
 	@Test
 	public void shouldReturnSpecificationsAddedToThePackage() {
-		javaPackage.addBehaviour(TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF);
+		javaPackage.addBehaviour(new TestMethod( TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF));
 		assertTrue(javaPackage.getClassSpecifications().get(0).getSpecifications().contains(
 				new Specification(SHOULD_VERIFY_THE_IMPORTANT_STUFF)));
 	}
 
 	@Test
 	public void shouldReturnStatementsAddedToThePackage() {
-		javaPackage.addBehaviour(TestExample.class, ITS_ALL_ABOUT_BEHAVIOUR);
+		javaPackage.addBehaviour(new TestMethod( TestExample.class, ITS_ALL_ABOUT_BEHAVIOUR));
 		assertTrue(javaPackage.hasClassStatements());
 		assertTrue(javaPackage.getClassStatements().get(0).getStatements().contains(new Statement(ITS_ALL_ABOUT_BEHAVIOUR)));
 	}
@@ -80,7 +80,7 @@ public class TestPackage {
 	@Test
 	public void shouldReturnScenariosAddedToThePackage() {
 		Package javaPackage = Package.forClass(TestExample.class);
-		javaPackage.addBehaviour(TestExample.class, GIVEN_WHEN_THEN);
+		javaPackage.addBehaviour(new TestMethod( TestExample.class, GIVEN_WHEN_THEN));
 		assertTrue(javaPackage.getScenarios().contains(new Scenario(GIVEN_WHEN_THEN)));
 	}
 

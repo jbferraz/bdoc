@@ -51,17 +51,14 @@ public class ModuleBehaviour {
 
 	public ClassBehaviour addBehaviour(TestMethod method) {
 
-		Class<? extends Object> testClass = method.clazz();
-		String camelCaseSentence = method.camelCaseSentence();
-
-		Package classPackage = Package.forClass(testClass);
+		Package classPackage = Package.forClass(method.clazz());
 		if (packages.contains(classPackage)) {
 			classPackage = from(packages).equalTo(classPackage);
 		} else {
 			packages.add(classPackage);
 		}
 
-		return classPackage.addBehaviour(testClass, camelCaseSentence);
+		return classPackage.addBehaviour(method);
 	}
 
 	public List<Package> getPackages() {

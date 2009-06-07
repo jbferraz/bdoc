@@ -29,29 +29,26 @@ package com.googlecode.bdoc;
  */
 public enum Story {
 
-	CREATE_BDOC_FROM_CODE(1, "As a developer", "I want to implement a userstory",
-			"so that a BDoc can be extracted from the code"),
+	CREATE_BDOC_FROM_CODE(1, "As a developer", "I want to implement a userstory", "so that a BDoc can be extracted from the code"),
 
 	XML_REPORT(2, "As a developer in the project", "I want to open the BDoc", "so that it opens in an XML editor"),
 
 	HTML_USERSTORY_REPORT(3, "As project owner of the project", "I want to generate a userstory report from the code",
 			"so that I can read what kind of behaviour the applications supports"),
 
-	HTML_MODULE_REPORT(4, "As a developer in the project",
-			"I want to generate a report with application module behaviour",
+	HTML_MODULE_REPORT(4, "As a developer in the project", "I want to generate a report with application module behaviour",
 			"so that I can get an overview of the internal workings of the application"),
 
 	CLASS_DIAGRAM(5, "As a developer in the project", "I want to generated a class diagram of the domain model",
 			"so that it opens in a browser"),
 
-	STORY_REFERENCE_CODE_GENERATOR(6, "As a developer in the project",
-			"I want to generate an example of the story and ref class", "so that I can start using it in the code"),
+	STORY_REFERENCE_CODE_GENERATOR(6, "As a developer in the project", "I want to generate an example of the story and ref class",
+			"so that I can start using it in the code"),
 
 	DIFF_OF_BDOCS(7, "As a developer in the project", "I want to diff to versions of a BDoc",
 			"so that I can see the difference between the two versions"),
 
-	HTML_DIFF_REPORT(8, "As a stakeholder in the project", "I want to generated BDocDiff as html",
-			"so that it opens in a browser"),
+	HTML_DIFF_REPORT(8, "As a stakeholder in the project", "I want to generated BDocDiff as html", "so that it opens in a browser"),
 
 	ADVANCED_SCENARIO_SPECIFICATION(9, "As a developer in the project",
 			"I want to write a scenario as a series of given when then methods",
@@ -61,7 +58,10 @@ public enum Story {
 			"so that BDoc can extract it and present all the differnt testcases"),
 
 	DIFF_LOG(11, "As a developer in the project", "I want a bdoc difflog to be generated continuously",
-			"so that I can keep track of each change in behaviour");
+			"so that I can keep track of each change in behaviour"),
+
+	NATURAL_LANGUAGE(12, "As a developer in the project", "I want support for natuarl language with writeing specifications",
+			"so that I can easily express behaviour of the software");
 
 	private Integer id;
 	private String[] narrative;

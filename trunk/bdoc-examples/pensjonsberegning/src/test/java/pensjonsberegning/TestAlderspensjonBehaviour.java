@@ -12,7 +12,7 @@ import pensjonsberegning.bdoc.Story;
 @RefClass(Alderspensjon.class)
 public class TestAlderspensjonBehaviour {
 
-	private Grunnpensjon grunnpensjon;
+	private Grunnbeloep grunnpensjon;
 	private Tilleggspensjon tilleggspensjon;
 	private Alderspensjon alderspensjon;
 
@@ -25,7 +25,7 @@ public class TestAlderspensjonBehaviour {
 	}
 
 	void gittEnGrunnpensjonLik(double verdi) {
-		grunnpensjon = new Grunnpensjon(verdi);
+		grunnpensjon = new Grunnbeloep(verdi);
 	}
 
 	void gittEnTilleggspensjonLik(double verdi) {

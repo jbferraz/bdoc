@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.calc.bdoc.Ref;
 import com.googlecode.bdoc.calc.bdoc.RefClass;
+import com.googlecode.bdoc.calc.bdoc.Spec;
 import com.googlecode.bdoc.calc.bdoc.Story;
 import com.googlecode.bdoc.testsupport.excel.ExcelExampleTableTestMethodSupport;
 
@@ -48,6 +49,12 @@ public class TestCalcBehaviour {
 	private int value1;
 	private int value2;
 	private int sum;
+
+	@Test
+	@Spec("( value1 + value2 ) / 2")
+	public void averageIsCalculatedAs$spec$() {
+		assertEquals(15, calc.average(10, 20), .001);
+	}
 
 	@Test
 	public void shouldAddTwoNumbers() {

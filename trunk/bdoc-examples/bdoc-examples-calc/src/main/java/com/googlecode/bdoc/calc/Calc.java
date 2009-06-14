@@ -37,4 +37,8 @@ public class Calc {
 		return i - j;
 	}
 
+	public double average(double i, double j) {
+		return (i+j)/2;
+	}
+
 }

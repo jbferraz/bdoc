@@ -124,6 +124,10 @@
 						<exclude>
 							com/googlecode/bdoc/testdataclasses/**
 						</exclude>
+						<exclude>
+							com/googlecode/bdoc/diff/report/moduletestdata/**
+						</exclude>
+						
 						<exclude>integrationtestclasses/**</exclude>
 						<exclude>**/testdata/**</exclude>
 						<exclude>**/*$*.class</exclude>

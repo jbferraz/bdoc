@@ -193,7 +193,7 @@ public class BDoc {
 		return moduleBehaviour;
 	}
 
-	public ClassBehaviour classBehaviourInGeneralBehaviour(Class<? extends Object> testClass) {
+	public ClassBehaviour classBehaviourInModuleBehaviour(Class<? extends Object> testClass) {
 		return moduleBehaviour.classBehaviourFor(testClass);
 	}
 

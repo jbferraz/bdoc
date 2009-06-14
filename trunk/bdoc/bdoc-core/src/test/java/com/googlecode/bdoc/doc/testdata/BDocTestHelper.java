@@ -144,7 +144,7 @@ public class BDocTestHelper {
 
 	public static Scenario addScenario(BDoc bdoc) {
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithOneScenario.class), BConst.SRC_TEST_JAVA);
-		ClassBehaviour classBehaviour = bdoc.classBehaviourInGeneralBehaviour(TestClassWithOneScenario.class);
+		ClassBehaviour classBehaviour = bdoc.classBehaviourInModuleBehaviour(TestClassWithOneScenario.class);
 		return classBehaviour.getScenarios().get(0);
 	}
 

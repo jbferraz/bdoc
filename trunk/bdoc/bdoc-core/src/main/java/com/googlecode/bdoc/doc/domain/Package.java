@@ -48,20 +48,16 @@ public class Package {
 	}
 
 	public ClassBehaviour addBehaviour(TestMethod testMethod ) {
-		return addBehaviour(testMethod.clazz(), testMethod.camelCaseSentence() );
-	}
-	
-	private ClassBehaviour addBehaviour(Class<? extends Object> testClass, String camelCaseSentence) {
-		ClassBehaviour classBehaviour = new ClassBehaviour(testClass);
+		ClassBehaviour classBehaviour = new ClassBehaviour(testMethod.clazz());
 		if (classBehaviourList.contains(classBehaviour)) {
 			classBehaviour = from(classBehaviourList).equalTo(classBehaviour);
 		} else {
 			classBehaviourList.add(classBehaviour);
 		}
-		classBehaviour.addBehaviour(camelCaseSentence);
+		classBehaviour.addBehaviour(testMethod);
 		return classBehaviour;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		return (obj instanceof Package) && ((Package) obj).name.equals(name);

@@ -35,6 +35,8 @@ import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
+import com.googlecode.bdoc.doc.domain.TestMethod;
+import com.googlecode.bdoc.doc.testdata.TestWithGeneralBehaviour;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -52,9 +54,9 @@ public class TestClassBehaviourDiff {
 
 	private final ClassBehaviour nonEmptyClassBehaviour = new ClassBehaviour(TestAsTestdata.class);
 	{
-		nonEmptyClassBehaviour.addBehaviour(GIVEN_WHEN_THEN);
-		nonEmptyClassBehaviour.addBehaviour(SHOULD_BEHAVE_LIKE_THAT);
-		nonEmptyClassBehaviour.addBehaviour(GIVE_A_STATEMENT);
+		nonEmptyClassBehaviour.addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, GIVEN_WHEN_THEN));
+		nonEmptyClassBehaviour.addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, SHOULD_BEHAVE_LIKE_THAT));
+		nonEmptyClassBehaviour.addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, GIVE_A_STATEMENT));
 	}
 
 	@Test

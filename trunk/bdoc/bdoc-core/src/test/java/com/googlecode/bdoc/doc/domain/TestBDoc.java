@@ -240,7 +240,7 @@ public class TestBDoc {
 		bdoc = new BDoc();
 		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(
 				BConst.SRC_TEST_JAVA));
-		ClassBehaviour classBehaviour = bdoc.classBehaviourInGeneralBehaviour(MyTestTablesBehaviour.class);
+		ClassBehaviour classBehaviour = bdoc.classBehaviourInModuleBehaviour(MyTestTablesBehaviour.class);
 		assertFalse(classBehaviour.getTestTables().isEmpty());
 	}
 

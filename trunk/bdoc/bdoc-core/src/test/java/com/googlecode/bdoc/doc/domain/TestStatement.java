@@ -26,22 +26,26 @@ package com.googlecode.bdoc.doc.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
+import com.googlecode.bdoc.doc.domain.testdata.Spec;
 
 public class TestStatement {
 
-	@Test(expected = IllegalArgumentException.class)
-	public void shouldThrowExceptionIfASpecIsUsedWithAReferenceByTheCamelCaseSentence() {
-		new Statement("behaviourIsSpecifiedByXXX", "spec");
+	@Test
+	public void bothSpecMarkerAndSpecValueMustBePresentForTheStatementToHaveASpec() {
+		assertFalse(new Statement("behaviourIsSpecifiedByXXX", "spec").hasSpec());
+		assertFalse(new Statement("behaviourIsSpecifiedBy$spec$", null).hasSpec());
+		assertTrue(new Statement("behaviourIsSpecifiedBy$spec$", "spec").hasSpec());
 	}
 
 	@Test
-	public void shouldTellIfASpecExists() {
+	public void shouldTellIfASpecExistsIfSpecMarkerAndSpecValueExists() {
 		Statement statement = new Statement("behaviourIsSpecifiedBy$spec$", "spec");
 		assertTrue(statement.hasSpec());
 		assertEquals("spec", statement.getSpec());
@@ -69,6 +73,40 @@ public class TestStatement {
 	@Test
 	public void trailingSpacesShouldBeRemovedFromSentence() {
 		assertEquals("statement", new Statement("    statement   ").getSentence());
+	}
+
+	@Test
+	public void shouldExtractASpecFromATestMethodWhenCamelcaseDescriptionContainsSpec() {
+		TestMethod testMethod = new TestMethod(MyTestWithASpec.class, "shouldBehaveLike$spec$");
+		Statement statement = new Statement(testMethod);
+		assertTrue(statement.hasSpec());
+		assertEquals("a+b", statement.getSpec());
+	}
+
+	@Test
+	public void shouldAcceptTestMethodsWithoutASpec() {
+		TestMethod testMethod = new TestMethod(MyTestWithoutASpec.class, "shouldBehaveLikeAplussB");
+		Statement statement = new Statement(testMethod);
+		assertFalse(statement.hasSpec());
+		assertNull(statement.getSpec());
+	}
+
+	// ----- TESTDATA --------------------------------------------
+	public class MyTestWithASpec {
+
+		@Test
+		@Spec("a+b")
+		public void shouldBehaveLike$spec$() {
+
+		}
+	}
+
+	public class MyTestWithoutASpec {
+
+		@Test
+		public void shouldBehaveLikeAplussB() {
+
+		}
 	}
 
 }

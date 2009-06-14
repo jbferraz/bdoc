@@ -120,19 +120,17 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 
 	public void addBehaviour(TestMethod testMethod) {
 
-		String camelCaseSentence = testMethod.camelCaseSentence();
-
-		if (Scenario.Pattern.match(camelCaseSentence)) {
-			scenarios.add(new Scenario(camelCaseSentence));
+		if (Scenario.Pattern.match(testMethod)) {
+			scenarios.add(new Scenario(testMethod));
 			return;
 		}
 
-		if (Specification.Pattern.match(camelCaseSentence)) {
-			specifications.add(new Specification(camelCaseSentence));
+		if (Specification.Pattern.match(testMethod)) {
+			specifications.add(new Specification(testMethod));
 			return;
 		}
 
-		statements.add(new Statement(camelCaseSentence));
+		statements.add(new Statement(testMethod));
 	}
 
 	public String getClassName() {

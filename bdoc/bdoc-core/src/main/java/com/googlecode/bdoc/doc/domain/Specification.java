@@ -86,8 +86,5 @@ public class Specification extends Statement {
 		return (obj instanceof Specification) && ((Specification) obj).camelCaseSentence.equals(camelCaseSentence);
 	}
 
-	public TestTable getTestTable() {
-		return null;
-	}
 
 }

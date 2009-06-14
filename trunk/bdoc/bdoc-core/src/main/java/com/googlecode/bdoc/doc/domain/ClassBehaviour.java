@@ -119,10 +119,8 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	}
 
 	public void addBehaviour(TestMethod testMethod) {
-		addBehaviour(testMethod.camelCaseSentence());
-	}
 
-	private void addBehaviour(String camelCaseSentence) {
+		String camelCaseSentence = testMethod.camelCaseSentence();
 
 		if (Scenario.Pattern.match(camelCaseSentence)) {
 			scenarios.add(new Scenario(camelCaseSentence));
@@ -130,7 +128,7 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 		}
 
 		if (Specification.Pattern.match(camelCaseSentence)) {
-			specifications.add((Specification) new Specification(camelCaseSentence));
+			specifications.add(new Specification(camelCaseSentence));
 			return;
 		}
 

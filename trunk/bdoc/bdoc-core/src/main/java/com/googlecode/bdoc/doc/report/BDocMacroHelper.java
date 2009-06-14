@@ -75,6 +75,7 @@ public class BDocMacroHelper {
 		result = result.replace("Oe", "Ø");
 
 		result = result.replace("øng", "oeng");
+		result = result.replace("døs", "does");
 		return result;
 	}
 

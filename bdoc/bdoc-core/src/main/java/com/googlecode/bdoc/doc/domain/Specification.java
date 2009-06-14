@@ -26,7 +26,6 @@ package com.googlecode.bdoc.doc.domain;
 
 import java.util.Locale;
 
-
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -46,8 +45,8 @@ public class Specification extends Statement {
 			return locale;
 		}
 
-		public static boolean match(String camelCaseSentence) {
-			return (null != find(camelCaseSentence));
+		public static boolean match(TestMethod testMethod) {
+			return (null != find(testMethod.camelCaseSentence()));
 		}
 
 		public static Pattern find(String camelCaseSentence) {
@@ -73,6 +72,11 @@ public class Specification extends Statement {
 		validatedPattern(Pattern.find(camelCaseSentence), camelCaseSentence);
 	}
 
+	public Specification(TestMethod testMethod) {
+		super(testMethod);
+		validatedPattern(Pattern.find(camelCaseSentence), camelCaseSentence);
+	}
+
 	static Pattern validatedPattern(Pattern pattern, String camelCaseSentence) {
 		if (null == pattern) {
 			throw new IllegalArgumentException("Not accepted as a specification: " + camelCaseSentence);
@@ -85,6 +89,5 @@ public class Specification extends Statement {
 	public boolean equals(Object obj) {
 		return (obj instanceof Specification) && ((Specification) obj).camelCaseSentence.equals(camelCaseSentence);
 	}
-
 
 }

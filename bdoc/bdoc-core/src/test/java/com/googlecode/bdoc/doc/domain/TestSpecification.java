@@ -53,4 +53,5 @@ public class TestSpecification {
 		assertNotNull(Pattern.valueOf("NO"));
 		assertNotNull(Pattern.valueOf("SV"));
 	}
+
 }

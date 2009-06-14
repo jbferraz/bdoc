@@ -75,8 +75,8 @@ public class Scenario {
 	}
 
 	public enum Pattern {
-		NO("og", new Locale("no"), "gitt", "Naar", "Saa"), EN("and", Locale.ENGLISH, "given", "When", "Then"), SV("och", new Locale("sv"),
-				"givet", "Naar", "Saa");
+		NO("og", new Locale("no"), "gitt", "Naar", "Saa"), EN("and", Locale.ENGLISH, "given", "When", "Then"), SV("och", new Locale(
+				"sv"), "givet", "Naar", "Saa");
 
 		private final String and;
 		private final String[] keywords;
@@ -93,8 +93,8 @@ public class Scenario {
 			return locale;
 		}
 
-		public static boolean match(String camelCaseSentence) {
-			return (null != find(camelCaseSentence));
+		public static boolean match(TestMethod testMethod) {
+			return (null != find(testMethod.camelCaseSentence()));
 		}
 
 		public static Pattern find(String camelCaseSentence) {
@@ -146,6 +146,10 @@ public class Scenario {
 	public Scenario(List<Part> parts) {
 		Validate.isTrue(!parts.isEmpty(), "Can't create scenario with no parts");
 		part.addAll(parts);
+	}
+
+	public Scenario(TestMethod testMethod) {
+		this(testMethod.camelCaseSentence());
 	}
 
 	@Override

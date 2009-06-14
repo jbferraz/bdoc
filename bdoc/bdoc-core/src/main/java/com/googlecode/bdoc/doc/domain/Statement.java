@@ -32,7 +32,7 @@ package com.googlecode.bdoc.doc.domain;
  */
 /**
  * @author Per Otto
- *
+ * 
  */
 public class Statement {
 
@@ -46,14 +46,14 @@ public class Statement {
 	protected String spec;
 
 	public Statement(String camelCaseSentence) {
-		this.camelCaseSentence = camelCaseSentence;
+		this(camelCaseSentence, null);
+	}
+
+	public Statement(TestMethod testMethod) {
+		this(testMethod.camelCaseSentence(), testMethod.getSpec());
 	}
 
 	public Statement(String camelCaseSentence, String spec) {
-		if (!camelCaseSentence.contains($SPEC$)) {
-			throw new IllegalArgumentException("$spec$ is missing from " + camelCaseSentence);
-		}
-
 		this.camelCaseSentence = camelCaseSentence;
 		this.spec = spec;
 	}
@@ -72,13 +72,13 @@ public class Statement {
 	}
 
 	public boolean hasSpec() {
-		return null != spec;
+		return (null != spec) && camelCaseSentence.contains( $SPEC$ );
 	}
 
 	public String getSpec() {
 		return spec;
 	}
-	
+
 	@Override
 	public String toString() {
 		return camelCaseSentence;

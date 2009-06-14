@@ -29,6 +29,8 @@ import static com.googlecode.bdoc.doc.domain.BDoc.TEST_METHOD_PREFIX;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import org.apache.commons.beanutils.MethodUtils;
+
 public class TestMethod {
 
 	private Method method;
@@ -41,6 +43,7 @@ public class TestMethod {
 
 	/**
 	 * Constructor made for test purpose
+	 * 
 	 * @param testClass
 	 * @param method
 	 */
@@ -129,5 +132,24 @@ public class TestMethod {
 
 	public Class<?> clazz() {
 		return testClass.clazz();
+	}
+
+	public String getSpec() {
+		Annotation[] declaredAnnotations = method.getDeclaredAnnotations();
+		for (Annotation annotation : declaredAnnotations) {
+
+			if (annotation.annotationType().getName().endsWith(".Spec")) {
+				try {
+					return String.valueOf(MethodUtils.invokeMethod(annotation, "value", null));
+				} catch (Exception e) {
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+
+	public boolean hasSpec() {
+		return null != getSpec();
 	}
 }

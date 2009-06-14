@@ -30,11 +30,12 @@ import com.googlecode.bdoc.diff.domain.testpackageremoved.TestClassRepresentsGen
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.TestWithGeneralBehaviour;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 public class BDocGeneralBehaviourDiffDocTestdataHelper {
 
@@ -46,23 +47,23 @@ public class BDocGeneralBehaviourDiffDocTestdataHelper {
 		oldBddDoc.setProject(projectInfo);
 		oldBddDoc.addBehaviourFrom(new TestClass(TestClassRepresentsGeneralBehaviourThatIsRemoved.class), BConst.SRC_TEST_JAVA);
 		oldBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
-		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
-				"givenAScenarioWhenItIsRemovedThenEnsureItIsReportedAsDeleted");
+		oldBddDoc.classBehaviourInModuleBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
+				new TestMethod(TestWithGeneralBehaviour.class, "givenAScenarioWhenItIsRemovedThenEnsureItIsReportedAsDeleted"));
 
-		oldBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour("shouldReportDeletedSpecifications");
+		oldBddDoc.classBehaviourInModuleBehaviour(TestWithGeneralBehaviour.class).addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, "shouldReportDeletedSpecifications"));
 
 		newBddDoc.setProject(projectInfo);
 		newBddDoc.addBehaviourFrom(new TestClass(TestClassNewInSubPackage.class), BConst.SRC_TEST_JAVA);
 		newBddDoc.addBehaviourFrom(new TestClass(TestWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
 
-		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
-				"givenANewScenario1WhenDiffIsRunThenPackageIsUpdatedWithANewScenario");
+		newBddDoc.classBehaviourInModuleBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
+				new TestMethod(TestWithGeneralBehaviour.class, "givenANewScenario1WhenDiffIsRunThenPackageIsUpdatedWithANewScenario"));
 
-		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
-				"givenANewScenario2WhenDiffIsRunThenPackageIsUpdatedWithANewScenario");
+		newBddDoc.classBehaviourInModuleBehaviour(TestWithGeneralBehaviour.class).addBehaviour(
+				new TestMethod(TestWithGeneralBehaviour.class, "givenANewScenario2WhenDiffIsRunThenPackageIsUpdatedWithANewScenario"));
 
-		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour("shouldRepresentANewSpecification1");
-		newBddDoc.classBehaviourInGeneralBehaviour(TestWithGeneralBehaviour.class).addBehaviour("shouldRepresentANewSpecification2");
+		newBddDoc.classBehaviourInModuleBehaviour(TestWithGeneralBehaviour.class).addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, "shouldRepresentANewSpecification1"));
+		newBddDoc.classBehaviourInModuleBehaviour(TestWithGeneralBehaviour.class).addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, "shouldRepresentANewSpecification2"));
 
 	}
 

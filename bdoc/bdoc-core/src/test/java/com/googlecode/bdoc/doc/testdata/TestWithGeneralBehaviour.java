@@ -27,7 +27,7 @@ package com.googlecode.bdoc.doc.testdata;
 import org.junit.Test;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 public class TestWithGeneralBehaviour {
 
@@ -37,7 +37,54 @@ public class TestWithGeneralBehaviour {
 
 	@Test
 	public void givenSomethingWhenThen() {
-
 	}
 
+	@Test
+	public void giveAStatement() {
+	}
+
+	@Test
+	public void shouldBehaveLikeThat() {
+	}
+
+	@Test
+	public void givenWhenThen() {
+	}
+
+	@Test
+	public void givenAScenarioWhenItIsRemovedThenEnsureItIsReportedAsDeleted() {
+	}
+
+	@Test
+	public void shouldReportDeletedSpecifications() {
+	}
+
+	@Test
+	public void givenANewScenario1WhenDiffIsRunThenPackageIsUpdatedWithANewScenario() {
+	}
+
+	@Test
+	public void givenANewScenario2WhenDiffIsRunThenPackageIsUpdatedWithANewScenario() {
+	}
+
+	@Test
+	public void shouldRepresentANewSpecification1() {
+	}
+
+	@Test
+	public void shouldRepresentANewSpecification2() {
+	}
+
+	@Test
+	public void shouldBeASpecification() {
+	}
+
+	@Test
+	public void givenShouldBeTheStartOfASCenarioWhenExtractedThenTransformed() {
+	}
+
+	@Test
+	public void statmentIsMoreGeneralThanSpecificationAndScenario() {
+
+	}
 }

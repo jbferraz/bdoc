@@ -38,6 +38,7 @@ import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.testdata.TestTest;
 import com.googlecode.bdoc.doc.testdata.RefClass;
+import com.googlecode.bdoc.doc.testdata.TestWithGeneralBehaviour;
 
 
 /**
@@ -91,14 +92,14 @@ public class TestClassBehaviour {
 	@Test
 	public void shouldRecognizeBehaviourStartingWithShouldAsASpecification() {
 		String spec = "shouldBeASpecification";
-		classBehaviour.addBehaviour(spec);
+		classBehaviour.addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, spec));
 		assertTrue(classBehaviour.getSpecifications().contains(new Specification(spec)));
 	}
 
 	@Test
 	public void shouldRecognizeBehaviourStartingWithGivenAsAScenario() {
 		String scenario = "givenShouldBeTheStartOfASCenarioWhenExtractedThenTransformed";
-		classBehaviour.addBehaviour(scenario);
+		classBehaviour.addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, scenario));
 		assertTrue(classBehaviour.getScenarios().contains(new Scenario(scenario)));
 	}
 
@@ -106,7 +107,7 @@ public class TestClassBehaviour {
 	public void shouldRecognizeBehaviourAsAStatmentIfItIsNotAScenarioOrASpecification() {
 
 		String statement = "statmentIsMoreGeneralThanSpecificationAndScenario";
-		classBehaviour.addBehaviour(statement);
+		classBehaviour.addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, statement));
 		assertTrue(classBehaviour.getStatements().contains(new Statement(statement)));
 	}
 

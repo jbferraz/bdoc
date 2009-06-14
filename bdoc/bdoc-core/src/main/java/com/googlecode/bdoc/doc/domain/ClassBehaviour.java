@@ -53,7 +53,7 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	private List<Statement> statements = new ArrayList<Statement>();
 
 	private List<TestTable> testTables = new ArrayList<TestTable>();
-	
+
 	public ClassBehaviour(Class<? extends Object> testClass) {
 		this.className = retreiveClassName(testClass);
 	}
@@ -118,7 +118,11 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 		return className;
 	}
 
-	public void addBehaviour(String camelCaseSentence) {
+	public void addBehaviour(TestMethod testMethod) {
+		addBehaviour(testMethod.camelCaseSentence());
+	}
+
+	private void addBehaviour(String camelCaseSentence) {
 
 		if (Scenario.Pattern.match(camelCaseSentence)) {
 			scenarios.add(new Scenario(camelCaseSentence));
@@ -189,7 +193,21 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 		this.scenarios.addAll(scenarios);
 	}
 
+	public void addScenario(Scenario scenario) {
+		this.scenarios.add(scenario);
+	}
+
 	public void addTestTables(List<TestTable> testTables) {
 		this.testTables.addAll(testTables);
 	}
+
+	public void addSpecification(Specification specification) {
+		this.specifications.add(specification);
+
+	}
+
+	public void addStatement(Statement statement) {
+		this.statements.add(statement);
+	}
+
 }

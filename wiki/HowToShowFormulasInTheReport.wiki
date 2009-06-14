@@ -14,7 +14,7 @@ The resulting report line will be:
  * Average is calculated as ( value 1 + value 2 ) / 2
 
 ===Spec annotation===
-You need to create your own Spec annotation in order for this to work, like shown below:
+You need to create your own Spec annotation in order for this to work, like the one shown below:
 {{{
 package com.googlecode.bdoc.calc.bdoc;
 

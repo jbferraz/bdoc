@@ -1,18 +1,18 @@
 /**
  * The MIT License
- * 
+ *
  * Copyright (c) 2008, 2009 @Author(s)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -46,7 +46,7 @@ import com.googlecode.bdoc.mojo.testdata.TestIt;
 import com.googlecode.bdoc.mojo.testdata.TestIt2;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 @SuppressWarnings("unchecked")
 public class TestBDocMojoBehaviour {
@@ -58,7 +58,6 @@ public class TestBDocMojoBehaviour {
 		bdocMojo = new BDocMojo() {
 			org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
 			{
-				bdocReportsXmlDirectoryPath = TestBDocMojo.TARGET;
 				project = new MavenProjectMock();
 
 				testAnnotationClassName = Test.class.getName();
@@ -71,7 +70,7 @@ public class TestBDocMojoBehaviour {
 				return sinkStub;
 			};
 		};
-		
+
 		bdocMojo.getBDocChangeLogFile().delete();
 		bdocMojo.scenarioAnalyzer = "static";
 	}
@@ -150,12 +149,12 @@ public class TestBDocMojoBehaviour {
 		BDoc bdoc = new BDoc(org.junit.Test.class, null, org.junit.Ignore.class);
 		bdoc.setProject(new ProjectInfo("test", "test"));
 		diffLog.scan(bdoc);
-		diffLog.writeToFile( bdocMojo.getBDocChangeLogFile() );
+		diffLog.writeToFile(bdocMojo.getBDocChangeLogFile());
 	}
 
 	private void thenEnsureTheBDocReportsXmlFileHasBeenUpdated() {
-		DiffLog diffLog = DiffLog.fromXmlFile(bdocMojo.getBDocChangeLogFile() );
-		assertTrue( 0 < diffLog.getDiffList().size() );
+		DiffLog diffLog = DiffLog.fromXmlFile(bdocMojo.getBDocChangeLogFile());
+		assertTrue(0 < diffLog.getDiffList().size());
 	}
 
 	@Test

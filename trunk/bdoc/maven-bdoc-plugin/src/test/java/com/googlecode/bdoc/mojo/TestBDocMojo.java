@@ -1,18 +1,18 @@
 /**
  * The MIT License
- * 
+ *
  * Copyright (c) 2008, 2009 @Author(s)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -53,7 +53,7 @@ import com.googlecode.bdoc.doc.report.BDocReportInterface;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 @SuppressWarnings("unchecked")
 public class TestBDocMojo {
@@ -67,14 +67,14 @@ public class TestBDocMojo {
 
 	private BDocMojo bdocDocMojo = new BDocMojo() {
 		org.codehaus.doxia.sink.Sink sinkStub = new SinkAdapter();
+
 		@Override
-		public org.codehaus.doxia.sink.Sink getSink() {			
+		public org.codehaus.doxia.sink.Sink getSink() {
 			return sinkStub;
 		};
 	};
 
 	public TestBDocMojo() {
-		bdocDocMojo.bdocReportsXmlDirectoryPath = TARGET;
 		bdocDocMojo.outputDirectory = new File(TARGET);
 
 		MavenProject mavenProject = new MavenProjectMock();
@@ -139,19 +139,14 @@ public class TestBDocMojo {
 	}
 
 	@Test
-	public void shouldChangeRootDirectoryForPersistedBDocChangesIfThisIsSpecifiedInConfiguration() {
-		BDocMojo bdocReportsMojo2 = new BDocMojo();
-		bdocReportsMojo2.bdocReportsXmlDirectoryPath = "mypath";
-		assertEquals("mypath", bdocReportsMojo2.getBDocChangeLogRootDirectoryPath());
+	public void shouldBuildTheBDocChangeLogFileUpFromProjectGroupIdAndProjectArticfactId() {
+		String separator = System.getProperty("file.separator");
+		String absolutePath = bdocDocMojo.getBDocChangeLogFile().getAbsolutePath();
+		assertTrue(absolutePath.contains(separator + "groupId" + separator + "artifactId" + separator + AbstractBDocMojo.BDOC_REPORTS_XML));
 	}
 
-	@Test
-	public void shouldBuildTheBDocChangeLogFileUpFromBDocChangeLogRootDirectoryAndProjectGroupIdAndProjectArticfactId() {
-		File expectedChangeLogFile = new File("target/groupId/artifactId/" + BDocMojo.BDOC_REPORTS_XML);
-		assertEquals(expectedChangeLogFile, bdocDocMojo.getBDocChangeLogFile());
-	}
-	
-	// ------ Scenarios ----------------------------------------------------------------------------------------------
+	// ------ Scenarios
+	// ----------------------------------------------------------------------------------------------
 
 	private void given_TestAnnotationClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
 		bdocDocMojo.testAnnotationClassName = clazz.getName();
@@ -225,7 +220,8 @@ public class TestBDocMojo {
 		thenEnsureExpectionsAreSatisfied();
 	}
 
-	// -------- Classes used as test data -------------------------------------------------------
+	// -------- Classes used as test data
+	// -------------------------------------------------------
 
 	@Target( { ElementType.METHOD, ElementType.TYPE })
 	public @interface MyRef {

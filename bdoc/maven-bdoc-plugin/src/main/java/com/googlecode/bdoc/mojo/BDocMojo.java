@@ -1,18 +1,18 @@
 /**
  * The MIT License
- * 
+ *
  * Copyright (c) 2008, 2009 @Author(s)
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -117,13 +117,6 @@ public class BDocMojo extends AbstractBDocMojo {
 	 * @required
 	 */
 	String scenarioFormatterClassName;
-
-	/**
-	 * Specifies where to save the bdoc-reports.xml, optional
-	 * 
-	 * @parameter
-	 */
-	String bdocReportsXmlDirectoryPath;
 
 	/**
 	 * @parameter
@@ -281,19 +274,4 @@ public class BDocMojo extends AbstractBDocMojo {
 		return "bdoc-reports";
 	}
 
-	File getBDocChangeLogFile() {
-		File dir = new File(getBDocChangeLogRootDirectoryPath(), getProject().getGroupId() + "/" + getProject().getArtifactId());
-		return new File(dir, getBDocChangeLogFileName());
-	}
-
-	String getBDocChangeLogRootDirectoryPath() {
-		if (null != bdocReportsXmlDirectoryPath) {
-			return bdocReportsXmlDirectoryPath;
-		}
-		return System.getProperty("user.home") + "/" + BDOC_DIR;
-	}
-
-	String getBDocChangeLogFileName() {
-		return BDOC_REPORTS_XML;
-	}
 }

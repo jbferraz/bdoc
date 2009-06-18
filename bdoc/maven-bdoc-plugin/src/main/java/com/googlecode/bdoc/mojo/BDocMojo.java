@@ -136,10 +136,10 @@ public class BDocMojo extends AbstractBDocMojo {
 		try {
 			executeInternal();
 		} catch (ConversionException e) {
-			String msg = "BDoc has had an internal error related to xml persistence. "
-					+ "This could happen if a new version of bdoc has been used, which could have changes in the underlying model. "
-					+ "Currently there are two solutions: 1. Don't upgrade, 2. Delete " + getBDocChangeLogFile().getAbsolutePath()
-					+ " and try again. Detailed message: " + e.getMessage();
+			String msg = "BDoc has had an internal error related to xml persistence file " + getBDocChangeLogFile().getAbsolutePath()
+					+ ". " + "This could happen if a new version of bdoc has been used, which could have changes in the underlying model. "
+					+ "Currently there are two solutions: 1. Don't upgrade, 2. Run bdoc:reset and try again. Detailed message: "
+					+ e.getMessage();
 
 			getLog().error(msg, e);
 		} catch (Exception e) {

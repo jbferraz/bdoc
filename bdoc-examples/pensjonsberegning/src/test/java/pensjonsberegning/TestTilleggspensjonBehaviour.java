@@ -11,7 +11,7 @@ import pensjonsberegning.bdoc.Story;
 public class TestTilleggspensjonBehaviour {
 
 	@Test
-	public void tilleggspensjonErLikGrunnbeloepet_x_Sluttpoengtallet_x_Pensjonsprosent() {
+	public void tilleggspensjonErLikGrunnbeloepet_x_Sluttpoengtall_x_Pensjonsprosent() {
 		gittEnGrunnpensjonLik(70256);
 		gittEtSluttpoengtallLik(5.16);
 		gittAntallAarMed45SomPensjonsProsent(25);

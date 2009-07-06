@@ -3,14 +3,12 @@ package pensjonsberegning;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.joda.time.DateMidnight;
-
 public class GrunnbeloepRepository {
 
 	private static Map<Integer, Grunnbeloep> grunnbelop = new HashMap<Integer, Grunnbeloep>();
 
-	public Grunnbeloep gjennomsnittligGrunnbeloepFor(DateMidnight aar) {
-		return grunnbelop.get(aar.getYear());
+	public Grunnbeloep gjennomsnittligGrunnbeloepFor(int aar) {
+		return grunnbelop.get(aar);
 	}
 
 	public static final Grunnbeloep _2008 = opprettGrunnbeloep(2008, 69108);

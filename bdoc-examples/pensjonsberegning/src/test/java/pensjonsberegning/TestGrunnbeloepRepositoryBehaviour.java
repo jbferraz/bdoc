@@ -1,9 +1,8 @@
 package pensjonsberegning;
 
 import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
-import org.joda.time.DateMidnight;
 import org.junit.Test;
 
 import pensjonsberegning.bdoc.RefClass;
@@ -16,7 +15,7 @@ public class TestGrunnbeloepRepositoryBehaviour {
 	@Test
 	public void skalInneholdeGjennomsnittligGrunnbelopForAarene1967Til2008() {
 		for (int aar = 1967; aar < 2009; aar++) {
-			eksempelPaaGrunnbelopForEtGittAar(aar, grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(new DateMidnight(aar, 1, 1)));
+			eksempelPaaGrunnbelopForEtGittAar(aar, grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(aar));
 		}
 	}
 
@@ -28,7 +27,7 @@ public class TestGrunnbeloepRepositoryBehaviour {
 	public void grunnbelopetErStigendeHvertAarFra1967() {
 		Grunnbeloep grunnbeloep = GrunnbeloepRepository._1967;
 		for (int aar = 1968; aar < 2009; aar++) {
-			Grunnbeloep grunnbeloepAaretEtter = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(new DateMidnight(aar, 1, 1));
+			Grunnbeloep grunnbeloepAaretEtter = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(aar);
 
 			assertTrue("Grunnbeloep skal være høyere i [" + aar + "] enn året før", grunnbeloep.verdi() < grunnbeloepAaretEtter
 					.verdi());

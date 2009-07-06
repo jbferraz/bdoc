@@ -21,9 +21,12 @@ public class PensjonspoengKalkulator {
 		if (inntekt.verdi() < grunnbeloep.verdi()) {
 			return 0;
 		}
-		
-		if( inntekt.aar().year().get() < 1971) {
-			return 7;
+
+		if (inntekt.aar() < 1971) {
+			if (8 < (inntekt.verdi() / grunnbeloep.verdi())) {
+				return 7;
+			}
+			return avrund((inntekt.verdi() - grunnbeloep.verdi()) / grunnbeloep.verdi());
 		}
 
 		if ((inntekt.verdi() / grunnbeloep.verdi()) < 6) {

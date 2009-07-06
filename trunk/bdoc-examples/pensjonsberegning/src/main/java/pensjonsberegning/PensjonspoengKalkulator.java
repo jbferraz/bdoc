@@ -6,15 +6,15 @@ package pensjonsberegning;
  */
 public class PensjonspoengKalkulator {
 
-	private Inntekt inntekt;
-	private GjennomsnittligGrunnbeloep grunnbeloep;
+	private GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository;
 
-	public PensjonspoengKalkulator(Inntekt inntekt, GjennomsnittligGrunnbeloep grunnbeloep) {
-		this.inntekt = inntekt;
-		this.grunnbeloep = grunnbeloep;
+	public PensjonspoengKalkulator( GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository ) {
+		this.gjennomsnittligGrunnbeloepRepository = gjennomsnittligGrunnbeloepRepository;
 	}
 
-	public double beregnet() {
+	public double beregnet(Inntekt inntekt) {
+
+		Grunnbeloep grunnbeloep = gjennomsnittligGrunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntekt.aar());
 
 		if ((inntekt.verdi() / grunnbeloep.verdi()) < 6) {
 			return avrund((inntekt.verdi() - grunnbeloep.verdi()) / grunnbeloep.verdi());
@@ -31,5 +31,4 @@ public class PensjonspoengKalkulator {
 	private double avrund(double verdi) {
 		return Math.round(100 * verdi) / 100D;
 	}
-
 }

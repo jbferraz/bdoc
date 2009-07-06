@@ -1,10 +1,10 @@
 package pensjonsberegning;
 
-public class GjennomsnittligGrunnbeloep {
+public class Grunnbeloep {
 
 	private double verdi;
 
-	public GjennomsnittligGrunnbeloep(double verdi) {
+	public Grunnbeloep(double verdi) {
 		this.verdi = verdi;
 	}
 

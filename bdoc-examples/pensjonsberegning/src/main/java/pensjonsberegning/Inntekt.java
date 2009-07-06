@@ -1,15 +1,23 @@
 package pensjonsberegning;
 
-public class Inntekt {
-	
-	private Double verdi;
+import org.joda.time.DateMidnight;
 
-	public Inntekt(double verdi ) {
+public class Inntekt {
+
+	private DateMidnight aar;
+	private double verdi;
+
+	public Inntekt(DateMidnight aar, double verdi) {
+		this.aar = aar;
 		this.verdi = verdi;
 	}
 
-	public Double verdi() {
+	public double verdi() {
 		return verdi;
+	}
+
+	public DateMidnight aar() {
+		return aar;
 	}
 
 }

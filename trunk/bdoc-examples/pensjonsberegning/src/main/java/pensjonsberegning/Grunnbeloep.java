@@ -12,4 +12,9 @@ public class Grunnbeloep {
 		return verdi;
 	}
 
+	@Override
+	public String toString() {
+		return String.valueOf(verdi);
+	}
+
 }

@@ -1,5 +1,7 @@
 package pensjonsberegning;
 
+import org.joda.time.DateMidnight.Property;
+
 /**
  * 
  * @author Per Otto Bergum Christensen
@@ -8,13 +10,21 @@ public class PensjonspoengKalkulator {
 
 	private GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository;
 
-	public PensjonspoengKalkulator( GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository ) {
+	public PensjonspoengKalkulator(GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository) {
 		this.gjennomsnittligGrunnbeloepRepository = gjennomsnittligGrunnbeloepRepository;
 	}
 
-	public double beregnet(Inntekt inntekt) {
+	public double beregn(Inntekt inntekt) {
 
 		Grunnbeloep grunnbeloep = gjennomsnittligGrunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntekt.aar());
+
+		if (inntekt.verdi() < grunnbeloep.verdi()) {
+			return 0;
+		}
+		
+		if( inntekt.aar().year().get() < 1971) {
+			return 7;
+		}
 
 		if ((inntekt.verdi() / grunnbeloep.verdi()) < 6) {
 			return avrund((inntekt.verdi() - grunnbeloep.verdi()) / grunnbeloep.verdi());

@@ -4,15 +4,15 @@ package pensjonsberegning;
  * 
  * @author Per Otto Bergum Christensen
  */
-public class PensjonspoengKalkulator {
+public class Pensjonspoengberegning {
 
 	private GrunnbeloepRepository grunnbeloepRepository;
 
-	public PensjonspoengKalkulator(GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository) {
+	public Pensjonspoengberegning(GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository) {
 		this.grunnbeloepRepository = gjennomsnittligGrunnbeloepRepository;
 	}
 
-	public double beregn(int inntektsaar, double inntekt) {
+	public double beregnPoengtallFor(int inntektsaar, double inntekt) {
 
 		Integer grunnbeloep = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntektsaar);
 

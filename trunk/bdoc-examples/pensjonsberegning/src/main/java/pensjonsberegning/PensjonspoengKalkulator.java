@@ -1,61 +1,59 @@
 package pensjonsberegning;
 
-import org.joda.time.DateMidnight.Property;
-
 /**
  * 
  * @author Per Otto Bergum Christensen
  */
 public class PensjonspoengKalkulator {
 
-	private GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository;
+	private GrunnbeloepRepository grunnbeloepRepository;
 
 	public PensjonspoengKalkulator(GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository) {
-		this.gjennomsnittligGrunnbeloepRepository = gjennomsnittligGrunnbeloepRepository;
+		this.grunnbeloepRepository = gjennomsnittligGrunnbeloepRepository;
 	}
 
-	public double beregn(Inntekt inntekt) {
+	public double beregn(int inntektsaar, double inntekt) {
 
-		Integer grunnbeloep = gjennomsnittligGrunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntekt.aar());
+		Integer grunnbeloep = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntektsaar);
 
-		if (inntekt.verdi() < grunnbeloep ) {
+		if (inntekt < grunnbeloep) {
 			return 0;
 		}
 
-		if (inntekt.aar() < 1971) {
-			if (8 < (inntekt.verdi() / grunnbeloep)) {
-				return 7;
+		if (inntektsaar < 1971) {
+			if ((inntekt / grunnbeloep) < 8) {
+				return rundAvTilToDesimaler((inntekt - grunnbeloep) / grunnbeloep);
 			}
-			return avrund((inntekt.verdi() - grunnbeloep) / grunnbeloep);
+			return 7;
 		}
 
-		if (inntekt.aar() < 1992) {
+		if (inntektsaar < 1992) {
 
-			if ((inntekt.verdi() / grunnbeloep) <= 8) {
-				return avrund((inntekt.verdi() - grunnbeloep) / grunnbeloep);
+			if ((inntekt / grunnbeloep) < 8) {
+				return rundAvTilToDesimaler((inntekt - grunnbeloep) / grunnbeloep);
 			}
-			
-			if ((inntekt.verdi() / grunnbeloep) < 12) {
-				Double nedjustertInntekt = (inntekt.verdi() - 8 * grunnbeloep) / 3;
-				return 7 + avrund((nedjustertInntekt) / grunnbeloep);
+
+			if ((inntekt / grunnbeloep) < 12) {
+				Double inntektMellom8og12G = inntekt - (8 * grunnbeloep);
+				return 7 + rundAvTilToDesimaler(inntektMellom8og12G / (3 * grunnbeloep));
 			}
 
 			return 8.33;
 		}
 
-		if ((inntekt.verdi() / grunnbeloep) < 6) {
-			return avrund((inntekt.verdi() - grunnbeloep) / grunnbeloep);
+		if ((inntekt / grunnbeloep) < 6) {
+			return rundAvTilToDesimaler((inntekt - grunnbeloep) / grunnbeloep);
 		}
 
-		if ((inntekt.verdi() / grunnbeloep) < 12) {
-			Double nedjustertInntekt = (inntekt.verdi() - 6 * grunnbeloep) / 3;
-			return 5 + avrund((nedjustertInntekt) / grunnbeloep);
+		if ((inntekt / grunnbeloep) < 12) {
+			Double inntektMellom6og12G = inntekt - (6 * grunnbeloep);
+			return 5 + rundAvTilToDesimaler(inntektMellom6og12G / (3 * grunnbeloep));
 		}
 
 		return 7;
 	}
 
-	private double avrund(double verdi) {
+	private double rundAvTilToDesimaler(double verdi) {
 		return Math.round(100 * verdi) / 100D;
 	}
 }

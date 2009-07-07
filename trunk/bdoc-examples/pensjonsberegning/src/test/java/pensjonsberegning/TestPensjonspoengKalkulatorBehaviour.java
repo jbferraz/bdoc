@@ -35,22 +35,22 @@ public class TestPensjonspoengKalkulatorBehaviour {
 	@Spec("inntekt - G / G = pensjonspoeng")
 	@Link( { "http://no.wikipedia.org/wiki/Pensjonspoeng", "http://www.nav.no/1073750161.cms?kapittel=10" })
 	public void forInntektInntil6GErPensjonspoengsberegningenFoelgende$spec$() {
-		assertEquals(4.79, pensjonspoengKalkulator.beregn(new Inntekt(2008, 400000)), .001);
-		assertEquals(3.34, pensjonspoengKalkulator.beregn(new Inntekt(2008, 300000)), .001);
+		assertEquals(4.79, pensjonspoengKalkulator.beregn(2008, 400000), .001);
+		assertEquals(3.34, pensjonspoengKalkulator.beregn(2008, 300000), .001);
 	}
 
 	@Test
 	@Spec(": ((6 * G) + ((inntekt - (6 * G)) / 3) - G ) / G = pensjonspoeng")
 	public void forInntektMellom6Og12GErPensjonsberegningenFoelgende$spec$() {
-		assertEquals("Maks antall poeng", 7.00, pensjonspoengKalkulator.beregn(new Inntekt(2008, 829296)), .001);
-		assertEquals("Lønn over 6G, men under 12G", 6.52, pensjonspoengKalkulator.beregn(new Inntekt(2008, 729296)), .001);
+		assertEquals("Maks antall poeng", 7.00, pensjonspoengKalkulator.beregn(2008, 829296), .001);
+		assertEquals("Lønn over 6G, men under 12G", 6.52, pensjonspoengKalkulator.beregn(2008, 729296), .001);
 	}
 
 	@Test
 	public void forInntektIAarene1971Til1991BlirDenDelenAvInntektenSomOverstigerAatteGangerGrunnbeloepetMedregnetMedEnTredjedel() {
-		assertEquals(8.33, pensjonspoengKalkulator.beregn(new Inntekt(1971, 12 * Grunnbeloep._1971)), .001);
-		assertEquals(7.00, pensjonspoengKalkulator.beregn(new Inntekt(1971, 8 * Grunnbeloep._1971)), .001);
-		assertEquals(7.67, pensjonspoengKalkulator.beregn(new Inntekt(1971, 10 * Grunnbeloep._1971)), .001);
+		assertEquals(8.33, pensjonspoengKalkulator.beregn(1971, 12 * Grunnbeloep._1971), .001);
+		assertEquals(7.00, pensjonspoengKalkulator.beregn(1971, 8 * Grunnbeloep._1971), .001);
+		assertEquals(7.67, pensjonspoengKalkulator.beregn(1971, 10 * Grunnbeloep._1971), .001);
 	}
 
 	/**
@@ -64,14 +64,14 @@ public class TestPensjonspoengKalkulatorBehaviour {
 
 	@Test
 	public void detMaksimaleAntalletPensjonspoengSomKanOpptjenesILoepetAvEtAarEr7() {
-		assertEquals("Eksempel med lønn over 12G", 7, pensjonspoengKalkulator.beregn(new Inntekt(2008, 929296)), .001);
+		assertEquals("Eksempel med lønn over 12G", 7, pensjonspoengKalkulator.beregn(2008, 929296), .001);
 	}
 
 	@Test
 	@Spec("1 G")
 	public void detGisKunPensjonspoengAvInntektPaaMerEnn$spec$() {
-		assertEquals(0, pensjonspoengKalkulator.beregn(new Inntekt(2008, 30000)), .001);
-		assertEquals(0, pensjonspoengKalkulator.beregn(new Inntekt(2008, 69108)), .001);
+		assertEquals(0, pensjonspoengKalkulator.beregn(2008, 30000), .001);
+		assertEquals(0, pensjonspoengKalkulator.beregn(2008, 69108), .001);
 	}
 
 	@Test
@@ -79,13 +79,12 @@ public class TestPensjonspoengKalkulatorBehaviour {
 
 		// => Lag testtabell som demonstrerer flere tilfeller: over under 6G og
 		// på flere årstall
-		assertEquals(3.58, pensjonspoengKalkulator.beregn(new Inntekt(2007, 300000)), .001);
-		assertEquals(3.34, pensjonspoengKalkulator.beregn(new Inntekt(2008, 300000)), .001);
+		assertEquals(3.58, pensjonspoengKalkulator.beregn(2007, 300000), .001);
+		assertEquals(3.34, pensjonspoengKalkulator.beregn(2008, 300000), .001);
 	}
 
 	@Test
-	@Spec(" 1967 - 1970 ")
-	public void pensjonsgivendeInntektForAarene$spec$BlirRegnetMedInntektInntilAatteGangerGrunnbeloepet() {
+	public void pensjonsgivendeInntektForAareneFraOgMed1967TilOgMed1970BlirRegnetMedInntektInntilAatteGangerGrunnbeloepet() {
 		eksempelPaaUtregningAvPensjonspoengMellom1967Og1970(1967, 4, 3);
 		eksempelPaaUtregningAvPensjonspoengMellom1967Og1970(1967, 8, 7);
 		eksempelPaaUtregningAvPensjonspoengMellom1967Og1970(1967, 12, 7);
@@ -98,10 +97,10 @@ public class TestPensjonspoengKalkulatorBehaviour {
 
 	void eksempelPaaUtregningAvPensjonspoengMellom1967Og1970(int inntektsaar, int inntektIGrunnbeloep, int pensjonspoeng) {
 		Integer grunnbeloep = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntektsaar);
-		Inntekt inntekt = new Inntekt(inntektsaar, inntektIGrunnbeloep * grunnbeloep);
+		Integer inntekt = inntektIGrunnbeloep * grunnbeloep;
 		String forklaring = "Forventet " + pensjonspoeng + " pensjonspoeng for inntektsaar " + inntektsaar;
 
-		assertEquals(forklaring, pensjonspoeng, pensjonspoengKalkulator.beregn(inntekt), .001);
+		assertEquals(forklaring, pensjonspoeng, pensjonspoengKalkulator.beregn(inntektsaar, inntekt), .001);
 	}
 
 }

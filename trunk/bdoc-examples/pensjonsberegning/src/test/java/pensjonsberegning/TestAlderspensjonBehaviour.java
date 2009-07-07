@@ -24,7 +24,7 @@ public class TestAlderspensjonBehaviour {
 		saaSkalAlderspensjonPrAarVaereLik(70256 + 159056);
 	}
 
-	void gittEnGrunnpensjonLik(double verdi) {
+	void gittEnGrunnpensjonLik(int verdi) {
 		grunnpensjon = new Grunnbeloep(verdi);
 	}
 

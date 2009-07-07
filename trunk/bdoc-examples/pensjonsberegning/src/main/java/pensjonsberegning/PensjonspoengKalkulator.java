@@ -29,6 +29,20 @@ public class PensjonspoengKalkulator {
 			return avrund((inntekt.verdi() - grunnbeloep.verdi()) / grunnbeloep.verdi());
 		}
 
+		if (inntekt.aar() < 1992) {
+
+			if ((inntekt.verdi() / grunnbeloep.verdi()) <= 8) {
+				return avrund((inntekt.verdi() - grunnbeloep.verdi()) / grunnbeloep.verdi());
+			}
+			
+			if ((inntekt.verdi() / grunnbeloep.verdi()) < 12) {
+				Double nedjustertInntekt = (inntekt.verdi() - 8 * grunnbeloep.verdi()) / 3;
+				return 7 + avrund((nedjustertInntekt) / grunnbeloep.verdi());
+			}
+
+			return 8.33;
+		}
+
 		if ((inntekt.verdi() / grunnbeloep.verdi()) < 6) {
 			return avrund((inntekt.verdi() - grunnbeloep.verdi()) / grunnbeloep.verdi());
 		}

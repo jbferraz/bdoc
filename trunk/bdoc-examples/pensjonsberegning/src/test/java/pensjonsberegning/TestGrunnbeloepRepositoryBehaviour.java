@@ -25,12 +25,12 @@ public class TestGrunnbeloepRepositoryBehaviour {
 
 	@Test
 	public void grunnbelopetErStigendeHvertAarFra1967() {
-		Grunnbeloep grunnbeloep = GrunnbeloepRepository._1967;
+		int grunnbeloep = GrunnbeloepRepository._1967;
 		for (int aar = 1968; aar < 2009; aar++) {
 			Grunnbeloep grunnbeloepAaretEtter = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(aar);
 
-			assertTrue("Grunnbeloep skal være høyere i [" + aar + "] enn året før", grunnbeloep.verdi() < grunnbeloepAaretEtter
-					.verdi());
+			assertTrue("Grunnbeloep skal være høyere i [" + aar + "] enn året før", grunnbeloep < grunnbeloepAaretEtter.verdi());
+			grunnbeloep = grunnbeloepAaretEtter.verdi();
 		}
 	}
 

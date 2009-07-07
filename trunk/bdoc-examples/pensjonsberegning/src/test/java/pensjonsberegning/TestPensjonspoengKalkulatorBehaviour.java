@@ -42,9 +42,25 @@ public class TestPensjonspoengKalkulatorBehaviour {
 	@Test
 	@Spec(": ((6 * G) + ((inntekt - (6 * G)) / 3) - G ) / G = pensjonspoeng")
 	public void forInntektMellom6Og12GErPensjonsberegningenFoelgende$spec$() {
-		assertEquals("Lønn på 12 G", 7.00, pensjonspoengKalkulator.beregn(new Inntekt(2008, 829296)), .001);
+		assertEquals("Maks antall poeng", 7.00, pensjonspoengKalkulator.beregn(new Inntekt(2008, 829296)), .001);
 		assertEquals("Lønn over 6G, men under 12G", 6.52, pensjonspoengKalkulator.beregn(new Inntekt(2008, 729296)), .001);
 	}
+
+	@Test
+	public void forInntektIAarene1971Til1991BlirDenDelenAvInntektenSomOverstigerAatteGangerGrunnbeloepetMedregnetMedEnTredjedel() {
+		assertEquals(8.33, pensjonspoengKalkulator.beregn(new Inntekt(1971, 12 * GrunnbeloepRepository._1971)), .001);
+		assertEquals(7.00, pensjonspoengKalkulator.beregn(new Inntekt(1971, 8 * GrunnbeloepRepository._1971)), .001);
+		assertEquals(7.67, pensjonspoengKalkulator.beregn(new Inntekt(1971, 10 * GrunnbeloepRepository._1971)), .001);
+	}
+
+	/**
+	 * For årene 1971 - 1991 ble pensjonsgivende inntekt begrenset til tolv
+	 * ganger grunnbeløpet. Den delen av inntekten som oversteg åtte ganger
+	 * grunnbeløpet ble bare medregnet med en tredjedel. Som følge av dette var
+	 * det høyeste oppnåelige poengtallet fra 1971 til og med 1991: 8,33
+	 * 
+	 * http://www.nav.no/rettskildene/Rundskriv/147945.cms
+	 */
 
 	@Test
 	public void detMaksimaleAntalletPensjonspoengSomKanOpptjenesILoepetAvEtAarEr7() {
@@ -87,14 +103,5 @@ public class TestPensjonspoengKalkulatorBehaviour {
 
 		assertEquals(forklaring, pensjonspoeng, pensjonspoengKalkulator.beregn(inntekt), .001);
 	}
-
-	/**
-	 * For årene 1971 - 1991 ble pensjonsgivende inntekt begrenset til tolv
-	 * ganger grunnbeløpet. Den delen av inntekten som oversteg åtte ganger
-	 * grunnbeløpet ble bare medregnet med en tredjedel. Som følge av dette var
-	 * det høyeste oppnåelige poengtallet fra 1971 til og med 1991: 8,33
-	 * 
-	 * http://www.nav.no/rettskildene/Rundskriv/147945.cms
-	 */
 
 }

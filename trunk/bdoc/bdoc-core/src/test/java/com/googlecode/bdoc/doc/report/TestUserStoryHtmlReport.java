@@ -113,13 +113,13 @@ public class TestUserStoryHtmlReport {
 	@Test
 	public void shouldPresentTheStatementsAssociatedWithTheStory() {
 		List<Statement> statements = bdoc.getUserstories().get(0).getClassStatements().get(0).getStatements();
-		assertXPathContains(sentence(statements.get(0)), "//ul[@class='statements']", html);
+		assertXPathContains(sentence(statements.get(0)), "//ul[@class='specifications']", html);
 	}
 
 	@Test
-	public void shouldPresentTheNameOfTheClassFormattedWithTheSpecifications() {
+	public void shouldPresentTheNameOfTheClassThatHasSpecifiedBehaviour() {
 		ClassSpecifications classBehaviour = bdoc.getUserstories().get(0).getClassSpecifications().get(0);
-		assertXPathContains(new BDocMacroHelper().format(classBehaviour.getClassName()), "//ul[@class='specifications']", html);
+		assertXPathContains(new BDocMacroHelper().format(classBehaviour.getClassName()), "//div[@class='classBehaviour']", html);
 	}
 
 	@Test

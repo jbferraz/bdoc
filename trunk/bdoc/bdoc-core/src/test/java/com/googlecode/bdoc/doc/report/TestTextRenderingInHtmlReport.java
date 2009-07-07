@@ -62,12 +62,12 @@ public class TestTextRenderingInHtmlReport {
 
 	@Test
 	public void shouldConvertTheCamelCaseSpecificationToASentence() {
-		assertXPathContains("Should be a specification", "//ul[@class='specifications']", html);
+		assertXPathContains("Should be a specification", "//div[@class='classBehaviour']", html);
 	}
 
 	@Test
 	public void shouldConvertTheCamelCaseStatementToASentence() {
-		assertXPathContains("This is a statement", "//ul[@class='statements']", html);
+		assertXPathContains("This is a statement", "//div[@class='classBehaviour']", html);
 	}
 
 	// Testdata =>

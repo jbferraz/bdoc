@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>maven-bdoc-plugin</artifactId>
-	<version>0.8.12-SNAPSHOT</version>	
+	<version>0.8.12-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 	<name>Behaviour Documentation - Maven plugin</name>
 	<url>http://bdoc.googlecode.com</url>
@@ -65,7 +65,7 @@
 	</distributionManagement>
 
 	<properties>
-		<maven.version>2.1.0</maven.version>
+		<maven.version>2.2.0</maven.version>
 	</properties>
 
 	<build>
@@ -179,7 +179,7 @@
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-core</artifactId>
-			<version>0.8.11</version>
+			<version>0.8.12-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

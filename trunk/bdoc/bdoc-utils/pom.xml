@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.googlecode.bdoc</groupId>
   <artifactId>bdoc-utils</artifactId>
-  <version>0.8.11-SNAPSHOT</version>
+  <version>0.8.12-SNAPSHOT</version>
   <name>Behaviour Documentation - Utils</name>
   <description>Util code shared for the differnt bdoc projects</description>
   <url>http://bdoc.googlecode.com</url>
@@ -63,10 +63,6 @@
 			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
 	</distributionManagement>
-
-	<properties>
-		<maven.version>2.1.0</maven.version>
-	</properties>
 
 	<build>
 		<extensions>

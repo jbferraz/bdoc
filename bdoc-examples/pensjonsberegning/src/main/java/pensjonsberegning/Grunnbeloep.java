@@ -2,13 +2,13 @@ package pensjonsberegning;
 
 public class Grunnbeloep {
 
-	private double verdi;
+	private int verdi;
 
-	public Grunnbeloep(double verdi) {
+	public Grunnbeloep(int verdi) {
 		this.verdi = verdi;
 	}
 
-	public double verdi() {
+	public int verdi() {
 		return verdi;
 	}
 

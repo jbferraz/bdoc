@@ -19,18 +19,18 @@ public class TestGrunnbeloepRepositoryBehaviour {
 		}
 	}
 
-	void eksempelPaaGrunnbelopForEtGittAar(Integer aar, Grunnbeloep grunnbeloep) {
+	void eksempelPaaGrunnbelopForEtGittAar(Integer aar, Integer grunnbeloep) {
 		assertNotNull("Skal inneholde grunnbelop for " + aar, grunnbeloep);
 	}
 
 	@Test
 	public void grunnbelopetErStigendeHvertAarFra1967() {
-		int grunnbeloep = GrunnbeloepRepository._1967;
+		int grunnbeloep = Grunnbeloep._1967;
 		for (int aar = 1968; aar < 2009; aar++) {
-			Grunnbeloep grunnbeloepAaretEtter = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(aar);
+			Integer grunnbeloepAaretEtter = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(aar);
 
-			assertTrue("Grunnbeloep skal være høyere i [" + aar + "] enn året før", grunnbeloep < grunnbeloepAaretEtter.verdi());
-			grunnbeloep = grunnbeloepAaretEtter.verdi();
+			assertTrue("Grunnbeloep skal være høyere i [" + aar + "] enn året før", grunnbeloep < grunnbeloepAaretEtter);
+			grunnbeloep = grunnbeloepAaretEtter;
 		}
 	}
 

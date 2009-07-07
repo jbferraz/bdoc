@@ -46,12 +46,35 @@
 </#macro>
 
 <#macro list_behaviour module>
+	<@list_class_behaviour list=module.getClassBehaviour()/>
+
+<#--
 	<@list_class_statements list=module.getClassStatements()/>
 	<@list_class_specifications list=module.getClassSpecifications()/>
+-->
 	<@list_scenarios textKey="scenarios" scenarios=module.getScenarios()/>
 	<@list_test_tables textKey="test_tables" testTables=module.getTestTables()/>
 	<a href="#top">&lt; Back to top</a>
 </#macro>
+
+<#macro list_class_behaviour list >
+	<div class="classBehaviour">
+		<#list list as classBehaviour>		
+			
+			<span>${bdocMacroHelper.format(classBehaviour.className)}</span>
+			<ul class="specifications">
+				<#list classBehaviour.specifications as specification>
+					<li>${bdocMacroHelper.format(specification)}</li>
+				</#list>
+				<#list classBehaviour.statements as statement>
+					<li>${bdocMacroHelper.format(statement)}</li>
+				</#list>
+			</ul>
+		</#list>
+	</div>
+</#macro>
+
+
 
 <#macro list_class_specifications list textKey="">
 	<#if 0 < list?size >

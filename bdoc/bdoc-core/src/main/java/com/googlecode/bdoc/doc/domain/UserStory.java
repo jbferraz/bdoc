@@ -109,4 +109,12 @@ public class UserStory extends ModuleBehaviour implements UserStoryDescription, 
 		return id.compareTo(otherUserStory.getId());
 	}
 
+	public List<ClassBehaviour> getClassBehaviour() {
+		List<ClassBehaviour> result = new ArrayList<ClassBehaviour>();
+		for (Package javaPackage : getPackages()) {
+			result.addAll((javaPackage.getClassBehaviour()));
+		}
+		return result;
+	}
+
 }

@@ -48,9 +48,9 @@ public class TestPensjonspoengKalkulatorBehaviour {
 
 	@Test
 	public void forInntektIAarene1971Til1991BlirDenDelenAvInntektenSomOverstigerAatteGangerGrunnbeloepetMedregnetMedEnTredjedel() {
-		assertEquals(8.33, pensjonspoengKalkulator.beregn(new Inntekt(1971, 12 * GrunnbeloepRepository._1971)), .001);
-		assertEquals(7.00, pensjonspoengKalkulator.beregn(new Inntekt(1971, 8 * GrunnbeloepRepository._1971)), .001);
-		assertEquals(7.67, pensjonspoengKalkulator.beregn(new Inntekt(1971, 10 * GrunnbeloepRepository._1971)), .001);
+		assertEquals(8.33, pensjonspoengKalkulator.beregn(new Inntekt(1971, 12 * Grunnbeloep._1971)), .001);
+		assertEquals(7.00, pensjonspoengKalkulator.beregn(new Inntekt(1971, 8 * Grunnbeloep._1971)), .001);
+		assertEquals(7.67, pensjonspoengKalkulator.beregn(new Inntekt(1971, 10 * Grunnbeloep._1971)), .001);
 	}
 
 	/**
@@ -97,8 +97,8 @@ public class TestPensjonspoengKalkulatorBehaviour {
 	}
 
 	void eksempelPaaUtregningAvPensjonspoengMellom1967Og1970(int inntektsaar, int inntektIGrunnbeloep, int pensjonspoeng) {
-		Grunnbeloep grunnbeloep = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntektsaar);
-		Inntekt inntekt = new Inntekt(inntektsaar, inntektIGrunnbeloep * grunnbeloep.verdi());
+		Integer grunnbeloep = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntektsaar);
+		Inntekt inntekt = new Inntekt(inntektsaar, inntektIGrunnbeloep * grunnbeloep);
 		String forklaring = "Forventet " + pensjonspoeng + " pensjonspoeng for inntektsaar " + inntektsaar;
 
 		assertEquals(forklaring, pensjonspoeng, pensjonspoengKalkulator.beregn(inntekt), .001);

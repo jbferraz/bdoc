@@ -53,6 +53,73 @@
 	<a href="#top">&lt; Back to top</a>
 </#macro>
 
+<#macro list_class_specifications list textKey="">
+	<#if 0 < list?size >
+
+		<div class="classBehaviour">
+			<#if !(textKey=="") >
+				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
+			</#if>
+
+			<ul class="specifications">
+				<#list list as classSpecifications>
+					<li>
+						<span>${bdocMacroHelper.format(classSpecifications.className)}</span>
+						<ul>
+							<#list classSpecifications.specifications as specification>
+								<li>${bdocMacroHelper.format(specification)}</li>
+							</#list>
+						</ul>
+					</li>
+				</#list>
+			</ul>
+		</div>
+
+	</#if>
+</#macro>
+
+<#macro list_class_statements list textKey="">
+	<#if 0 < list?size >
+
+		<div class="classBehaviour">
+			<#if !(textKey=="") >
+				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
+			</#if>
+
+			<ul class="statements">
+				<#list list as classStatements>
+					<li>
+						<span>${classStatements.className}</span>
+						<ul>
+							<#list classStatements.statements as statement>
+								<li>${bdocMacroHelper.format(statement)}</li>
+							</#list>
+						</ul>
+					</li>									
+				</#list>
+			</ul>
+		</div>
+
+	</#if>
+</#macro>
+
+<#macro list_scenarios scenarios textKey="">
+	<#if 0 < scenarios?size >
+		<div class="classBehaviour">
+			<#if !(textKey=="") >
+				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
+			</#if>
+			<div class="scenarios">
+				<#list scenarios as scenario>
+					<ul class="scenario">
+						${bdocMacroHelper.scenarioLines(scenario)}
+					</ul>
+				</#list>
+			</div>
+		</div>
+	</#if>
+</#macro>
+
 <#macro list_test_tables testTables textKey="">
 	<#if 0 < testTables?size >
 		<div class="classBehaviour">
@@ -91,67 +158,6 @@
 	</#if>
 </#macro>
 
-<#macro list_scenarios scenarios textKey="">
-	<#if 0 < scenarios?size >
-		<div class="classBehaviour">
-			<#if !(textKey=="") >
-				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
-			</#if>
-			<div class="scenarios">
-				<#list scenarios as scenario>
-					<ul class="scenario">
-						${bdocMacroHelper.scenarioLines(scenario)}
-					</ul>
-				</#list>
-			</div>
-		</div>
-	</#if>
-</#macro>
-
-<#macro list_class_specifications list textKey="">
-	<#if 0 < list?size >
-
-		<div class="classBehaviour">
-			<#if !(textKey=="") >
-				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
-			</#if>
-
-			<ul class="specifications">
-				<#list list as classSpecifications>
-					<li>
-						<span>${bdocMacroHelper.format(classSpecifications.className)}</span>
-						<ul>
-							<#list classSpecifications.specifications as specification>
-								<li>${bdocMacroHelper.format(specification)}</li>
-							</#list>
-						</ul>
-					</li>
-				</#list>
-			</ul>
-		</div>
-
-	</#if>
-</#macro>
-
-<#macro list_class_statements list textKey="">
-	<#if 0 < list?size >
-
-		<div class="classBehaviour">
-			<#if !(textKey=="") >
-				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
-			</#if>
-
-			<ul class="statements">
-				<#list list as classStatements>
-					<#list classStatements.statements as statement>
-						<li>${bdocMacroHelper.format(statement)}</li>
-					</#list>
-				</#list>
-			</ul>
-		</div>
-
-	</#if>
-</#macro>
 
 <#macro narrative value>
 	<div class="narrative">

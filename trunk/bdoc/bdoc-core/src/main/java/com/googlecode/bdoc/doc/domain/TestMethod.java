@@ -28,6 +28,7 @@ import static com.googlecode.bdoc.doc.domain.BDoc.TEST_METHOD_PREFIX;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import org.apache.commons.beanutils.MethodUtils;
 
@@ -35,6 +36,9 @@ public class TestMethod {
 
 	private Method method;
 	private TestClass testClass;
+
+	private List<Scenario> scenarios;
+	private List<TestTable> testTables;
 
 	public TestMethod(TestClass testClass, Method method) {
 		this.testClass = testClass;
@@ -151,5 +155,29 @@ public class TestMethod {
 
 	public boolean hasSpec() {
 		return null != getSpec();
+	}
+
+	public List<Scenario> getScenarios() {
+		return scenarios;
+	}
+
+	public void setScenarios(List<Scenario> scenarios) {
+		this.scenarios = scenarios;
+	}
+
+	public List<TestTable> getTestTables() {
+		return testTables;
+	}
+
+	public void setTestTables(List<TestTable> testTables) {
+		this.testTables = testTables;
+	}
+
+	public boolean hasScenarios() {
+		return null != scenarios;
+	}
+
+	public boolean hasTestTables() {
+		return null != testTables;
 	}
 }

@@ -40,15 +40,6 @@ public class ModuleBehaviour {
 		return from(packages).equalTo(Package.forClass(testClass)).getBehaviourFor(testClass);
 	}
 
-	public ClassBehaviour addBehaviour(TestMethod method, List<Scenario> scenarios, List<TestTable> testTables) {
-		ClassBehaviour classBehaviour = addBehaviour(method);
-
-		classBehaviour.addScenarios(scenarios);
-		classBehaviour.addTestTables(testTables);
-
-		return classBehaviour;
-	}
-
 	public ClassBehaviour addBehaviour(TestMethod method) {
 
 		Package classPackage = Package.forClass(method.clazz());
@@ -58,7 +49,16 @@ public class ModuleBehaviour {
 			packages.add(classPackage);
 		}
 
-		return classPackage.addBehaviour(method);
+		ClassBehaviour classBehaviour = classPackage.addBehaviour(method);
+
+		if (method.hasScenarios()) {
+			classBehaviour.addScenarios(method.getScenarios());
+		}
+		if (method.hasTestTables()) {
+			classBehaviour.addTestTables(method.getTestTables());
+		}
+
+		return classBehaviour;
 	}
 
 	public List<Package> getPackages() {

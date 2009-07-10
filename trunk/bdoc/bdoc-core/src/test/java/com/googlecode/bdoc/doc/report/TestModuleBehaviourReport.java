@@ -31,7 +31,6 @@ import static org.apache.commons.io.FileUtils.writeStringToFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -48,7 +47,6 @@ import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
-import com.googlecode.bdoc.doc.report.BDocMacroHelper.TableCellFormatter;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.TestClassWithGeneralBehaviour;
 import com.googlecode.bdoc.doc.testdata.TestClassWithTestTablesBehaviour;
@@ -65,20 +63,11 @@ public class TestModuleBehaviourReport {
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(
 				BConst.SRC_TEST_JAVA));
 
-		ModuleBehaviourReport InternalApplicationBehaviourReport = new ModuleBehaviourReport(
+		ModuleBehaviourReport internalApplicationBehaviourReport = new ModuleBehaviourReport(
 				bdoc);
+		
 
-		TableCellFormatter customClassFormatter = new TableCellFormatter() {
-			public String format(Object object) {
-				return "custom";
-			}
-		};
-
-		HashMap<Class<?>, TableCellFormatter> tableCellFormatters = new HashMap<Class<?>, TableCellFormatter>();
-		tableCellFormatters.put(Class.class, customClassFormatter);
-		InternalApplicationBehaviourReport.setCustomObjectFormatters(tableCellFormatters);
-
-		html = InternalApplicationBehaviourReport.html();
+		html = internalApplicationBehaviourReport.html();
 
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 		writeStringToFile(new File("target/" + getClass().getName() + ".xml"), new XmlReport(bdoc).xml());
@@ -141,12 +130,6 @@ public class TestModuleBehaviourReport {
 		List<TestTable> testTables = bdoc.testTables();
 		assertXPathContains(sentence(testTables.get(0).getHeaderColumns().get(0).getValue().toString()),
 				"//ul[@class='testTable']", html);
-	}
-
-	@Test
-	public void shouldPresentColumnValuesOfTestTablesWithATableCellFormatter() {
-		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
-		assertXPathContains("custom", "//div[@class='exampleOnTypeConversionSuppert']", html);
 	}
 	
 	@Test

@@ -26,18 +26,18 @@ package com.googlecode.bdoc.doc.domain;
 
 public class TableColumn {
 
-	private Object value;
+	private String value;
 
 	public TableColumn(Object value) {
-		this.value = value;
+		this.value = value.toString();
 	}
 
-	public Object getValue() {
+	public String getValue() {
 		return value;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(value);
+		return value;
 	}
 }

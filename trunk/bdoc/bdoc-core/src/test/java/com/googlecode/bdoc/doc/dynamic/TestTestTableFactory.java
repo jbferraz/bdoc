@@ -77,13 +77,13 @@ public class TestTestTableFactory {
 	}
 
 	@Test
-	public void theTestTableColumnShouldContainValueFromTheMethodArgument() {
+	public void theTestTableColumnShouldContainValueFromTheMethodArgumentAsAString() {
 		TestTable testTable = factoryCreate(TestConvertUtilsBehaviour.class, "shouldConvertFromPrimitivToPrimitiv");
 		List<TableColumn> firstRowColumns = testTable.getRows().get(0).getColumns();
 
-		assertEquals(Boolean.FALSE, firstRowColumns.get(0).getValue());
-		assertEquals(Integer.class, firstRowColumns.get(1).getValue());
-		assertEquals(0, firstRowColumns.get(2).getValue());
+		assertEquals(String.valueOf( Boolean.FALSE ), firstRowColumns.get(0).getValue());
+		assertEquals(String.valueOf( Integer.class), firstRowColumns.get(1).getValue());
+		assertEquals(String.valueOf( 0 ), firstRowColumns.get(2).getValue());
 	}
 
 	@Test

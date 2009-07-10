@@ -24,7 +24,6 @@
 
 package com.googlecode.bdoc.doc.report;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,10 +37,6 @@ import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
  */
 public class BDocMacroHelper {
 
-	public interface TableCellFormatter {
-		public String format(Object object);
-	}
-
 	private ScenarioLinesFormatter formatter;
 
 	public BDocMacroHelper() {
@@ -53,7 +48,6 @@ public class BDocMacroHelper {
 	}
 
 	ResourceBundle bundle;
-	private HashMap<Class<?>, TableCellFormatter> tableCellFormatters;
 	{
 		bundle = ResourceBundle.getBundle("com.googlecode.bdoc.text");
 	}
@@ -95,21 +89,7 @@ public class BDocMacroHelper {
 	}
 
 	public String formatTableColumn(TableColumn tableColumn) {
-		Object value = tableColumn.getValue();
-
-		if (null == tableCellFormatters) {
-			return String.valueOf(value);
-		}
-
-		TableCellFormatter tableCellFormatter = tableCellFormatters.get(value.getClass());
-		if (null == tableCellFormatter) {
-			return String.valueOf(value);
-		}
-		return tableCellFormatter.format(value);
-	}
-
-	public void setCustomObjectFormatters(HashMap<Class<?>, TableCellFormatter> tableCellFormatters) {
-		this.tableCellFormatters = tableCellFormatters;
+		return tableColumn.getValue();
 	}
 
 	public String format(String string) {

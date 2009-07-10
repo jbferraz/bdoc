@@ -4,16 +4,18 @@ package pensjonsberegning;
  * 
  * @author Per Otto Bergum Christensen
  */
-public class Pensjonspoengberegning {
+public class Pensjonspoeng {
 
 	private GrunnbeloepRepository grunnbeloepRepository;
 
-	public Pensjonspoengberegning(GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository) {
+	public Pensjonspoeng(GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository) {
 		this.grunnbeloepRepository = gjennomsnittligGrunnbeloepRepository;
 	}
 
-	public double beregnPoengtallFor(int inntektsaar, double inntekt) {
-
+	public double beregn(int inntektsaar, double inntekt) {
+		if ((inntektsaar < 1967) || (2008 < inntektsaar)) {
+			throw new IllegalArgumentException("Inntektsår må ligge mellom 1967 og 2008");
+		}
 		Integer grunnbeloep = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntektsaar);
 
 		if (inntekt < grunnbeloep) {

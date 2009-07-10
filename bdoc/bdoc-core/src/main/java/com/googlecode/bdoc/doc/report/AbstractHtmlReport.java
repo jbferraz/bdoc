@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.report.BDocMacroHelper.TableCellFormatter;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
@@ -76,7 +75,4 @@ public class AbstractHtmlReport {
 		}
 	}
 
-	public void setCustomObjectFormatters(HashMap<Class<?>, TableCellFormatter> tableCellFormatters) {
-		bddDocMacroHelper.setCustomObjectFormatters(tableCellFormatters);
-	}
 }

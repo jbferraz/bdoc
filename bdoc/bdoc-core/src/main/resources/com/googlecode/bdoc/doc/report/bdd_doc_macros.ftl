@@ -47,11 +47,6 @@
 
 <#macro list_behaviour module>
 	<@list_class_behaviour list=module.getClassBehaviour()/>
-
-<#--
-	<@list_class_statements list=module.getClassStatements()/>
-	<@list_class_specifications list=module.getClassSpecifications()/>
--->
 	<@list_scenarios textKey="scenarios" scenarios=module.getScenarios()/>
 	<@list_test_tables textKey="test_tables" testTables=module.getTestTables()/>
 	<a href="#top">&lt; Back to top</a>
@@ -63,11 +58,11 @@
 			
 			<span>${bdocMacroHelper.format(classBehaviour.className)}</span>
 			<ul class="specifications">
-				<#list classBehaviour.specifications as specification>
-					<li>${bdocMacroHelper.format(specification)}</li>
-				</#list>
 				<#list classBehaviour.statements as statement>
 					<li>${bdocMacroHelper.format(statement)}</li>
+				</#list>
+				<#list classBehaviour.specifications as specification>
+					<li>${bdocMacroHelper.format(specification)}</li>
 				</#list>
 			</ul>
 		</#list>

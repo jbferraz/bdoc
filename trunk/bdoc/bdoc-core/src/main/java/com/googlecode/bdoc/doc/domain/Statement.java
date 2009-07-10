@@ -24,6 +24,8 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import java.util.List;
+
 /**
  * A Statement defines loose behaviour, without the classic 'should'
  * 
@@ -41,6 +43,10 @@ public class Statement {
 	private static final String SPACE = " ";
 
 	protected String camelCaseSentence;
+	
+	private List<Scenario> scenarios;
+	private List<TestTable> testTables;
+	
 
 	/** Spec is referenced inside the camelCaseSentence */
 	protected String spec;
@@ -51,6 +57,8 @@ public class Statement {
 
 	public Statement(TestMethod testMethod) {
 		this(testMethod.camelCaseSentence(), testMethod.getSpec());
+		this.scenarios = testMethod.getScenarios();
+		this.testTables = testMethod.getTestTables();
 	}
 
 	public Statement(String camelCaseSentence, String spec) {
@@ -79,8 +87,17 @@ public class Statement {
 		return spec;
 	}
 
+	public List<Scenario> getScenarios() {
+		return scenarios;
+	}
+
+	public List<TestTable> getTestTables() {
+		return testTables;
+	}
+	
 	@Override
 	public String toString() {
 		return camelCaseSentence;
 	}
+	
 }

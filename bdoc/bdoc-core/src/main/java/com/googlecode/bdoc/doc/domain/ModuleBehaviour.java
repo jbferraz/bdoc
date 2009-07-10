@@ -50,14 +50,9 @@ public class ModuleBehaviour {
 		}
 
 		ClassBehaviour classBehaviour = classPackage.addBehaviour(method);
-
 		if (method.hasScenarios()) {
 			classBehaviour.addScenarios(method.getScenarios());
 		}
-		if (method.hasTestTables()) {
-			classBehaviour.addTestTables(method.getTestTables());
-		}
-
 		return classBehaviour;
 	}
 
@@ -106,11 +101,4 @@ public class ModuleBehaviour {
 		return result;
 	}
 
-	public List<TestTable> testTables() {
-		List<TestTable> result = new ArrayList<TestTable>();
-		for (Package javaPackage : packages) {
-			result.addAll(javaPackage.getTestTables());
-		}
-		return result;
-	}
 }

@@ -246,13 +246,4 @@ public class BDoc {
 		testAnnotations = new TestAnnotations();
 	}
 
-	public List<TestTable> testTables() {
-		List<TestTable> result = new ArrayList<TestTable>();
-		result.addAll(moduleBehaviour.testTables());
-		for (UserStory userStory : userStories) {
-			result.addAll(userStory.getTestTables());
-		}
-
-		return result;
-	}
 }

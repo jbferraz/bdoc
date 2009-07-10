@@ -130,15 +130,4 @@ public class Package {
 		return result;
 	}
 
-	public List<TestTable> getTestTables() {
-		List<TestTable> result = new ArrayList<TestTable>();
-		for (ClassBehaviour classBehaviour : classBehaviourList) {
-			if (classBehaviour.hasTestTables()) {
-				result.addAll(classBehaviour.getTestTables());
-			}
-		}
-
-		return result;
-	}
-
 }

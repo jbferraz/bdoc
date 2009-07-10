@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import static com.googlecode.bdoc.doc.util.Select.from;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -69,6 +70,8 @@ public class TestBDocBehaviour {
 		expectedScenarioParts.add(new Scenario.Part("whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock"));
 		expectedScenarioParts.add(new Scenario.Part("thenEnsureThatTheScenarioIsExtracted"));
 
-		assertTrue(behaviour.getScenarios().contains(new Scenario(expectedScenarioParts)));
+		Specification specification = from(behaviour.getSpecifications()).equalTo(new Specification( "shouldAddScenariosSpecifiedInATestMethodBlock"));
+		
+		assertTrue(specification.getScenarios().contains(new Scenario(expectedScenarioParts)));
 	}
 }

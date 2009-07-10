@@ -52,8 +52,6 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 
 	private List<Statement> statements = new ArrayList<Statement>();
 
-	private List<TestTable> testTables = new ArrayList<TestTable>();
-
 	public ClassBehaviour(Class<? extends Object> testClass) {
 		this.className = retreiveClassName(testClass);
 	}
@@ -158,15 +156,18 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 		return scenarios;
 	}
 
-	public List<TestTable> getTestTables() {
-		if (null == testTables) {
-			testTables = new ArrayList<TestTable>();
-		}
-		return testTables;
-	}
-
 	public boolean hasTestTables() {
-		return !getTestTables().isEmpty();
+		for (Specification specification : specifications ) {
+			if( specification.hasTestTables() ) {
+				return true;
+			}
+		}
+		for (Statement statement : statements) {
+			if( statement.hasTestTables() ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean hasSpecifications() {
@@ -191,10 +192,6 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 
 	public void addScenario(Scenario scenario) {
 		this.scenarios.add(scenario);
-	}
-
-	public void addTestTables(List<TestTable> testTables) {
-		this.testTables.addAll(testTables);
 	}
 
 	public void addSpecification(Specification specification) {

@@ -31,6 +31,9 @@ import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
+import com.googlecode.bdoc.doc.domain.TableColumn;
+import com.googlecode.bdoc.doc.domain.TableRow;
+import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.UserStory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.ConversionException;
@@ -74,6 +77,9 @@ public class XmlReport {
 		xstream.alias("specification", Specification.class);
 		xstream.alias("statement", Statement.class);
 		xstream.alias("part", Scenario.Part.class);
+		xstream.alias("testTable", TestTable.class);
+		xstream.alias("row", TableRow.class);
+		xstream.alias("column", TableColumn.class);
 		xstream.addImplicitCollection(Package.class, "classBehaviourList");
 	}
 

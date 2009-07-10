@@ -78,6 +78,15 @@
 		font-style: italic;
 		font-size: 110%;
 	}
+	.exampleTitle {
+		font-style: italic;
+		font-size: 110%;
+	}
+	
+	.testTableDescription {
+		font-style: italic;
+	}
+	
 	.dateTime {
 		font-style: itallic;
 		font-size: 70%;
@@ -110,19 +119,19 @@
 		padding: 0px;
 		padding-left: 2px;
 	}
-	.testTables table {
+	.testTable table {
 		border: 1px solid black;
 		border-collapse: collapse;
 	}
-	.testTables thead {
+	.testTable thead {
 		font-weight: bold;
 		background-color: #f0f0f0;
 	}
-	.testTables table th {
+	.testTable table th {
 		border: 1px solid black;
 		padding: 3px;
 	}
-	.testTables table td {
+	.testTable table td {
 		border: 1px solid black;
 		padding: 3px;
 	}

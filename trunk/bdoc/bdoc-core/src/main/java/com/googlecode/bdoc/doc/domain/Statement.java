@@ -100,4 +100,8 @@ public class Statement {
 		return camelCaseSentence;
 	}
 	
+	public boolean hasTestTables() {
+		return null != testTables;
+	}
+	
 }

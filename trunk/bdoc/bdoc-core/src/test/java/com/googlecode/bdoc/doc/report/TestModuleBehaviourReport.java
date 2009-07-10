@@ -26,8 +26,10 @@ package com.googlecode.bdoc.doc.report;
 
 import static com.googlecode.bdoc.doc.report.ReportTestHelper.scenarioPart;
 import static com.googlecode.bdoc.doc.report.ReportTestHelper.sentence;
+import static com.googlecode.bdoc.doc.util.Select.from;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +42,7 @@ import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
@@ -60,12 +63,11 @@ public class TestModuleBehaviourReport {
 	public TestModuleBehaviourReport() throws IOException {
 		bdoc = BDocTestHelper.bdocWithProject();
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithGeneralBehaviour.class), BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(
-				BConst.SRC_TEST_JAVA));
+		bdoc
+				.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(
+						BConst.SRC_TEST_JAVA));
 
-		ModuleBehaviourReport internalApplicationBehaviourReport = new ModuleBehaviourReport(
-				bdoc);
-		
+		ModuleBehaviourReport internalApplicationBehaviourReport = new ModuleBehaviourReport(bdoc);
 
 		html = internalApplicationBehaviourReport.html();
 
@@ -81,57 +83,55 @@ public class TestModuleBehaviourReport {
 
 	@Test
 	public void shouldPresentPackagesWithBehaviourNotAssociatedWityAnyStories() {
-		assertXPathContains(bdoc.getModuleBehaviour().getPackages().get(0).getName(),
-				"//div[@class='generalBehaviour']", html);
+		assertXPathContains(bdoc.getModuleBehaviour().getPackages().get(0).getName(), "//div[@class='generalBehaviour']", html);
 	}
 
 	@Test
 	public void shouldPresentScenariosNotAssociatedWithAnyStories() {
-		List<Scenario> scenarios = bdoc.getModuleBehaviour().getPackages().get(0).getClassBehaviour().get(0)
-				.getScenarios();
-		assertXPathContains(scenarioPart(0, scenarios.get(0)),
-				"//div[@class='generalBehaviour']/div[@class='package']", html);
+		List<Scenario> scenarios = bdoc.getModuleBehaviour().getPackages().get(0).getClassBehaviour().get(0).getScenarios();
+		assertXPathContains(scenarioPart(0, scenarios.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
 	public void shouldPresentSpecificationsNotAssociatedWithAnyStories() {
 		List<Specification> specifications = bdoc.getModuleBehaviour().getPackages().get(0).getClassBehaviour().get(0)
 				.getSpecifications();
-		assertXPathContains(sentence(specifications.get(0)), "//div[@class='generalBehaviour']/div[@class='package']",
-				html);
+		assertXPathContains(sentence(specifications.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
 	public void shouldPresentStatementsNotAssociatedWithAnyStories() {
-		List<Statement> statements = bdoc.getModuleBehaviour().getPackages().get(0).getClassBehaviour().get(0)
-				.getStatements();
+		List<Statement> statements = bdoc.getModuleBehaviour().getPackages().get(0).getClassBehaviour().get(0).getStatements();
 		assertXPathContains(sentence(statements.get(0)), "//div[@class='generalBehaviour']/div[@class='package']", html);
 	}
 
 	@Test
 	public void shouldBePossibleToChangeFormattingForAdvancedScenarioSpecification() throws IOException {
 		bdoc = BDocTestHelper.bdocWithAdvancedScenarioSpecification();
-		String htmlAndInBetween = new ModuleBehaviourReport(bdoc, new AndInBetweenScenarioLinesFormatter())
-				.html();
-		String htmlEachOnNewLine = new ModuleBehaviourReport(bdoc,
-				new EachOnNewLineScenarioLinesFormatter()).html();
-		Assert.assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
+		String htmlAndInBetween = new ModuleBehaviourReport(bdoc, new AndInBetweenScenarioLinesFormatter()).html();
+		String htmlEachOnNewLine = new ModuleBehaviourReport(bdoc, new EachOnNewLineScenarioLinesFormatter()).html();
+		assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
 
 	}
 
 	@Test
 	public void shouldPresentTestTablesForGeneralBehaviour() {
-		List<TestTable> testTables = bdoc.testTables();
-		assertXPathContains(sentence(testTables.get(0)), "//ul[@class='testTable']", html);
+		ClassBehaviour classBehaviour = bdoc.classBehaviourInModuleBehaviour(TestClassWithTestTablesBehaviour.class);
+		Specification specification = from(classBehaviour.getSpecifications()).equalTo(new Specification("shouldAddTwoNumbers"));
+
+		assertXPathContains(sentence(specification.getTestTables().get(0)), "//ul[@class='testTable']", html);
 	}
 
 	@Test
 	public void shouldPresentFormatedHeaderColumnsOfTestTables() {
-		List<TestTable> testTables = bdoc.testTables();
-		assertXPathContains(sentence(testTables.get(0).getHeaderColumns().get(0).getValue().toString()),
+
+		ClassBehaviour classBehaviour = bdoc.classBehaviourInModuleBehaviour(TestClassWithTestTablesBehaviour.class);
+		Specification specification = from(classBehaviour.getSpecifications()).equalTo(new Specification("shouldAddTwoNumbers"));
+
+		assertXPathContains(sentence(specification.getTestTables().get(0).getHeaderColumns().get(0).getValue().toString()),
 				"//ul[@class='testTable']", html);
 	}
-	
+
 	@Test
 	public void shouldPresentATableOfContentsWithAllPackageNames() {
 		List<Package> packages = bdoc.getModuleBehaviour().getPackages();
@@ -139,5 +139,5 @@ public class TestModuleBehaviourReport {
 			assertXPathContains(javaPackage.getName(), "//ul[@class='toc']", html);
 		}
 	}
-	
+
 }

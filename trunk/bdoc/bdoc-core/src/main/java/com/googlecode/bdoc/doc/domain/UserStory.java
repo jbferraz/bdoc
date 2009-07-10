@@ -95,16 +95,6 @@ public class UserStory extends ModuleBehaviour implements UserStoryDescription, 
 		return result;
 	}
 
-	public List<TestTable> getTestTables() {
-		List<TestTable> testTables = new ArrayList<TestTable>();
-
-		for (Package javaPackage : getPackages()) {
-			testTables.addAll(javaPackage.getTestTables());
-		}
-
-		return Collections.unmodifiableList(testTables);
-	}
-
 	public int compareTo(UserStory otherUserStory) {
 		return id.compareTo(otherUserStory.getId());
 	}

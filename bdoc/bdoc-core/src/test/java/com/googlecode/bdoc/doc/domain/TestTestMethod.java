@@ -24,7 +24,11 @@
 
 package com.googlecode.bdoc.doc.domain;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -34,13 +38,26 @@ public class TestTestMethod {
 
 	@Test
 	public void shouldTellIfASpecAnnotationExists() {
-		assertTrue( new TestMethod(MyTestWithSpec.class, "shouldBehaveLike$spec$").hasSpec() );
-		assertFalse( new TestMethod(MyTestWithoutSpec.class, "shouldBehaveLikeAplussB").hasSpec() );
+		assertTrue(new TestMethod(MyTestWithSpec.class, "shouldBehaveLike$spec$").hasSpec());
+		assertFalse(new TestMethod(MyTestWithoutSpec.class, "shouldBehaveLikeAplussB").hasSpec());
 	}
-	
+
 	@Test
 	public void shouldReturnTheValueOfASpec() {
-		assertEquals( "a+b", new TestMethod(MyTestWithSpec.class, "shouldBehaveLike$spec$").getSpec() );
+		assertEquals("a+b", new TestMethod(MyTestWithSpec.class, "shouldBehaveLike$spec$").getSpec());
+	}
+
+	@Test
+	public void shouldTellIfTestTablesExistsAndAreNotEmpty() {
+		TestMethod testMethod = new TestMethod(MyTestWithSpec.class, "shouldBehaveLike$spec$");
+		testMethod.setTestTables(null);
+		assertFalse(testMethod.hasTestTables());
+		ArrayList<TestTable> testTables = new ArrayList<TestTable>();
+		testMethod.setTestTables(testTables);
+		assertFalse(testMethod.hasTestTables());
+		testTables.add(new TestTable("camelCaseDescription"));
+		testMethod.setTestTables(testTables);
+		assertTrue(testMethod.hasTestTables());
 	}
 
 	// ----- TESTDATA --------------------------------------------

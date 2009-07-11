@@ -178,6 +178,6 @@ public class TestMethod {
 	}
 
 	public boolean hasTestTables() {
-		return null != testTables;
+		return null != testTables && testTables.size() > 0;
 	}
 }

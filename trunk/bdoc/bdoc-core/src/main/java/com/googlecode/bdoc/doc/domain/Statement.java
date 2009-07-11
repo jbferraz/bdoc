@@ -43,10 +43,9 @@ public class Statement {
 	private static final String SPACE = " ";
 
 	protected String camelCaseSentence;
-	
+
 	private List<Scenario> scenarios;
 	private List<TestTable> testTables;
-	
 
 	/** Spec is referenced inside the camelCaseSentence */
 	protected String spec;
@@ -80,7 +79,7 @@ public class Statement {
 	}
 
 	public boolean hasSpec() {
-		return (null != spec) && camelCaseSentence.contains( $SPEC$ );
+		return (null != spec) && camelCaseSentence.contains($SPEC$);
 	}
 
 	public String getSpec() {
@@ -94,14 +93,14 @@ public class Statement {
 	public List<TestTable> getTestTables() {
 		return testTables;
 	}
-	
+
 	@Override
 	public String toString() {
 		return camelCaseSentence;
 	}
-	
+
 	public boolean hasTestTables() {
-		return null != testTables;
+		return null != testTables && testTables.size() > 0;
 	}
-	
+
 }

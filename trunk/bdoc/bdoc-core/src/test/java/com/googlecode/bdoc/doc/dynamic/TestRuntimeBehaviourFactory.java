@@ -82,15 +82,13 @@ public class TestRuntimeBehaviourFactory {
 	@Test
 	public void shouldAddMethodCallArgumentValuesToTheEndOfEachScenarioPart() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("scenarioWithArguments"));
-		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(
-				0));
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(0));
 	}
 
 	@Test
 	public void shouldPutASpaceCharBeforeAndAfterEachArgument() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("scenarioWithArguments"));
-		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(
-				0));
+		assertEquals(new Scenario("given_1_When_2_And_3_Then_4_And_5_And_6_"), runtimeBehaviourFactory.getCreatedScenarios().get(0));
 	}
 
 	@Test
@@ -125,12 +123,6 @@ public class TestRuntimeBehaviourFactory {
 	}
 
 	@Test
-	public void shouldNotCreateATestTablesFromTestMethodWhenCallsAreMadeToAccessibleCustomAssertOnlyOnce() {
-		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("withdraw"));
-		assertTrue(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
-	}
-
-	@Test
 	public void shouldNotCreateAScenarioIfTheFirstMethodDoesntStartWithTheScenarioKeywordGiven() {
 		runtimeBehaviourFactory.analyze(accountBehaviourTestClass.getTestMethod("shouldContainATestTable"));
 		assertTrue(runtimeBehaviourFactory.getCreatedScenarios().isEmpty());
@@ -149,8 +141,19 @@ public class TestRuntimeBehaviourFactory {
 
 	@Test
 	public void shouldNotCreateTestTablesWhenMethodCallsDoNotIncludeArguments() {
-		runtimeBehaviourFactory.analyze(new TestClass(TestMyObjectBehaviour.class)
-				.getTestMethod("shouldMakeACallWithoutArguments"));
+		runtimeBehaviourFactory.analyze(new TestClass(TestMyObjectBehaviour.class).getTestMethod("shouldMakeACallWithoutArguments"));
+		assertTrue(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
+	}
+
+	@Test
+	public void shouldExtractTestTableWithOnlyOnRow() {
+		runtimeBehaviourFactory.analyze(new TestClass(TestMyObjectBehaviour.class).getTestMethod("shouldExtractTestTableWithOnlyOnRow"));
+		assertFalse(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
+	}
+	
+	@Test
+	public void shouldNotExtractTestTableForMethodsStartingWithScenariosKeyWords() {
+		runtimeBehaviourFactory.analyze(new TestClass(TestMyObjectBehaviour.class).getTestMethod("testThatMakesCallScenarioMethods"));
 		assertTrue(runtimeBehaviourFactory.getCreatedTestTables().isEmpty());
 	}
 }

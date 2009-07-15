@@ -66,7 +66,7 @@ public class TestClassWithTestTablesBehaviour {
 
 	@Test
 	public void shouldHandleBothScenarioAndTestTableInOneTest() {
-		given();
+		givenADynamicScenario();
 		when();
 		then();
 
@@ -76,7 +76,7 @@ public class TestClassWithTestTablesBehaviour {
 		exampleOnNumber(4);
 	}
 
-	void given() {
+	void givenADynamicScenario() {
 	}
 
 	void when() {

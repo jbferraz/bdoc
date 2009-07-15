@@ -45,4 +45,9 @@ public class TestConstantNameToSentenceTranslator {
 	public void shouldTransformAllUnderscoreToSpace() {
 		assertEquals(' ', ConstantNameToSentenceTranslator.translate("S_D").charAt(1));
 	}
+	
+	@Test
+	public void shouldTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacter() {
+		assertEquals("Grunnbeløp", ConstantNameToSentenceTranslator.translate("GRUNNBELOEP"));
+	}
 }

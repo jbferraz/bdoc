@@ -40,6 +40,7 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassWithOneScenario;
@@ -95,7 +96,10 @@ public class TestDiffLogReportBehaviour {
 
 	private void thenEnsureTheReportContainsTheDiffWithTheAddedScenario() throws IOException {
 		String html = diffLogReport.result();
-		assertXPathContains(scenarioPart(1,bdocWithOneScenario.scenarios().get(0)), "//div[@class='diffLogs']", html);
+		
+		ClassBehaviour classBehaviour = bdocWithOneScenario.classBehaviourInModuleBehaviour(TestClassWithOneScenario.class);
+		
+		assertXPathContains(scenarioPart(1,classBehaviour.getScenarios().get(0)), "//div[@class='diffLogs']", html);
 	}
 
 	@Test

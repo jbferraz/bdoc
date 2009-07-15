@@ -26,6 +26,8 @@ package com.googlecode.bdoc.doc.util;
 
 import org.apache.commons.lang.Validate;
 
+import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
+
 /**
  * @author Per Otto Bergum Christensen
  */
@@ -39,7 +41,9 @@ public class ConstantNameToSentenceTranslator {
 		Validate.notNull(constantName, "constantName");
 		Validate.isTrue(0 < constantName.length(), "constantName must have length greater than 0");
 
-		return (constantName.charAt(0) + constantName.substring(1).toLowerCase()).replace('_', ' ');
+		String sentence = (constantName.charAt(0) + constantName.substring(1).toLowerCase()).replace('_', ' ');
+		
+		return CamelCaseToSentenceTranslator.formatTwoLetterCodeToNorwegianSpecialCharacters( sentence );
 	}
 
 }

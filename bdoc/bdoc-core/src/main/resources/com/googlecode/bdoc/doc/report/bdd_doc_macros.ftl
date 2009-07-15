@@ -121,6 +121,27 @@
 	</#if>
 </#macro>
 
+<#macro list_examples module>
+	<div class="examples">
+		<span class="exampleTitle"><@bdddoc.text key="examples"/></span>
+		
+		<#list module.getClassBehaviour() as classBehaviour>
+	
+			<#if classBehaviour.hasTestTables() || classBehaviour.hasScenarios() >
+				<p>${classBehaviour.getClassName()}</p>
+			</#if>
+			<#if classBehaviour.hasTestTables() || classBehaviour.hasScenarios() >
+				<@scenarios_and_test_table statements=classBehaviour.getStatements()/>
+				<@scenarios_and_test_table statements=classBehaviour.getSpecifications()/>
+			</#if>
+			<#if classBehaviour.hasScenarios()>
+				<@list_scenarios scenarios=classBehaviour.getScenarios()/>
+			</#if>		
+		</#list>
+
+	</div>
+</#macro>
+
 <#macro list_scenarios scenarios textKey="">
 	<#if 0 < scenarios?size >
 		<div class="classBehaviour">
@@ -138,52 +159,43 @@
 	</#if>
 </#macro>
 
-<#macro list_examples module>
-	<div class="examples">
-		<span class="exampleTitle"><@bdddoc.text key="examples"/></span>
-		
-		<#list module.getClassBehaviour() as classBehaviour>
-			
-			<#if classBehaviour.hasTestTables()>
-				<p>${classBehaviour.getClassName()}</p>	
-				<@test_table statements=classBehaviour.getStatements()/>
-				<@test_table statements=classBehaviour.getSpecifications()/>
-			</#if>
-							
-		</#list>
 
-	</div>
-</#macro>
-
-<#macro test_table statements>
+<#macro scenarios_and_test_table statements>
 	<#list statements as statement>
+	
+		<#if statement.hasScenarios()>
+			<ul class="testTable">
+				<p>${bdocMacroHelper.format(statement)}<BR/></p>
+				<@list_scenarios scenarios=statement.getScenarios()/>
+			</ul>
+		</#if>
 				
 		<#if statement.hasTestTables()>
 	
 			<#list statement.getTestTables() as testTable>
 				<ul class="testTable">
-					<div class="${testTable.sentence}">
-						<p>${bdocMacroHelper.format(statement)}<BR/>
-						<span class="testTableDescription">${bdocMacroHelper.format(testTable)}</span></p>
-						<table>
-							<thead>
-								<tr>
-								<#list testTable.getHeaderColumns() as headerColumn>
-									<th>${bdocMacroHelper.format(headerColumn)}</th>
+				
+					<p>${bdocMacroHelper.format(statement)}<BR/>
+					<span class="testTableDescription">${bdocMacroHelper.format(testTable)}</span></p>
+					<table>
+						<thead>
+							<tr>
+							<#list testTable.getHeaderColumns() as headerColumn>
+								<th>${bdocMacroHelper.formatHeaderColumn(headerColumn)}</th>
+							</#list>
+							</tr>
+						</thead>
+						<tbody>
+							<#list testTable.getRows() as row>
+							<tr>
+								<#list row.getColumns() as column>
+									<td>${bdocMacroHelper.format(column)}</td>
 								</#list>
-								</tr>
-							</thead>
-							<tbody>
-								<#list testTable.getRows() as row>
-								<tr>
-									<#list row.getColumns() as column>
-										<td>${bdocMacroHelper.formatTableColumn(column)}</td>
-									</#list>
-								</tr>
-								</#list>
-							</tbody>
-						</table>
-					</div>
+							</tr>
+							</#list>
+						</tbody>
+					</table>
+					
 				</ul>
 			</#list>
 		</#if>

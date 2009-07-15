@@ -65,4 +65,28 @@ public class TestMyObjectBehaviour {
 
 	void examleWithoutArgument() {
 	}
+
+	@Test
+	public void shouldExtractTestTableWithOnlyOnRow() {
+		example(4);
+	}
+
+	@Test
+	public void testThatMakesCallScenarioMethods() {
+		givenMyFavoriteValue(4);
+		gittMinFavorittVerdi(4);
+		saaSkalJegHoppe( 10 );
+	}
+
+	public void saaSkalJegHoppe(int i) {
+	}
+
+	public void givenMyFavoriteValue(int i) {
+	}
+
+	public void gittMinFavorittVerdi(int i) {
+	}
+	
+	
+
 }

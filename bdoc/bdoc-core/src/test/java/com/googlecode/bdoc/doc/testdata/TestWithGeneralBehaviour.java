@@ -87,4 +87,13 @@ public class TestWithGeneralBehaviour {
 	public void statmentIsMoreGeneralThanSpecificationAndScenario() {
 
 	}
+	
+	@Test
+	public void statementWithScenario() {		
+	}
+	
+	@Test
+	public void shouldBeSpecificationWithScenario() {		
+	}
+	
 }

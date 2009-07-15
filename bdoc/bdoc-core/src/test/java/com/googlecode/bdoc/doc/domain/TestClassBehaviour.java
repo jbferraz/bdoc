@@ -27,6 +27,9 @@ package com.googlecode.bdoc.doc.domain;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,9 +43,8 @@ import com.googlecode.bdoc.doc.domain.testdata.TestTest;
 import com.googlecode.bdoc.doc.testdata.RefClass;
 import com.googlecode.bdoc.doc.testdata.TestWithGeneralBehaviour;
 
-
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 @Ref(Story.CREATE_BDOC_FROM_CODE)
 public class TestClassBehaviour {
@@ -114,6 +116,32 @@ public class TestClassBehaviour {
 	@Test
 	public void shouldReturnEmptyListOfSpecificationsForANewClassBehviour() {
 		assertTrue(new ClassBehaviour(TestSomeClass.class).getSpecifications().isEmpty());
+	}
+
+	@Test
+	public void scenariosAddedDirectlyShouldResultInClassBehaviourWithScenarios() {
+		classBehaviour.addBehaviour(new TestMethod(TestWithGeneralBehaviour.class, "givenWhenThen"));
+		assertTrue(classBehaviour.hasScenarios());
+	}
+
+	@Test
+	public void scenariosAddedIndirectlyThroughAStatmentShouldResultInClassBehaviourWithScenarios() {
+		TestMethod testMethod = new TestMethod(TestWithGeneralBehaviour.class, "statementWithScenario");
+		List<Scenario> scenarios = new ArrayList<Scenario>();
+		scenarios.add(new Scenario("givenWhenThen"));
+		testMethod.setScenarios(scenarios);
+		classBehaviour.addBehaviour(testMethod);
+		assertTrue(classBehaviour.hasScenarios());
+	}
+
+	@Test
+	public void scenariosAddedIndirectlyThroughASpecificationShouldResultInClassBehaviourWithScenarios() {
+		TestMethod testMethod = new TestMethod(TestWithGeneralBehaviour.class, "shouldBeSpecificationWithScenario");
+		List<Scenario> scenarios = new ArrayList<Scenario>();
+		scenarios.add(new Scenario("givenWhenThen"));
+		testMethod.setScenarios(scenarios);
+		classBehaviour.addBehaviour(testMethod);
+		assertTrue(classBehaviour.hasScenarios());
 	}
 
 	public class TestSomeClass {

@@ -29,13 +29,12 @@ import static com.googlecode.bdoc.doc.report.ReportTestHelper.sentence;
 import static com.googlecode.bdoc.doc.util.Select.from;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -48,7 +47,6 @@ import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestClass;
-import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.TestClassWithGeneralBehaviour;
@@ -106,20 +104,16 @@ public class TestModuleBehaviourReport {
 	}
 
 	@Test
-	public void shouldBePossibleToChangeFormattingForAdvancedScenarioSpecification() throws IOException {
-		bdoc = BDocTestHelper.bdocWithAdvancedScenarioSpecification();
-		String htmlAndInBetween = new ModuleBehaviourReport(bdoc, new AndInBetweenScenarioLinesFormatter()).html();
-		String htmlEachOnNewLine = new ModuleBehaviourReport(bdoc, new EachOnNewLineScenarioLinesFormatter()).html();
-		assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
-
-	}
-
-	@Test
 	public void shouldPresentTestTablesForGeneralBehaviour() {
 		ClassBehaviour classBehaviour = bdoc.classBehaviourInModuleBehaviour(TestClassWithTestTablesBehaviour.class);
 		Specification specification = from(classBehaviour.getSpecifications()).equalTo(new Specification("shouldAddTwoNumbers"));
 
 		assertXPathContains(sentence(specification.getTestTables().get(0)), "//ul[@class='testTable']", html);
+	}
+	
+	@Test
+	public void shouldPresentDynamicScenarios() {
+		assertXPathContains("Given a dynamic scenario", "//div[@class='content']", html);
 	}
 
 	@Test

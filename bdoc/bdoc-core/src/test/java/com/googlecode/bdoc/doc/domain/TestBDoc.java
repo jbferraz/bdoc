@@ -210,24 +210,32 @@ public class TestBDoc {
 	}
 
 	@Test
-	public void listOfScenariosShouldIncludeThoseRelatedToGeneralBehaviour() {
+	public void listOfScenariosShouldIncludeThoseRelatedToModuleBehaviour() {
 		bdoc = new BDoc();
 		bdoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BConst.SRC_TEST_JAVA);
-		assertFalse(bdoc.scenarios().isEmpty());
+		ClassBehaviour classBehaviour = bdoc.classBehaviourInModuleBehaviour(TestExampleNoStories.class);
+		
+		assertFalse(classBehaviour.getScenarios().isEmpty());
 	}
 
 	@Test
 	public void listOfScenariosShouldIncludeThoseRelatedToUserStories() {
-		bdoc = new BDoc();
+		bdoc = new BDoc(Test.class,ExReference.class,Ignore.class); 
 		bdoc.addBehaviourFrom(new TestClass(TestExampleWithStory.class), BConst.SRC_TEST_JAVA);
-		assertFalse(bdoc.scenarios().isEmpty());
+		ClassBehaviour classBehaviour = bdoc.userStoryFor(ExStory.STORY3).classBehaviourFor(TestExampleWithStory.class);
+		assertFalse(classBehaviour.getScenarios().isEmpty());
 	}
 
 	@Test
 	public void shouldBeAbleToUseRuntimeBehaviourFactoryToCreateScenarioInMethodBlock() {
-		BDoc bdocWithScenario = new BDoc();
-		bdocWithScenario.addBehaviourFrom(new TestClass(TestDomainBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
-		assertFalse(bdocWithScenario.scenarios().isEmpty());
+		bdoc = new BDoc();
+		bdoc.addBehaviourFrom(new TestClass(TestDomainBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
+
+		ClassBehaviour classBehaviour = bdoc.classBehaviourInModuleBehaviour(TestDomainBehaviour.class);
+		Specification specification = from(classBehaviour.getSpecifications()).equalTo(
+				new Specification("shouldBeASpecificationWithScenario"));
+		
+		assertFalse(specification.getScenarios().isEmpty());
 	}
 
 	@Test
@@ -254,11 +262,12 @@ public class TestBDoc {
 	public void listOfTestTablesShouldIncludeUserStories() {
 		bdoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
 		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
-		
+
 		ClassBehaviour classBehaviour = bdoc.classBehaviourInModuleBehaviour(MyTestTablesBehaviour.class);
 
-		Specification specification = from(classBehaviour.getSpecifications()).equalTo(new Specification("shouldIncludeTestTableReferencedToAStory"));
-		
+		Specification specification = from(classBehaviour.getSpecifications()).equalTo(
+				new Specification("shouldIncludeTestTableReferencedToAStory"));
+
 		assertTrue(specification.getTestTables().contains(new TestTable("assertDivison")));
 	}
 

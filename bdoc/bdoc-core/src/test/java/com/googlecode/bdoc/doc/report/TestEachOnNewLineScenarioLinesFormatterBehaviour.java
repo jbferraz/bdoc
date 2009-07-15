@@ -24,35 +24,36 @@
 
 package com.googlecode.bdoc.doc.report;
 
-import static org.junit.Assert.assertEquals;
+import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import integrationtestclasses.stack.StackBehavior;
+
+import java.io.File;
+import java.io.IOException;
 
 import org.junit.Test;
 
-import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 
 /**
  * @author Per Otto Bergum Christensen
  */
-public class TestBDocMacroHelperBehaviour {
-
-	private BDocMacroHelper bdocMacroHelper = new BDocMacroHelper();
+public class TestEachOnNewLineScenarioLinesFormatterBehaviour {
 
 	@Test
-	public void shouldFindTextForAGivenKey() {
-		assertEquals("New user stories", new BDocMacroHelper().text("new.user.stories"));
-	}
+	public void shouldBePossibleToChangeFormattingForAdvancedScenarioSpecification() throws IOException {
+		BDoc bdoc = BDocTestHelper.bdocWithProject();
+		bdoc.addBehaviourFrom(new TestClass(StackBehavior.class), BConst.SRC_TEST_JAVA);
 
-	@Test
-	public void shouldBePossibleToSetScenarioFormatter() throws Exception {
-		new BDocMacroHelper(new EachOnNewLineScenarioLinesFormatter());
-	}
-
-	@Test
-	public void shouldTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacterWhenFormattingScenarios() {
-		String scenarioLines = bdocMacroHelper.scenarioLines(new Scenario("gittAtOevreGrenseErNaarSaa"));
-		assertFalse(scenarioLines.contains("oe"));
-		assertTrue(scenarioLines.contains("ø"));
+		String htmlAndInBetween = new ModuleBehaviourReport(bdoc, new AndInBetweenScenarioLinesFormatter()).html();
+		String htmlEachOnNewLine = new ModuleBehaviourReport(bdoc, new EachOnNewLineScenarioLinesFormatter()).html();
+		
+		writeStringToFile(new File("target/" + getClass().getName() + ".htmlAndInBetween.html"), htmlAndInBetween);
+		writeStringToFile(new File("target/" + getClass().getName() + ".htmlEachOnNewLine.html"), htmlEachOnNewLine);
+		
+		assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
 	}
 }

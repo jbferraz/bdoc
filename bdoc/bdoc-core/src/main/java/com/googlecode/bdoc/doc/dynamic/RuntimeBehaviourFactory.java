@@ -66,18 +66,21 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 			scenarios.add(scenario);
 		}
 
-		createOneTestTableForEachMethodThatOccursMoreThanOnce(method, methodCalls);
+		createOneTestTableForEachMethod(method, methodCalls);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void createOneTestTableForEachMethodThatOccursMoreThanOnce(TestMethod method, List<MethodCall> methodCalls) {
+	private void createOneTestTableForEachMethod(TestMethod method, List<MethodCall> methodCalls) {
 		TreeBag methodsBag = new TreeBag();
 
-		// for som strange reason, a testrun in maven gives a ConcurentBlaBlaException if for each is used.. .
+		// for som strange reason, a testrun in maven gives a
+		// ConcurentBlaBlaException if for each is used.. .
 		for (int i = 0; i < methodCalls.size(); i++) {
 			MethodCall methodCall = methodCalls.get(i);
-			if (methodCall.hasArguments()) {
-				methodsBag.add(methodCall.getName());
+			String methodName = methodCall.getName();
+
+			if (methodCall.hasArguments() && (null == Scenario.Pattern.find(methodName))) {
+				methodsBag.add(methodName);
 			}
 		}
 
@@ -85,7 +88,7 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 		for (Object object : uniqueSet) {
 			String name = (String) object;
 			int count = methodsBag.getCount(name);
-			if (count > 1) {
+			if (count > 0) {
 				List<MethodCall> testTableMethodCalls = new ArrayList<MethodCall>();
 				for (MethodCall methodCall : methodCalls) {
 					if (name.equals(methodCall.getName())) {

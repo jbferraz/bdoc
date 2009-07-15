@@ -50,9 +50,9 @@ public class ModuleBehaviour {
 		}
 
 		ClassBehaviour classBehaviour = classPackage.addBehaviour(method);
-		if (method.hasScenarios()) {
-			classBehaviour.addScenarios(method.getScenarios());
-		}
+//		if (method.hasScenarios()) {
+//			classBehaviour.addScenarios(method.getScenarios());
+//		}
 		return classBehaviour;
 	}
 

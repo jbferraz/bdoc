@@ -57,23 +57,10 @@ public class BDocMacroHelper {
 	}
 
 	public String format(Statement statement) {
-		return formatTwoLetterCodeToNorwegianSpecialCharacters(CamelCaseToSentenceTranslator.translate(statement.getSentence()));
+		return CamelCaseToSentenceTranslator.translate(statement.getSentence());
 	}
 
-	private String formatTwoLetterCodeToNorwegianSpecialCharacters(String result) {
-		result = result.replace("aa", "å");
-		result = result.replace("Aa", "Å");
-		result = result.replace("ae", "æ");
-		result = result.replace("Ae", "Æ");
-		result = result.replace("oe", "ø");
-		result = result.replace("Oe", "Ø");
-
-		result = result.replace("øng", "oeng");
-		result = result.replace("døs", "does");
-		return result;
-	}
-
-	public String format(TableColumn column) {
+	public String formatHeaderColumn(TableColumn column) {
 		return CamelCaseToSentenceTranslator.translate(String.valueOf(column.getValue()));
 	}
 
@@ -82,13 +69,13 @@ public class BDocMacroHelper {
 		StringBuilder scenarioHtmlSnippet = new StringBuilder();
 		for (String line : lines) {
 			scenarioHtmlSnippet.append("<li>");
-			scenarioHtmlSnippet.append(formatTwoLetterCodeToNorwegianSpecialCharacters(line));
+			scenarioHtmlSnippet.append(line);
 			scenarioHtmlSnippet.append("</li>");
 		}
 		return scenarioHtmlSnippet.toString();
 	}
 
-	public String formatTableColumn(TableColumn tableColumn) {
+	public String format(TableColumn tableColumn) {
 		return tableColumn.getValue();
 	}
 

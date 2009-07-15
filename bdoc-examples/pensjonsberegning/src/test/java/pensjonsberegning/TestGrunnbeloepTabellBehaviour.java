@@ -5,15 +5,18 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import pensjonsberegning.bdoc.Ref;
 import pensjonsberegning.bdoc.RefClass;
+import pensjonsberegning.bdoc.Story;
 
-@RefClass(GrunnbeloepRepository.class)
-public class TestGrunnbeloepRepositoryBehaviour {
+@Ref( Story.TABELL_FOR_GRUNNBELOEP )
+@RefClass(GrunnbeloepTabell.class)
+public class TestGrunnbeloepTabellBehaviour {
 
-	private GrunnbeloepRepository grunnbeloepRepository = new GrunnbeloepRepository();
+	private GrunnbeloepTabell grunnbeloepRepository = new GrunnbeloepTabell();
 
 	@Test
-	public void skalInneholdeGjennomsnittligGrunnbelopForAarene1967Til2008() {
+	public void inneholderGjennomsnittligGrunnbelopForAarene1967Til2008() {
 		for (int aar = 1967; aar < 2009; aar++) {
 			eksempelPaaGrunnbelopForEtGittAar(aar, grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(aar));
 		}
@@ -24,7 +27,7 @@ public class TestGrunnbeloepRepositoryBehaviour {
 	}
 
 	@Test
-	public void grunnbelopetErStigendeHvertAarFra1967() {
+	public void erStigendeHvertAarFra1967() {
 		int grunnbeloep = Grunnbeloep._1967;
 		for (int aar = 1968; aar < 2009; aar++) {
 			Integer grunnbeloepAaretEtter = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(aar);

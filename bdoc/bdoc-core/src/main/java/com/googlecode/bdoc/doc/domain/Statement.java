@@ -100,7 +100,11 @@ public class Statement {
 	}
 
 	public boolean hasTestTables() {
-		return null != testTables && testTables.size() > 0;
+		return null != testTables && !testTables.isEmpty();
+	}
+	
+	public boolean hasScenarios() {
+		return null != scenarios && !scenarios.isEmpty();
 	}
 
 }

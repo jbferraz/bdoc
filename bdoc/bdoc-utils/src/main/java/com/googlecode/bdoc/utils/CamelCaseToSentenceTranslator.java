@@ -36,21 +36,21 @@ public class CamelCaseToSentenceTranslator {
 
 	public static String translate(String camelCaseSentence) {
 
-		StringBuilder sentence = new StringBuilder();
+		StringBuilder sentenceBuilder = new StringBuilder();
 
 		boolean firstChar = true;
 		Character previousChar = null;
 		for (char character : camelCaseSentence.toCharArray()) {
 
 			if (Character.isUpperCase(character) && !SPACE_CHAR.equals(previousChar)) {
-				sentence.append(' ');
+				sentenceBuilder.append(' ');
 			}
 
 			if (firstChar) {
-				sentence.append(Character.toUpperCase(character));
+				sentenceBuilder.append(Character.toUpperCase(character));
 				firstChar = false;
 			} else {
-				sentence.append(Character.toLowerCase(character));
+				sentenceBuilder.append(Character.toLowerCase(character));
 			}
 			previousChar = character;
 		}
@@ -58,9 +58,9 @@ public class CamelCaseToSentenceTranslator {
 		StringBuilder sentenceWithNumberFormatted = new StringBuilder();
 
 		boolean lastCharIsNumber = false;
-		for (int i = 0; i < sentence.length(); i++) {
+		for (int i = 0; i < sentenceBuilder.length(); i++) {
 
-			char c = sentence.charAt(i);
+			char c = sentenceBuilder.charAt(i);
 
 			if (isNumber(c) && !lastCharIsNumber) {
 				sentenceWithNumberFormatted.append(" ");
@@ -71,7 +71,8 @@ public class CamelCaseToSentenceTranslator {
 			sentenceWithNumberFormatted.append(c);
 		}
 
-		return sentenceWithNumberFormatted.toString().replace(SPACE_CHAR, ' ').toString().trim();
+		String sentence = sentenceWithNumberFormatted.toString().replace(SPACE_CHAR, ' ').toString().trim();
+		return formatTwoLetterCodeToNorwegianSpecialCharacters(sentence);
 	}
 
 	private static boolean isNumber(char c) {
@@ -90,6 +91,18 @@ public class CamelCaseToSentenceTranslator {
 		}
 
 		return sentence;
+	}
 
+	public static String formatTwoLetterCodeToNorwegianSpecialCharacters(String result) {
+		result = result.replace("aa", "å");
+		result = result.replace("Aa", "Å");
+		result = result.replace("ae", "æ");
+		result = result.replace("Ae", "Æ");
+		result = result.replace("oe", "ø");
+		result = result.replace("Oe", "Ø");
+
+		result = result.replace("øng", "oeng");
+		result = result.replace("døs", "does");
+		return result;
 	}
 }

@@ -1,12 +1,11 @@
 package pensjonsberegning;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 public class TestPensjonspoeng {
-	private Pensjonspoeng pensjonspoeng = new Pensjonspoeng(new GrunnbeloepRepository());
+	private Pensjonspoeng pensjonspoeng = new Pensjonspoeng(new GrunnbeloepTabell());
 
 	@Test
 	public void skalKunneUtfoeresForPensjonsgivendeInntektMellom1967Og2008() {

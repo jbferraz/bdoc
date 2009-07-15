@@ -1,14 +1,16 @@
 package pensjonsberegning;
 
 /**
+ * Klassen beregner antall Pensjonspoeng basert på inntekstår og inntekt. Basert
+ * på inntekstår vil aktuell G verdi for året benyttes.
  * 
  * @author Per Otto Bergum Christensen
  */
 public class Pensjonspoeng {
 
-	private GrunnbeloepRepository grunnbeloepRepository;
+	private GrunnbeloepTabell grunnbeloepRepository;
 
-	public Pensjonspoeng(GrunnbeloepRepository gjennomsnittligGrunnbeloepRepository) {
+	public Pensjonspoeng(GrunnbeloepTabell gjennomsnittligGrunnbeloepRepository) {
 		this.grunnbeloepRepository = gjennomsnittligGrunnbeloepRepository;
 	}
 
@@ -55,7 +57,7 @@ public class Pensjonspoeng {
 		return 7;
 	}
 
-	private double rundAvTilToDesimaler(double verdi) {
+	public static double rundAvTilToDesimaler(double verdi) {
 		return Math.round(100 * verdi) / 100D;
 	}
 }

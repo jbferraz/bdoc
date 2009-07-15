@@ -30,8 +30,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
-
 /**
  * @author Per Otto Bergum Christensen
  * @author Micael Vesterlund
@@ -126,4 +124,25 @@ public class TestCamelCaseToSentenceTranslator {
 		String sentence = CamelCaseToSentenceTranslator.translate("given_A_Sentence");
 		assertEquals("Given a sentence", sentence);
 	}
+	
+	@Test
+	public void shouldTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacter() {
+		exampleOnFormattingOfNorwegianText("naarASaaB", "Når a så b");
+		exampleOnFormattingOfNorwegianText("aa", "Å");
+		exampleOnFormattingOfNorwegianText("skalVaere", "Skal være");
+		exampleOnFormattingOfNorwegianText("ae", "Æ");
+		exampleOnFormattingOfNorwegianText("skalAngiOevreGrense", "Skal angi øvre grense");
+		exampleOnFormattingOfNorwegianText("oe", "Ø");
+	}
+	
+	@Test
+	public void shouldNotTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacterWhenTwoLetterCodeIsANaturalPartOfTheWord() {
+		exampleOnFormattingOfNorwegianText("poeng", "Poeng");
+	}
+	
+
+	void exampleOnFormattingOfNorwegianText(String camelCase, String expectedText) {
+		assertEquals(expectedText, CamelCaseToSentenceTranslator.translate(camelCase));
+	}
+	
 }

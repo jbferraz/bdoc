@@ -157,13 +157,13 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	}
 
 	public boolean hasTestTables() {
-		for (Specification specification : specifications ) {
-			if( specification.hasTestTables() ) {
+		for (Specification specification : specifications) {
+			if (specification.hasTestTables()) {
 				return true;
 			}
 		}
 		for (Statement statement : statements) {
-			if( statement.hasTestTables() ) {
+			if (statement.hasTestTables()) {
 				return true;
 			}
 		}
@@ -175,6 +175,16 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	}
 
 	public boolean hasScenarios() {
+		for (Statement statement : statements) {
+			if (statement.hasScenarios()) {
+				return true;
+			}
+		}
+		for (Specification specification : specifications) {
+			if (specification.hasScenarios()) {
+				return true;
+			}
+		}
 		return !scenarios.isEmpty();
 	}
 

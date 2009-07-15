@@ -227,17 +227,6 @@ public class BDoc {
 		return result;
 	}
 
-	public List<Scenario> scenarios() {
-		List<Scenario> result = new ArrayList<Scenario>();
-
-		result.addAll(moduleBehaviour.scenarios());
-
-		for (UserStory userStory : userStories) {
-			result.addAll(userStory.getScenarios());
-		}
-		return result;
-	}
-
 	/**
 	 * Helper method for test - when default annotations should be set, after
 	 * serializing the BDoc, since annotations are transient

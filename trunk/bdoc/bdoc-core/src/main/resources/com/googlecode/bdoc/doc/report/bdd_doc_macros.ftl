@@ -47,7 +47,6 @@
 
 <#macro list_behaviour module>
 	<@list_class_behaviour list=module.getClassBehaviour()/>
-	<@list_scenarios textKey="scenarios" scenarios=module.getScenarios()/>
 	<@list_examples module=module/>
 	<a href="#top">&lt; Back to top</a>
 </#macro>

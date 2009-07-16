@@ -32,6 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bdddoc4j.examples.Ref;
+import bdddoc4j.examples.RefClass;
 import bdddoc4j.examples.Story;
 
 /**
@@ -44,6 +45,7 @@ import bdddoc4j.examples.Story;
  * @Author Micael Vesterlund, micael.vesterlund@gmail.com
  */
 @Ref(Story.STACK_DESCRIBED_WITH_METHODS)
+@RefClass(Stack.class)
 public class TestStackBehavior {
 
 	private Stack<String> stack;
@@ -121,59 +123,59 @@ public class TestStackBehavior {
 		sizeAfter = 0;
 	}
 
-	private void givenAnEmptyStack() {
+	protected void givenAnEmptyStack() {
 		stack = new Stack<String>();
 	}
 
-	private void givenOnePushedItem(String item) {
+	protected void givenOnePushedItem(String item) {
 		sizeBefore = stack.size();
 		stack.push(item);
 		sizeAfter = stack.size();
 	}
 
-	private void whenPushedIsCalledWith(String item) {
+	protected void whenPushedIsCalledWith(String item) {
 		givenOnePushedItem(item);
 	}
 
-	private void whenPopIsCalled() {
+	protected void whenPopIsCalled() {
 		sizeBefore = stack.size();
 		poped = stack.pop();
 		sizeAfter = stack.size();
 	}
 
-	private void whenPeekIsCalled() {
+	protected void whenPeekIsCalled() {
 		sizeBefore = stack.size();
 		peeked = stack.peek();
 		sizeAfter = stack.size();
 	}
 
-	private void thenAnExceptionAreThrown() {
+	protected void thenAnExceptionAreThrown() {
 		fail("method hasn't caused an exception when it should");
 	}
 
-	private void thenPopedValueShouldBe(String lastPushed) {
+	protected void thenPopedValueShouldBe(String lastPushed) {
 		assertThat(lastPushed, equalTo(poped));
 	}
 
-	private void thenPeekedValueShouldBe(String lastPushed) {
+	protected void thenPeekedValueShouldBe(String lastPushed) {
 		assertThat(lastPushed, equalTo(peeked));
 	}
 
-	private void thenTheValueRemainsInTheStack() {
+	protected void thenTheValueRemainsInTheStack() {
 		assertThat(sizeAfter, equalTo(sizeBefore));
 	}
 
-	private void thenShouldTheValueNotRemainsInTheStack() {
+	protected void thenShouldTheValueNotRemainsInTheStack() {
 		assertThat(sizeAfter, equalTo(sizeBefore - 1));
 	}
 
-	private void thenTheStackAreEmpty() {
+	protected void thenTheStackAreEmpty() {
 		if (!stack.isEmpty()) {
 			throw new AssertionError();
 		}
 	}
 
-	private void thenTheStackAreNotEmpty() {
+	protected void thenTheStackAreNotEmpty() {
 		if (stack.isEmpty()) {
 			throw new AssertionError();
 		}

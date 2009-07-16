@@ -29,7 +29,6 @@ import static com.googlecode.bdoc.doc.report.ReportTestHelper.sentence;
 import static com.googlecode.bdoc.doc.util.Select.from;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
-import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.io.IOException;

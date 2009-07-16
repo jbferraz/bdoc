@@ -32,11 +32,11 @@ import org.junit.Test;
 public class TestClassWithGeneralBehaviour {
 
 	@Test
-	public void givenSomeThingWhenAnActionThenEnsure1() {
+	public void givenSomeThingWhenAnActionThenEnsureXXX() {
 	}
 
 	@Test
-	public void givenSomeThingWhenAnActionThenEnsure2() {
+	public void givenSomeThingWhenAnActionThenEnsureYYY() {
 	}
 
 	@Test

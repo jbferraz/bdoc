@@ -72,6 +72,10 @@ public class Statement {
 		}
 		return result.trim();
 	}
+	
+	public String getCamelCaseSentence() {
+		return camelCaseSentence;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -105,6 +109,10 @@ public class Statement {
 	
 	public boolean hasScenarios() {
 		return null != scenarios && !scenarios.isEmpty();
+	}
+	
+	public boolean hasExamples() {
+		return hasScenarios() || hasTestTables();
 	}
 
 }

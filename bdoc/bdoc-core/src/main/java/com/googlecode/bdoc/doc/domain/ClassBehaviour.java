@@ -212,5 +212,9 @@ public class ClassBehaviour implements ClassSpecifications, ClassStatements {
 	public void addStatement(Statement statement) {
 		this.statements.add(statement);
 	}
+	
+	public boolean hasExamples() {
+		return hasScenarios() || hasTestTables();
+	}
 
 }

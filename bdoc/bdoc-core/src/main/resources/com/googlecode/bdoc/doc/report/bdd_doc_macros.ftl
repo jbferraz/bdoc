@@ -57,18 +57,25 @@
 			
 			<span>${bdocMacroHelper.format(classBehaviour.className)}</span>
 			<ul class="specifications">
-				<#list classBehaviour.statements as statement>
-					<li>${bdocMacroHelper.format(statement)}</li>
-				</#list>
-				<#list classBehaviour.specifications as specification>
-					<li>${bdocMacroHelper.format(specification)}</li>
-				</#list>
+				<@li_statements statements=classBehaviour.statements/>
+				<@li_statements statements=classBehaviour.specifications/>				
 			</ul>
 		</#list>
 	</div>
 </#macro>
 
-
+<#macro li_statements statements>
+	<#list statements as statement>
+		<li>
+			<#if statement.hasExamples()>
+				<a href="#${statement.getCamelCaseSentence()}">${bdocMacroHelper.format(statement)}</a>
+			</#if>
+			<#if !statement.hasExamples()>
+				${bdocMacroHelper.format(statement)}
+			</#if>
+		</li>
+	</#list>
+</#macro>
 
 <#macro list_class_specifications list textKey="">
 	<#if 0 < list?size >
@@ -126,10 +133,8 @@
 		
 		<#list module.getClassBehaviour() as classBehaviour>
 	
-			<#if classBehaviour.hasTestTables() || classBehaviour.hasScenarios() >
+			<#if classBehaviour.hasExamples() >			
 				<p>${classBehaviour.getClassName()}</p>
-			</#if>
-			<#if classBehaviour.hasTestTables() || classBehaviour.hasScenarios() >
 				<@scenarios_and_test_table statements=classBehaviour.getStatements()/>
 				<@scenarios_and_test_table statements=classBehaviour.getSpecifications()/>
 			</#if>
@@ -161,6 +166,10 @@
 
 <#macro scenarios_and_test_table statements>
 	<#list statements as statement>
+	
+		<#if statement.hasExamples()>
+			<a name="${statement.getCamelCaseSentence()}"></a>
+		</#if>
 	
 		<#if statement.hasScenarios()>
 			<ul class="testTable">

@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.doc.report;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
@@ -37,23 +38,16 @@ import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
  */
 public class BDocMacroHelper {
 
+	private ResourceBundle textBundle;
 	private ScenarioLinesFormatter formatter;
-
-	public BDocMacroHelper() {
-		this.formatter = new AndInBetweenScenarioLinesFormatter();
-	}
 
 	public BDocMacroHelper(ScenarioLinesFormatter formatter) {
 		this.formatter = formatter;
-	}
-
-	ResourceBundle bundle;
-	{
-		bundle = ResourceBundle.getBundle("com.googlecode.bdoc.text");
+		this.textBundle = ResourceBundle.getBundle("com.googlecode.bdoc.text", Locale.ENGLISH );
 	}
 
 	public String text(String key) {
-		return bundle.getString(key);
+		return textBundle.getString(key);
 	}
 
 	public String format(Statement statement) {

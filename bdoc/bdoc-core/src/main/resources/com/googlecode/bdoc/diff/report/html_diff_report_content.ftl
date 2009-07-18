@@ -135,7 +135,7 @@
 
 <#if bdocDiff.hasGeneralBehaviourDiff() >	
 	<div class="generalBehaviourDiff">
-		<h2><@bdddoc.text key="internal.app.behaviour"/></h2>
+		<h2><@bdddoc.text key="module.behaviour"/></h2>
 		
 		<#if bdocDiff.getModuleBehaviourDiff().hasNewPackages() >
 			<div class="newPackages">

@@ -55,12 +55,15 @@ import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassWithThreeScenari
 @Ref(Story.HTML_USERSTORY_REPORT)
 public class TestUserStoryHtmlReport {
 
+	private BDocMacroHelper bdocMacroHelper = new BDocMacroHelper(new AndInBetweenScenarioLinesFormatter());
+
 	private String html;
 	private BDoc bdoc;
 
 	public TestUserStoryHtmlReport() throws IOException {
 		bdoc = BDocTestHelper.bdocWithProject();
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class),
+				BConst.SRC_TEST_JAVA);
 
 		UserStoryHtmlReport htmlReport = new UserStoryHtmlReport(bdoc);
 
@@ -107,7 +110,8 @@ public class TestUserStoryHtmlReport {
 	@Test
 	public void shouldPresentTheNameOfTheClassThatHasSpecifiedBehaviour() {
 		ClassSpecifications classBehaviour = bdoc.getUserstories().get(0).getClassSpecifications().get(0);
-		assertXPathContains(new BDocMacroHelper().format(classBehaviour.getClassName()), "//div[@class='classBehaviour']", html);
+
+		assertXPathContains(bdocMacroHelper.format(classBehaviour.getClassName()), "//div[@class='classBehaviour']", html);
 	}
 
 	@Test

@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.googlecode.bdoc.diff.domain.BDocDiff;
+import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
 
@@ -58,7 +59,7 @@ public class HtmlDiffReport {
 
 		model = new HashMap<String, Object>();
 		model.put("bdocDiff", bDocDiff);
-		model.put("bdocMacroHelper", new BDocMacroHelper() );
+		model.put("bdocMacroHelper", new BDocMacroHelper(new AndInBetweenScenarioLinesFormatter()) );
 	}
 
 	public String html() {

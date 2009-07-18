@@ -37,11 +37,9 @@ import com.googlecode.bdoc.doc.domain.Scenario;
  */
 public class TestBDocMacroHelperBehaviour {
 
-	private BDocMacroHelper bdocMacroHelper = new BDocMacroHelper();
-
 	@Test
-	public void shouldFindTextForAGivenKey() {
-		assertEquals("New user stories", new BDocMacroHelper().text("new.user.stories"));
+	public void defaultTextLanguageShouldBeEnglish() {
+		assertEquals("New user stories", new BDocMacroHelper(new AndInBetweenScenarioLinesFormatter()).text("new.user.stories"));
 	}
 
 	@Test
@@ -51,7 +49,7 @@ public class TestBDocMacroHelperBehaviour {
 
 	@Test
 	public void shouldTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacterWhenFormattingScenarios() {
-		String scenarioLines = bdocMacroHelper.scenarioLines(new Scenario("gittAtOevreGrenseErNaarSaa"));
+		String scenarioLines = new BDocMacroHelper(new AndInBetweenScenarioLinesFormatter()).scenarioLines(new Scenario("gittAtOevreGrenseErNaarSaa"));
 		assertFalse(scenarioLines.contains("oe"));
 		assertTrue(scenarioLines.contains("ø"));
 	}

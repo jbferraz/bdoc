@@ -24,7 +24,7 @@
 
 package com.googlecode.bdoc;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Enumeration;
 import java.util.Locale;
@@ -38,6 +38,7 @@ public class TestSynchronizedTextKeys {
 	private static final String COM_GOOGLECODE_BDOC_TEXT = "com.googlecode.bdoc.text";
 	private ResourceBundle enText = ResourceBundle.getBundle(COM_GOOGLECODE_BDOC_TEXT, Locale.ENGLISH);
 	private ResourceBundle noText = ResourceBundle.getBundle(COM_GOOGLECODE_BDOC_TEXT, new Locale("no"));
+	private ResourceBundle svText = ResourceBundle.getBundle(COM_GOOGLECODE_BDOC_TEXT, new Locale("sv"));
 
 	@Test
 	public void englishTextPropertyFileShouldContainKeyForTocUserstories() {
@@ -50,8 +51,18 @@ public class TestSynchronizedTextKeys {
 	}
 
 	@Test
+	public void swedishTextPropertyFileShouldContainKeyForTocUserstories() {
+		assertEquals("Användarberättelse:", svText.getString("toc.userstories"));
+	}
+
+	@Test
 	public void norwegianTextPropertyFileShouldBeInSyncWithTheEnglishVersion() {
 		assertResourceBundleEquals(Locale.ENGLISH, new Locale("no"));
+	}
+
+	@Test
+	public void swedishTextPropertyFileShouldBeInSyncWithTheEnglishVersion() {
+		assertResourceBundleEquals(Locale.ENGLISH, new Locale("sv"));
 	}
 
 	private void assertResourceBundleEquals(Locale locale1, Locale locale2) {

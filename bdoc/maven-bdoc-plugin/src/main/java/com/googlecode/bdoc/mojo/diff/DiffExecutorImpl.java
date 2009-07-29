@@ -28,6 +28,7 @@ import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.diff.report.BDocDiffReport;
 import com.googlecode.bdoc.diff.report.DiffReport;
 
@@ -43,13 +44,13 @@ public class DiffExecutorImpl implements DiffExecutor {
 		this.logDirectory = logDirectory;
 	}
 
-	public DiffReport createDiffReport(String oldBddDocFileName, String newBddDocFileName) {
+	public DiffReport createDiffReport(String oldBddDocFileName, String newBddDocFileName,BDocConfig bdocConfig) {
 		try {
 
 			String oldXmlVersion = FileUtils.readFileToString(new File(logDirectory, oldBddDocFileName));
 			String newXmlVersion = FileUtils.readFileToString(new File(logDirectory, newBddDocFileName));
 
-			return new BDocDiffReport().execute(oldXmlVersion, newXmlVersion );
+			return new BDocDiffReport().execute(oldXmlVersion, newXmlVersion,bdocConfig );
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

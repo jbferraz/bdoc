@@ -36,6 +36,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
@@ -85,7 +86,7 @@ public class TestDiffLogReportBehaviour {
 	}
 
 	private void whenTheReportIsRunOnTheDiffLog() {
-		diffLogReport.run(diffLog);
+		diffLogReport.run(diffLog,new BDocConfig());
 	}
 
 	private void thenEnsureTheReportContainsTheDiffWithTheAddedSpecification() throws IOException {

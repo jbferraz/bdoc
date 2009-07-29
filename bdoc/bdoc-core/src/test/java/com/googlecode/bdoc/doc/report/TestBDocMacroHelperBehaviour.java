@@ -28,6 +28,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Locale;
+
 import org.junit.Test;
 
 import com.googlecode.bdoc.BDocConfig;
@@ -40,12 +42,26 @@ public class TestBDocMacroHelperBehaviour {
 
 	@Test
 	public void defaultTextLanguageShouldBeEnglish() {
-		assertEquals("New user stories", new BDocMacroHelper( new BDocConfig()  ).text("new.user.stories"));
+		assertEquals("New user stories", new BDocMacroHelper(new BDocConfig()).text("new.user.stories"));
+	}
+
+	@Test
+	public void norwegianLocaleShouldBeSupported() {
+		BDocConfig bdocConfig = new BDocConfig();
+		bdocConfig.setLocale(new Locale("NO"));
+		assertEquals("Nye brukerhistorier", new BDocMacroHelper(bdocConfig).text("new.user.stories"));
+	}
+
+	@Test
+	public void swedishLocaleShouldBeSupported() {
+		BDocConfig bdocConfig = new BDocConfig();
+		bdocConfig.setLocale(new Locale("SV"));
+		assertEquals("Nya användarberättelser", new BDocMacroHelper(bdocConfig).text("new.user.stories"));
 	}
 
 	@Test
 	public void shouldTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacterWhenFormattingScenarios() {
-		String scenarioLines = new BDocMacroHelper( new BDocConfig()  ).scenarioLines(new Scenario("gittAtOevreGrenseErNaarSaa"));
+		String scenarioLines = new BDocMacroHelper(new BDocConfig()).scenarioLines(new Scenario("gittAtOevreGrenseErNaarSaa"));
 		assertFalse(scenarioLines.contains("oe"));
 		assertTrue(scenarioLines.contains("ø"));
 	}

@@ -34,6 +34,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
@@ -61,7 +62,7 @@ public class TestDiffLogReport {
 
 	public TestDiffLogReport() throws IOException {
 		DiffLogReport diffLogReport = new DiffLogReport();
-		diffLogReport.run(diffLog);
+		diffLogReport.run(diffLog, new BDocConfig());
 		html = diffLogReport.result();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 	}

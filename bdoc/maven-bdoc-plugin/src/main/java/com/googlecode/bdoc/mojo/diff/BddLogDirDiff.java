@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.diff.report.DiffReport;
 
 /**
@@ -36,8 +37,10 @@ import com.googlecode.bdoc.diff.report.DiffReport;
 public class BddLogDirDiff {
 
 	private DiffExecutor diffReportFactory;
+	private BDocConfig bdocConfig;
 
-	public BddLogDirDiff() {
+	public BddLogDirDiff(BDocConfig bdocConfig) {
+		this.bdocConfig = bdocConfig;
 	}
 
 	public void setDiffExecutor(DiffExecutor diffReportFactory) {
@@ -55,7 +58,7 @@ public class BddLogDirDiff {
 		int compareIndex = lastPos - 1;
 
 		while (-1 < compareIndex) {
-			DiffReport diffReport = diffReportFactory.createDiffReport(bddLogFiles.get(compareIndex), bddLogFiles.get(lastPos));
+			DiffReport diffReport = diffReportFactory.createDiffReport(bddLogFiles.get(compareIndex), bddLogFiles.get(lastPos),bdocConfig);
 			if (diffReport.diffExists()) {
 				return diffReport;
 			}

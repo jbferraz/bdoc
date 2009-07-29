@@ -70,5 +70,5 @@ public class BDocConfig {
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
-
+	
 }

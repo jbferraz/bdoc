@@ -32,6 +32,9 @@ import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 
 /**
+ * Used to create BDoc, should be replaced by BDocConfig, that should be input
+ * to the BDoc Constructor.
+ * 
  * @author Per Otto Bergum Christensen
  */
 public interface BDocFactory {
@@ -53,6 +56,5 @@ public interface BDocFactory {
 	public abstract void setIgnoreAnnotation(Class<? extends Annotation> ignoreAnnotation);
 
 	public abstract BDoc createBDoc(BehaviourFactory behaviourFactory);
-
 
 }

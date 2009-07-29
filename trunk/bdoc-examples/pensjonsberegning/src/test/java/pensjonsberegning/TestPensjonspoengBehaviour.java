@@ -33,7 +33,18 @@ public class TestPensjonspoengBehaviour {
 	@Test
 	@Spec(": (Inntekt - G ) / G = Pensjonspoeng")
 	public void hovedregelVedPensjonspoengberegningEr$spec$() {
-		assertEquals(4.79, pensjonspoeng.beregn(2008, 400000), .001);
+		gittEnInntektPaa$arg1$GangerGrunnbelopet( 4 );
+		naarPensjonspoengBeregnes();
+		saaSkalAntallPensjonspoengVeareLik(3);
+	}
+
+	void gittEnInntektPaa$arg1$GangerGrunnbelopet(double inntektIGrunnbeloepet ) {
+	}
+
+	void naarPensjonspoengBeregnes() {
+	}
+
+	void saaSkalAntallPensjonspoengVeareLik(double i) {
 	}
 
 	@Test

@@ -195,7 +195,7 @@ public class BDocMojo extends AbstractBDocMojo {
 
 		writeReport(BDOC_USERSTORY_REPORT, new UserStoryHtmlReport(bdoc, bdocConfig).html());
 		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, bdocConfig).html());
-		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog).result());
+		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog,bdocConfig).result());
 
 		makeBDocReportsHtml();
 	}

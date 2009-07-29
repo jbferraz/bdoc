@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.diff.report;
 
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
 import com.googlecode.bdoc.diff.domain.ClassBehaviourDiff;
 import com.googlecode.bdoc.diff.domain.ModuleBehaviourDiff;
@@ -40,16 +41,16 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  */
 public class BDocDiffReport {
 
-	public DiffReport execute(String oldXmlVersion, String newXmlVersion) {
+	public DiffReport execute(String oldXmlVersion, String newXmlVersion,BDocConfig bdocConfig) {
 		BDoc oldVersion = XmlReport.createBDoc(oldXmlVersion);
 		BDoc newVersion = XmlReport.createBDoc(newXmlVersion);
 
 		BDocDiff bDocDiff = new BDocDiff(oldVersion, newVersion);
 
-		return execute(bDocDiff);
+		return execute(bDocDiff,bdocConfig);
 	}
 
-	public DiffReport execute(BDocDiff bdocDiff) {
+	public DiffReport execute(BDocDiff bdocDiff,BDocConfig bdocConfig ) {
 		XStream xstream = new XStream(new DomDriver());
 
 		XmlReport.addAlias(xstream);
@@ -64,7 +65,7 @@ public class BDocDiffReport {
 
 		DiffReport diffReport = new DiffReport(bdocDiff.diffExists(), xstream.toXML(bdocDiff));
 		if (diffReport.diffExists()) {
-			diffReport.setHtmlReport(new HtmlDiffReport(bdocDiff).html());
+			diffReport.setHtmlReport(new HtmlDiffReport(bdocDiff,bdocConfig).html());
 		}
 		return diffReport;
 	}

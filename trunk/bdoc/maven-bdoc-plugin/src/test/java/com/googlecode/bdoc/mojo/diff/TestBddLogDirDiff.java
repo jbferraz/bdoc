@@ -31,22 +31,24 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.diff.report.DiffReport;
-import com.googlecode.bdoc.mojo.diff.BddLogDirDiff;
-import com.googlecode.bdoc.mojo.diff.DiffExecutor;
 
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 public class TestBddLogDirDiff {
 
-	private BddLogDirDiff bddLogDirDiff = new BddLogDirDiff();
+	private BDocConfig bdocConfig = new BDocConfig();
+	private BddLogDirDiff bddLogDirDiff = new BddLogDirDiff(bdocConfig);
 
 	private Mockery context = new Mockery();
 
 	private static final String FIRST_BDD_DOC = "bddDoc.1.xml";
 	private static final String PREVIOUS_BDD_DOC = "bddDoc.2.xml";
 	private static final String LAST_BDD_DOC = "bddDoc.3.xml";
+
+	
 
 	private String[] bddLogFiles = new String[3];
 	{
@@ -62,7 +64,7 @@ public class TestBddLogDirDiff {
 
 		context.checking(new Expectations() {
 			{
-				one(diffExecutor).createDiffReport(PREVIOUS_BDD_DOC, LAST_BDD_DOC);
+				one(diffExecutor).createDiffReport(PREVIOUS_BDD_DOC, LAST_BDD_DOC, bdocConfig);
 				will(returnValue(new DiffReport(true)));
 			}
 		});
@@ -80,9 +82,9 @@ public class TestBddLogDirDiff {
 
 		context.checking(new Expectations() {
 			{
-				one(diffExecutor).createDiffReport(PREVIOUS_BDD_DOC, LAST_BDD_DOC);
+				one(diffExecutor).createDiffReport(PREVIOUS_BDD_DOC, LAST_BDD_DOC, bdocConfig);
 				will(returnValue(new DiffReport(false)));
-				one(diffExecutor).createDiffReport(FIRST_BDD_DOC, LAST_BDD_DOC);
+				one(diffExecutor).createDiffReport(FIRST_BDD_DOC, LAST_BDD_DOC, bdocConfig);
 				will(returnValue(new DiffReport(true)));
 			}
 		});
@@ -101,9 +103,9 @@ public class TestBddLogDirDiff {
 
 		context.checking(new Expectations() {
 			{
-				one(diffExecutor).createDiffReport(PREVIOUS_BDD_DOC, LAST_BDD_DOC);
+				one(diffExecutor).createDiffReport(PREVIOUS_BDD_DOC, LAST_BDD_DOC, bdocConfig);
 				will(returnValue(diffReport1));
-				one(diffExecutor).createDiffReport(FIRST_BDD_DOC, LAST_BDD_DOC);
+				one(diffExecutor).createDiffReport(FIRST_BDD_DOC, LAST_BDD_DOC, bdocConfig);
 				will(returnValue(diffReport2));
 			}
 		});
@@ -120,9 +122,9 @@ public class TestBddLogDirDiff {
 
 		context.checking(new Expectations() {
 			{
-				one(diffExecutor).createDiffReport(PREVIOUS_BDD_DOC, LAST_BDD_DOC);
+				one(diffExecutor).createDiffReport(PREVIOUS_BDD_DOC, LAST_BDD_DOC, bdocConfig);
 				will(returnValue(new DiffReport(false)));
-				one(diffExecutor).createDiffReport(FIRST_BDD_DOC, LAST_BDD_DOC);
+				one(diffExecutor).createDiffReport(FIRST_BDD_DOC, LAST_BDD_DOC, bdocConfig);
 				will(returnValue(new DiffReport(false)));
 			}
 		});

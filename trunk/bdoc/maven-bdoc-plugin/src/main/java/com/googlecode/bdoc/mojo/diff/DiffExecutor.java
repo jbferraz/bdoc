@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.mojo.diff;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.diff.report.DiffReport;
 
 /**
@@ -31,6 +32,6 @@ import com.googlecode.bdoc.diff.report.DiffReport;
  */
 public interface DiffExecutor {
 	
-	public DiffReport createDiffReport( String oldBddDocFileName, String newBddDocFileName ); 
+	public DiffReport createDiffReport( String oldBddDocFileName, String newBddDocFileName,BDocConfig bdocConfig ); 
 
 }

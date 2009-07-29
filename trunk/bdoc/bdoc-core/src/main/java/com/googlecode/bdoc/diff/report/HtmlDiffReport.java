@@ -49,7 +49,7 @@ public class HtmlDiffReport {
 	private Map<String, Object> model;
 	private Configuration cfg;
 
-	public HtmlDiffReport(BDocDiff bDocDiff) {
+	public HtmlDiffReport(BDocDiff bDocDiff,BDocConfig bdocConfig) {
 		cfg = new Configuration();
 
 		final MultiTemplateLoader multiTemplateLoader = new MultiTemplateLoader(new TemplateLoader[] {
@@ -60,7 +60,7 @@ public class HtmlDiffReport {
 
 		model = new HashMap<String, Object>();
 		model.put("bdocDiff", bDocDiff);
-		model.put("bdocMacroHelper", new BDocMacroHelper( new BDocConfig()  ) );
+		model.put("bdocMacroHelper", new BDocMacroHelper( bdocConfig  ) );
 	}
 
 	public String html() {

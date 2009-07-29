@@ -32,11 +32,10 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocUserStoryDiffDocTestdataHelper;
-import com.googlecode.bdoc.diff.report.BDocDiffReport;
-import com.googlecode.bdoc.diff.report.DiffReport;
 import com.googlecode.bdoc.doc.report.XmlReport;
 
 /**
@@ -52,7 +51,7 @@ public class TestBDocDiffReport {
 		final String version1 = new XmlReport(BDocUserStoryDiffDocTestdataHelper.getBddDocWithGeneralBehaviourAndAStory()).xml();
 		final String version2 = new XmlReport(BDocUserStoryDiffDocTestdataHelper.getBddDocWithUpdatedStory()).xml();
 
-		final DiffReport diffReport = bDocDiffReport.execute(version1, version2);
+		final DiffReport diffReport = bDocDiffReport.execute(version1, version2, new BDocConfig());
 
 		FileUtils.writeStringToFile(new File("target/" + getClass().getName() + ".xml"), diffReport.xml());
 

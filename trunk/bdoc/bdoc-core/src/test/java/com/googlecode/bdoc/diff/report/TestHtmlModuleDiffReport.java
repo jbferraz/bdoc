@@ -34,6 +34,7 @@ import java.util.Calendar;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
@@ -94,8 +95,8 @@ public class TestHtmlModuleDiffReport {
 	private String html;
 
 	public TestHtmlModuleDiffReport() throws IOException {
-		final String xml = new BDocDiffReport().execute(bDocDiff).xml();
-		html = new HtmlDiffReport(bDocDiff).html();
+		final String xml = new BDocDiffReport().execute(bDocDiff,new BDocConfig()).xml();
+		html = new HtmlDiffReport(bDocDiff,new BDocConfig()).html();
 
 		writeStringToFile(new File("target/" + getClass().getName() + ".xml"), xml);
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);

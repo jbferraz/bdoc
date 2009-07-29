@@ -28,14 +28,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
-import java.util.List;
 
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.doxia.sink.SinkAdapter;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -47,10 +44,8 @@ import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
-import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
-import com.googlecode.bdoc.doc.report.BDocReportInterface;
-import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
+import com.googlecode.bdoc.doc.report.BDocFactory;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -62,7 +57,7 @@ public class TestBDocMojo {
 
 	private Mockery context;
 
-	private BDocReportInterface bdocReport;
+	private BDocFactory bdocReport;
 	private BDoc bdoc;
 
 	private BDocMojo bdocDocMojo = new BDocMojo() {
@@ -91,8 +86,8 @@ public class TestBDocMojo {
 		bdoc.setProject(new ProjectInfo("name", "version"));
 
 		context = new Mockery();
-		bdocReport = context.mock(BDocReportInterface.class);
-		bdocDocMojo.bdocReport = bdocReport;
+		bdocReport = context.mock(BDocFactory.class);
+		bdocDocMojo.bdocFactory = bdocReport;
 
 		context.checking(new Expectations() {
 			{
@@ -101,7 +96,7 @@ public class TestBDocMojo {
 				one(bdocReport).setExcludesFilePattern(null);
 				one(bdocReport).setClassLoader(with(any(ClassLoader.class)));
 				one(bdocReport).setProjectInfo(with(any(ProjectInfo.class)));
-				one(bdocReport).run(with(any(JavaTestSourceBehaviourParser.class)));
+				one(bdocReport).createBDoc(with(any(JavaTestSourceBehaviourParser.class)));
 				will(returnValue(bdoc));
 			}
 		});
@@ -115,18 +110,17 @@ public class TestBDocMojo {
 		bdocDocMojo.scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
 		expectConfiguredTestAnnotationSetOnTheBDocReport(Test.class);
 		expectConfiguredIgnoreAnnotationSetOnTheBDocReport(Ignore.class);
-		expectConfiguredScenarioFormatterClassSetOnTheBDocReport(new AndInBetweenScenarioLinesFormatter());
 	}
 
 	@Test
-	public void shouldCreateANewChangeLogXmlWhenOneDoesNotExist() throws MavenReportException {
+	public void shouldCreateANewChangeLogXmlWhenOneDoesNotExist() throws Exception {
 		expectDefaultMavenConfigurationSetOnBDocReport();
 		whenTheReportIsExecuted();
 		assertTrue(bdocDocMojo.getBDocChangeLogFile().exists());
 	}
 
 	@Test
-	public void shouldUpdateTheLatestBDocInThePersistedChangeLog() throws MavenReportException, IOException {
+	public void shouldUpdateTheLatestBDocInThePersistedChangeLog() throws Exception {
 		expectDefaultMavenConfigurationSetOnBDocReport();
 		whenTheReportIsExecuted();
 		DiffLog updatedChangeLog = DiffLog.fromXmlFile(bdocDocMojo.getBDocChangeLogFile());
@@ -135,7 +129,7 @@ public class TestBDocMojo {
 
 	@Test
 	public void shouldUseTheUserHomeDirectoryConcatenatedWithBDocAsRootDirectoryForPersistedBDocChangeLogs() {
-		assertEquals(System.getProperty("user.home") + "/bdoc", new BDocMojo().getBDocChangeLogRootDirectoryPath());
+		assertEquals(System.getProperty("user.home") + "/bdoc", BDocMojo.getBDocChangeLogRootDirectoryPath());
 	}
 
 	@Test
@@ -154,10 +148,6 @@ public class TestBDocMojo {
 
 	private void given_IgnoreAnnotationClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
 		bdocDocMojo.ignoreAnnotationClassName = clazz.getName();
-	}
-
-	private void given_ScenarioFormatterClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
-		bdocDocMojo.scenarioFormatterClassName = clazz.getName();
 	}
 
 	private void given_AStoryRefAnnotationAnnotation_IsConfigured(final Class<? extends Annotation> clazz) {
@@ -180,13 +170,6 @@ public class TestBDocMojo {
 		});
 	}
 
-	private void expectConfiguredScenarioFormatterClassSetOnTheBDocReport(final ScenarioLinesFormatter scenarioLinesFormatter) {
-		context.checking(new Expectations() {
-			{
-				one(bdocReport).setScenarioLinesFormatter(scenarioLinesFormatter);
-			}
-		});
-	}
 
 	private void expectConfiguredRefAnnotationSetOnTheBDocReport(final Class<? extends Annotation> clazz) {
 		context.checking(new Expectations() {
@@ -196,8 +179,8 @@ public class TestBDocMojo {
 		});
 	}
 
-	private void whenTheReportIsExecuted() throws MavenReportException {
-		bdocDocMojo.executeReport(null);
+	private void whenTheReportIsExecuted() throws Exception {
+		bdocDocMojo.executeInternal();
 	}
 
 	private void thenEnsureExpectionsAreSatisfied() {
@@ -205,15 +188,13 @@ public class TestBDocMojo {
 	}
 
 	@Test
-	public void shouldConfigureTheBDocReportFromMavenConfiguration() throws MavenReportException {
+	public void shouldConfigureTheBDocReportFromMavenConfiguration() throws Exception {
 		given_TestAnnotationClassName_IsConfiguredOtherThanDefaultValue(MyTestAnnotation.class);
 		given_IgnoreAnnotationClassName_IsConfiguredOtherThanDefaultValue(MyIgnoreAnnotation.class);
-		given_ScenarioFormatterClassName_IsConfiguredOtherThanDefaultValue(MyScenarioLinesFormatter.class);
 		given_AStoryRefAnnotationAnnotation_IsConfigured(MyRef.class);
 
 		expectConfiguredTestAnnotationSetOnTheBDocReport(MyTestAnnotation.class);
 		expectConfiguredIgnoreAnnotationSetOnTheBDocReport(MyIgnoreAnnotation.class);
-		expectConfiguredScenarioFormatterClassSetOnTheBDocReport(new MyScenarioLinesFormatter());
 		expectConfiguredRefAnnotationSetOnTheBDocReport(MyRef.class);
 
 		whenTheReportIsExecuted();
@@ -235,14 +216,4 @@ public class TestBDocMojo {
 	public @interface MyIgnoreAnnotation {
 	}
 
-	public static class MyScenarioLinesFormatter implements ScenarioLinesFormatter {
-		public List<String> getLines(Scenario scenario) {
-			return null;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			return obj instanceof MyScenarioLinesFormatter;
-		}
-	}
 }

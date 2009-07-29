@@ -48,7 +48,7 @@ public class AbstractHtmlReport {
 	private BDocMacroHelper bddDocMacroHelper;
 
 	public AbstractHtmlReport(BDoc bddDoc, String reportContentTemplate, String tocHeaderKey, List<TocItem> toc,
-			ScenarioLinesFormatter scenarioLinesFormatter) {
+			BDocConfig bdocConfig ) {
 
 		cfg = new Configuration();
 		cfg.setTemplateLoader(new ClassTemplateLoader(AbstractHtmlReport.class, ""));
@@ -59,7 +59,8 @@ public class AbstractHtmlReport {
 		model.put("toc", toc);
 		model.put("tocHeader", tocHeaderKey);		
 		model.put("report_content_template", reportContentTemplate);
-		bddDocMacroHelper = new BDocMacroHelper(new BDocConfig( Locale.ENGLISH, scenarioLinesFormatter) ) ;
+		
+		bddDocMacroHelper = new BDocMacroHelper(bdocConfig ) ;
 		model.put("bdocMacroHelper", bddDocMacroHelper);
 	}
 

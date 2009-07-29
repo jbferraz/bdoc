@@ -27,6 +27,7 @@ package com.googlecode.bdoc.doc.report;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.UserStory;
 
@@ -35,12 +36,8 @@ import com.googlecode.bdoc.doc.domain.UserStory;
  */
 public class UserStoryHtmlReport extends AbstractHtmlReport {
 
-	public UserStoryHtmlReport(BDoc bdoc) {
-		this(bdoc, new AndInBetweenScenarioLinesFormatter());
-	}
-
-	public UserStoryHtmlReport(BDoc bdoc, ScenarioLinesFormatter scenarioLinesFormatter) {
-		super(bdoc, "user_story_html_report_content.ftl", "toc.userstories",createToc(bdoc), scenarioLinesFormatter);
+	public UserStoryHtmlReport(BDoc bdoc, BDocConfig bdocConfig) {
+		super(bdoc, "user_story_html_report_content.ftl", "toc.userstories",createToc(bdoc), bdocConfig);
 	}
 
 	private static List<TocItem> createToc(BDoc bdoc) {

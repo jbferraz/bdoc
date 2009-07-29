@@ -37,6 +37,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -64,7 +65,7 @@ public class TestModuleBehaviourReport {
 				.addBehaviourFrom(new TestClass(TestClassWithTestTablesBehaviour.class), new RuntimeBehaviourFactory(
 						BConst.SRC_TEST_JAVA));
 
-		ModuleBehaviourReport internalApplicationBehaviourReport = new ModuleBehaviourReport(bdoc);
+		ModuleBehaviourReport internalApplicationBehaviourReport = new ModuleBehaviourReport(bdoc, new BDocConfig());
 
 		html = internalApplicationBehaviourReport.html();
 

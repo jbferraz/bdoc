@@ -34,9 +34,7 @@ import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 /**
  * @author Per Otto Bergum Christensen
  */
-public interface BDocReportInterface {
-
-	public abstract void setScenarioLinesFormatter(ScenarioLinesFormatter scenarioLinesFormatter);
+public interface BDocFactory {
 
 	public void setProjectInfo(ProjectInfo projectInfo);
 
@@ -54,10 +52,7 @@ public interface BDocReportInterface {
 
 	public abstract void setIgnoreAnnotation(Class<? extends Annotation> ignoreAnnotation);
 
-	public abstract BDoc run(BehaviourFactory behaviourFactory);
+	public abstract BDoc createBDoc(BehaviourFactory behaviourFactory);
 
-	public abstract String getHtml();
-
-	public abstract String getXml();
 
 }

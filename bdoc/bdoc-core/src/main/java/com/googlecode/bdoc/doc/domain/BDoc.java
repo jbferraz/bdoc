@@ -34,6 +34,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang.Validate;
 
@@ -233,6 +234,10 @@ public class BDoc {
 	 */
 	public void setDefaultTestAnnotations() {
 		testAnnotations = new TestAnnotations();
+	}
+
+	public Locale getLocale() {
+		return Locale.ENGLISH;
 	}
 
 }

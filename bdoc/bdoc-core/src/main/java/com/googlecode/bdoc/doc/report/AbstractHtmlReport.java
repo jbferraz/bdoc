@@ -27,8 +27,10 @@ package com.googlecode.bdoc.doc.report;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.BDoc;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -57,7 +59,7 @@ public class AbstractHtmlReport {
 		model.put("toc", toc);
 		model.put("tocHeader", tocHeaderKey);		
 		model.put("report_content_template", reportContentTemplate);
-		bddDocMacroHelper = new BDocMacroHelper(scenarioLinesFormatter);
+		bddDocMacroHelper = new BDocMacroHelper(new BDocConfig( Locale.ENGLISH, scenarioLinesFormatter) ) ;
 		model.put("bdocMacroHelper", bddDocMacroHelper);
 	}
 

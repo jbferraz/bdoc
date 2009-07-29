@@ -46,7 +46,6 @@ public class ResetMojo extends AbstractBDocMojo {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private void executeInternal() throws Exception {
 
 		File docChangeLogFile = getBDocChangeLogFile();

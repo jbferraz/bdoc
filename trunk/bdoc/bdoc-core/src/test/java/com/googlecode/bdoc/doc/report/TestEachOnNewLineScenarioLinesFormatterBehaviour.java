@@ -34,6 +34,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
@@ -48,12 +49,18 @@ public class TestEachOnNewLineScenarioLinesFormatterBehaviour {
 		BDoc bdoc = BDocTestHelper.bdocWithProject();
 		bdoc.addBehaviourFrom(new TestClass(StackBehavior.class), BConst.SRC_TEST_JAVA);
 
-		String htmlAndInBetween = new ModuleBehaviourReport(bdoc, new AndInBetweenScenarioLinesFormatter()).html();
-		String htmlEachOnNewLine = new ModuleBehaviourReport(bdoc, new EachOnNewLineScenarioLinesFormatter()).html();
-		
+		String htmlAndInBetween = new ModuleBehaviourReport(bdoc, bdocConfig(new AndInBetweenScenarioLinesFormatter())).html();
+		String htmlEachOnNewLine = new ModuleBehaviourReport(bdoc, bdocConfig(new EachOnNewLineScenarioLinesFormatter())).html();
+
 		writeStringToFile(new File("target/" + getClass().getName() + ".htmlAndInBetween.html"), htmlAndInBetween);
 		writeStringToFile(new File("target/" + getClass().getName() + ".htmlEachOnNewLine.html"), htmlEachOnNewLine);
-		
+
 		assertFalse(htmlAndInBetween.equals(htmlEachOnNewLine));
+	}
+
+	private BDocConfig bdocConfig(ScenarioLinesFormatter scenarioLinesFormatter) {
+		BDocConfig bdocConfig = new BDocConfig();
+		bdocConfig.setScenarioLinesFormatter(scenarioLinesFormatter);
+		return bdocConfig;
 	}
 }

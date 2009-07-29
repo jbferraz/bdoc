@@ -28,25 +28,14 @@ import java.io.File;
 import java.lang.annotation.Annotation;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.util.ClassesDirectory;
 
 /**
  * @author Per Otto Bergum Christensen
  */
-public class BDocReportImpl implements BDocReportInterface {
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.googlecode.bdoc.doc.report.BDocReport#setScenarioLinesFormatter(com
-	 * .googlecode.bdoc.doc.report.ScenarioLinesFormatter)
-	 */
-	public void setScenarioLinesFormatter(ScenarioLinesFormatter scenarioLinesFormatter) {
-		this.scenarioLinesFormatter = scenarioLinesFormatter;
-	}
+public class BDocFactoryImpl implements BDocFactory {
 
 	private ClassesDirectory classesDirectory = new ClassesDirectory();
 
@@ -56,12 +45,7 @@ public class BDocReportImpl implements BDocReportInterface {
 	private Class<? extends Annotation> testAnnotation;
 	private Class<? extends Annotation> ignoreAnnotation;
 	private String html, xml;
-	private ScenarioLinesFormatter scenarioLinesFormatter;
-
-	public BDocReportImpl() {
-		super();
-	}
-
+	
 	public void setProjectInfo(ProjectInfo projectInfo) {
 		this.projectInfo = projectInfo;
 	}
@@ -136,18 +120,10 @@ public class BDocReportImpl implements BDocReportInterface {
 	 * 
 	 * @see com.googlecode.bdoc.doc.report.BDocReport#run(java.io.File)
 	 */
-	public BDoc run(BehaviourFactory behaviourFactory) {
+	public BDoc createBDoc(BehaviourFactory behaviourFactory) {
 		BDoc bdoc = new BDoc(testAnnotation, storyRefAnnotation, ignoreAnnotation);
-		
 		bdoc.setProject(projectInfo);
 		bdoc.addBehaviourFrom(classesDirectory, classLoader, behaviourFactory);
-
-		xml = new XmlReport(bdoc).xml();
-		if (scenarioLinesFormatter != null) {
-			html = new UserStoryHtmlReport(bdoc, scenarioLinesFormatter).html();
-		} else {
-			html = new UserStoryHtmlReport(bdoc).html();
-		}
 		return bdoc;
 
 	}

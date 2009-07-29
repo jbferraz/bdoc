@@ -34,6 +34,7 @@ import java.util.Locale;
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.reporting.MavenReportException;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.difflog.DiffLogReport;
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -41,8 +42,8 @@ import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
-import com.googlecode.bdoc.doc.report.BDocReportImpl;
-import com.googlecode.bdoc.doc.report.BDocReportInterface;
+import com.googlecode.bdoc.doc.report.BDocFactoryImpl;
+import com.googlecode.bdoc.doc.report.BDocFactory;
 import com.googlecode.bdoc.doc.report.ModuleBehaviourReport;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
@@ -129,7 +130,8 @@ public class BDocMojo extends AbstractBDocMojo {
 	 */
 	String scenarioAnalyzer;
 
-	BDocReportInterface bdocReport = new BDocReportImpl();
+	BDocConfig bdocConfig = new BDocConfig();
+	BDocFactory bdocFactory = new BDocFactoryImpl();
 
 	@Override
 	protected void executeReport(Locale arg0) throws MavenReportException {
@@ -137,7 +139,8 @@ public class BDocMojo extends AbstractBDocMojo {
 			executeInternal();
 		} catch (ConversionException e) {
 			String msg = "BDoc has had an internal error related to xml persistence file " + getBDocChangeLogFile().getAbsolutePath()
-					+ ". " + "This could happen if a new version of bdoc has been used, which could have changes in the underlying model. "
+					+ ". "
+					+ "This could happen if a new version of bdoc has been used, which could have changes in the underlying model. "
 					+ "Currently there are two solutions: 1. Don't upgrade, 2. Run bdoc:reset and try again. Detailed message: "
 					+ e.getMessage();
 
@@ -148,23 +151,27 @@ public class BDocMojo extends AbstractBDocMojo {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void executeInternal() throws Exception {
+	protected void executeInternal() throws Exception {
 		ClassLoader classLoader = getClassLoader();
 
-		bdocReport.setClassLoader(classLoader);
-		bdocReport.setTestClassDirectory(testClassDirectory);
+		bdocFactory.setClassLoader(classLoader);
+		bdocFactory.setTestClassDirectory(testClassDirectory);
 
-		bdocReport.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
-		bdocReport.setIgnoreAnnotation((Class<? extends Annotation>) classLoader.loadClass(ignoreAnnotationClassName));
-		bdocReport.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName).newInstance());
+		bdocFactory.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
+		bdocFactory.setIgnoreAnnotation((Class<? extends Annotation>) classLoader.loadClass(ignoreAnnotationClassName));
 
-		bdocReport.setIncludesFilePattern(includes);
-		bdocReport.setExcludesFilePattern(excludes);
+		bdocFactory.setIncludesFilePattern(includes);
+		bdocFactory.setExcludesFilePattern(excludes);
 
-		bdocReport.setProjectInfo(new ProjectInfo(getProject().getName(), getProject().getVersion()));
+		bdocFactory.setProjectInfo(new ProjectInfo(getProject().getName(), getProject().getVersion()));
 
 		if (null != storyRefAnnotationClassName) {
-			bdocReport.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
+			bdocFactory.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
+		}
+
+		if (null != scenarioFormatterClassName) {
+			bdocConfig.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
+					.newInstance());
 		}
 
 		getLog().info("scenarioAnalyzer: " + scenarioAnalyzer);
@@ -173,7 +180,7 @@ public class BDocMojo extends AbstractBDocMojo {
 			behaviourFactory = new RuntimeBehaviourFactory(testSourceDirectory);
 		}
 
-		BDoc bdoc = bdocReport.run(behaviourFactory);
+		BDoc bdoc = bdocFactory.createBDoc(behaviourFactory);
 
 		DiffLog diffLog = new DiffLog();
 		if (getBDocChangeLogFile().exists()) {
@@ -183,21 +190,18 @@ public class BDocMojo extends AbstractBDocMojo {
 		diffLog.scan(bdoc);
 
 		getLog().info("Updating file: " + getBDocChangeLogFile());
+
 		diffLog.writeToFile(getBDocChangeLogFile());
 
-		writeReport(BDOC_USERSTORY_REPORT, new UserStoryHtmlReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(
-				scenarioFormatterClassName).newInstance()).html());
-
-		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, (ScenarioLinesFormatter) classLoader.loadClass(
-				scenarioFormatterClassName).newInstance()).html());
-
+		writeReport(BDOC_USERSTORY_REPORT, new UserStoryHtmlReport(bdoc, bdocConfig).html());
+		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, bdocConfig).html());
 		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog).result());
 
 		makeBDocReportsHtml();
 	}
 
 	protected BDoc bdoc() {
-		return bdocReport.run(new JavaTestSourceBehaviourParser(testSourceDirectory));
+		return bdocFactory.createBDoc(new JavaTestSourceBehaviourParser(testSourceDirectory));
 	}
 
 	private void makeBDocReportsHtml() {

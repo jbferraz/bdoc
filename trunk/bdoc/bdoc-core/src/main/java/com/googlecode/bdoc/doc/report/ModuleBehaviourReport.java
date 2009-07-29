@@ -27,17 +27,14 @@ package com.googlecode.bdoc.doc.report;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.Package;
 
 public class ModuleBehaviourReport extends AbstractHtmlReport {
 
-	public ModuleBehaviourReport(BDoc bdoc) {
-		this(bdoc, new AndInBetweenScenarioLinesFormatter());
-	}
-
-	public ModuleBehaviourReport(BDoc bdoc, ScenarioLinesFormatter scenarioLinesFormatter) {
-		super(bdoc, "internal_application_html_report_content.ftl", "toc.packages",createToc(bdoc), scenarioLinesFormatter);
+	public ModuleBehaviourReport(BDoc bdoc, BDocConfig bdocConfig) {
+		super(bdoc, "internal_application_html_report_content.ftl", "toc.packages",createToc(bdoc), bdocConfig);
 	}
 
 	private static List<TocItem> createToc(BDoc bdoc) {

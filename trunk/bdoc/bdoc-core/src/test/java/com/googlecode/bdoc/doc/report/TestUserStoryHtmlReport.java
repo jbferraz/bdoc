@@ -66,7 +66,7 @@ public class TestUserStoryHtmlReport {
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class),
 				BConst.SRC_TEST_JAVA);
 
-		UserStoryHtmlReport htmlReport = new UserStoryHtmlReport(bdoc);
+		UserStoryHtmlReport htmlReport = new UserStoryHtmlReport(bdoc,new BDocConfig());
 
 		html = htmlReport.html();
 

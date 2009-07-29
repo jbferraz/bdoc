@@ -169,11 +169,6 @@ public class BDocMojo extends AbstractBDocMojo {
 			bdocFactory.setStoryRefAnnotation((Class<? extends Annotation>) classLoader.loadClass(storyRefAnnotationClassName));
 		}
 
-		if (null != scenarioFormatterClassName) {
-			bdocConfig.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
-					.newInstance());
-		}
-
 		getLog().info("scenarioAnalyzer: " + scenarioAnalyzer);
 		BehaviourFactory behaviourFactory = new JavaTestSourceBehaviourParser(testSourceDirectory);
 		if (scenarioAnalyzer.equals("dynamic")) {
@@ -181,6 +176,13 @@ public class BDocMojo extends AbstractBDocMojo {
 		}
 
 		BDoc bdoc = bdocFactory.createBDoc(behaviourFactory);
+
+		if (null != scenarioFormatterClassName) {
+			bdocConfig.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
+					.newInstance());
+		}
+
+		bdocConfig.setLocale(bdoc.getLocale());
 
 		DiffLog diffLog = new DiffLog();
 		if (getBDocChangeLogFile().exists()) {
@@ -195,7 +197,7 @@ public class BDocMojo extends AbstractBDocMojo {
 
 		writeReport(BDOC_USERSTORY_REPORT, new UserStoryHtmlReport(bdoc, bdocConfig).html());
 		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, bdocConfig).html());
-		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog,bdocConfig).result());
+		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog, bdocConfig).result());
 
 		makeBDocReportsHtml();
 	}

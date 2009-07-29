@@ -60,6 +60,7 @@ public class BDocConfig {
 	}
 
 	public void setScenarioLinesFormatter(ScenarioLinesFormatter scenarioLinesFormatter) {
+		Validate.notNull(scenarioLinesFormatter);
 		this.scenarioLinesFormatter = scenarioLinesFormatter;
 	}
 
@@ -68,6 +69,7 @@ public class BDocConfig {
 	}
 
 	public void setLocale(Locale locale) {
+		Validate.notNull(locale, "locale");
 		this.locale = locale;
 	}
 	

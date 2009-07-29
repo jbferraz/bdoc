@@ -122,6 +122,11 @@ public class BDocMojo extends AbstractBDocMojo {
 	/**
 	 * @parameter
 	 */
+	String locale;
+
+	/**
+	 * @parameter
+	 */
 	String storyRefAnnotationClassName;
 
 	/**
@@ -134,8 +139,15 @@ public class BDocMojo extends AbstractBDocMojo {
 	BDocFactory bdocFactory = new BDocFactoryImpl();
 
 	@Override
-	protected void executeReport(Locale arg0) throws MavenReportException {
+	protected void executeReport(Locale mvnReportLocale) throws MavenReportException {
 		try {
+			if (null != locale) {
+				bdocConfig.setLocale(new Locale(locale));
+			} else {
+				if (null != mvnReportLocale) {
+					bdocConfig.setLocale(mvnReportLocale);
+				}
+			}
 			executeInternal();
 		} catch (ConversionException e) {
 			String msg = "BDoc has had an internal error related to xml persistence file " + getBDocChangeLogFile().getAbsolutePath()
@@ -181,8 +193,6 @@ public class BDocMojo extends AbstractBDocMojo {
 			bdocConfig.setScenarioLinesFormatter((ScenarioLinesFormatter) classLoader.loadClass(scenarioFormatterClassName)
 					.newInstance());
 		}
-
-		bdocConfig.setLocale(bdoc.getLocale());
 
 		DiffLog diffLog = new DiffLog();
 		if (getBDocChangeLogFile().exists()) {

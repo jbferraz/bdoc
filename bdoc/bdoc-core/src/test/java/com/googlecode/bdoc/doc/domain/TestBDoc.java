@@ -31,7 +31,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -290,17 +289,15 @@ public class TestBDoc {
 		assertNotNull(bdoc.getModuleBehaviour().classBehaviourFor(TestWithManyUserStories.class));
 	}
 
-	@Test
-	public void localeIsReturnedBasedOnEvaluationOfLanguageUsedInSpecifications() {
-
-		BDoc bdoc = new BDoc();
-		bdoc.addBehaviourFrom(new TestClass( TestWithEnglishLanguage.class), BConst.SRC_TEST_JAVA );
-		assertEquals( Locale.ENGLISH, bdoc.getLocale() );
-	}
-
 	public class TestWithEnglishLanguage {
 		@Test
 		public void shouldBeEnglishLanguage() {
+		}
+	}
+
+	public class TestWithNorwegianLanguage {
+		@Test
+		public void skalVeareNorskSpraak() {
 		}
 	}
 

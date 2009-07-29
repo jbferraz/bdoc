@@ -43,6 +43,7 @@
 					<scenarioFormatterClassName>
 						com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter
 					</scenarioFormatterClassName>
+					<locale>no</locale>
 				</configuration>
 
 				<executions>

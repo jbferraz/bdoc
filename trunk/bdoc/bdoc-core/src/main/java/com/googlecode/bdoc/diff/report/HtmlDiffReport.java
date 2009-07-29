@@ -30,7 +30,6 @@ import java.util.Map;
 
 import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.diff.domain.BDocDiff;
-import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
 

@@ -28,8 +28,8 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.diff.report.HtmlDiffReport;
-import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
 
@@ -63,7 +63,7 @@ public class DiffLogReport {
 
 		model = new HashMap<String, Object>();
 		model.put("diffLog", diffLog);
-		model.put("bdocMacroHelper", new BDocMacroHelper( new AndInBetweenScenarioLinesFormatter() ));
+		model.put("bdocMacroHelper", new BDocMacroHelper( new BDocConfig()  ));
 		
 		return this;
 	}

@@ -30,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.Scenario;
 
 /**
@@ -39,17 +40,12 @@ public class TestBDocMacroHelperBehaviour {
 
 	@Test
 	public void defaultTextLanguageShouldBeEnglish() {
-		assertEquals("New user stories", new BDocMacroHelper(new AndInBetweenScenarioLinesFormatter()).text("new.user.stories"));
-	}
-
-	@Test
-	public void shouldBePossibleToSetScenarioFormatter() throws Exception {
-		new BDocMacroHelper(new EachOnNewLineScenarioLinesFormatter());
+		assertEquals("New user stories", new BDocMacroHelper( new BDocConfig()  ).text("new.user.stories"));
 	}
 
 	@Test
 	public void shouldTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacterWhenFormattingScenarios() {
-		String scenarioLines = new BDocMacroHelper(new AndInBetweenScenarioLinesFormatter()).scenarioLines(new Scenario("gittAtOevreGrenseErNaarSaa"));
+		String scenarioLines = new BDocMacroHelper( new BDocConfig()  ).scenarioLines(new Scenario("gittAtOevreGrenseErNaarSaa"));
 		assertFalse(scenarioLines.contains("oe"));
 		assertTrue(scenarioLines.contains("ø"));
 	}

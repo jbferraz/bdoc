@@ -36,6 +36,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
@@ -55,7 +56,7 @@ import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassWithThreeScenari
 @Ref(Story.HTML_USERSTORY_REPORT)
 public class TestUserStoryHtmlReport {
 
-	private BDocMacroHelper bdocMacroHelper = new BDocMacroHelper(new AndInBetweenScenarioLinesFormatter());
+	private BDocMacroHelper bdocMacroHelper = new BDocMacroHelper( new BDocConfig()  );
 
 	private String html;
 	private BDoc bdoc;

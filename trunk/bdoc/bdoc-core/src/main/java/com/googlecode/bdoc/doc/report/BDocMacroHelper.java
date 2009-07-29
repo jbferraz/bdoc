@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TableColumn;
@@ -41,9 +42,13 @@ public class BDocMacroHelper {
 	private ResourceBundle textBundle;
 	private ScenarioLinesFormatter formatter;
 
-	public BDocMacroHelper(ScenarioLinesFormatter formatter) {
+	public BDocMacroHelper( BDocConfig bdocConfig ) {
+		this( bdocConfig.getScenarioLinesFormatter(), bdocConfig.getLocale() );
+	}
+
+	public BDocMacroHelper(ScenarioLinesFormatter formatter, Locale locale) {
 		this.formatter = formatter;
-		this.textBundle = ResourceBundle.getBundle("com.googlecode.bdoc.text", Locale.ENGLISH );
+		this.textBundle = ResourceBundle.getBundle("com.googlecode.bdoc.text", locale);
 	}
 
 	public String text(String key) {

@@ -44,7 +44,6 @@ public class BDocFactoryImpl implements BDocFactory {
 	private Class<? extends Annotation> storyRefAnnotation;
 	private Class<? extends Annotation> testAnnotation;
 	private Class<? extends Annotation> ignoreAnnotation;
-	private String html, xml;
 	
 	public void setProjectInfo(ProjectInfo projectInfo) {
 		this.projectInfo = projectInfo;
@@ -126,24 +125,6 @@ public class BDocFactoryImpl implements BDocFactory {
 		bdoc.addBehaviourFrom(classesDirectory, classLoader, behaviourFactory);
 		return bdoc;
 
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#getHtml()
-	 */
-	public String getHtml() {
-		return html;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#getXml()
-	 */
-	public String getXml() {
-		return xml;
 	}
 
 	public void setIgnoreAnnotation(Class<? extends Annotation> ignoreAnnotation) {

@@ -26,7 +26,6 @@ package com.googlecode.bdoc.doc.testdata;
 
 import integrationtestclasses.stack.StackBehavior;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -70,7 +69,7 @@ public class BDocTestHelper {
 	}
 
 	public static BDoc bdocWithProject() {
-		BDoc bdoc = new BDoc(Test.class, ExReference.class, Ignore.class);
+		BDoc bdoc = new BDoc(ExReference.class);
 		bdoc.setProject(testProject());
 		return bdoc;
 	}

@@ -42,8 +42,7 @@ public class BDocFactoryImpl implements BDocFactory {
 	private ProjectInfo projectInfo;
 	private ClassLoader classLoader;
 	private Class<? extends Annotation> storyRefAnnotation;
-	private Class<? extends Annotation> testAnnotation;
-	private Class<? extends Annotation> ignoreAnnotation;
+	
 	
 	public void setProjectInfo(ProjectInfo projectInfo) {
 		this.projectInfo = projectInfo;
@@ -106,28 +105,13 @@ public class BDocFactoryImpl implements BDocFactory {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.googlecode.bdoc.doc.report.BDocReport#setTestAnnotation(java.lang
-	 * .Class)
-	 */
-	public void setTestAnnotation(Class<? extends Annotation> testAnnotation) {
-		this.testAnnotation = testAnnotation;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see com.googlecode.bdoc.doc.report.BDocReport#run(java.io.File)
 	 */
 	public BDoc createBDoc(BehaviourFactory behaviourFactory) {
-		BDoc bdoc = new BDoc(testAnnotation, storyRefAnnotation, ignoreAnnotation);
+		BDoc bdoc = new BDoc(storyRefAnnotation);
 		bdoc.setProject(projectInfo);
 		bdoc.addBehaviourFrom(classesDirectory, classLoader, behaviourFactory);
 		return bdoc;
 
-	}
-
-	public void setIgnoreAnnotation(Class<? extends Annotation> ignoreAnnotation) {
-		this.ignoreAnnotation = ignoreAnnotation;
 	}
 }

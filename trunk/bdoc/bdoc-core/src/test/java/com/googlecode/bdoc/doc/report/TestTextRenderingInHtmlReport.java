@@ -52,7 +52,7 @@ public class TestTextRenderingInHtmlReport {
 	private String html;
 
 	public TestTextRenderingInHtmlReport() throws IOException {
-		BDoc bddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		BDoc bddDoc = new BDoc(ExReference.class);
 		bddDoc.setProject(BDocTestHelper.testProject());
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithASpecification.class), BConst.SRC_TEST_JAVA);
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithAStatement.class), BConst.SRC_TEST_JAVA);

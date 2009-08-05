@@ -51,10 +51,6 @@ public interface BDocFactory {
 
 	public abstract void setStoryRefAnnotation(Class<? extends Annotation> storyRefAnnotation);
 
-	public abstract void setTestAnnotation(Class<? extends Annotation> testAnnotation);
-
-	public abstract void setIgnoreAnnotation(Class<? extends Annotation> ignoreAnnotation);
-
 	public abstract BDoc createBDoc(BehaviourFactory behaviourFactory);
 
 }

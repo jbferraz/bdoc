@@ -27,7 +27,6 @@ package com.googlecode.bdoc.doc.report;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import com.googlecode.bdoc.BDocConfig;

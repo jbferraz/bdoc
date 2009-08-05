@@ -39,8 +39,8 @@ import com.googlecode.bdoc.doc.testdata.TestWithGeneralBehaviour;
  */
 public class BDocGeneralBehaviourDiffDocTestdataHelper {
 
-	private final BDoc oldBddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
-	private final BDoc newBddDoc = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+	private final BDoc oldBddDoc = new BDoc(ExReference.class);
+	private final BDoc newBddDoc = new BDoc(ExReference.class);
 
 	{
 		ProjectInfo projectInfo = new ProjectInfo("test-project", "version1");

@@ -74,10 +74,10 @@ public class TestBDocDiff {
 
 	@Test
 	public void shouldReportDiffForChangedGeneralBehaviour() {
-		BDoc bddDocV1 = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		BDoc bddDocV1 = new BDoc(ExReference.class);
 		bddDocV1.setProject(new ProjectInfo("name", "1"));
 
-		BDoc bddDocV2 = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		BDoc bddDocV2 = new BDoc(ExReference.class);
 		bddDocV2.setProject(new ProjectInfo("name", "1"));
 
 		bddDocV2.addBehaviourFrom(new TestClass(TestWithOnlyGeneralBehaviourContent.class), BConst.SRC_TEST_JAVA);

@@ -101,18 +101,6 @@ public class BDocMojo extends AbstractBDocMojo {
 	String[] excludes;
 
 	/**
-	 * @parameter default-value="org.junit.Test"
-	 * @required
-	 */
-	String testAnnotationClassName;
-
-	/**
-	 * @parameter default-value="org.junit.Ignore"
-	 * @required
-	 */
-	String ignoreAnnotationClassName;
-
-	/**
 	 * @parameter default-value=
 	 *            "com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter"
 	 * @required
@@ -168,9 +156,6 @@ public class BDocMojo extends AbstractBDocMojo {
 
 		bdocFactory.setClassLoader(classLoader);
 		bdocFactory.setTestClassDirectory(testClassDirectory);
-
-		bdocFactory.setTestAnnotation((Class<? extends Annotation>) classLoader.loadClass(testAnnotationClassName));
-		bdocFactory.setIgnoreAnnotation((Class<? extends Annotation>) classLoader.loadClass(ignoreAnnotationClassName));
 
 		bdocFactory.setIncludesFilePattern(includes);
 		bdocFactory.setExcludesFilePattern(excludes);

@@ -33,7 +33,6 @@ import java.io.File;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.doxia.sink.SinkAdapter;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.difflog.DiffLog;
@@ -60,8 +59,6 @@ public class TestBDocMojoBehaviour {
 			{
 				project = new MavenProjectMock();
 
-				testAnnotationClassName = Test.class.getName();
-				ignoreAnnotationClassName = Ignore.class.getName();
 				scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
 			}
 
@@ -146,7 +143,7 @@ public class TestBDocMojoBehaviour {
 
 	private void givenAnExistingBDocReportsXmlFile() {
 		DiffLog diffLog = new DiffLog();
-		BDoc bdoc = new BDoc(org.junit.Test.class, null, org.junit.Ignore.class);
+		BDoc bdoc = new BDoc();
 		bdoc.setProject(new ProjectInfo("test", "test"));
 		diffLog.scan(bdoc);
 		diffLog.writeToFile(bdocMojo.getBDocChangeLogFile());

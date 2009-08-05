@@ -48,8 +48,8 @@ public class BDocUserStoryDiffDocTestdataHelper {
 	{
 		emptyBddDoc.setProject(new ProjectInfo("emptyproject", "version1"));
 	}
-	private final BDoc bddDocWithGeneralBehaviourAndAStory = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
-	private final BDoc bddDocWithUpdatedStory = new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+	private final BDoc bddDocWithGeneralBehaviourAndAStory = new BDoc(ExReference.class);
+	private final BDoc bddDocWithUpdatedStory = new BDoc(ExReference.class);
 
 	{
 		bddDocWithGeneralBehaviourAndAStory.setProject(new ProjectInfo("test-project", "version1"));
@@ -219,6 +219,6 @@ public class BDocUserStoryDiffDocTestdataHelper {
 	}
 
 	public static BDoc createBDoc() {
-		return new BDoc(org.junit.Test.class, ExReference.class, org.junit.Ignore.class);
+		return new BDoc(ExReference.class);
 	}
 }

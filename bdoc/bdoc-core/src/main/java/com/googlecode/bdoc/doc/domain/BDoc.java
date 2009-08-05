@@ -75,8 +75,7 @@ public class BDoc {
 	 * @param storyRefAnnotation
 	 *            marks method as something with a reference to story
 	 */
-	public BDoc(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> storyRefAnnotation,
-			Class<? extends Annotation> ignoreAnnotation) {
+	public BDoc(Class<? extends Annotation> storyRefAnnotation) {
 		this.storyRefAnnotation = storyRefAnnotation;
 	}
 
@@ -124,7 +123,7 @@ public class BDoc {
 	 */
 	private UserStory userStory(Annotation storyRefAnnotation) {
 		ClassBehaviourSorter classBehaviourSorter = new ClassBehaviourSorter();
-		UserStory userStory = new UserStory(userStoryDescription(storyRefAnnotation),classBehaviourSorter );
+		UserStory userStory = new UserStory(userStoryDescription(storyRefAnnotation), classBehaviourSorter);
 		if (userStories.contains(userStory)) {
 			return from(userStories).equalTo(userStory);
 		} else {

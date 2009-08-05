@@ -37,7 +37,6 @@ import org.codehaus.doxia.sink.SinkAdapter;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.difflog.DiffLog;
@@ -50,7 +49,6 @@ import com.googlecode.bdoc.doc.report.BDocFactory;
 /**
  * @author Per Otto Bergum Christensen
  */
-@SuppressWarnings("unchecked")
 public class TestBDocMojo {
 
 	public static final String TARGET = "target";
@@ -105,11 +103,7 @@ public class TestBDocMojo {
 	}
 
 	public void expectDefaultMavenConfigurationSetOnBDocReport() {
-		bdocDocMojo.testAnnotationClassName = Test.class.getName();
-		bdocDocMojo.ignoreAnnotationClassName = Ignore.class.getName();
 		bdocDocMojo.scenarioFormatterClassName = AndInBetweenScenarioLinesFormatter.class.getName();
-		expectConfiguredTestAnnotationSetOnTheBDocReport(Test.class);
-		expectConfiguredIgnoreAnnotationSetOnTheBDocReport(Ignore.class);
 	}
 
 	@Test
@@ -142,34 +136,9 @@ public class TestBDocMojo {
 	// ------ Scenarios
 	// ----------------------------------------------------------------------------------------------
 
-	private void given_TestAnnotationClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
-		bdocDocMojo.testAnnotationClassName = clazz.getName();
-	}
-
-	private void given_IgnoreAnnotationClassName_IsConfiguredOtherThanDefaultValue(Class clazz) {
-		bdocDocMojo.ignoreAnnotationClassName = clazz.getName();
-	}
-
 	private void given_AStoryRefAnnotationAnnotation_IsConfigured(final Class<? extends Annotation> clazz) {
 		bdocDocMojo.storyRefAnnotationClassName = clazz.getName();
 	}
-
-	private void expectConfiguredTestAnnotationSetOnTheBDocReport(final Class clazz) {
-		context.checking(new Expectations() {
-			{
-				one(bdocReport).setTestAnnotation(with(clazz));
-			}
-		});
-	}
-
-	private void expectConfiguredIgnoreAnnotationSetOnTheBDocReport(final Class clazz) {
-		context.checking(new Expectations() {
-			{
-				one(bdocReport).setIgnoreAnnotation(with(clazz));
-			}
-		});
-	}
-
 
 	private void expectConfiguredRefAnnotationSetOnTheBDocReport(final Class<? extends Annotation> clazz) {
 		context.checking(new Expectations() {
@@ -189,12 +158,8 @@ public class TestBDocMojo {
 
 	@Test
 	public void shouldConfigureTheBDocReportFromMavenConfiguration() throws Exception {
-		given_TestAnnotationClassName_IsConfiguredOtherThanDefaultValue(MyTestAnnotation.class);
-		given_IgnoreAnnotationClassName_IsConfiguredOtherThanDefaultValue(MyIgnoreAnnotation.class);
 		given_AStoryRefAnnotationAnnotation_IsConfigured(MyRef.class);
 
-		expectConfiguredTestAnnotationSetOnTheBDocReport(MyTestAnnotation.class);
-		expectConfiguredIgnoreAnnotationSetOnTheBDocReport(MyIgnoreAnnotation.class);
 		expectConfiguredRefAnnotationSetOnTheBDocReport(MyRef.class);
 
 		whenTheReportIsExecuted();

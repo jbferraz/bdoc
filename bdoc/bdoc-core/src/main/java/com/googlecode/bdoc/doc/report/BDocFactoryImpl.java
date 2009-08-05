@@ -26,6 +26,9 @@ package com.googlecode.bdoc.doc.report;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
+import java.util.List;
+
+import org.apache.tools.ant.DirectoryScanner;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
@@ -37,81 +40,52 @@ import com.googlecode.bdoc.doc.util.ClassesDirectory;
  */
 public class BDocFactoryImpl implements BDocFactory {
 
-	private ClassesDirectory classesDirectory = new ClassesDirectory();
+	private ClassesDirectory testClassDirectory = new ClassesDirectory();
 
 	private ProjectInfo projectInfo;
 	private ClassLoader classLoader;
 	private Class<? extends Annotation> storyRefAnnotation;
-	
-	
+
 	public void setProjectInfo(ProjectInfo projectInfo) {
 		this.projectInfo = projectInfo;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.googlecode.bdoc.doc.report.BDocReport#setTestClassDirectory(java.
-	 * io.File)
-	 */
-	public void setTestClassDirectory(File testClassDirectory) {
-		classesDirectory.setBaseDir(testClassDirectory);
+	public void setTestClassDirectory(File baseDir) {
+		this.testClassDirectory.setBaseDir(baseDir);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.googlecode.bdoc.doc.report.BDocReport#setIncludesFilePattern(java
-	 * .lang.String[])
-	 */
 	public void setIncludesFilePattern(String[] includesFilePattern) {
-		classesDirectory.setIncludes(includesFilePattern);
+		testClassDirectory.setIncludes(includesFilePattern);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.googlecode.bdoc.doc.report.BDocReport#setExcludesFilePattern(java
-	 * .lang.String[])
-	 */
 	public void setExcludesFilePattern(String[] excludesFilePattern) {
-		classesDirectory.setExcludes(excludesFilePattern);
+		testClassDirectory.setExcludes(excludesFilePattern);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seecom.googlecode.bdoc.doc.report.BDocReport#setClassLoader(java.lang.
-	 * ClassLoader)
-	 */
 	public void setClassLoader(ClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.googlecode.bdoc.doc.report.BDocReport#setStoryRefAnnotation(java.
-	 * lang.Class)
-	 */
 	public void setStoryRefAnnotation(Class<? extends Annotation> storyRefAnnotation) {
 		this.storyRefAnnotation = storyRefAnnotation;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.googlecode.bdoc.doc.report.BDocReport#run(java.io.File)
-	 */
 	public BDoc createBDoc(BehaviourFactory behaviourFactory) {
 		BDoc bdoc = new BDoc(storyRefAnnotation);
 		bdoc.setProject(projectInfo);
-		bdoc.addBehaviourFrom(classesDirectory, classLoader, behaviourFactory);
+		bdoc.addBehaviourFrom(testClassDirectory, classLoader, behaviourFactory);
 		return bdoc;
+	}
 
+	public String findReportConfigClassName() {
+		ClassesDirectory reportConfigDirectory = new ClassesDirectory();
+		reportConfigDirectory.setBaseDir(testClassDirectory.getBaseDir());
+		reportConfigDirectory.setIncludes("**/ReportConfig.class");
+		List<String> result = reportConfigDirectory.classes();
+		if (!result.isEmpty()) {
+			return result.get(0);
+		}
+
+		return null;
 	}
 }

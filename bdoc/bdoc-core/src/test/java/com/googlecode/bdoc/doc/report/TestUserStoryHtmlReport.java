@@ -48,6 +48,8 @@ import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.domain.UserStoryDescription.Narrative;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassThatShouldComeFirst;
+import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassThatShouldComeLast;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements;
 
 /**
@@ -56,7 +58,7 @@ import com.googlecode.bdoc.doc.testdata.BDocTestHelper.TestClassWithThreeScenari
 @Ref(Story.HTML_USERSTORY_REPORT)
 public class TestUserStoryHtmlReport {
 
-	private BDocMacroHelper bdocMacroHelper = new BDocMacroHelper( new BDocConfig()  );
+	private BDocMacroHelper bdocMacroHelper = new BDocMacroHelper(new BDocConfig());
 
 	private String html;
 	private BDoc bdoc;
@@ -66,7 +68,10 @@ public class TestUserStoryHtmlReport {
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements.class),
 				BConst.SRC_TEST_JAVA);
 
-		UserStoryHtmlReport htmlReport = new UserStoryHtmlReport(bdoc,new BDocConfig());
+		bdoc.addBehaviourFrom(new TestClass(TestClassThatShouldComeLast.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassThatShouldComeFirst.class), BConst.SRC_TEST_JAVA);
+
+		UserStoryHtmlReport htmlReport = new UserStoryHtmlReport(bdoc, new BDocConfig());
 
 		html = htmlReport.html();
 

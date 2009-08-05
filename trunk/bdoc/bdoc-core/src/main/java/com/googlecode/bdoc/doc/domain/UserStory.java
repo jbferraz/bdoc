@@ -38,12 +38,18 @@ public class UserStory extends ModuleBehaviour implements UserStoryDescription, 
 	private final Integer id;
 	private final String title;
 	private final Narrative narrative;
+	private final ClassBehaviourSorter classBehaviourSorter;
 
 	public UserStory(UserStoryDescription userStoryDescription) {
+		this(userStoryDescription, new ClassBehaviourSorter());
+	}
+
+	public UserStory(UserStoryDescription userStoryDescription, ClassBehaviourSorter classBehaviourSorter) {
 		Validate.notNull(userStoryDescription);
 		this.id = userStoryDescription.getId();
 		this.title = userStoryDescription.getTitle();
 		this.narrative = userStoryDescription.getNarrative();
+		this.classBehaviourSorter = classBehaviourSorter;
 	}
 
 	public Integer getId() {
@@ -104,7 +110,6 @@ public class UserStory extends ModuleBehaviour implements UserStoryDescription, 
 		for (Package javaPackage : getPackages()) {
 			result.addAll((javaPackage.getClassBehaviour()));
 		}
-		return result;
+		return classBehaviourSorter.sort(result);
 	}
-
 }

@@ -85,6 +85,23 @@ public class BDocTestHelper {
 
 		return bddDoc;
 	}
+	
+	@ExReference(ExStory.STORY1)
+	public class TestClassThatShouldComeFirst {
+		@Test
+		public void firstStatement() {
+			
+		}
+	}
+	
+	@ExReference(ExStory.STORY1)
+	public class TestClassThatShouldComeLast{
+		@Test
+		public void lastStatement() {
+			
+		}
+	}
+	
 
 	@ExReference(ExStory.STORY1)
 	public class TestClassWithThreeScenariosThreeSpecificationsAndThreeStatements {

@@ -125,7 +125,8 @@ public class BDoc {
 	 *            identifies userstory to add
 	 */
 	private UserStory userStory(Annotation storyRefAnnotation) {
-		UserStory userStory = new UserStory(userStoryDescription(storyRefAnnotation));
+		ClassBehaviourSorter classBehaviourSorter = new ClassBehaviourSorter();
+		UserStory userStory = new UserStory(userStoryDescription(storyRefAnnotation),classBehaviourSorter );
 		if (userStories.contains(userStory)) {
 			return from(userStories).equalTo(userStory);
 		} else {

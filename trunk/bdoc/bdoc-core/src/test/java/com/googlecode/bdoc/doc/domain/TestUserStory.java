@@ -35,7 +35,9 @@ import org.junit.Test;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.TestBDoc.TestExampleAnnotatedScenariosAndSpecifications;
+import com.googlecode.bdoc.doc.domain.testdata.packagex.ClassX;
 import com.googlecode.bdoc.doc.domain.testdata.packagex.ClassXTest;
+import com.googlecode.bdoc.doc.domain.testdata.packagey.ClassY;
 import com.googlecode.bdoc.doc.domain.testdata.packagey.ClassYTest;
 import com.googlecode.bdoc.doc.testdata.ExStory;
 
@@ -100,9 +102,34 @@ public class TestUserStory {
 
 		List<ClassBehaviour> classBehaviour = userStory.getClassBehaviour();
 
-		assertEquals( 2, classBehaviour.size() );
+		assertEquals(2, classBehaviour.size());
 		assertTrue(classBehaviour.contains(new ClassBehaviour(ClassXTest.class)));
 		assertTrue(classBehaviour.contains(new ClassBehaviour(ClassYTest.class)));
+	}
+
+	@Test
+	public void shouldSortClassBehaviourAfterSpecifiedOrder() {
+		Class<?>[] classBehaviourOrder = { ClassY.class, ClassX.class, LastClass.class};
+		
+		userStory = new UserStory(ExStory.STORY1, new ClassBehaviourSorter( classBehaviourOrder ) );
+		userStory.addBehaviour(new TestMethod(LastClassTest.class, "lastStatement"));
+		userStory.addBehaviour(new TestMethod(ClassYTest.class, "shouldBeTestY"));
+		userStory.addBehaviour(new TestMethod(ClassXTest.class, "shouldBeTestX"));
+		
+		assertEquals( "ClassY", userStory.getClassBehaviour().get(0).getClassName() );
+		assertEquals( "ClassX", userStory.getClassBehaviour().get(1).getClassName() );
+		assertEquals( "LastClass", userStory.getClassBehaviour().get(2).getClassName() );
+	}
+
+	public class LastClass {
+	}
+
+	public class LastClassTest {
+
+		@Test
+		public void lastStatement() {
+
+		}
 	}
 
 }

@@ -79,28 +79,33 @@ public class TestClass {
 		return clazz.getMethods();
 	}
 
-	public List<TestMethod> getTestMethods(TestAnnotations testAnnotations) {
+	public List<TestMethod> getTestMethods() {
 		List<TestMethod> result = new ArrayList<TestMethod>();
 		Method[] methods = getMethods();
 		for (Method method : methods) {
-			TestMethod testMethod = new TestMethod(this,method);
-			if (testMethod.isTest(testAnnotations)) {
+			TestMethod testMethod = new TestMethod(this, method);
+			if (testMethod.isTest()) {
 				result.add(testMethod);
 			}
 		}
 		return result;
 	}
 
-	public boolean classIsAnnotatedWithIgnore(TestAnnotations testAnnotations) {
-		Validate.notNull(testAnnotations, "testAnnotations can't be null");
-		Validate.notNull(testAnnotations.getIgnoreAnnotation());
+	public boolean classIsAnnotatedWithIgnore() {
 
-		return (clazz.isAnnotationPresent(testAnnotations.getIgnoreAnnotation()));
+		Annotation[] annotations = clazz.getAnnotations();
+		for (Annotation annotation : annotations) {
+			if (annotation.annotationType().getName().endsWith(".Ignore")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public TestMethod getTestMethod(String methodName) {
 		try {
-			return new TestMethod(this,clazz.getMethod(methodName, new Class[0]));
+			return new TestMethod(this, clazz.getMethod(methodName, new Class[0]));
 		} catch (Exception e) {
 			throw new IllegalStateException("Error getting testmethod [" + methodName + "] from [" + clazz.getName() + "]", e);
 		}

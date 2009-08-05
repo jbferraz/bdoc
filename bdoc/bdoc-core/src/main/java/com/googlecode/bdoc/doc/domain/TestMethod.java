@@ -101,12 +101,7 @@ public class TestMethod {
 	 *            to check
 	 * @return true if method is a test
 	 */
-	public boolean isTest(TestAnnotations testAnnotations) {
-		if ((null != testAnnotations.getTestAnnotation()) && method.isAnnotationPresent(testAnnotations.getTestAnnotation())) {
-			if ((null != testAnnotations.getIgnoreAnnotation()) && !method.isAnnotationPresent(testAnnotations.getIgnoreAnnotation())) {
-				return true;
-			}
-		}
+	public boolean isTest() {
 
 		boolean testMethod = false;
 		boolean ignore = false;

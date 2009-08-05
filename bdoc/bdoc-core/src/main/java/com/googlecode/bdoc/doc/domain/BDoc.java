@@ -48,7 +48,6 @@ public class BDoc {
 	public static final String TEST_METHOD_PREFIX = "test";
 
 	protected transient Class<? extends Annotation> storyRefAnnotation;
-	protected transient TestAnnotations testAnnotations = new TestAnnotations();
 
 	protected ProjectInfo projectInfo = new ProjectInfo("unnamed", "unknown");
 	protected Calendar docTime = Calendar.getInstance();
@@ -79,7 +78,6 @@ public class BDoc {
 	public BDoc(Class<? extends Annotation> testAnnotation, Class<? extends Annotation> storyRefAnnotation,
 			Class<? extends Annotation> ignoreAnnotation) {
 		this.storyRefAnnotation = storyRefAnnotation;
-		this.testAnnotations = new TestAnnotations(testAnnotation, ignoreAnnotation);
 	}
 
 	/**
@@ -93,11 +91,11 @@ public class BDoc {
 			userStory = userStory(testClass.getAnnotation(storyRefAnnotation));
 		}
 
-		if (testClass.classIsAnnotatedWithIgnore(testAnnotations)) {
+		if (testClass.classIsAnnotatedWithIgnore()) {
 			return this;
 		}
 
-		for (TestMethod method : testClass.getTestMethods(testAnnotations)) {
+		for (TestMethod method : testClass.getTestMethods()) {
 
 			if ((null != storyRefAnnotation) && (method.isAnnotationPresent(storyRefAnnotation))) {
 				userStory = userStory(method.getAnnotation(storyRefAnnotation));
@@ -226,14 +224,6 @@ public class BDoc {
 			result.addAll(userStory.specifications());
 		}
 		return result;
-	}
-
-	/**
-	 * Helper method for test - when default annotations should be set, after
-	 * serializing the BDoc, since annotations are transient
-	 */
-	public void setDefaultTestAnnotations() {
-		testAnnotations = new TestAnnotations();
 	}
 
 }

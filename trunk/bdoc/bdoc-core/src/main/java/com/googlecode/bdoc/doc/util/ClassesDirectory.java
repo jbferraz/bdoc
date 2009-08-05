@@ -44,8 +44,12 @@ public class ClassesDirectory {
 		ds.setBasedir(baseDir);
 	}
 
+	public File getBaseDir() {
+		return ds.getBasedir();
+	}
+
 	public List<String> classes() {
-		Validate.notNull(ds.getBasedir(), "BaseDir must be set on " + getClass().getCanonicalName() );
+		Validate.notNull(ds.getBasedir(), "BaseDir must be set on " + getClass().getCanonicalName());
 
 		List<String> result = new ArrayList<String>();
 
@@ -78,7 +82,7 @@ public class ClassesDirectory {
 	 * @param includes
 	 *            array of ant file patterns to include
 	 */
-	public void setIncludes(String[] includes) {
+	public void setIncludes(String... includes) {
 		ds.setIncludes(includes);
 	}
 
@@ -86,7 +90,7 @@ public class ClassesDirectory {
 	 * @param excludes
 	 *            array of ant file patterns to exclude
 	 */
-	public void setExcludes(String[] excludes) {
+	public void setExcludes(String... excludes) {
 		ds.setExcludes(excludes);
 	}
 }

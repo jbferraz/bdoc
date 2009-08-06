@@ -35,6 +35,7 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.BDocUserStoryDiffDocTestdataHelper.TestWithOnlyGeneralBehaviourContent;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.ClassBehaviourSorter;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.testdata.ExReference;
@@ -74,10 +75,10 @@ public class TestBDocDiff {
 
 	@Test
 	public void shouldReportDiffForChangedGeneralBehaviour() {
-		BDoc bddDocV1 = new BDoc(ExReference.class);
+		BDoc bddDocV1 = new BDoc(ExReference.class, new ClassBehaviourSorter());
 		bddDocV1.setProject(new ProjectInfo("name", "1"));
 
-		BDoc bddDocV2 = new BDoc(ExReference.class);
+		BDoc bddDocV2 = new BDoc(ExReference.class, new ClassBehaviourSorter());
 		bddDocV2.setProject(new ProjectInfo("name", "1"));
 
 		bddDocV2.addBehaviourFrom(new TestClass(TestWithOnlyGeneralBehaviourContent.class), BConst.SRC_TEST_JAVA);

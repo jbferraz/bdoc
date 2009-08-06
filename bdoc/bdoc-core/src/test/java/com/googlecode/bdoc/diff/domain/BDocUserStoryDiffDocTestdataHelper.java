@@ -31,6 +31,7 @@ import com.googlecode.bdoc.diff.domain.added.TestClassRepresentsTestsThatAreAdde
 import com.googlecode.bdoc.diff.domain.testpackageremoved.TestClassRepresentsTestsThatAreRemoved;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
+import com.googlecode.bdoc.doc.domain.ClassBehaviourSorter;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Specification;
@@ -48,8 +49,8 @@ public class BDocUserStoryDiffDocTestdataHelper {
 	{
 		emptyBddDoc.setProject(new ProjectInfo("emptyproject", "version1"));
 	}
-	private final BDoc bddDocWithGeneralBehaviourAndAStory = new BDoc(ExReference.class);
-	private final BDoc bddDocWithUpdatedStory = new BDoc(ExReference.class);
+	private final BDoc bddDocWithGeneralBehaviourAndAStory = new BDoc(ExReference.class,new ClassBehaviourSorter());
+	private final BDoc bddDocWithUpdatedStory = new BDoc(ExReference.class, new ClassBehaviourSorter());
 
 	{
 		bddDocWithGeneralBehaviourAndAStory.setProject(new ProjectInfo("test-project", "version1"));
@@ -219,6 +220,6 @@ public class BDocUserStoryDiffDocTestdataHelper {
 	}
 
 	public static BDoc createBDoc() {
-		return new BDoc(ExReference.class);
+		return new BDoc(ExReference.class, new ClassBehaviourSorter());
 	}
 }

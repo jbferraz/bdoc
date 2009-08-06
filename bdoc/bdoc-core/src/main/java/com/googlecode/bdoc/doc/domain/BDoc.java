@@ -54,6 +54,8 @@ public class BDoc {
 	protected List<UserStory> userStories = new ArrayList<UserStory>();
 	protected ModuleBehaviour moduleBehaviour = new ModuleBehaviour();
 
+	private ClassBehaviourSorter classBehaviourSorter;
+
 	/**
 	 * Constructor - for test
 	 */
@@ -75,8 +77,9 @@ public class BDoc {
 	 * @param storyRefAnnotation
 	 *            marks method as something with a reference to story
 	 */
-	public BDoc(Class<? extends Annotation> storyRefAnnotation) {
+	public BDoc(Class<? extends Annotation> storyRefAnnotation, ClassBehaviourSorter classBehaviourSorter) {
 		this.storyRefAnnotation = storyRefAnnotation;
+		this.classBehaviourSorter = classBehaviourSorter;
 	}
 
 	/**
@@ -122,7 +125,6 @@ public class BDoc {
 	 *            identifies userstory to add
 	 */
 	private UserStory userStory(Annotation storyRefAnnotation) {
-		ClassBehaviourSorter classBehaviourSorter = new ClassBehaviourSorter();
 		UserStory userStory = new UserStory(userStoryDescription(storyRefAnnotation), classBehaviourSorter);
 		if (userStories.contains(userStory)) {
 			return from(userStories).equalTo(userStory);

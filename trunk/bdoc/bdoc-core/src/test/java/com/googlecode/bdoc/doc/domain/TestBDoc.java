@@ -58,7 +58,7 @@ public class TestBDoc {
 
 	@Before
 	public void resetBddDoc() {
-		bdoc = new BDoc(ExReference.class);
+		bdoc = new BDoc(ExReference.class,new ClassBehaviourSorter());
 		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedScenariosAndSpecifications.class), BConst.SRC_TEST_JAVA);
 		bdoc.addBehaviourFrom(new TestClass(TestExampleAnnotatedClass.class), BConst.SRC_TEST_JAVA);
 	}
@@ -93,7 +93,7 @@ public class TestBDoc {
 
 	@Test
 	public void shouldExtractBehaviourFromMetodsStartingWithTheWordTest() {
-		bdoc = new BDoc(ExReference.class);
+		bdoc = new BDoc(ExReference.class, new ClassBehaviourSorter());
 		bdoc.addBehaviourFrom(new TestClass(TestExampleJunit3.class), BConst.SRC_TEST_JAVA);
 
 		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
@@ -131,14 +131,14 @@ public class TestBDoc {
 
 	@Test
 	public void shouldIgnoreClassesThatAreNotTests() {
-		bdoc = new BDoc(Ref.class);
+		bdoc = new BDoc(Ref.class, new ClassBehaviourSorter());
 		bdoc.addBehaviourFrom(new TestClass(Ref.class), BConst.SRC_TEST_JAVA);
 		assertEquals(0, bdoc.getUserstories().size());
 	}
 
 	@Test
 	public void shouldHandleStoryReferencesThatDoesNotImplementUserStoryDescriptionDirectly() {
-		bdoc = new BDoc(ExReference2.class);
+		bdoc = new BDoc(ExReference2.class, new ClassBehaviourSorter());
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithExStory2Reference.class), BConst.SRC_TEST_JAVA);
 		assertEquals("Test story", bdoc.getUserstories().get(0).getTitle());
 	}
@@ -150,14 +150,14 @@ public class TestBDoc {
 
 	@Test
 	public void givenATestClassWithNoReferenceToAStoryWhenBdddocIsGeneratedThenTheSpecifiedBehaviourShouldNotBeAddedToAnyStories() {
-		bdoc = new BDoc(ExReference.class);
+		bdoc = new BDoc(ExReference.class, new ClassBehaviourSorter());
 		bdoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BConst.SRC_TEST_JAVA);
 		assertEquals(0, bdoc.getUserstories().size());
 	}
 
 	@Test
 	public void givenATestClassWithNoReferenceToAStoryWhenBdddocIsGeneratedThenTheSpecifiedBehaviourShouldBeAddedToGeneralBehaviour() {
-		bdoc = new BDoc(ExReference.class );
+		bdoc = new BDoc(ExReference.class, new ClassBehaviourSorter() );
 		bdoc.addBehaviourFrom(new TestClass(TestExampleNoStories.class), BConst.SRC_TEST_JAVA);
 
 		assertTrue(bdoc.getModuleBehaviour().getPackages().get(0).getClassSpecifications().get(0).getSpecifications().contains(
@@ -174,7 +174,7 @@ public class TestBDoc {
 
 	@Test
 	public void shouldIgnoreMethodsAnnotatedWithIgnore() {
-		bdoc = new BDoc( ExReference.class );
+		bdoc = new BDoc( ExReference.class, new ClassBehaviourSorter() );
 		bdoc.addBehaviourFrom(new TestClass(TestExampleIgnoreMethods.class), BConst.SRC_TEST_JAVA);
 		ModuleBehaviour behaviour = bdoc.getModuleBehaviour();
 		List<Package> packages = behaviour.getPackages();
@@ -188,7 +188,7 @@ public class TestBDoc {
 
 	@Test
 	public void shouldIgnoreClassAnnotatedWithIgnore() {
-		bdoc = new BDoc( ExReference.class );
+		bdoc = new BDoc( ExReference.class, new ClassBehaviourSorter() );
 		bdoc.addBehaviourFrom(new TestClass(TestExampleIgnoreClass.class), BConst.SRC_TEST_JAVA);
 		ModuleBehaviour behaviour = bdoc.getModuleBehaviour();
 		List<Package> packages = behaviour.getPackages();
@@ -220,7 +220,7 @@ public class TestBDoc {
 
 	@Test
 	public void listOfScenariosShouldIncludeThoseRelatedToUserStories() {
-		bdoc = new BDoc( ExReference.class );
+		bdoc = new BDoc( ExReference.class, new ClassBehaviourSorter() );
 		bdoc.addBehaviourFrom(new TestClass(TestExampleWithStory.class), BConst.SRC_TEST_JAVA);
 		ClassBehaviour classBehaviour = bdoc.userStoryFor(ExStory.STORY3).classBehaviourFor(TestExampleWithStory.class);
 		assertFalse(classBehaviour.getScenarios().isEmpty());
@@ -260,7 +260,7 @@ public class TestBDoc {
 
 	@Test
 	public void listOfTestTablesShouldIncludeUserStories() {
-		bdoc = new BDoc(ExReference.class );
+		bdoc = new BDoc(ExReference.class, new ClassBehaviourSorter() );
 		bdoc.addBehaviourFrom(new TestClass(MyTestTablesBehaviour.class), new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA));
 
 		ClassBehaviour classBehaviour = bdoc.classBehaviourInModuleBehaviour(MyTestTablesBehaviour.class);
@@ -273,7 +273,7 @@ public class TestBDoc {
 
 	@Test
 	public void shouldSortUserStoriesById() {
-		bdoc = new BDoc(ExReference.class );
+		bdoc = new BDoc(ExReference.class, new ClassBehaviourSorter() );
 		bdoc.addBehaviourFrom(new TestClass(TestWithManyUserStories.class), BConst.SRC_TEST_JAVA);
 
 		assertEquals(ExStory.STORY1.getId(), bdoc.getUserstories().get(0).getId());
@@ -283,7 +283,7 @@ public class TestBDoc {
 
 	@Test
 	public void shouldIncludeAllClassBehaviourInModuleBehaviour() {
-		bdoc = new BDoc(ExReference.class);
+		bdoc = new BDoc(ExReference.class, new ClassBehaviourSorter());
 		bdoc.addBehaviourFrom(new TestClass(TestWithManyUserStories.class), BConst.SRC_TEST_JAVA);
 
 		assertNotNull(bdoc.getModuleBehaviour().classBehaviourFor(TestWithManyUserStories.class));

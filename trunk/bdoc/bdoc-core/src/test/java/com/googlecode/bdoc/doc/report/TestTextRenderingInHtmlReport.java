@@ -37,6 +37,7 @@ import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.ClassBehaviourSorter;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.testdata.BDocTestHelper;
 import com.googlecode.bdoc.doc.testdata.ExReference;
@@ -52,7 +53,7 @@ public class TestTextRenderingInHtmlReport {
 	private String html;
 
 	public TestTextRenderingInHtmlReport() throws IOException {
-		BDoc bddDoc = new BDoc(ExReference.class);
+		BDoc bddDoc = new BDoc(ExReference.class, new ClassBehaviourSorter());
 		bddDoc.setProject(BDocTestHelper.testProject());
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithASpecification.class), BConst.SRC_TEST_JAVA);
 		bddDoc.addBehaviourFrom(new TestClass(TestClassWithAStatement.class), BConst.SRC_TEST_JAVA);

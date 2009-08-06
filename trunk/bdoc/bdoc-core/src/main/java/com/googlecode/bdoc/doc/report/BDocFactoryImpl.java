@@ -26,12 +26,12 @@ package com.googlecode.bdoc.doc.report;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.List;
-
-import org.apache.tools.ant.DirectoryScanner;
 
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
+import com.googlecode.bdoc.doc.domain.ClassBehaviourSorter;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.util.ClassesDirectory;
 
@@ -45,6 +45,7 @@ public class BDocFactoryImpl implements BDocFactory {
 	private ProjectInfo projectInfo;
 	private ClassLoader classLoader;
 	private Class<? extends Annotation> storyRefAnnotation;
+	private String reportConfigClassName = "ReportConfig";
 
 	public void setProjectInfo(ProjectInfo projectInfo) {
 		this.projectInfo = projectInfo;
@@ -71,21 +72,50 @@ public class BDocFactoryImpl implements BDocFactory {
 	}
 
 	public BDoc createBDoc(BehaviourFactory behaviourFactory) {
-		BDoc bdoc = new BDoc(storyRefAnnotation);
+		ClassBehaviourSorter classBehaviourSorter = createClassBehaviourSorter();
+		BDoc bdoc = new BDoc(storyRefAnnotation, classBehaviourSorter);
 		bdoc.setProject(projectInfo);
 		bdoc.addBehaviourFrom(testClassDirectory, classLoader, behaviourFactory);
 		return bdoc;
 	}
 
-	public String findReportConfigClassName() {
+	protected ClassBehaviourSorter createClassBehaviourSorter() {
+		String reportConfigClassName = findReportConfigClassName();
+		if (null != reportConfigClassName) {
+			return createClassBehaviourSorterFromClassName(reportConfigClassName);
+		}
+		return null;
+	}
+
+	protected String findReportConfigClassName() {
 		ClassesDirectory reportConfigDirectory = new ClassesDirectory();
 		reportConfigDirectory.setBaseDir(testClassDirectory.getBaseDir());
-		reportConfigDirectory.setIncludes("**/ReportConfig.class");
+		reportConfigDirectory.setIncludes("**/" + reportConfigClassName + ".class");
 		List<String> result = reportConfigDirectory.classes();
 		if (!result.isEmpty()) {
 			return result.get(0);
 		}
 
 		return null;
+	}
+
+	private ClassBehaviourSorter createClassBehaviourSorterFromClassName(String className) {
+		try {
+			Class<?> reportConfigClass = classLoader.loadClass(className);
+			
+			Field field = reportConfigClass.getDeclaredField("presentationOrder");
+			field.setAccessible(true);
+
+			return new ClassBehaviourSorter(((Class<?>[]) field.get(reportConfigClass.newInstance())));
+
+		} catch (Exception e) {
+			throw new IllegalArgumentException("ReportConfig not accecpted: " + className, e);
+		}
+	}
+
+	public static BDocFactoryImpl createForTest(String reportConfigClassName) {
+		BDocFactoryImpl bdocFactoryImpl = new BDocFactoryImpl();
+		bdocFactoryImpl.reportConfigClassName = reportConfigClassName;
+		return bdocFactoryImpl;
 	}
 }

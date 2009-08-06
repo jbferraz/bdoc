@@ -31,6 +31,7 @@ import org.junit.Test;
 import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
+import com.googlecode.bdoc.doc.domain.ClassBehaviourSorter;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
@@ -69,7 +70,7 @@ public class BDocTestHelper {
 	}
 
 	public static BDoc bdocWithProject() {
-		BDoc bdoc = new BDoc(ExReference.class);
+		BDoc bdoc = new BDoc(ExReference.class, new ClassBehaviourSorter());
 		bdoc.setProject(testProject());
 		return bdoc;
 	}

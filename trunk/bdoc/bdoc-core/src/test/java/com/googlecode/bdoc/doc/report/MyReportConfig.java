@@ -24,39 +24,10 @@
 
 package com.googlecode.bdoc.doc.report;
 
-import static org.junit.Assert.*;
+import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.ClassBehaviour;
+import com.googlecode.bdoc.doc.domain.UserStory;
 
-import java.io.File;
-
-import org.junit.Test;
-
-public class BDocFactoryImplTest {
-
-	@Test
-	public void whenAReporConfigIsPresentItShouldBeSpecifiedByItsClassName() {
-		BDocFactoryImpl bdocFactoryImpl = new BDocFactoryImpl();
-		bdocFactoryImpl.setTestClassDirectory(new File("target/test-classes"));
-
-		String className = bdocFactoryImpl.findReportConfigClassName();
-		assertEquals("com.googlecode.bdoc.ReportConfig", className);
-	}
-
-	@Test
-	public void whenAReporConfigIsNotPresentItShouldBeSpecifiedNull() {
-		BDocFactoryImpl bdocFactoryImpl = new BDocFactoryImpl();
-		bdocFactoryImpl.setTestClassDirectory(new File("target/test"));
-
-		String className = bdocFactoryImpl.findReportConfigClassName();
-		assertEquals(null, className);
-	}
-	
-	@Test
-	public void theFieldPresentationOrderShouldBeReadFromASpecifiedReportConfig() {
-		
-	}
-
-	@Test
-	public void andSendAClassBehaviourSorterToBDocWhenAnPresentationOrderIsSpecified() {
-
-	}
+public class MyReportConfig {
+	Class<?>[] presentationOrder = { BDoc.class, UserStory.class, ClassBehaviour.class };
 }

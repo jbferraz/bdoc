@@ -110,6 +110,10 @@ public class UserStory extends ModuleBehaviour implements UserStoryDescription, 
 		for (Package javaPackage : getPackages()) {
 			result.addAll((javaPackage.getClassBehaviour()));
 		}
-		return classBehaviourSorter.sort(result);
+		if (null != classBehaviourSorter) {
+			classBehaviourSorter.sort(result);
+		}
+
+		return result;
 	}
 }

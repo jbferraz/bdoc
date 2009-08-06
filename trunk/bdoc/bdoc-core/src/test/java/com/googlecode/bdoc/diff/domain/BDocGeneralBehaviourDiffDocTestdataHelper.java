@@ -28,6 +28,7 @@ import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.diff.domain.subpackage.TestClassNewInSubPackage;
 import com.googlecode.bdoc.diff.domain.testpackageremoved.TestClassRepresentsGeneralBehaviourThatIsRemoved;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.ClassBehaviourSorter;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestMethod;
@@ -39,8 +40,8 @@ import com.googlecode.bdoc.doc.testdata.TestWithGeneralBehaviour;
  */
 public class BDocGeneralBehaviourDiffDocTestdataHelper {
 
-	private final BDoc oldBddDoc = new BDoc(ExReference.class);
-	private final BDoc newBddDoc = new BDoc(ExReference.class);
+	private final BDoc oldBddDoc = new BDoc(ExReference.class, new ClassBehaviourSorter());
+	private final BDoc newBddDoc = new BDoc(ExReference.class, new ClassBehaviourSorter());
 
 	{
 		ProjectInfo projectInfo = new ProjectInfo("test-project", "version1");

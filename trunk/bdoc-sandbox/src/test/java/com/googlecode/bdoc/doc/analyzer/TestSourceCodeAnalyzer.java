@@ -24,7 +24,10 @@
 
 package com.googlecode.bdoc.doc.analyzer;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -37,15 +40,16 @@ import com.googlecode.bdoc.sandbox.BConst;
  */
 public class TestSourceCodeAnalyzer {
 
-	@Test
-	public final void shouldFindTestMethodsAndItsScenarios() {
-		// List<MethodInfo> methodInfos =
-		// SourceCodeAnalyzer.analyze(getFile(TestDiffLogBehaviour.class));
-		// assertEquals(1, methodInfos.size());
-		// assertEquals(4, methodInfos.get(0).getMethodInfos().size());
-	}
-
-	private File getFile(Class c) {
+	private static File getFile(Class c) {
 		return new File(BConst.SRC_TEST_JAVA, c.getName().replace('.', '/') + ".java");
 	}
+
+	@Test
+	public final void shouldFindTestMethodsAndItsScenarios() {
+		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class));
+		assertEquals(2, methodInfos.size());
+		assertEquals(0, methodInfos.get(0).getMethodInfos().size());
+		assertEquals(3, methodInfos.get(1).getMethodInfos().size());
+	}
+
 }

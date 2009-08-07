@@ -121,7 +121,10 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 			if (methodSelect.getKind().equals(Kind.IDENTIFIER)) {
 				IdentifierTree identifierTree = (IdentifierTree) methodSelect;
 				Name name = identifierTree.getName();
-				methods.add(new MethodInfo(name.toString()));
+				String camelCaseSentence = name.toString();
+				if (Scenario.Pattern.isScenario(camelCaseSentence)) {
+					methods.add(new MethodInfo(camelCaseSentence));
+				}
 			}
 		}
 	}

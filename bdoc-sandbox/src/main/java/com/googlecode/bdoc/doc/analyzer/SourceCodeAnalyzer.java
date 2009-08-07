@@ -36,6 +36,9 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 import javax.tools.JavaCompiler.CompilationTask;
 
+import org.apache.maven.shared.model.fileset.FileSet;
+import org.apache.maven.shared.model.fileset.util.FileSetManager;
+
 /**
  * 
  * @author Micael Vesterlund
@@ -78,7 +81,24 @@ public class SourceCodeAnalyzer {
 			System.out.println(e.getLocalizedMessage());
 		}
 
+		deleteClasses(file);
+
 		return processor.getMethodInfos();
+	}
+
+	private static void deleteClasses(File file) {
+		File dir = file.getParentFile();
+		FileSetManager fileSetManager = new FileSetManager();
+		FileSet fileSet = new FileSet();
+		fileSet.setDirectory(dir.getPath());
+		fileSet.addInclude("*.class");
+
+		try {
+			fileSetManager.delete(fileSet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private static List<File> getFileAsList(File file) {

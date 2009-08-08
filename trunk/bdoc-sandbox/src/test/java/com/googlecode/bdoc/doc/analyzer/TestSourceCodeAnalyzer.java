@@ -52,4 +52,18 @@ public class TestSourceCodeAnalyzer {
 		assertEquals(3, methodInfos.get(1).getMethodInfos().size());
 	}
 
+	/**
+	 * Utfordringer: 
+	 
+@Test public void eksemplerPaaBensjonsBeregning() {
+assertEquals( 3, pensjonsPoengForInntektPaa(4 * G) );
+assertEquals( 7, pensjonsPoengForInntektPaa(12 * G) );
+}
+
+=>
+Eksempler på pensjonsberegning
+3 pensjonspoeng for inntekt på 4*G
+7 pensjonspoeng for inntekt på 12*G
+
+	 */
 }

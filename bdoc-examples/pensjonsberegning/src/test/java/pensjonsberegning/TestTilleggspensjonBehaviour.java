@@ -9,9 +9,18 @@ import pensjonsberegning.bdoc.Story;
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Tilleggspensjon.class)
 public class TestTilleggspensjonBehaviour {
+	
+//	{
+//		tilleggspensjon = new Tilleggspensjon( person, 2009 );
+//		tilleggspensjon.getPensjonsprosent().beregnet();
+//		tilleggspensjon.getSluttpoengtall().beregnet()
+//		tilleggspensjon.getSluttpoengtall().getPensjonspoeng(); 
+//		tilleggspensjon.getGrunnbelope();
+//		tilleggspensjon.beregnet();
+//	}
 
 	@Test
-	public void tilleggspensjonErLikGrunnbeloepet_x_Sluttpoengtall_x_Pensjonsprosent() {
+	public void tilleggspensjonErLikGrunnbeloepet_x_Pensjonsprosent_x_Sluttpoengtall() {
 		gittEnGrunnpensjonLik(70256);
 		gittEtSluttpoengtallLik(5.16);
 		gittAntallAarMed45SomPensjonsProsent(25);
@@ -37,4 +46,5 @@ public class TestTilleggspensjonBehaviour {
 
 	void saaSkalTilleggspensjonPerAarVaereLik(double d) {
 	}
+	
 }

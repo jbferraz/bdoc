@@ -9,7 +9,13 @@ import pensjonsberegning.bdoc.Ref;
 import pensjonsberegning.bdoc.RefClass;
 import pensjonsberegning.bdoc.Story;
 
-@Ref( Story.TABELL_FOR_GRUNNBELOEP )
+/**
+ * Liste over grunnbeløp: http://www.nav.no/page?id=1073744172
+ * 
+ * @author Per Otto Bergum Christensen
+ * 
+ */
+@Ref(Story.TABELL_FOR_GRUNNBELOEP)
 @RefClass(GrunnbeloepTabell.class)
 public class TestGrunnbeloepTabellBehaviour {
 

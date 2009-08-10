@@ -12,6 +12,11 @@ import pensjonsberegning.bdoc.Ref;
 import pensjonsberegning.bdoc.RefClass;
 import pensjonsberegning.bdoc.Story;
 
+/**
+ * Eksempel på beregning av sluttpoengtall: http://www.nav.no/rettskildene/Rundskriv/147941.cms
+ * @author Per Otto
+ *
+ */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Sluttpoengtall.class)
 public class TestSluttpoengtallBehaviour {

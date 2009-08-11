@@ -46,35 +46,14 @@ import org.apache.maven.shared.model.fileset.util.FileSetManager;
  */
 public class SourceCodeAnalyzer {
 
-	// public static List<MethodCall> analyze(TestMethod testMethod) {
-	// File file = new File(BConst.SRC_TEST_JAVA,
-	// testMethod.getClass().getName().replace('.', '/') + ".java");
-	// List<MethodCall> methodCalls = new ArrayList<MethodCall>();
-	// List<MethodInfo> invokeProcessor = invokeProcessor(file);
-	// for (MethodInfo methodInfo : invokeProcessor) {
-	// if (methodInfo.getName().equals(testMethod.getName())) {
-	// List<MethodInfo> methodInfos = methodInfo.getMethodInfos();
-	// for (MethodInfo methodInfo2 : methodInfos) {
-	// MethodCall methodCall = new MethodCall(methodInfo2.getName());
-	// methodCalls.add(methodCall);
-	// }
-	// }
-	// }
-	// return methodCalls;
-	// }
-
 	public static List<MethodInfo> analyze(File file) {
-		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-		StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 		List<File> files = getFileAsList(file);
 
-		Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(files);
-		CompilationTask task = compiler.getTask(null, fileManager, null, null, null, compilationUnits);
-		LinkedList<AbstractProcessor> processors = new LinkedList<AbstractProcessor>();
-		CodeAnalyzerProcessor processor = new CodeAnalyzerProcessor();
-		processors.add(processor);
-		task.setProcessors(processors);
-		task.call();
+		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+		StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
+
+		List<MethodInfo> methodInfos = callCompiler(files, compiler, fileManager);
+
 		try {
 			fileManager.close();
 		} catch (IOException e) {
@@ -83,7 +62,25 @@ public class SourceCodeAnalyzer {
 
 		deleteClasses(file);
 
+		return methodInfos;
+	}
+
+	private static List<MethodInfo> callCompiler(List<File> files, JavaCompiler compiler, StandardJavaFileManager fileManager) {
+		CompilationTask compilationTask = getCompilationTask(files, compiler, fileManager);
+
+		LinkedList<AbstractProcessor> processors = new LinkedList<AbstractProcessor>();
+		CodeAnalyzerProcessor processor = new CodeAnalyzerProcessor();
+		processors.add(processor);
+
+		compilationTask.setProcessors(processors);
+		compilationTask.call();
 		return processor.getMethodInfos();
+	}
+
+	private static CompilationTask getCompilationTask(List<File> files, JavaCompiler compiler, StandardJavaFileManager fileManager) {
+		Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(files);
+		CompilationTask task = compiler.getTask(null, fileManager, null, null, null, compilationUnits);
+		return task;
 	}
 
 	private static void deleteClasses(File file) {

@@ -33,7 +33,16 @@ import java.util.List;
  */
 public class MethodInfo {
 
+	private boolean ignored;
 	private String name;
+
+	public boolean isIgnored() {
+		return ignored;
+	}
+
+	public void setIgnored(boolean ignored) {
+		this.ignored = ignored;
+	}
 
 	private List<MethodInfo> methodInfos;
 

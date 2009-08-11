@@ -71,39 +71,28 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 			MethodTree methodTreeLeaf = (MethodTree) leaf;
 			Name name = methodTreeLeaf.getName();
 			ModifiersTree modifiers = methodTreeLeaf.getModifiers();
-			boolean isTestMethod = false;
-			List<? extends AnnotationTree> annotations = modifiers.getAnnotations();
-			for (AnnotationTree annotationTree : annotations) {
-				Tree annotationType = annotationTree.getAnnotationType();
-				Kind kind = annotationType.getKind();
-				Name identifier = null;
-				if (kind.equals(Kind.IDENTIFIER)) {
-					IdentifierTree identifierTree = (IdentifierTree) annotationType;
-					identifier = identifierTree.getName();
-				} else {
-					MemberSelectTree memberSelectTree = (MemberSelectTree) annotationType;
-					identifier = memberSelectTree.getIdentifier();
-				}
-				if (identifier.contentEquals("Test")) {
-					isTestMethod = true;
-				}
 
-			}
-			if (isTestMethod) {
+			if (isMethodAnnotatedWith(modifiers, "Test")) {
 				MethodInfo methodInfo = new MethodInfo(name.toString());
+				methodInfo.setIgnored(isMethodAnnotatedWith(modifiers, "Ignore"));
+
 				List<MethodInfo> methods = new ArrayList<MethodInfo>();
 				BlockTree body = methodTreeLeaf.getBody();
 				List<? extends StatementTree> statements = body.getStatements();
 				for (StatementTree statementTree : statements) {
 					Kind kind = statementTree.getKind();
+					MethodInfo method = null;
 					if (kind.equals(Kind.EXPRESSION_STATEMENT)) {
 						ExpressionStatementTree expressionStatementTree = (ExpressionStatementTree) statementTree;
 						ExpressionTree expression = expressionStatementTree.getExpression();
-						extractMethods(methods, expression);
+						method = extractMethod(expression);
 					} else if (kind.equals(Kind.VARIABLE)) {
 						VariableTree variableTree = (VariableTree) statementTree;
 						ExpressionTree expression = variableTree.getInitializer();
-						extractMethods(methods, expression);
+						method = extractMethod(expression);
+					}
+					if (method != null) {
+						methods.add(method);
 					}
 				}
 				methodInfo.setMethodInfos(methods);
@@ -114,7 +103,33 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 		return super.visitMethod(methodTree, trees);
 	}
 
-	private void extractMethods(List<MethodInfo> methods, ExpressionTree expression) {
+	private boolean isMethodAnnotatedWith(ModifiersTree modifiers, String annotation) {
+		List<? extends AnnotationTree> annotations = modifiers.getAnnotations();
+		for (AnnotationTree annotationTree : annotations) {
+			Name identifier = extractName(annotationTree);
+			if (identifier.contentEquals(annotation)) {
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	private Name extractName(AnnotationTree annotationTree) {
+		Tree annotationType = annotationTree.getAnnotationType();
+		Kind kind = annotationType.getKind();
+		Name identifier = null;
+		if (kind.equals(Kind.IDENTIFIER)) {
+			IdentifierTree identifierTree = (IdentifierTree) annotationType;
+			identifier = identifierTree.getName();
+		} else {
+			MemberSelectTree memberSelectTree = (MemberSelectTree) annotationType;
+			identifier = memberSelectTree.getIdentifier();
+		}
+		return identifier;
+	}
+
+	private MethodInfo extractMethod(ExpressionTree expression) {
 		if (expression.getKind().equals(Kind.METHOD_INVOCATION)) {
 			MethodInvocationTree methodInvocationTree = (MethodInvocationTree) expression;
 			ExpressionTree methodSelect = methodInvocationTree.getMethodSelect();
@@ -123,10 +138,12 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 				Name name = identifierTree.getName();
 				String camelCaseSentence = name.toString();
 				if (Scenario.Pattern.isScenario(camelCaseSentence)) {
-					methods.add(new MethodInfo(camelCaseSentence));
+					MethodInfo methodInfo = new MethodInfo(camelCaseSentence);
+					return methodInfo;
 				}
 			}
 		}
+		return null;
 	}
 
 }

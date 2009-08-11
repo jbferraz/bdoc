@@ -1,23 +1,47 @@
 package pensjonsberegning;
 
-import org.junit.Ignore;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
 import org.junit.Test;
 
+import pensjonsberegning.bdoc.Ref;
+import pensjonsberegning.bdoc.Story;
+
+/**
+ * Grunnpensjon: http://www.nav.no/1073750161.cms?kapittel=3
+ * 
+ * @author Per Otto Bergum Christensen
+ * 
+ */
+@Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 public class TestGrunnpensjon {
 
-//  http://www.dinside.no/1671/hva-faar-jeg-i-pensjon
-//	Full grunnpensjon for en som er enslig eller gift med en som ikke er pensjonist, svarer til 1 G. Full grunnpensjon for ektepar som begge er pensjonister, svarer til 75 prosent av 1G for hver. 
-	
-	@Test
-	@Ignore
-	public void forEnsligeErGrunnpensjonEr100ProsentAvGrunnbeloepet() {
-		//new Grunnensjon( person )
+	private Person person = new Person();
+
+	@Before
+	public void resetPerson() {
+		person = new Person();
 	}
-	
+
 	@Test
-	@Ignore
-	public void forGifteEllerParnereGrunnpensjon85ProsentAvGrunnbeloepet() {
+	public void somHovedregelTilsvarerFullGrunnpensjonGrunnbeloepetForEnEnsligPensjonsmottaker() {
+		Grunnpensjon grunnensjon = new Grunnpensjon(person, 1);
+		assertEquals(1, grunnensjon.beregnet(), .001);
+	}
+
+	@Test
+	public void forPensjonistSomErGiftEllerHarSamboerMedPensjonFraFolketrygdenEllerAftUtgjoerGrunnpensjonen85ProsentAvGrunnbeloepet() {
+		person.setEktefelleEllerSamboerMedPensjonFraFolketrygdenEllerAfp(true);
+		assertEquals(0.85d, new Grunnpensjon(person, 1).beregnet(), .001);
+	}
+
+	@Test
+	public void forPensjonistSomErGiftEllerHarSamboerSomHarInntektSomOverstiger2_x_grunnbeloepetUtgjoerGrunnpensjonen85ProsentAvGrunnbeloepet() {		
+		person.setEktefelleEllerSamboerSinInntekt(3);
+		assertEquals(0.85d, new Grunnpensjon(person, 1).beregnet(), .001);
 		
+		person.setEktefelleEllerSamboerSinInntekt(2);
+		assertEquals(1, new Grunnpensjon(person, 1).beregnet(), .001);		
 	}
-	
 }

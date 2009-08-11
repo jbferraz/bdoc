@@ -138,6 +138,7 @@ public class TestCamelCaseToSentenceTranslator {
 	@Test
 	public void shouldNotTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacterWhenTwoLetterCodeIsANaturalPartOfTheWord() {
 		exampleOnFormattingOfNorwegianText("poeng", "Poeng");
+		exampleOnFormattingOfNorwegianText("samboer", "Samboer");
 	}
 	
 

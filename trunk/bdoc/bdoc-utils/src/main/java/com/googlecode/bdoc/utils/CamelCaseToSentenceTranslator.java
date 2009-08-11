@@ -102,6 +102,7 @@ public class CamelCaseToSentenceTranslator {
 		result = result.replace("Oe", "Ø");
 
 		result = result.replace("øng", "oeng");
+		result = result.replace("ambør", "amboer");
 		result = result.replace("døs", "does");
 		return result;
 	}

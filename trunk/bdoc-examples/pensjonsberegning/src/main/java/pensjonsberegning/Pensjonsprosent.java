@@ -1,6 +1,20 @@
 package pensjonsberegning;
 
+import java.util.List;
+
 public class Pensjonsprosent {
+
+	private List<Inntekt> inntekt;
+	private GrunnbeloepTabell grunnbeloepTabell;
+
+	public Pensjonsprosent(List<Inntekt> inntekt, GrunnbeloepTabell grunnbeloepTabell ) {
+		this.inntekt = inntekt;
+		this.grunnbeloepTabell = grunnbeloepTabell;
+	}
+	
+	public Double beregnet() {
+		return null;
+	}
 
 	public static double forAar(int aar) {
 		if (1991 < aar) {

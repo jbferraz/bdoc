@@ -13,6 +13,14 @@ public class Sluttpoengtall {
 		}
 	};
 
+	public Sluttpoengtall(List<Inntekt> inntekt, GrunnbeloepTabell grunnbeloepTabell) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Double beregnet() {
+		return null;
+	}
+	
 	public static double beregn(List<Double> pensjonspoengListe) {
 
 		List<Double> tyveBestePensjonspoeng = new ArrayList<Double>();

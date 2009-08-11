@@ -14,7 +14,6 @@ public class Person {
 
 	public void setEktefelleEllerSamboerMedPensjonFraFolketrygdenEllerAfp(Boolean ektefelleEllerSamboerMedPensjonFraFolketrygden) {
 		this.giftEllerHarSamboerMedPensjonFraFolketrygdenEllerAfp = ektefelleEllerSamboerMedPensjonFraFolketrygden;
-
 	}
 
 	public Integer getEktefelleEllerSamboerSinInntekt() {
@@ -24,5 +23,9 @@ public class Person {
 	public void setEktefelleEllerSamboerSinInntekt(Integer ektefelleEllerSamboerSinInntekt) {
 		this.ektefelleEllerSamboerSinInntekt = ektefelleEllerSamboerSinInntekt;
 
+	}
+
+	public List<Inntekt> getInntekt() {
+		return inntekt;
 	}
 }

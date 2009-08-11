@@ -2,14 +2,25 @@ package pensjonsberegning;
 
 public class Tilleggspensjon {
 
-	private double verdi;
+	private Integer grunnbeloep;
+	private Pensjonsprosent pensjonsprosent;
+	private Sluttpoengtall sluttpoengtall;
 
-	public Tilleggspensjon(double verdi) {
-		this.verdi = verdi;
+	public Tilleggspensjon(Person person, GrunnbeloepTabell grunnbeloepTabell) {
+		this( //
+				grunnbeloepTabell.sisteVerdi(), // 
+				new Pensjonsprosent(person.getInntekt(), grunnbeloepTabell),//
+				new Sluttpoengtall(person.getInntekt(), grunnbeloepTabell));
 	}
 
-	public double verdi() {
-		return verdi;
+	public Tilleggspensjon(Integer grunnbeloep, Pensjonsprosent pensjonsprosent, Sluttpoengtall sluttpoengtall) {
+		this.grunnbeloep = grunnbeloep;
+		this.pensjonsprosent = pensjonsprosent;
+		this.sluttpoengtall = sluttpoengtall;
+	}
+
+	public Double beregnet() {
+		return grunnbeloep * pensjonsprosent.beregnet() * sluttpoengtall.beregnet();
 	}
 
 }

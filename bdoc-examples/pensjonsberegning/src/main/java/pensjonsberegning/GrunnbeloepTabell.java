@@ -6,4 +6,8 @@ public class GrunnbeloepTabell {
 		return Grunnbeloep.gjennomsnittligGrunnbeloepFor(aar);
 	}
 
+	public Integer sisteVerdi() {
+		return null;
+	}
+
 }

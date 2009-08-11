@@ -1,5 +1,7 @@
 package pensjonsberegning;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import pensjonsberegning.bdoc.Ref;
@@ -9,42 +11,47 @@ import pensjonsberegning.bdoc.Story;
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Tilleggspensjon.class)
 public class TestTilleggspensjonBehaviour {
-	
-//	{
-//		tilleggspensjon = new Tilleggspensjon( person, 2009 );
-//		tilleggspensjon.getPensjonsprosent().beregnet();
-//		tilleggspensjon.getSluttpoengtall().beregnet()
-//		tilleggspensjon.getSluttpoengtall().getPensjonspoeng(); 
-//		tilleggspensjon.getGrunnbelope();
-//		tilleggspensjon.beregnet();
-//	}
+
+	private int grunnbeloep;
+	private Pensjonsprosent pensjonsprosent;
+	private Sluttpoengtall sluttpoengtall;
+	private Tilleggspensjon tilleggspensjon;
 
 	@Test
-	public void tilleggspensjonErLikGrunnbeloepet_x_Pensjonsprosent_x_Sluttpoengtall() {
-		gittEnGrunnpensjonLik(70256);
-		gittEtSluttpoengtallLik(5.16);
-		gittAntallAarMed45SomPensjonsProsent(25);
-		gittAntallAarMed42SomPensjonsProsent(15);
+	public void tilleggspensjonErLikGrunnbeloep_x_Pensjonsprosent_x_Sluttpoengtall() {
+		gittGrunnbeloepLik(100000);
+		gittPensjonsprosentLik(0.25);
+		gittSluttpoengtallLik(5.0);
 		naarBeregningAvTilleggspensjonUtfoeres();
-		saaSkalTilleggspensjonPerAarVaereLik(159056);
+		saaSkalTilleggspensjonVaereLik(125000);
 	}
 
-	void gittEnGrunnpensjonLik(int i) {
+	void gittGrunnbeloepLik(int verdi) {
+		this.grunnbeloep = verdi;
 	}
 
-	void gittEtSluttpoengtallLik(double d) {
+	void gittPensjonsprosentLik(final Double verdi) {
+		this.pensjonsprosent = new Pensjonsprosent(null, null) {
+			public Double beregnet() {
+				return verdi;
+			}
+		};
 	}
 
-	void gittAntallAarMed42SomPensjonsProsent(int i) {
-	}
-
-	void gittAntallAarMed45SomPensjonsProsent(int i) {
+	void gittSluttpoengtallLik(final Double verdi) {
+		this.sluttpoengtall = new Sluttpoengtall(null,null) {
+			public Double beregnet() {
+				return verdi;
+			}
+		};
 	}
 
 	void naarBeregningAvTilleggspensjonUtfoeres() {
+		this.tilleggspensjon = new Tilleggspensjon(grunnbeloep, pensjonsprosent, sluttpoengtall);
 	}
 
-	void saaSkalTilleggspensjonPerAarVaereLik(double d) {
+	void saaSkalTilleggspensjonVaereLik(double verdi) {
+		assertEquals(verdi, tilleggspensjon.beregnet(), .001);
 	}
-	
+
 }

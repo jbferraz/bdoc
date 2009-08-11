@@ -45,25 +45,22 @@ public class TestSourceCodeAnalyzer {
 	}
 
 	@Test
-	public final void shouldFindTestMethodsAndItsScenarios() {
+	public final void shouldOnlyFindTestMethods() {
 		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class));
-		assertEquals(2, methodInfos.size());
-		assertEquals(0, methodInfos.get(0).getMethodInfos().size());
-		assertEquals(3, methodInfos.get(1).getMethodInfos().size());
+		assertEquals(4, methodInfos.size());
+		assertEquals("shouldFindLocale", methodInfos.get(0).getName());
+		assertEquals("shouldAddDepositToBalance", methodInfos.get(1).getName());
+		assertEquals("thisMethodAreIgnored", methodInfos.get(2).getName());
+		assertEquals("eksemplerPaaBensjonsBeregning", methodInfos.get(3).getName());
 	}
 
-	/**
-	 * Utfordringer: 
-	 
-@Test public void eksemplerPaaBensjonsBeregning() {
-assertEquals( 3, pensjonsPoengForInntektPaa(4 * G) );
-assertEquals( 7, pensjonsPoengForInntektPaa(12 * G) );
-}
+	@Test
+	public final void shouldTellIfMethodAreMarkedWithIgnore() {
+		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class));
+		assertEquals(false, methodInfos.get(0).isIgnored());
+		assertEquals(false, methodInfos.get(1).isIgnored());
+		assertEquals(true, methodInfos.get(2).isIgnored());
+		assertEquals(false, methodInfos.get(3).isIgnored());
+	}
 
-=>
-Eksempler på pensjonsberegning
-3 pensjonspoeng for inntekt på 4*G
-7 pensjonspoeng for inntekt på 12*G
-
-	 */
 }

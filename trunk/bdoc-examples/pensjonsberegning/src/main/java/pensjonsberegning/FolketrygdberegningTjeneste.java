@@ -17,10 +17,8 @@ public class FolketrygdberegningTjeneste {
 		Grunnpensjon grunnpensjon = new Grunnpensjon(medlem, grunnbeloepForAar);
 
 		OpptjeningsAarListe opptjeningsAarListe = opptjeningsAarTjeneste.opprettOpptjeningsAarFor(medlem);
-		Double pensjonsprosent = new Pensjonsprosent(opptjeningsAarListe).beregnet();
-		Double sluttpoengtall = Sluttpoengtall.beregn(opptjeningsAarListe.getPensjonspoengListe());
 
-		Tilleggspensjon tilleggspensjon = new Tilleggspensjon(grunnbeloepForAar, pensjonsprosent, sluttpoengtall);
+		Tilleggspensjon tilleggspensjon = new Tilleggspensjon(grunnbeloepForAar, opptjeningsAarListe );
 		
 		return new Alderspensjon(grunnpensjon, tilleggspensjon);
 	}

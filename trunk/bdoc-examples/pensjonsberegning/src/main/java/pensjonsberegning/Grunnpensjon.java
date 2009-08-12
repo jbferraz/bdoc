@@ -2,10 +2,10 @@ package pensjonsberegning;
 
 public class Grunnpensjon {
 
-	private Person person;
+	private MedlemAvFolketrygden person;
 	private Integer grunnbeloep;
 
-	public Grunnpensjon(Person person, Integer grunnbeloep) {
+	public Grunnpensjon(MedlemAvFolketrygden person, Integer grunnbeloep) {
 		this.person = person;
 		this.grunnbeloep = grunnbeloep;
 	}

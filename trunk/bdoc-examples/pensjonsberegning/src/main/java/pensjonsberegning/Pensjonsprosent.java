@@ -1,19 +1,17 @@
 package pensjonsberegning;
 
-import java.util.List;
-
 public class Pensjonsprosent {
 
-	private List<Inntekt> inntekt;
-	private GrunnbeloepTabell grunnbeloepTabell;
+	private int opptjeningsaar1967Til1991;
+	private int opptjeningsaarFraOgMed1992;
 
-	public Pensjonsprosent(List<Inntekt> inntekt, GrunnbeloepTabell grunnbeloepTabell ) {
-		this.inntekt = inntekt;
-		this.grunnbeloepTabell = grunnbeloepTabell;
+	public Pensjonsprosent(int opptjeningsaar1967Til1991, int opptjeningsaarFraOgMed1992) {
+		this.opptjeningsaar1967Til1991 = opptjeningsaar1967Til1991;
+		this.opptjeningsaarFraOgMed1992 = opptjeningsaarFraOgMed1992;
 	}
-	
-	public Double beregnet() {
-		return null;
+
+	public Pensjonsprosent(OpptjeningsAarListe opptjeningsAarListe) {
+		this(opptjeningsAarListe.antallOpptjeningsaarIPerioden1967Til1991(), opptjeningsAarListe.antallOpptjeningsaarFraOgMed1992());
 	}
 
 	public static double forAar(int aar) {
@@ -23,7 +21,7 @@ public class Pensjonsprosent {
 		return 45;
 	}
 
-	public static double beregn(int opptjeningsaar1967Til1991, int opptjeningsaarFraOgMed1992) {
+	public Double beregnet() {
 
 		int medregnetOpptjeningsaar1967Til1912 = opptjeningsaar1967Til1991;
 		if (40 < medregnetOpptjeningsaar1967Til1912) {

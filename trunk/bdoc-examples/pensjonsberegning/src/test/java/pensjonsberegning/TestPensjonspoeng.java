@@ -19,9 +19,4 @@ public class TestPensjonspoeng {
 		pensjonspoeng.beregn(1966, 300000);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void skalGiFeilVedForsokPaaBeregningAvPoengtallEtter2008() {
-		pensjonspoeng.beregn(2009, 300000);
-	}	
-
 }

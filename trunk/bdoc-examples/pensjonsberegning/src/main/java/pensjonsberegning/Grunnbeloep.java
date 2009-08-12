@@ -7,6 +7,7 @@ public class Grunnbeloep {
 
 	private static Map<Integer, Integer> grunnbelop = new HashMap<Integer, Integer>();
 
+	public static final Integer _2009 = opprettGrunnbeloep(2009, 72006);
 	public static final Integer _2008 = opprettGrunnbeloep(2008, 69108);
 	public static final Integer _2007 = opprettGrunnbeloep(2007, 65505);
 	public static final Integer _2006 = opprettGrunnbeloep(2006, 62161);
@@ -50,13 +51,16 @@ public class Grunnbeloep {
 	public static final Integer _1968 = opprettGrunnbeloep(1968, 5900);
 	public static final Integer _1967 = opprettGrunnbeloep(1967, 5400);
 
-
 	private static Integer opprettGrunnbeloep(Integer aar, Integer grunnbeloep) {
 		grunnbelop.put(aar, grunnbeloep);
 		return grunnbeloep;
 	}
-	
+
 	static Integer gjennomsnittligGrunnbeloepFor(int aar) {
-		return grunnbelop.get(aar);
-	}	
+		Integer grunnbeloep = grunnbelop.get(aar);
+		if (null == grunnbeloep) {
+			throw new IllegalArgumentException("Gjennomsnittlig grunnbeloep for år " + aar + " ble ikke funnet");
+		}
+		return grunnbeloep;
+	}
 }

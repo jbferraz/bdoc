@@ -3,15 +3,15 @@ package pensjonsberegning;
 public class Inntekt {
 
 	private int aar;
-	private double verdi;
+	private double beloep;
 
 	public Inntekt(int aar, double verdi) {
 		this.aar = aar;
-		this.verdi = verdi;
+		this.beloep = verdi;
 	}
 
-	public double verdi() {
-		return verdi;
+	public double beloep() {
+		return beloep;
 	}
 
 	public int aar() {
@@ -20,7 +20,7 @@ public class Inntekt {
 
 	@Override
 	public String toString() {
-		return aar + ": " + verdi;
+		return aar + ": " + beloep;
 	}
 
 }

@@ -51,7 +51,7 @@ public class TestPensjonsprosentBehaviour {
 	void eksempelPaaBeregningAvPensjonsprosent(String beskrivelse, int opptjeningsaarITiden1967Til1991,
 			int opptjeningsaarFraOgMed1992, double pensjonsprosent) {
 
-		double prosent = 100 * Pensjonsprosent.beregn(opptjeningsaarITiden1967Til1991, opptjeningsaarFraOgMed1992);
+		double prosent = 100 * new Pensjonsprosent(opptjeningsaarITiden1967Til1991, opptjeningsaarFraOgMed1992).beregnet();
 		assertEquals(pensjonsprosent, prosent, .001);
 	}
 }

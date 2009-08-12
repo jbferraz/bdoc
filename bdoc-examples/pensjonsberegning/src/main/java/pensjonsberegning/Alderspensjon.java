@@ -2,16 +2,25 @@ package pensjonsberegning;
 
 public class Alderspensjon {
 
-	Grunnpensjon grunnpensjon;
+	Double grunnpensjon;
 	Tilleggspensjon tilleggspensjon;
+	
 
 	public Alderspensjon(Grunnpensjon grunnpensjon, Tilleggspensjon tilleggspensjon) {
-		this.grunnpensjon = grunnpensjon;
+		this.grunnpensjon = grunnpensjon.beregnet();
 		this.tilleggspensjon = tilleggspensjon;
 	}
 
 	public double beregnet() {
-		return grunnpensjon.beregnet() + tilleggspensjon.beregnet();
+		return grunnpensjon + tilleggspensjon.beregnet();
 	}
 
+	public Double getGrunnpensjon() {
+		return grunnpensjon;
+	}
+
+	public Tilleggspensjon getTilleggspensjon() {
+		return tilleggspensjon;
+	}
+	
 }

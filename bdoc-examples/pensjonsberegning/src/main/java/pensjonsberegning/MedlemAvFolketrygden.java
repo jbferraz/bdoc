@@ -3,7 +3,7 @@ package pensjonsberegning;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person {
+public class MedlemAvFolketrygden {
 	private List<Inntekt> inntekt = new ArrayList<Inntekt>();
 	private Boolean giftEllerHarSamboerMedPensjonFraFolketrygdenEllerAfp;
 	private Integer ektefelleEllerSamboerSinInntekt;
@@ -27,5 +27,9 @@ public class Person {
 
 	public List<Inntekt> getInntekt() {
 		return inntekt;
+	}
+
+	public void addInntektForAar(int aar, int beloep) {
+		inntekt.add(new Inntekt(aar, beloep));
 	}
 }

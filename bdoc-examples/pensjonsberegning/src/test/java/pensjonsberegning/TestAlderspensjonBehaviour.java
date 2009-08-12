@@ -36,7 +36,7 @@ public class TestAlderspensjonBehaviour {
 		gittEnGrunnpensjonLik(50000);
 		gittEnTilleggspensjonLik(100000);
 		naarAlderspensjonBeregnes();
-		saaSkalAlderspensjonPrAarVaereLik(150000);
+		saaSkalAlderspensjonVaereLik(150000);
 	}
 
 	void gittEnGrunnpensjonLik(final Integer verdi) {
@@ -59,7 +59,7 @@ public class TestAlderspensjonBehaviour {
 		alderspensjon = new Alderspensjon(grunnpensjon, tilleggspensjon);
 	}
 
-	void saaSkalAlderspensjonPrAarVaereLik(double forventetAlderspensjon) {
+	void saaSkalAlderspensjonVaereLik(double forventetAlderspensjon) {
 		assertEquals(forventetAlderspensjon, alderspensjon.beregnet(), .001);
 	}
 

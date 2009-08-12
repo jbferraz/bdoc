@@ -17,11 +17,11 @@ import pensjonsberegning.bdoc.Story;
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 public class TestGrunnpensjon {
 
-	private Person person = new Person();
+	private MedlemAvFolketrygden person = new MedlemAvFolketrygden();
 
 	@Before
 	public void resetPerson() {
-		person = new Person();
+		person = new MedlemAvFolketrygden();
 	}
 
 	@Test
@@ -31,7 +31,7 @@ public class TestGrunnpensjon {
 	}
 
 	@Test
-	public void forPensjonistSomErGiftEllerHarSamboerMedPensjonFraFolketrygdenEllerAftUtgjoerGrunnpensjonen85ProsentAvGrunnbeloepet() {
+	public void forPensjonistSomErGiftEllerHarSamboerMedPensjonFraFolketrygdenEllerAfpUtgjoerGrunnpensjonen85ProsentAvGrunnbeloepet() {
 		person.setEktefelleEllerSamboerMedPensjonFraFolketrygdenEllerAfp(true);
 		assertEquals(0.85d, new Grunnpensjon(person, 1).beregnet(), .001);
 	}

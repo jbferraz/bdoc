@@ -13,8 +13,8 @@ import pensjonsberegning.bdoc.Story;
 public class TestTilleggspensjonBehaviour {
 
 	private int grunnbeloep;
-	private Pensjonsprosent pensjonsprosent;
-	private Sluttpoengtall sluttpoengtall;
+	private Double pensjonsprosent;
+	private Double sluttpoengtall;
 	private Tilleggspensjon tilleggspensjon;
 
 	@Test
@@ -31,19 +31,11 @@ public class TestTilleggspensjonBehaviour {
 	}
 
 	void gittPensjonsprosentLik(final Double verdi) {
-		this.pensjonsprosent = new Pensjonsprosent(null, null) {
-			public Double beregnet() {
-				return verdi;
-			}
-		};
+		this.pensjonsprosent = verdi;
 	}
 
 	void gittSluttpoengtallLik(final Double verdi) {
-		this.sluttpoengtall = new Sluttpoengtall(null,null) {
-			public Double beregnet() {
-				return verdi;
-			}
-		};
+		this.sluttpoengtall = verdi;
 	}
 
 	void naarBeregningAvTilleggspensjonUtfoeres() {
@@ -53,5 +45,4 @@ public class TestTilleggspensjonBehaviour {
 	void saaSkalTilleggspensjonVaereLik(double verdi) {
 		assertEquals(verdi, tilleggspensjon.beregnet(), .001);
 	}
-
 }

@@ -22,7 +22,7 @@ import pensjonsberegning.bdoc.Story;
 public class TestSluttpoengtallBehaviour {
 
 	@Test
-	public void sluttpoengtalletErGjennomsnittetAvDe20HoeyestePoengtallene() {
+	public void erGjennomsnittetAvDe20HoeyestePoengtallene() {
 		List<Double> poentallRekke = new ArrayList<Double>(); 
 		poentallRekke.addAll( asList(1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d) );
 		poentallRekke.addAll( asList(1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d) );

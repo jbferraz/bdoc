@@ -8,17 +8,18 @@ package pensjonsberegning;
  */
 public class Pensjonspoeng {
 
-	private GrunnbeloepTabell grunnbeloepRepository;
+	private GrunnbeloepTabell grunnbeloepTabell;
 
 	public Pensjonspoeng(GrunnbeloepTabell gjennomsnittligGrunnbeloepRepository) {
-		this.grunnbeloepRepository = gjennomsnittligGrunnbeloepRepository;
+		this.grunnbeloepTabell = gjennomsnittligGrunnbeloepRepository;
+	}
+
+	public static double beregn(Inntekt inntekt, GrunnbeloepTabell grunnbeloepTabell) {
+		return new Pensjonspoeng(grunnbeloepTabell).beregn(inntekt.aar(), inntekt.beloep());
 	}
 
 	public double beregn(int inntektsaar, double inntekt) {
-		if ((inntektsaar < 1967) || (2008 < inntektsaar)) {
-			throw new IllegalArgumentException("Inntektsår må ligge mellom 1967 og 2008");
-		}
-		Integer grunnbeloep = grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(inntektsaar);
+		Integer grunnbeloep = grunnbeloepTabell.gjennomsnittligGrunnbeloepFor(inntektsaar);
 
 		if (inntekt < grunnbeloep) {
 			return 0;

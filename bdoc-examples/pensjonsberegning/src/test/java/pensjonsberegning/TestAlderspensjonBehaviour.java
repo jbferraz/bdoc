@@ -42,8 +42,8 @@ public class TestAlderspensjonBehaviour extends ScenarioSupport<TestAlderspensjo
 		grunnpensjon = new Grunnpensjon(manueltBeregnet);
 	}
 
-	void tilleggspensjon_er(Double verdi) {
-		tilleggspensjon = new Tilleggspensjon(verdi);
+	void tilleggspensjon_er(Double manueltBeregnet) {
+		tilleggspensjon = new Tilleggspensjon(manueltBeregnet);
 	}
 
 	void alderspensjon_beregnes() {

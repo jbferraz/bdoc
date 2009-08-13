@@ -1,6 +1,9 @@
 package pensjonsberegning;
 
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class OpptjeningsAarTjeneste {
 
 	private GrunnbeloepTabell grunnbeloepTabell;

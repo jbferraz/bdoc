@@ -1,5 +1,8 @@
 package pensjonsberegning;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class Pensjonsprosent {
 
 	private int opptjeningsaar1967Til1991;

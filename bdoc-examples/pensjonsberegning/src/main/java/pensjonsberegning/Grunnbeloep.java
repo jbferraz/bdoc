@@ -1,5 +1,8 @@
 package pensjonsberegning;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 import java.util.HashMap;
 import java.util.Map;
 

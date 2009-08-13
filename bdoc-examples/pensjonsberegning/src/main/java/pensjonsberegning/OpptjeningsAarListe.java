@@ -3,6 +3,9 @@ package pensjonsberegning;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class OpptjeningsAarListe extends ArrayList<OpptjeningsAar> {
 
 	private static final long serialVersionUID = 1L;

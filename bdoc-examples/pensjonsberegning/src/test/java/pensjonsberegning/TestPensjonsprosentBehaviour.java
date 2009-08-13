@@ -10,6 +10,9 @@ import pensjonsberegning.bdoc.RefClass;
 import pensjonsberegning.bdoc.Spec;
 import pensjonsberegning.bdoc.Story;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Pensjonsprosent.class)
 public class TestPensjonsprosentBehaviour {

@@ -1,12 +1,13 @@
 package pensjonsberegning;
 
-import static org.junit.Assert.assertEquals;
 import static java.util.Arrays.asList;
-
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class TestOpptjeningsAarList {
 
 	@Test

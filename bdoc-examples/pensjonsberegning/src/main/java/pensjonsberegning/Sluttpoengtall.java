@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class Sluttpoengtall {
 
 	private final static Comparator<Double> doubleAscComparator = new Comparator<Double>() {

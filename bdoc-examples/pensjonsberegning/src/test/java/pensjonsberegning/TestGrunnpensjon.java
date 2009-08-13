@@ -9,10 +9,7 @@ import pensjonsberegning.bdoc.Ref;
 import pensjonsberegning.bdoc.Story;
 
 /**
- * Grunnpensjon: http://www.nav.no/1073750161.cms?kapittel=3
- * 
  * @author Per Otto Bergum Christensen
- * 
  */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 public class TestGrunnpensjon {

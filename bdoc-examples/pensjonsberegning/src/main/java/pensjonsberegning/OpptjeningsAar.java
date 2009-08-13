@@ -1,5 +1,8 @@
 package pensjonsberegning;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class OpptjeningsAar {
 
 	private int aar;

@@ -3,6 +3,9 @@ package pensjonsberegning;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class MedlemAvFolketrygden {
 	private List<Inntekt> inntekt = new ArrayList<Inntekt>();
 	private Boolean giftEllerHarSamboerMedPensjonFraFolketrygdenEllerAfp;

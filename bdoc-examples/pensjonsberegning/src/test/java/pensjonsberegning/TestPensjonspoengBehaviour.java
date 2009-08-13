@@ -10,18 +10,7 @@ import pensjonsberegning.bdoc.Spec;
 import pensjonsberegning.bdoc.Story;
 
 /**
- * http://no.wikipedia.org/wiki/Pensjonspoeng
- * http://www.nav.no/1073750161.cms?kapittel=10
- * http://www.nav.no/1073750161.cms?kapittel=11 detaljert:
- * http://www.nav.no/rettskildene/Rundskriv/147945.cms
- * http://www.nav.no/rettskildene/Rundskriv/147955.cms Bra:
- * http://www.dinside.no/1671/hva-faar-jeg-i-pensjon
- * 
- * Liste over grunnbelop:
- * http://www.consis.no/Endring+av+grunnbel%C3%B8pet+(G).FglLG2m.ips
- * 
  * @author Per Otto Bergum Christensen
- * 
  */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Pensjonspoeng.class)

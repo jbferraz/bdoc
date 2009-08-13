@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class TestSluttpoengtall {
 
 	@Test

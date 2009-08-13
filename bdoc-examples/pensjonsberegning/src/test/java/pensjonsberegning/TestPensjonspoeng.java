@@ -4,6 +4,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class TestPensjonspoeng {
 	private Pensjonspoeng pensjonspoeng = new Pensjonspoeng(new GrunnbeloepTabell());
 

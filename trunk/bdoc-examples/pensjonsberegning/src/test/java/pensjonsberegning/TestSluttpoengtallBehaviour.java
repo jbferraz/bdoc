@@ -30,8 +30,8 @@ public class TestSluttpoengtallBehaviour {
 		eksempelPaaSluttpoengtallberegning("Rekke med 35 poengtall", poentallRekke, 4.1);
 	}
 
-	@Test
-	public void vedOpptjentPensjonspoengI20AarEllerFaerreEnn20AarBeregnesSluttpoengtalletSomGjennomsnittetAvAllePoengtallene() {
+	@Test       
+	public void erSnittetAvPoengtalleneNaarAntallPoengtallEr20EllerMindre() {
 		eksempelPaaSluttpoengtallberegning("Rekke med et poengtall", asList(1d), 1);
 		eksempelPaaSluttpoengtallberegning("Rekke med to poengtall", asList(1d, 2d), 1.5);
 

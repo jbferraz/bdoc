@@ -2,7 +2,6 @@ package pensjonsberegning;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import pensjonsberegning.bdoc.Ref;
@@ -25,46 +24,34 @@ import pensjonsberegning.bdoc.Story;
  */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Alderspensjon.class)
-public class TestAlderspensjonBehaviour {
-
+public class TestAlderspensjonBehaviour extends ScenarioSupport<TestAlderspensjonBehaviour> {
+	
 	private Grunnpensjon grunnpensjon;
 	private Tilleggspensjon tilleggspensjon;
 	private Alderspensjon alderspensjon;
-
+	
 	@Test
 	public void alderspensjonErLikGrunnpensjonPlussTilleggspensjon() {
-		gittEnGrunnpensjonLik(50000);
-		gittEnTilleggspensjonLik(100000);
-		naarAlderspensjonBeregnes();
-		saaSkalAlderspensjonVaereLik(150000);
+		gitt.grunnpensjon_er(50000.0);
+		og.tilleggspensjon_er(100000.0);
+		naar.alderspensjon_beregnes();
+		saa.skal_alderspensjon_vaere_lik(150000);
 	}
 
-	void gittEnGrunnpensjonLik(final Integer verdi) {
-		grunnpensjon = new Grunnpensjon(null,null) {
-			public Double beregnet() {
-				return verdi.doubleValue();
-			}
-		};
+	void grunnpensjon_er(Double manueltBeregnet) {
+		grunnpensjon = new Grunnpensjon(manueltBeregnet);
 	}
 
-	void gittEnTilleggspensjonLik(final Integer verdi) {
-		tilleggspensjon = new Tilleggspensjon(null,null,null) {
-			public Double beregnet() {
-				return verdi.doubleValue();
-			}
-		};
+	void tilleggspensjon_er(Double verdi) {
+		tilleggspensjon = new Tilleggspensjon(verdi);
 	}
 
-	void naarAlderspensjonBeregnes() {
+	void alderspensjon_beregnes() {
 		alderspensjon = new Alderspensjon(grunnpensjon, tilleggspensjon);
 	}
 
-	void saaSkalAlderspensjonVaereLik(double forventetAlderspensjon) {
+	void skal_alderspensjon_vaere_lik(double forventetAlderspensjon) {
 		assertEquals(forventetAlderspensjon, alderspensjon.beregnet(), .001);
 	}
 
-	@Test
-	@Ignore
-	public void grunnpensjonErLikGrunnbeloepet() {
-	}
 }

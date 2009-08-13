@@ -2,23 +2,30 @@ package pensjonsberegning;
 
 public class Grunnpensjon {
 
-	private MedlemAvFolketrygden person;
-	private Integer grunnbeloep;
+	private Double beregnet;
 
-	public Grunnpensjon(MedlemAvFolketrygden person, Integer grunnbeloep) {
-		this.person = person;
-		this.grunnbeloep = grunnbeloep;
+	public Grunnpensjon(Double manueltBeregnet) {
+		this.beregnet = manueltBeregnet;
+	}
+
+	public Grunnpensjon(MedlemAvFolketrygden medlem, Integer grunnbeloep) {
+		this.beregnet = beregnet(medlem, grunnbeloep);
 	}
 
 	public Double beregnet() {
-		if (null != person.getEktefelleEllerSamboerSinInntekt() && (2 * grunnbeloep < person.getEktefelleEllerSamboerSinInntekt())) {
+		return beregnet;
+	}
+	
+	public static Double beregnet(MedlemAvFolketrygden medlem, Integer grunnbeloep) {
+		if (null != medlem.getEktefelleEllerSamboerSinInntekt() && (2 * grunnbeloep < medlem.getEktefelleEllerSamboerSinInntekt())) {
 			return 0.85 * grunnbeloep.doubleValue();
 		}
 
-		if (person.getGiftEllerHarSamboerMedPensjonFraFolketrygdenEllerAfp()) {
+		if (medlem.getGiftEllerHarSamboerMedPensjonFraFolketrygdenEllerAfp()) {
 			return 0.85 * grunnbeloep.doubleValue();
 		}
 		return grunnbeloep.doubleValue();
 	}
+	
 
 }

@@ -6,6 +6,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class TestOpptjeningsAarTjeneste {
 
 	private OpptjeningsAarTjeneste opptjeningsAarTjeneste = new OpptjeningsAarTjeneste(new GrunnbeloepTabell());

@@ -1,9 +1,6 @@
 package pensjonsberegning;
 
 /**
- * Klassen beregner antall Pensjonspoeng basert på inntekstår og inntekt. Basert
- * på inntekstår vil aktuell G verdi for året benyttes.
- * 
  * @author Per Otto Bergum Christensen
  */
 public class Pensjonspoeng {

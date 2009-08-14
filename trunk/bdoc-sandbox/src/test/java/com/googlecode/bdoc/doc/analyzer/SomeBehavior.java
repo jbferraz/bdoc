@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author Micael Vesterlund
  * 
  */
-public class SomeBehavior {
+public class SomeBehavior extends ScenarioSupport<SomeBehavior> {
 
 	@Test
 	public final void shouldFindLocale() {
@@ -23,9 +23,9 @@ public class SomeBehavior {
 
 	@Test
 	public void shouldAddDepositToBalance() {
-		givenAnAccountWithInitialBalance(0);
-		whenDepositAreCalledWithAmount(100);
-		thenShouldBalanceEqualsTo(100);
+		given.anAccountWithInitialBalance(0);
+		when.depositAreCalledWithAmount(100);
+		then.shouldBalanceEqualsTo(100);
 	}
 
 	public void noTest() {
@@ -55,12 +55,12 @@ public class SomeBehavior {
 		return 7;
 	}
 
-	private void thenShouldBalanceEqualsTo(int i) {
+	private void shouldBalanceEqualsTo(int i) {
 	}
 
-	private void whenDepositAreCalledWithAmount(int i) {
+	private void depositAreCalledWithAmount(int i) {
 	}
 
-	private void givenAnAccountWithInitialBalance(int i) {
+	private void anAccountWithInitialBalance(int i) {
 	}
 }

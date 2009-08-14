@@ -25,7 +25,7 @@ public class SomeBehavior extends ScenarioSupport<SomeBehavior> {
 	public void shouldAddDepositToBalance() {
 		given.anAccountWithInitialBalance(0);
 		when.depositAreCalledWithAmount(100);
-		then.shouldBalanceEqualsTo(100);
+		then.balanceShouldEqualsTo(100);
 	}
 
 	public void noTest() {
@@ -55,7 +55,7 @@ public class SomeBehavior extends ScenarioSupport<SomeBehavior> {
 		return 7;
 	}
 
-	private void shouldBalanceEqualsTo(int i) {
+	private void balanceShouldEqualsTo(int i) {
 	}
 
 	private void depositAreCalledWithAmount(int i) {

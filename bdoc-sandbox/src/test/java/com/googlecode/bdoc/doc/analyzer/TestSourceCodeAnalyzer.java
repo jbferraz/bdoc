@@ -45,7 +45,7 @@ public class TestSourceCodeAnalyzer {
 	}
 
 	@Test
-	public final void shouldOnlyFindTestMethods() {
+	public final void shouldOnlyFindMethodsMarkedWithTest() {
 		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class));
 		assertEquals(4, methodInfos.size());
 		assertEquals("shouldFindLocale", methodInfos.get(0).getName());
@@ -61,6 +61,15 @@ public class TestSourceCodeAnalyzer {
 		assertEquals(false, methodInfos.get(1).isIgnored());
 		assertEquals(true, methodInfos.get(2).isIgnored());
 		assertEquals(false, methodInfos.get(3).isIgnored());
+	}
+
+	@Test
+	public final void shouldFindScenarios() {
+		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class));
+		assertEquals(0, methodInfos.get(0).getMethodInfos().size());
+		assertEquals(3, methodInfos.get(1).getMethodInfos().size());
+		assertEquals(0, methodInfos.get(2).getMethodInfos().size());
+		assertEquals(0, methodInfos.get(3).getMethodInfos().size());
 	}
 
 }

@@ -29,6 +29,8 @@ import java.util.List;
 
 import javax.lang.model.element.Name;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.sun.source.tree.AnnotationTree;
 import com.sun.source.tree.BlockTree;
 import com.sun.source.tree.ExpressionStatementTree;
@@ -133,13 +135,29 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 		if (expression.getKind().equals(Kind.METHOD_INVOCATION)) {
 			MethodInvocationTree methodInvocationTree = (MethodInvocationTree) expression;
 			ExpressionTree methodSelect = methodInvocationTree.getMethodSelect();
-			if (methodSelect.getKind().equals(Kind.IDENTIFIER)) {
+			Kind kind = methodSelect.getKind();
+			if (kind.equals(Kind.IDENTIFIER)) {
 				IdentifierTree identifierTree = (IdentifierTree) methodSelect;
 				Name name = identifierTree.getName();
 				String camelCaseSentence = name.toString();
 				if (Scenario.Pattern.isScenario(camelCaseSentence)) {
 					MethodInfo methodInfo = new MethodInfo(camelCaseSentence);
 					return methodInfo;
+				}
+			} else if (kind.equals(Kind.MEMBER_SELECT)) {
+				MemberSelectTree memberSelectTree = (MemberSelectTree) methodSelect;
+				Name name = memberSelectTree.getIdentifier();
+				ExpressionTree expression2 = memberSelectTree.getExpression();
+				Kind kind2 = expression2.getKind();
+				if (kind2 != null && kind2.equals(Kind.IDENTIFIER)) {
+					IdentifierTree identifierTree = (IdentifierTree) expression2;
+					Name name2 = identifierTree.getName();
+					String camelCaseSentence = name2.toString();
+					if (Scenario.Pattern.isScenario(camelCaseSentence)) {
+						camelCaseSentence = camelCaseSentence.concat(StringUtils.capitalize(name.toString()));
+						MethodInfo methodInfo = new MethodInfo(camelCaseSentence);
+						return methodInfo;
+					}
 				}
 			}
 		}

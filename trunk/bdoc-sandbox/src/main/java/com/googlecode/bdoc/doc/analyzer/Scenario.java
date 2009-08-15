@@ -33,12 +33,21 @@ import org.apache.commons.lang.Validate;
  */
 public class Scenario {
 
-	public static final int KEYWORD_COUNT = 3;
+	private String camelCaseSentence;
+
+	public Scenario(String camelCaseSentence) {
+		this.camelCaseSentence = camelCaseSentence;
+	}
+
+	public String getCamelCaseSentence() {
+		return camelCaseSentence;
+	}
 
 	public enum Pattern {
 		NO(new Locale("no"), "og", "gitt", "Naar", "Saa"), EN(Locale.ENGLISH, "and", "given", "When", "Then"), SV(new Locale("sv"), "och",
 				"givet", "Naar", "Saa");
 
+		public static final int KEYWORD_COUNT = 3;
 		private final String and;
 		private final String[] keywords;
 		private final Locale locale;

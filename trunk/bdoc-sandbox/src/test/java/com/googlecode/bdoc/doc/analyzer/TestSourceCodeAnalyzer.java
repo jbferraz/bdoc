@@ -66,10 +66,10 @@ public class TestSourceCodeAnalyzer {
 	@Test
 	public final void shouldFindScenarios() {
 		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class));
-		assertEquals(0, methodInfos.get(0).getMethodInfos().size());
-		assertEquals(3, methodInfos.get(1).getMethodInfos().size());
-		assertEquals(0, methodInfos.get(2).getMethodInfos().size());
-		assertEquals(0, methodInfos.get(3).getMethodInfos().size());
+		assertEquals(0, methodInfos.get(0).getScenarios().size());
+		assertEquals(3, methodInfos.get(1).getScenarios().size());
+		assertEquals(0, methodInfos.get(2).getScenarios().size());
+		assertEquals(0, methodInfos.get(3).getScenarios().size());
 	}
 
 }

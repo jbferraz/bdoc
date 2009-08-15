@@ -44,7 +44,7 @@ public class MethodInfo {
 		this.ignored = ignored;
 	}
 
-	private List<MethodInfo> methodInfos;
+	private List<Scenario> scenarios;
 
 	public MethodInfo(String name) {
 		this.name = name;
@@ -54,16 +54,16 @@ public class MethodInfo {
 		return name;
 	}
 
-	public List<MethodInfo> getMethodInfos() {
-		return methodInfos;
+	public List<Scenario> getScenarios() {
+		return scenarios;
 	}
 
-	public void setMethodInfos(List<MethodInfo> methodInfos) {
-		this.methodInfos = methodInfos;
+	public void setScenarios(List<Scenario> scenarios) {
+		this.scenarios = scenarios;
 	}
 
 	@Override
 	public String toString() {
-		return "MethodInfo [name=" + name + ", methodInfos=" + methodInfos + "]";
+		return "MethodInfo [name=" + name + ", methodInfos=" + scenarios + "]";
 	}
 }

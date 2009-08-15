@@ -33,6 +33,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.sun.source.tree.AnnotationTree;
 import com.sun.source.tree.BlockTree;
+import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ExpressionStatementTree;
 import com.sun.source.tree.ExpressionTree;
 import com.sun.source.tree.IdentifierTree;
@@ -66,6 +67,12 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 	}
 
 	@Override
+	public Object visitClass(ClassTree classTree, Trees trees) {
+		Name simpleName = classTree.getSimpleName();
+		return super.visitClass(classTree, trees);
+	}
+
+	@Override
 	public Object visitMethod(MethodTree methodTree, Trees trees) {
 		TreePath path = getCurrentPath();
 		Tree leaf = path.getLeaf();
@@ -78,26 +85,26 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 				MethodInfo methodInfo = new MethodInfo(name.toString());
 				methodInfo.setIgnored(isMethodAnnotatedWith(modifiers, "Ignore"));
 
-				List<MethodInfo> methods = new ArrayList<MethodInfo>();
+				List<Scenario> scenarios = new ArrayList<Scenario>();
 				BlockTree body = methodTreeLeaf.getBody();
 				List<? extends StatementTree> statements = body.getStatements();
 				for (StatementTree statementTree : statements) {
 					Kind kind = statementTree.getKind();
-					MethodInfo method = null;
+					Scenario scenario = null;
 					if (kind.equals(Kind.EXPRESSION_STATEMENT)) {
 						ExpressionStatementTree expressionStatementTree = (ExpressionStatementTree) statementTree;
 						ExpressionTree expression = expressionStatementTree.getExpression();
-						method = extractMethod(expression);
+						scenario = extractScenario(expression);
 					} else if (kind.equals(Kind.VARIABLE)) {
 						VariableTree variableTree = (VariableTree) statementTree;
 						ExpressionTree expression = variableTree.getInitializer();
-						method = extractMethod(expression);
+						scenario = extractScenario(expression);
 					}
-					if (method != null) {
-						methods.add(method);
+					if (scenario != null) {
+						scenarios.add(scenario);
 					}
 				}
-				methodInfo.setMethodInfos(methods);
+				methodInfo.setScenarios(scenarios);
 				methodInfos.add(methodInfo);
 			}
 		}
@@ -131,7 +138,7 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 		return identifier;
 	}
 
-	private MethodInfo extractMethod(ExpressionTree expression) {
+	private Scenario extractScenario(ExpressionTree expression) {
 		if (expression.getKind().equals(Kind.METHOD_INVOCATION)) {
 			MethodInvocationTree methodInvocationTree = (MethodInvocationTree) expression;
 			ExpressionTree methodSelect = methodInvocationTree.getMethodSelect();
@@ -141,8 +148,8 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 				Name name = identifierTree.getName();
 				String camelCaseSentence = name.toString();
 				if (Scenario.Pattern.isScenario(camelCaseSentence)) {
-					MethodInfo methodInfo = new MethodInfo(camelCaseSentence);
-					return methodInfo;
+					Scenario scenario = new Scenario(camelCaseSentence);
+					return scenario;
 				}
 			} else if (kind.equals(Kind.MEMBER_SELECT)) {
 				MemberSelectTree memberSelectTree = (MemberSelectTree) methodSelect;
@@ -155,8 +162,8 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 					String camelCaseSentence = name2.toString();
 					if (Scenario.Pattern.isScenario(camelCaseSentence)) {
 						camelCaseSentence = camelCaseSentence.concat(StringUtils.capitalize(name.toString()));
-						MethodInfo methodInfo = new MethodInfo(camelCaseSentence);
-						return methodInfo;
+						Scenario scenario = new Scenario(camelCaseSentence);
+						return scenario;
 					}
 				}
 			}

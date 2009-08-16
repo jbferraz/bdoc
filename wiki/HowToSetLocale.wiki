@@ -1,0 +1,7 @@
+Default locale is english, but you can also use norwegian (no )or swedish (sv). 
+{{{
+<configuration>
+        .. .
+	<locale>no</locale>
+</configuration>
+}}}

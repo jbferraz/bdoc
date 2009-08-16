@@ -1,5 +1,8 @@
+_16 August 2009 - Release 0.8.12_
+ Version 0.8.12 is released with new formatting of the userstory report, locale support for norwegian and swedish, and a new configuration option for setting the presentation order of classes in the userstory report. Read more on HowToSetLocale and HowToConfigureClassPresentationOrder.
+
 _14 June 2009 - Release 0.8.11_
- Version 0.8.11 is release with functionality for showing formules in the bdoc report. Read more on HowToShowFormulasInTheReport.
+ Version 0.8.11 is released with functionality for showing formules in the bdoc report. Read more on HowToShowFormulasInTheReport.
 
 _4 June 2009 - Release 0.8.10_
  Version 0.8.10 is released with some adjustments on the module report, describing class behaviour. The report now contains all classes. Earlier a class referenced by a user story was only shown in the user story report.  

@@ -1,0 +1,557 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<title>pensjonsberegning</title>
+
+
+<style type="text/css">
+	body { margin: 0px; font-family: helvetica, verdana, arial,sans-serif;}		
+	
+	h1, h2 { margin-top: 0px; }
+	div.classBehaviour {
+		padding-left: 5px;
+	}
+		
+	ul.scenario {
+		padding-bottom: 13px;
+	}
+	
+	ul.specifications {
+		padding-bottom: 13px;
+	}
+
+	ul.statements {
+		padding-bottom: 13px;
+	}
+				
+	div.narrative {
+		padding-bottom: 13px;
+	}
+	
+	li.titleDiff {
+		padding-bottom: 13px;
+	}
+	
+	li.projectInfo {
+		padding-bottom: 13px;
+	}
+	#projectInfo {
+		background-color: #f0f0f0;
+		padding: 2px;
+	}
+	#projectInfo h1 {
+		margin: 0px;
+	}
+	.navigation {
+		width: 20%;
+		float: left;
+	}
+	.content {
+		width: 79%;
+		float: left;
+	}
+	.scenarioTitle {
+		font-style: italic;
+		font-size: 110%;
+	}
+	.exampleTitle {
+		font-style: italic;
+		font-size: 110%;
+	}
+	
+	.testTableDescription {
+		font-style: italic;
+	}
+	
+	.dateTime {
+		font-style: itallic;
+		font-size: 70%;
+	}
+	.diffLogs .content {
+		margin-left: 2px;
+	}
+	.reportInfo h1 {
+		margin: 0px;
+		padding: 0px;
+	}
+	.reportInfo {
+		background-color: #f0f0f0;
+		border-bottom: 4px solid #e0e0e0;
+		padding: 2px;
+		width: 100%;
+		margin-bottom: 8px;
+	}
+	.userstory .narrative {
+		font-style: italic;
+		font-size: 90%;
+	}
+	.diffLogTitle {
+		background-color: #f0f0f0;
+		width: 100%;
+		border-bottom: 1px solid black;
+	}
+	.diffLogTitle h1 {
+		margin: 0px;
+		padding: 0px;
+		padding-left: 2px;
+	}
+	.testTable table {
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	.testTable thead {
+		font-weight: bold;
+		background-color: #f0f0f0;
+	}
+	.testTable table th {
+		border: 1px solid black;
+		padding: 3px;
+	}
+	.testTable table td {
+		border: 1px solid black;
+		padding: 3px;
+	}
+</style>		
+	</head>
+	<body>
+						
+
+<div class="content">			
+	<div class="examples">
+		<span class="exampleTitle">	Eksempler
+</span>
+		
+	
+	
+				<p>Alderspensjon</p>
+	
+			<a name="alderspensjonErLikGrunnpensjonPlussTilleggspensjon"></a>
+	
+				
+	
+				<ul class="testTable">
+				
+					<p>Alderspensjon er lik grunnpensjon pluss tilleggspensjon<BR/>
+					<span class="testTableDescription">Grunnpensjon er</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Manuelt beregnet</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>50000.0</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+				<ul class="testTable">
+				
+					<p>Alderspensjon er lik grunnpensjon pluss tilleggspensjon<BR/>
+					<span class="testTableDescription">Skal alderspensjon være lik</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Forventet alderspensjon</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>150000.0</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+				<ul class="testTable">
+				
+					<p>Alderspensjon er lik grunnpensjon pluss tilleggspensjon<BR/>
+					<span class="testTableDescription">Tilleggspensjon er</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Manuelt beregnet</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>100000.0</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+	
+	
+				<p>Tilleggspensjon</p>
+	
+			<a name="tilleggspensjonErLikGrunnbeloep_x_Pensjonsprosent_x_Sluttpoengtall"></a>
+	
+			<ul class="testTable">
+				<p>Tilleggspensjon er lik grunnbeløp x pensjonsprosent x sluttpoengtall<BR/></p>
+		<div class="classBehaviour">
+			<div class="scenarios">
+					<ul class="scenario">
+						<li>Gitt grunnbeløp lik  100000</li><li>Gitt pensjonsprosent lik  0.25</li><li>Gitt sluttpoengtall lik  5.0</li><li>Når beregning av tilleggspensjon utføres</li><li>Så skal tilleggspensjon være lik  125000.0</li>
+					</ul>
+			</div>
+		</div>
+			</ul>
+				
+	
+				<p>Pensjonsprosent</p>
+	
+	
+				
+	
+	
+				
+	
+			<a name="hovedregelVedPensjonsprosentberegningEr$spec$"></a>
+	
+				
+	
+				<ul class="testTable">
+				
+					<p>Hovedregel ved pensjonsprosentberegning er  (  45% * opptjeningsår i tiden  1967– 1991 +  42% * opptjeningsår fra og med  1992) /  40<BR/>
+					<span class="testTableDescription">Eksempel på beregning av pensjonsprosent</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Beskrivelse</th>
+								<th>Opptjeningsår i tiden 1967 til 1991</th>
+								<th>Opptjeningsår fra og med 1992</th>
+								<th>Pensjonsprosent</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>Maksimal pensjonsprosent</td>
+									<td>40</td>
+									<td>0</td>
+									<td>45.0</td>
+							</tr>
+							<tr>
+									<td>Kun 20 år opptjening før 1992</td>
+									<td>20</td>
+									<td>0</td>
+									<td>22.5</td>
+							</tr>
+							<tr>
+									<td>Full opptjening etter 1991</td>
+									<td>0</td>
+									<td>40</td>
+									<td>42.0</td>
+							</tr>
+							<tr>
+									<td>Halv opptjening etter 1991</td>
+									<td>0</td>
+									<td>20</td>
+									<td>21.0</td>
+							</tr>
+							<tr>
+									<td>Full opptjening fordelt likt fram til 1991 og etter</td>
+									<td>20</td>
+									<td>20</td>
+									<td>43.5</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+	
+			<a name="maksimaltAntallOpptjeningsaarSomMedregnesEr40"></a>
+	
+				
+	
+				<ul class="testTable">
+				
+					<p>Maksimalt antall opptjeningsår som medregnes er 40<BR/>
+					<span class="testTableDescription">Eksempel på beregning av pensjonsprosent</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Beskrivelse</th>
+								<th>Opptjeningsår i tiden 1967 til 1991</th>
+								<th>Opptjeningsår fra og med 1992</th>
+								<th>Pensjonsprosent</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>Ekstra opptjening (ut over 40 år) fram til 1991 vil ikke medregnes</td>
+									<td>41</td>
+									<td>0</td>
+									<td>45.0</td>
+							</tr>
+							<tr>
+									<td>Ekstra opptjening (ut over 40 år) fra og med 1992 vil ikke medregnes</td>
+									<td>0</td>
+									<td>41</td>
+									<td>42.0</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+	
+			<a name="opptjeningsaarFoer1992TellesFoerstNaarSummenAvOpptjeningsaarFoerOgEtter1992Overstiger40"></a>
+	
+				
+	
+				<ul class="testTable">
+				
+					<p>Opptjeningsår før 1992 telles først når summen av opptjeningsår før og etter 1992 overstiger 40<BR/>
+					<span class="testTableDescription">Eksempel på beregning av pensjonsprosent</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Beskrivelse</th>
+								<th>Opptjeningsår i tiden 1967 til 1991</th>
+								<th>Opptjeningsår fra og med 1992</th>
+								<th>Pensjonsprosent</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>Maksimal pensjonsprosent, 1 år etter 1991 tas ikke med</td>
+									<td>40</td>
+									<td>1</td>
+									<td>45.0</td>
+							</tr>
+							<tr>
+									<td>Full opptjening, 2 opptjeningsår etter 1991 tas ikke med</td>
+									<td>20</td>
+									<td>22</td>
+									<td>43.5</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+	
+				<p>Sluttpoengtall</p>
+	
+			<a name="erGjennomsnittetAvDe20HoeyestePoengtallene"></a>
+	
+				
+		
+				<ul class="testTable">
+				
+					<p>Er gjennomsnittet av de 20 høyeste poengtallene<BR/>
+					<span class="testTableDescription">Eksempel på sluttpoengtallberegning</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Beskrivelse</th>
+								<th>Pensjonspoengtall</th>
+								<th>Sluttpoengtall</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>Rekke med 35 poengtall</td>
+									<td>[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 1.0, 2.0, 3.0, 4.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]</td>
+									<td>4.1</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+	
+			<a name="erSnittetAvPoengtalleneNaarAntallPoengtallEr20EllerMindre"></a>
+	
+				
+	
+				<ul class="testTable">
+				
+					<p>Er snittet av poengtallene når antall poengtall er 20 eller mindre<BR/>
+					<span class="testTableDescription">Eksempel på sluttpoengtallberegning</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Beskrivelse</th>
+								<th>Pensjonspoengtall</th>
+								<th>Sluttpoengtall</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>Rekke med et poengtall</td>
+									<td>[1.0]</td>
+									<td>1.0</td>
+							</tr>
+							<tr>
+									<td>Rekke med to poengtall</td>
+									<td>[1.0, 2.0]</td>
+									<td>1.5</td>
+							</tr>
+							<tr>
+									<td>Rekke med 20 poengtall</td>
+									<td>[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 1.0, 2.0, 3.0, 4.0]</td>
+									<td>4.1</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+	
+	
+				
+	
+				<p>Pensjonspoeng</p>
+	
+			<a name="hovedregelVedPensjonspoengberegningEr$spec$"></a>
+	
+			<ul class="testTable">
+				<p>Hovedregel ved pensjonspoengberegning er : ( inntekt  -  g ) /  g =  pensjonspoeng<BR/></p>
+		<div class="classBehaviour">
+			<div class="scenarios">
+					<ul class="scenario">
+						<li>Gitt en inntekt på$arg 1$ ganger grunnbelopet  4.0</li><li>Når pensjonspoeng beregnes</li><li>Så skal antall pensjonspoeng veare lik  3.0</li>
+					</ul>
+			</div>
+		</div>
+			</ul>
+				
+	
+			<a name="forAarene1967Til1970BleInntektInntilAatteGangerGrunnbeloepetMedregnet"></a>
+	
+				
+	
+				<ul class="testTable">
+				
+					<p>For årene 1967 til 1970 ble inntekt inntil åtte ganger grunnbeløpet medregnet<BR/>
+					<span class="testTableDescription">Eksempel på pensjonspoengberegning</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Beskrivelse</th>
+								<th>Inntektsår</th>
+								<th>Inntekt</th>
+								<th>Pensjonspoeng</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>Inntekt på 4G skal gi 3 pensjonspoeng</td>
+									<td>1967</td>
+									<td>21600</td>
+									<td>3.0</td>
+							</tr>
+							<tr>
+									<td>Inntekt på 8G skal gi maksgrensen på 7 pensjonspoeng</td>
+									<td>1967</td>
+									<td>43200</td>
+									<td>7.0</td>
+							</tr>
+							<tr>
+									<td>Inntekt på 12G skal begrensens til maksgrensen på 7 pensjonspoeng</td>
+									<td>1967</td>
+									<td>64800</td>
+									<td>7.0</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+	
+			<a name="forAarene1971Til1991BleInntektBegrensetTil12_G_HvorDenDelenAvInntektenSomOversteg8_G_kunBleMedregnetMedEnTredjedel"></a>
+	
+				
+	
+				<ul class="testTable">
+				
+					<p>For årene 1971 til 1991 ble inntekt begrenset til 12 g hvor den delen av inntekten som oversteg 8 g kun ble medregnet med en tredjedel<BR/>
+					<span class="testTableDescription">Eksempel på pensjonspoengberegning</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Beskrivelse</th>
+								<th>Inntektsår</th>
+								<th>Inntekt</th>
+								<th>Pensjonspoeng</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>Inntekt på 8G skal gi 7 pensjonspoeng</td>
+									<td>1971</td>
+									<td>59200</td>
+									<td>7.0</td>
+							</tr>
+							<tr>
+									<td>Inntekt på 10G skal gi 7.67 pensjonspoeng</td>
+									<td>1971</td>
+									<td>74000</td>
+									<td>7.67</td>
+							</tr>
+							<tr>
+									<td>Inntekt på 12G skal gi maksgrensen på 8.33 pensjonspoeng</td>
+									<td>1971</td>
+									<td>88800</td>
+									<td>8.33</td>
+							</tr>
+							<tr>
+									<td>Inntekt på 14G skal begrenses til maksgrensen på 8.33 pensjonspoeng</td>
+									<td>1971</td>
+									<td>103600</td>
+									<td>8.33</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>
+	
+			<a name="fra1992MedregnesBareEnTredjedelAvInntektenSomLiggerMellom6Og12_G"></a>
+	
+				
+	
+				<ul class="testTable">
+				
+					<p>Fra 1992 medregnes bare en tredjedel av inntekten som ligger mellom 6 og 12 g<BR/>
+					<span class="testTableDescription">Eksempel på pensjonspoengberegning</span></p>
+					<table>
+						<thead>
+							<tr>
+								<th>Beskrivelse</th>
+								<th>Inntektsår</th>
+								<th>Inntekt</th>
+								<th>Pensjonspoeng</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+									<td>Inntekt på 4G skal gi 3 pensjonspoeng</td>
+									<td>1992</td>
+									<td>144668</td>
+									<td>3.0</td>
+							</tr>
+							<tr>
+									<td>Inntekt på 6G skal gi 5 pensjonspoeng</td>
+									<td>1992</td>
+									<td>217002</td>
+									<td>5.0</td>
+							</tr>
+							<tr>
+									<td>Inntekt på 8G skal gi 5.67 pensjonspoeng</td>
+									<td>1992</td>
+									<td>289336</td>
+									<td>5.67</td>
+							</tr>
+							<tr>
+									<td>Inntekt på 12G skal gi maksgrensen på 7 pensjonspoeng</td>
+									<td>1992</td>
+									<td>434004</td>
+									<td>7.0</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</ul>	
+			</div>
+	
+	</body>
+</html>

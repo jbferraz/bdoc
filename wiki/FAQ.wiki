@@ -2,6 +2,26 @@
 
 = Frequently Asked Questions (FAQ)=
 
+===BDoc doesn't show up in my site report===
+Edit your pom.xml and add bdoc as a report plugin:
+{{{
+<reporting>
+	<plugins>
+		<plugin>
+			<groupId>com.googlecode.bdoc</groupId>
+			<artifactId>maven-bdoc-plugin</artifactId>
+			<version>0.8.12</version>
+			
+			<configuration>
+			  .. . 
+			</configuration>
+			
+		</plugin>
+	</plugins>
+</reporting>
+
+}}}
+
 ===Eclipse does not allow me to create Enums===
 Make sure you have configured Maven to be Java 1.5 compliant by configuring the compiler plug-in like so:
 {{{

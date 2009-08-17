@@ -10,7 +10,7 @@ Edit your pom.xml and add bdoc as a report plugin:
 		<plugin>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>maven-bdoc-plugin</artifactId>
-			<version>0.8.12</version>
+			<version>.. .</version>
 			
 			<configuration>
 			  .. . 

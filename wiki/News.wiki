@@ -1,3 +1,6 @@
+_17 August 2009 - Release 0.8.13_
+ Version 0.8.13 is released with all the functionality announced in the 0.8.12 version:-)
+
 _16 August 2009 - Release 0.8.12_
  Version 0.8.12 is released with new formatting of the userstory report, locale support for norwegian and swedish, and a new configuration option for setting the presentation order of classes in the userstory report. Read more on HowToSetLocale and HowToConfigureClassPresentationOrder.
 

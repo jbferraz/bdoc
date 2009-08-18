@@ -28,19 +28,26 @@
 -->
 
 
-<#setting date_format="short">
+<#import "bdd_doc_macros.ftl" as bdddoc />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>yxxxTitle</title>				
+		<title>XXX</title>				
 	</head>
-	
-	<FRAMESET ROWS="100%, *" COLS="20%, 80%">
-		<FRAME SRC="user_story_toc_frame.html"/>
-		<FRAMESET ROWS="50%, 50%">
-			<FRAME SRC="user_story_specifications_frame.html"/>
-			<FRAME SRC="user_story_examples_frame.html"/>
-		</FRAMESET>		
-	</FRAMESET>		
-	
+	<body>
+
+		<div class="navigation">
+			<strong><@bdddoc.text key="toc.userstories"/></strong>
+			<ul class="toc">
+				<#list toc as tocItem>
+					<li class="userstory">
+						<a href="#${tocItem.title}">${tocItem.title}</a>
+					</li>
+				</#list>
+			</ul>
+		</div>
+
+
+		<A HREF="pensjonsberegning/Alderspensjon.html" title="class in pensjonsberegning" target="classFrame">Alderspensjon</A>
+	</body>
 </html>

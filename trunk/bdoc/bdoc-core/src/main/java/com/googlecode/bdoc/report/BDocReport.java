@@ -26,67 +26,56 @@ package com.googlecode.bdoc.report;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.BDocException;
+import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.cache.MultiTemplateLoader;
-import freemarker.cache.TemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateException;
 
 public class BDocReport {
 
-	private String indexHtmlContent;
-	private String userStoriesTocFrameHtmlContent;
+	private String indexFrameSet;
+	private String userStoryTocFrame;
 
-	public BDocReport() {
+	private Map<String, Object> model = new HashMap<String, Object>();
+	private BDoc bdoc;
+	private String userStorySpecificationsFrame;
+	private String userStoryExamplesFrame;
+	private BDocConfig bdocConfig;
+
+	public BDocReport(BDoc bdoc, BDocConfig bdocConfig) {
+		this.bdoc = bdoc;
+		this.bdocConfig = bdocConfig;
+		this.model.put("bdoc", bdoc);
+		this.model.put("bdocMacroHelper", new BDocMacroHelper( bdocConfig  ) );
 		try {
-			indexHtmlContent = createIndexHtmlContent();
-			userStoriesTocFrameHtmlContent = createUserStoriesTocFrameHtmlContent();
+			makeBDocReport();
 		} catch (Throwable e) {
 			throw new BDocException(e);
 		}
 	}
 
-	private String createIndexHtmlContent() throws TemplateException, IOException {
-		Configuration cfg = new Configuration();
-		final MultiTemplateLoader multiTemplateLoader = new MultiTemplateLoader(new TemplateLoader[] { new ClassTemplateLoader(
-				BDocReport.class, "") });
+	private void makeBDocReport() throws TemplateException, IOException {
+		indexFrameSet = FreeMarkerUtils.createContentFrom("index_html.ftl", model);
+		userStoryTocFrame = new UserStoryTocFrame(bdoc, bdocConfig).html();
 
-		cfg.setTemplateLoader(multiTemplateLoader);
-		cfg.setObjectWrapper(new DefaultObjectWrapper());
+		userStorySpecificationsFrame = FreeMarkerUtils.createContentFrom("user_story_specifications_frame_html.ftl", model);
 
-		Map<String, Object> model = new HashMap<String, Object>();
-		StringWriter xhtml = new StringWriter();
-		cfg.getTemplate("index_html.ftl").process(model, xhtml);
-		return xhtml.toString();
-	}
-
-	private String createUserStoriesTocFrameHtmlContent() throws TemplateException, IOException {
-		Configuration cfg = new Configuration();
-		final MultiTemplateLoader multiTemplateLoader = new MultiTemplateLoader(new TemplateLoader[] { new ClassTemplateLoader(
-				BDocReport.class, "") });
-
-		cfg.setTemplateLoader(multiTemplateLoader);
-		cfg.setObjectWrapper(new DefaultObjectWrapper());
-
-		Map<String, Object> model = new HashMap<String, Object>();
-		StringWriter xhtml = new StringWriter();
-		cfg.getTemplate("user_stories_toc_frame_html.ftl").process(model, xhtml);
-		return xhtml.toString();
+		userStoryExamplesFrame = FreeMarkerUtils.createContentFrom("user_story_examples_frame_html.ftl", model);
 	}
 
 	public void writeTo(File baseDir) {
 		File reportDirectory = createReportDirectory(baseDir);
-		writeFile(reportDirectory, "index.html", indexHtmlContent);
-		writeFile(reportDirectory, "user_stories_toc_frame.html", userStoriesTocFrameHtmlContent );
+		writeFile(reportDirectory, "index.html", indexFrameSet);
+		writeFile(reportDirectory, "user_story_toc_frame.html", userStoryTocFrame);
+		writeFile(reportDirectory, "user_story_specifications_frame.html", userStorySpecificationsFrame);
+		writeFile(reportDirectory, "user_story_examples_frame.html", userStoryExamplesFrame);
 	}
 
 	private void writeFile(File reportDirectory, String fileName, String content) {
@@ -96,7 +85,7 @@ public class BDocReport {
 			throw new BDocException(e);
 		}
 	}
-	
+
 	private File createReportDirectory(File basetDir) {
 		try {
 			File reportDir = new File(basetDir, "bdoc");

@@ -24,13 +24,23 @@
 
 package com.googlecode.bdoc.report;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+
+import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.BDocConfig;
+import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.ClassBehaviourSorter;
+import com.googlecode.bdoc.doc.domain.ProjectInfo;
+import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.report.testdata.BDocReportTestRef;
+import com.googlecode.bdoc.report.testdata.TestClassWithRefToStoryNrOne;
+import com.googlecode.bdoc.report.testdata.TestClassWithRefToStoryNrTwoBehaviour;
 
 public class TestBDocReport {
 
@@ -41,7 +51,12 @@ public class TestBDocReport {
 		if (reportDirectory.exists()) {
 			FileUtils.forceDelete(reportDirectory);
 		}
-		BDocReport bdocReport = new BDocReport();
+		BDoc bdoc = new BDoc(BDocReportTestRef.class, new ClassBehaviourSorter());
+		bdoc.setProject(new ProjectInfo("TestBDocReport", "1.0"));
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrOne.class), BConst.SRC_TEST_JAVA);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrTwoBehaviour.class), BConst.SRC_TEST_JAVA);
+
+		BDocReport bdocReport = new BDocReport(bdoc, new BDocConfig());
 		bdocReport.writeTo(baseDir);
 	}
 
@@ -56,7 +71,19 @@ public class TestBDocReport {
 	}
 
 	@Test
-	public void shouldCreateUserStoriesTocFrameInBdocReportDirectory() {
-		assertTrue(new File(reportDirectory, "user_stories_toc_frame.html").exists());
+	public void shouldCreateUserStoriesTocFrameInBDocReportDirectory() {
+		assertTrue(new File(reportDirectory, "user_story_toc_frame.html").exists());
 	}
+
+	@Test
+	public void shouldCreateUserStoriesSpecificationFrameInBDocReportDirectory() {
+		assertTrue(new File(reportDirectory, "user_story_specifications_frame.html").exists());
+	}
+	
+	@Test
+	public void shouldCreateUserStoriesExamplesFrameInBDocReportDirectory() {
+		assertTrue(new File(reportDirectory, "user_story_examples_frame.html").exists());
+	}
+	
+
 }

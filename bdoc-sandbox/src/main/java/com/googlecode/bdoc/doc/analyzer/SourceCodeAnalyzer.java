@@ -46,13 +46,13 @@ import org.apache.maven.shared.model.fileset.util.FileSetManager;
  */
 public class SourceCodeAnalyzer {
 
-	public static List<MethodInfo> analyze(File file) {
+	public static ClassInfo analyze(File file) {
 		List<File> files = getFileAsList(file);
 
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 
-		List<MethodInfo> methodInfos = callCompiler(files, compiler, fileManager);
+		ClassInfo classInfo = callCompiler(files, compiler, fileManager);
 
 		try {
 			fileManager.close();
@@ -62,10 +62,10 @@ public class SourceCodeAnalyzer {
 
 		deleteClasses(file);
 
-		return methodInfos;
+		return classInfo;
 	}
 
-	private static List<MethodInfo> callCompiler(List<File> files, JavaCompiler compiler, StandardJavaFileManager fileManager) {
+	private static ClassInfo callCompiler(List<File> files, JavaCompiler compiler, StandardJavaFileManager fileManager) {
 		CompilationTask compilationTask = getCompilationTask(files, compiler, fileManager);
 
 		LinkedList<AbstractProcessor> processors = new LinkedList<AbstractProcessor>();
@@ -74,7 +74,7 @@ public class SourceCodeAnalyzer {
 
 		compilationTask.setProcessors(processors);
 		compilationTask.call();
-		return processor.getMethodInfos();
+		return processor.getClassInfo();
 	}
 
 	private static CompilationTask getCompilationTask(List<File> files, JavaCompiler compiler, StandardJavaFileManager fileManager) {

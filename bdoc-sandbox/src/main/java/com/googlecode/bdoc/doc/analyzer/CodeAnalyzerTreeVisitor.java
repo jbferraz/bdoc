@@ -56,19 +56,19 @@ import com.sun.source.util.Trees;
  */
 public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 
-	private List<MethodInfo> methodInfos;
+	private ClassInfo classInfo;
 
-	public CodeAnalyzerTreeVisitor() {
-		methodInfos = new ArrayList<MethodInfo>();
+	public ClassInfo getClassInfo() {
+		return classInfo;
 	}
 
-	public List<MethodInfo> getMethodInfos() {
-		return methodInfos;
+	public CodeAnalyzerTreeVisitor() {
 	}
 
 	@Override
 	public Object visitClass(ClassTree classTree, Trees trees) {
 		Name simpleName = classTree.getSimpleName();
+		classInfo = new ClassInfo(simpleName.toString());
 		return super.visitClass(classTree, trees);
 	}
 
@@ -105,7 +105,7 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 					}
 				}
 				methodInfo.setScenarios(scenarios);
-				methodInfos.add(methodInfo);
+				classInfo.addMethodInfo(methodInfo);
 			}
 		}
 

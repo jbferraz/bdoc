@@ -24,7 +24,6 @@
 
 package com.googlecode.bdoc.doc.analyzer;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -71,8 +70,8 @@ public class CodeAnalyzerProcessor extends AbstractProcessor {
 
 	}
 
-	public List<MethodInfo> getMethodInfos() {
-		return visitor.getMethodInfos();
+	public ClassInfo getClassInfo() {
+		return visitor.getClassInfo();
 	}
 
 }

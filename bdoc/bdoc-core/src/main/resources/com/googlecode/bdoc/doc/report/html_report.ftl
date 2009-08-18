@@ -42,6 +42,7 @@
 			<h1>${bddDoc.project.name} ${bddDoc.project.version}</h1>
 			<p class="dateTime">${bddDoc.docTime?datetime}</p>
 		</div>
+		
 		<div class="navigation">
 			<strong><@bdddoc.text key="${tocHeader}"/></strong>
 			<ul class="toc">

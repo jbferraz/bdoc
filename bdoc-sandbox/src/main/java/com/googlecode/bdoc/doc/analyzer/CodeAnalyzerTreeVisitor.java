@@ -85,25 +85,28 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 				MethodInfo methodInfo = new MethodInfo(name.toString());
 				methodInfo.setIgnored(isMethodAnnotatedWith(modifiers, "Ignore"));
 
-				List<Scenario> scenarios = new ArrayList<Scenario>();
 				BlockTree body = methodTreeLeaf.getBody();
 				List<? extends StatementTree> statements = body.getStatements();
+				List<String> scenarioParts = new ArrayList<String>();
 				for (StatementTree statementTree : statements) {
 					Kind kind = statementTree.getKind();
-					Scenario scenario = null;
+					String part = null;
 					if (kind.equals(Kind.EXPRESSION_STATEMENT)) {
 						ExpressionStatementTree expressionStatementTree = (ExpressionStatementTree) statementTree;
 						ExpressionTree expression = expressionStatementTree.getExpression();
-						scenario = extractScenario(expression);
+						part = extractScenarioPart(expression);
 					} else if (kind.equals(Kind.VARIABLE)) {
 						VariableTree variableTree = (VariableTree) statementTree;
 						ExpressionTree expression = variableTree.getInitializer();
-						scenario = extractScenario(expression);
+						part = extractScenarioPart(expression);
 					}
-					if (scenario != null) {
-						scenarios.add(scenario);
+					if (part != null) {
+						scenarioParts.add(part);
 					}
 				}
+
+				List<Scenario> scenarios = Scenario.scenariosBuilder(scenarioParts.toArray(new String[0]));
+
 				methodInfo.setScenarios(scenarios);
 				classInfo.addMethodInfo(methodInfo);
 			}
@@ -138,7 +141,7 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 		return identifier;
 	}
 
-	private Scenario extractScenario(ExpressionTree expression) {
+	private String extractScenarioPart(ExpressionTree expression) {
 		if (expression.getKind().equals(Kind.METHOD_INVOCATION)) {
 			MethodInvocationTree methodInvocationTree = (MethodInvocationTree) expression;
 			ExpressionTree methodSelect = methodInvocationTree.getMethodSelect();
@@ -147,9 +150,8 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 				IdentifierTree identifierTree = (IdentifierTree) methodSelect;
 				Name name = identifierTree.getName();
 				String camelCaseSentence = name.toString();
-				if (Scenario.Pattern.isScenario(camelCaseSentence)) {
-					Scenario scenario = new Scenario(camelCaseSentence);
-					return scenario;
+				if (Scenario.Pattern.isScenarioKeyword(camelCaseSentence)) {
+					return camelCaseSentence;
 				}
 			} else if (kind.equals(Kind.MEMBER_SELECT)) {
 				MemberSelectTree memberSelectTree = (MemberSelectTree) methodSelect;
@@ -160,10 +162,9 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 					IdentifierTree identifierTree = (IdentifierTree) expression2;
 					Name name2 = identifierTree.getName();
 					String camelCaseSentence = name2.toString();
-					if (Scenario.Pattern.isScenario(camelCaseSentence)) {
+					if (Scenario.Pattern.isScenarioKeyword(camelCaseSentence)) {
 						camelCaseSentence = camelCaseSentence.concat(StringUtils.capitalize(name.toString()));
-						Scenario scenario = new Scenario(camelCaseSentence);
-						return scenario;
+						return camelCaseSentence;
 					}
 				}
 			}

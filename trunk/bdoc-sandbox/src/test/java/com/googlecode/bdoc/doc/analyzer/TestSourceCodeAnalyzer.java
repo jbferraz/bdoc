@@ -53,6 +53,7 @@ public class TestSourceCodeAnalyzer {
 	@Test
 	public final void shouldOnlyFindMethodsMarkedWithTest() {
 		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+
 		assertEquals(4, methodInfos.size());
 		assertEquals("shouldFindLocale", methodInfos.get(0).getName());
 		assertEquals("shouldAddDepositToBalance", methodInfos.get(1).getName());
@@ -63,6 +64,7 @@ public class TestSourceCodeAnalyzer {
 	@Test
 	public final void shouldTellIfMethodAreMarkedWithIgnore() {
 		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+
 		assertEquals(false, methodInfos.get(0).isIgnored());
 		assertEquals(false, methodInfos.get(1).isIgnored());
 		assertEquals(true, methodInfos.get(2).isIgnored());
@@ -72,10 +74,20 @@ public class TestSourceCodeAnalyzer {
 	@Test
 	public final void shouldFindScenarios() {
 		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+
 		assertEquals(0, methodInfos.get(0).getScenarios().size());
-		assertEquals(3, methodInfos.get(1).getScenarios().size());
+		assertEquals(1, methodInfos.get(1).getScenarios().size());
 		assertEquals(0, methodInfos.get(2).getScenarios().size());
 		assertEquals(0, methodInfos.get(3).getScenarios().size());
+	}
+
+	@Test
+	public final void shouldFindScenariosParts() {
+		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+
+		assertEquals(1, methodInfos.get(1).getScenarios().get(0).getGivens().length);
+		assertEquals(1, methodInfos.get(1).getScenarios().get(0).getWhens().length);
+		assertEquals(1, methodInfos.get(1).getScenarios().get(0).getWhens().length);
 	}
 
 }

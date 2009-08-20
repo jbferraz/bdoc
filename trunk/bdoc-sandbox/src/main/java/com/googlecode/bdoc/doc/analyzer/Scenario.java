@@ -24,6 +24,8 @@
 
 package com.googlecode.bdoc.doc.analyzer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.lang.Validate;
@@ -33,14 +35,98 @@ import org.apache.commons.lang.Validate;
  */
 public class Scenario {
 
-	private String camelCaseSentence;
+	private String[] givens;
+	private String[] whens;
+	private String[] thens;
 
-	public Scenario(String camelCaseSentence) {
-		this.camelCaseSentence = camelCaseSentence;
+	public Scenario(String[] givens, String[] whens, String[] thens) {
+		this.givens = givens;
+		this.whens = whens;
+		this.thens = thens;
 	}
 
-	public String getCamelCaseSentence() {
-		return camelCaseSentence;
+	public static List<Scenario> scenariosBuilder(String... sentences) {
+		List<Scenario> scenarios = new ArrayList<Scenario>();
+
+		List<String> givens = new ArrayList<String>();
+		List<String> whens = new ArrayList<String>();
+		List<String> thens = new ArrayList<String>();
+		boolean isGiven = false;
+		boolean isWhen = false;
+		boolean isThen = false;
+
+		for (String sentence : sentences) {
+			if (isGiven(sentence) || isGiven && isAnd(sentence)) {
+				isGiven = true;
+				isWhen = false;
+				isThen = false;
+				if (!givens.isEmpty()) {
+					Scenario scenario = new Scenario(givens.toArray(new String[0]), whens.toArray(new String[0]), thens
+							.toArray(new String[0]));
+					scenarios.add(scenario);
+					givens = new ArrayList<String>();
+					whens = new ArrayList<String>();
+					thens = new ArrayList<String>();
+				}
+				givens.add(sentence);
+			} else if (isWhen(sentence) || isWhen && isAnd(sentence)) {
+				isGiven = false;
+				isWhen = true;
+				isThen = false;
+				whens.add(sentence);
+			} else if (isThen(sentence) || isThen && isAnd(sentence)) {
+				isGiven = false;
+				isWhen = false;
+				isThen = true;
+				thens.add(sentence);
+			}
+		}
+
+		if (!givens.isEmpty()) {
+			Scenario scenario = new Scenario(givens.toArray(new String[0]), whens.toArray(new String[0]), thens.toArray(new String[0]));
+			scenarios.add(scenario);
+			givens = new ArrayList<String>();
+			whens = new ArrayList<String>();
+			thens = new ArrayList<String>();
+		}
+
+		return scenarios;
+	}
+
+	private static boolean isGiven(String sentence) {
+		for (Pattern pattern : Pattern.values()) {
+			if (sentence.toLowerCase().startsWith(pattern.keywords[0].toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean isWhen(String sentence) {
+		for (Pattern pattern : Pattern.values()) {
+			if (sentence.toLowerCase().startsWith(pattern.keywords[1].toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean isThen(String sentence) {
+		for (Pattern pattern : Pattern.values()) {
+			if (sentence.toLowerCase().startsWith(pattern.keywords[2].toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean isAnd(String sentence) {
+		for (Pattern pattern : Pattern.values()) {
+			if (sentence.toLowerCase().startsWith(pattern.and.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public enum Pattern {
@@ -63,10 +149,10 @@ public class Scenario {
 			return locale;
 		}
 
-		public static boolean isScenario(String camelCaseSentence) {
+		public static boolean isScenarioKeyword(String sentence) {
 			for (Pattern pattern : Pattern.values()) {
 				for (String keyword : pattern.keywords) {
-					if (camelCaseSentence.startsWith(keyword.toLowerCase())) {
+					if (sentence.toLowerCase().startsWith(keyword.toLowerCase())) {
 						return true;
 					}
 				}
@@ -77,6 +163,18 @@ public class Scenario {
 		public String and() {
 			return and;
 		}
+	}
+
+	public String[] getGivens() {
+		return givens;
+	}
+
+	public String[] getWhens() {
+		return whens;
+	}
+
+	public String[] getThens() {
+		return thens;
 	}
 
 }

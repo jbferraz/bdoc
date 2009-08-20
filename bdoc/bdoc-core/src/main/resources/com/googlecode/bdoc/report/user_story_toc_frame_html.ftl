@@ -41,13 +41,13 @@
 			<ul class="toc">
 				<#list toc as tocItem>
 					<li class="userstory">
-						<a href="#${tocItem.title}">${tocItem.title}</a>
+						<A HREF="${tocItem.fileName}" target="specifications">${tocItem.title}</A>
 					</li>
 				</#list>
 			</ul>
 		</div>
 
 
-		<A HREF="pensjonsberegning/Alderspensjon.html" title="class in pensjonsberegning" target="classFrame">Alderspensjon</A>
+		
 	</body>
 </html>

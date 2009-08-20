@@ -36,17 +36,17 @@ import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 
-public class FreeMarkerUtils {
+public class BDocReportUtils {
 
 	private static Configuration cfg = new Configuration();
 	static {
-		MultiTemplateLoader multiTemplateLoader = FreeMarkerUtils.createTemplateLoader();
+		MultiTemplateLoader multiTemplateLoader = BDocReportUtils.createTemplateLoader();
 		cfg.setTemplateLoader(multiTemplateLoader);
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 
 	}
 
-	private FreeMarkerUtils() {
+	private BDocReportUtils() {
 
 	}
 

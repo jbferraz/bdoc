@@ -25,23 +25,41 @@
 package com.googlecode.bdoc.report;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.googlecode.bdoc.BDocConfig;
+import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 
-public class UserStoryTocFrame {
+/**
+ * @author Per Otto Bergum Christensen
+ */
+public class UserStorySpecificationsFrame {
 
-	private Map<String, Object> model = new HashMap<String,Object>();
+	private Map<String, Object> model = new HashMap<String, Object>();
+	private UserStory userStory;
 
-	public UserStoryTocFrame(List<UserStorySpecificationsFrame> userStorySpecFrames, BDocConfig bdocConfig ) {
-		model.put("toc", userStorySpecFrames );
-		model.put("bdocMacroHelper", new BDocMacroHelper( bdocConfig  ) );
+	public UserStorySpecificationsFrame(UserStory userStory, BDocConfig bdocConfig) {
+		this.userStory = userStory;
+		model.put("userStory", userStory);
+		model.put("narrative", userStory.getNarrative());
+		model.put("bdocMacroHelper", new BDocMacroHelper(bdocConfig));
+	}
+
+	public String html() {
+		return BDocReportUtils.createContentFrom("user_story_specifications_frame.ftl", model);
 	}
 	
-	public String html() {
-		return BDocReportUtils.createContentFrom("user_story_toc_frame_html.ftl",model);
+	private String fileNamePrefix() {
+		return userStory.getTitle().replace(" ", "_").toLowerCase();
 	}
 
+	public String getFileName() {
+		return fileNamePrefix() + "_specifications_frame.html";
+	}
+	
+	public String getTitle() {
+		return userStory.getTitle();
+	}
+	
 }

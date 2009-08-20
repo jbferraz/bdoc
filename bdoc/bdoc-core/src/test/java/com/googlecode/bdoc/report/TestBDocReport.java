@@ -76,8 +76,9 @@ public class TestBDocReport {
 	}
 
 	@Test
-	public void shouldCreateUserStoriesSpecificationFrameInBDocReportDirectory() {
-		assertTrue(new File(reportDirectory, "user_story_specifications_frame.html").exists());
+	public void shouldCreateAUserStorySpecificationFrameForEachUserStory() {
+		assertTrue(new File(reportDirectory, "story_nr_one_specifications_frame.html").exists());
+		assertTrue(new File(reportDirectory, "story_nr_two_specifications_frame.html").exists());
 	}
 	
 	@Test

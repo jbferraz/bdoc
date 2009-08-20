@@ -26,38 +26,31 @@ package com.googlecode.bdoc.report;
 
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
-import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.BDocConfig;
-import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.domain.ClassBehaviourSorter;
-import com.googlecode.bdoc.doc.domain.ProjectInfo;
-import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.UserStory;
-import com.googlecode.bdoc.report.testdata.BDocReportTestRef;
-import com.googlecode.bdoc.report.testdata.TestClassWithRefToStoryNrOne;
-import com.googlecode.bdoc.report.testdata.TestClassWithRefToStoryNrTwoBehaviour;
+import com.googlecode.bdoc.report.testdata.BDocReportTestStory;
 
 public class TestUserStoryTocFrame {
 
-	private BDoc bdoc;
+	List<UserStorySpecificationsFrame> userStorySpecFrames = new ArrayList<UserStorySpecificationsFrame>();
 	private String html;
 
 	public TestUserStoryTocFrame() {
-		bdoc = new BDoc(BDocReportTestRef.class, new ClassBehaviourSorter());
-		bdoc.setProject(new ProjectInfo("TestBDocReport", "1.0"));
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrOne.class), BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrTwoBehaviour.class), BConst.SRC_TEST_JAVA);
+		userStorySpecFrames.add(new UserStorySpecificationsFrame(new UserStory(BDocReportTestStory.STORY_NR_ONE), new BDocConfig()));
+		userStorySpecFrames.add(new UserStorySpecificationsFrame(new UserStory(BDocReportTestStory.STORY_NR_TWO), new BDocConfig()));
 
-		html = new UserStoryTocFrame(bdoc, new BDocConfig() ).html();
+		html = new UserStoryTocFrame(userStorySpecFrames, new BDocConfig()).html();
 	}
 
 	@Test
 	public void shouldPresentATableOfContentsWithAllUserStoryTitles() {
-		for (UserStory story : bdoc.getUserstories()) {
-			assertXPathContains(story.getTitle(), "//ul[@class='toc']", html);
-		}
+		assertXPathContains("Story nr one", "//ul[@class='toc']", html);
+		assertXPathContains("Story nr two", "//ul[@class='toc']", html);
 	}
 
 }

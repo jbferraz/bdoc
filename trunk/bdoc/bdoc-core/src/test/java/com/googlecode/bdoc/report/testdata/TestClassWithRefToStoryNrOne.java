@@ -32,5 +32,13 @@ public class TestClassWithRefToStoryNrOne {
 	@Test
 	public void isTestData() {
 	}
+	
+	@Test
+	public void shouldBeSpecified() {
+		
+	}
 
+	@Test
+	public void givenXWhenYThenZ() {
+	}
 }

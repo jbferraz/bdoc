@@ -26,7 +26,9 @@ package com.googlecode.bdoc.report;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -34,6 +36,7 @@ import org.apache.commons.io.FileUtils;
 import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.BDocException;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 
 import freemarker.template.TemplateException;
@@ -45,7 +48,7 @@ public class BDocReport {
 
 	private Map<String, Object> model = new HashMap<String, Object>();
 	private BDoc bdoc;
-	private String userStorySpecificationsFrame;
+	private List<UserStorySpecificationsFrame> userStorySpecificationFrameItems = new ArrayList<UserStorySpecificationsFrame>();
 	private String userStoryExamplesFrame;
 	private BDocConfig bdocConfig;
 
@@ -53,7 +56,7 @@ public class BDocReport {
 		this.bdoc = bdoc;
 		this.bdocConfig = bdocConfig;
 		this.model.put("bdoc", bdoc);
-		this.model.put("bdocMacroHelper", new BDocMacroHelper( bdocConfig  ) );
+		this.model.put("bdocMacroHelper", new BDocMacroHelper(bdocConfig));
 		try {
 			makeBDocReport();
 		} catch (Throwable e) {
@@ -62,19 +65,24 @@ public class BDocReport {
 	}
 
 	private void makeBDocReport() throws TemplateException, IOException {
-		indexFrameSet = FreeMarkerUtils.createContentFrom("index_html.ftl", model);
-		userStoryTocFrame = new UserStoryTocFrame(bdoc, bdocConfig).html();
+		for (UserStory userStory : bdoc.getUserstories()) {
+			userStorySpecificationFrameItems.add(new UserStorySpecificationsFrame(userStory, bdocConfig));
+		}
 
-		userStorySpecificationsFrame = FreeMarkerUtils.createContentFrom("user_story_specifications_frame_html.ftl", model);
-
-		userStoryExamplesFrame = FreeMarkerUtils.createContentFrom("user_story_examples_frame_html.ftl", model);
+		indexFrameSet = BDocReportUtils.createContentFrom("index_html.ftl", model);
+		userStoryTocFrame = new UserStoryTocFrame(userStorySpecificationFrameItems, bdocConfig).html();
+		userStoryExamplesFrame = BDocReportUtils.createContentFrom("user_story_examples_frame_html.ftl", model);
 	}
 
 	public void writeTo(File baseDir) {
 		File reportDirectory = createReportDirectory(baseDir);
 		writeFile(reportDirectory, "index.html", indexFrameSet);
 		writeFile(reportDirectory, "user_story_toc_frame.html", userStoryTocFrame);
-		writeFile(reportDirectory, "user_story_specifications_frame.html", userStorySpecificationsFrame);
+
+		for (UserStorySpecificationsFrame userStorySpec : userStorySpecificationFrameItems) {
+			writeFile(reportDirectory, userStorySpec.getFileName(), userStorySpec.html());
+		}
+
 		writeFile(reportDirectory, "user_story_examples_frame.html", userStoryExamplesFrame);
 	}
 

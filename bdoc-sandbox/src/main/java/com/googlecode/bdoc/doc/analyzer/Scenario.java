@@ -60,7 +60,7 @@ public class Scenario {
 				isGiven = true;
 				isWhen = false;
 				isThen = false;
-				if (!givens.isEmpty()) {
+				if (!givens.isEmpty() && !isAnd(sentence)) {
 					Scenario scenario = new Scenario(givens.toArray(new String[0]), whens.toArray(new String[0]), thens
 							.toArray(new String[0]));
 					scenarios.add(scenario);
@@ -149,12 +149,15 @@ public class Scenario {
 			return locale;
 		}
 
-		public static boolean isScenarioKeyword(String sentence) {
+		public static boolean isScenarioKeywordOrAnd(String sentence) {
 			for (Pattern pattern : Pattern.values()) {
 				for (String keyword : pattern.keywords) {
 					if (sentence.toLowerCase().startsWith(keyword.toLowerCase())) {
 						return true;
 					}
+				}
+				if (sentence.toLowerCase().startsWith(pattern.and.toLowerCase())) {
+					return true;
 				}
 			}
 			return false;

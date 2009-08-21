@@ -43,10 +43,51 @@ public class SomeBehavior extends ScenarioSupport<SomeBehavior> {
 		assertEquals(7, pensjonsPoengForInntektPaa(12 * G));
 	}
 
+	@Test
+	public void shouldPopLastPushedValueFirst() {
+		given.aNewlyCreatedStack();
+		and.pushedIsCalledWith("foo");
+		and.pushedIsCalledWith("bar");
+		when.popIsCalled();
+		then.popedValueIs("bar");
+		and.sizeOfStackHasDecreasedWith(1);
+		and.stackIsNotEmpty();
+	}
+
 	// =>
 	// Eksempler på pensjonsberegning
 	// 3 pensjonspoeng for inntekt på 4*G
 	// 7 pensjonspoeng for inntekt på 12*G
+
+	private void stackIsNotEmpty() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void sizeOfStackHasDecreasedWith(int i) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void popedValueIs(String string) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void popIsCalled() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void pushedIsCalledWith(String string) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void aNewlyCreatedStack() {
+		// TODO Auto-generated method stub
+
+	}
 
 	private int pensjonsPoengForInntektPaa(int g) {
 		if (g == 4) {

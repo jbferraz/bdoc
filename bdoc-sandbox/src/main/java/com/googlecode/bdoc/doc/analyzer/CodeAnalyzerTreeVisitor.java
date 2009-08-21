@@ -150,7 +150,7 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 				IdentifierTree identifierTree = (IdentifierTree) methodSelect;
 				Name name = identifierTree.getName();
 				String camelCaseSentence = name.toString();
-				if (Scenario.Pattern.isScenarioKeyword(camelCaseSentence)) {
+				if (Scenario.Pattern.isScenarioKeywordOrAnd(camelCaseSentence)) {
 					return camelCaseSentence;
 				}
 			} else if (kind.equals(Kind.MEMBER_SELECT)) {
@@ -162,7 +162,7 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 					IdentifierTree identifierTree = (IdentifierTree) expression2;
 					Name name2 = identifierTree.getName();
 					String camelCaseSentence = name2.toString();
-					if (Scenario.Pattern.isScenarioKeyword(camelCaseSentence)) {
+					if (Scenario.Pattern.isScenarioKeywordOrAnd(camelCaseSentence)) {
 						camelCaseSentence = camelCaseSentence.concat(StringUtils.capitalize(name.toString()));
 						return camelCaseSentence;
 					}

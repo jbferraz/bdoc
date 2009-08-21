@@ -44,7 +44,9 @@ import freemarker.template.TemplateException;
 public class BDocReport {
 
 	private String indexFrameSet;
+	private String blankFrame;
 	private String userStoryTocFrame;
+	private ProjectInfoFrame projectInfoFrame;
 
 	private Map<String, Object> model = new HashMap<String, Object>();
 	private BDoc bdoc;
@@ -69,9 +71,11 @@ public class BDocReport {
 			userStorySpecificationFrameItems.add(new UserStorySpecificationsFrame(userStory, bdocConfig));
 		}
 
-		indexFrameSet = BDocReportUtils.createContentFrom("index_html.ftl", model);
+		indexFrameSet = BDocReportUtils.createContentFrom("index.ftl", model);
 		userStoryTocFrame = new UserStoryTocFrame(userStorySpecificationFrameItems, bdocConfig).html();
 		userStoryExamplesFrame = BDocReportUtils.createContentFrom("user_story_examples_frame_html.ftl", model);
+		projectInfoFrame = new ProjectInfoFrame( bdoc, bdocConfig );
+		blankFrame = BDocReportUtils.createContentFrom("blank.ftl", model);
 	}
 
 	public void writeTo(File baseDir) {
@@ -84,6 +88,8 @@ public class BDocReport {
 		}
 
 		writeFile(reportDirectory, "user_story_examples_frame.html", userStoryExamplesFrame);
+		writeFile(reportDirectory, "project_info.html", projectInfoFrame.html() );
+		writeFile(reportDirectory, "blank.html", blankFrame );
 	}
 
 	private void writeFile(File reportDirectory, String fileName, String content) {

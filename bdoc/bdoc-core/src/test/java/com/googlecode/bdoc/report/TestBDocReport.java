@@ -71,6 +71,16 @@ public class TestBDocReport {
 	}
 
 	@Test
+	public void shouldCreateProjectInfoHtmlInBDocReportDirectory() {
+		assertTrue(new File(reportDirectory, "project_info.html").exists());
+	}
+
+	@Test
+	public void shouldCreateABlankHtmlToBeUsedTogheterWithProjectInfo() {
+		assertTrue(new File(reportDirectory, "blank.html").exists());
+	}
+
+	@Test
 	public void shouldCreateUserStoriesTocFrameInBDocReportDirectory() {
 		assertTrue(new File(reportDirectory, "user_story_toc_frame.html").exists());
 	}

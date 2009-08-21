@@ -56,6 +56,11 @@ public class TestUserStorySpecificationsFrame {
 	}
 
 	@Test
+	public void shouldPresentTheTitleOfTheStory() {
+		assertXPathContains(userStory.getTitle(), "//body", html);
+	}
+	
+	@Test
 	public void shouldPresentTheNarrativeOfTheStory() {
 		Narrative narrative = userStory.getNarrative();
 		assertXPathContains(narrative.getRole(), "//div[@class='narrative']", html);

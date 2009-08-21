@@ -42,6 +42,7 @@ public class UserStorySpecificationsFrame {
 	public UserStorySpecificationsFrame(UserStory userStory, BDocConfig bdocConfig) {
 		this.userStory = userStory;
 		model.put("userStory", userStory);
+		model.put("fileNamePrefix", fileNamePrefix());
 		model.put("narrative", userStory.getNarrative());
 		model.put("bdocMacroHelper", new BDocMacroHelper(bdocConfig));
 	}
@@ -49,7 +50,7 @@ public class UserStorySpecificationsFrame {
 	public String html() {
 		return BDocReportUtils.createContentFrom("user_story_specifications_frame.ftl", model);
 	}
-	
+
 	private String fileNamePrefix() {
 		return userStory.getTitle().replace(" ", "_").toLowerCase();
 	}
@@ -57,9 +58,9 @@ public class UserStorySpecificationsFrame {
 	public String getFileName() {
 		return fileNamePrefix() + "_specifications_frame.html";
 	}
-	
+
 	public String getTitle() {
 		return userStory.getTitle();
 	}
-	
+
 }

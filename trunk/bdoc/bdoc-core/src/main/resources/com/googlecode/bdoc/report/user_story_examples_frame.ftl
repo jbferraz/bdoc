@@ -26,15 +26,10 @@
 <#--
 	@author Per Otto Bergum Christensen
 -->
-
-
-<#setting date_format="short">
+<#import "report_macros.ftl" as report_macro />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>summary frame</title>				
-	</head>
 	<body>
-		<h1>examples frame</h1>
+		<@report_macro.list_examples module=module/>
 	</body>
 </html>

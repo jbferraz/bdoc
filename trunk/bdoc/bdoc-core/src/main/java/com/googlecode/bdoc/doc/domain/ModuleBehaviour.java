@@ -49,11 +49,7 @@ public class ModuleBehaviour {
 			packages.add(classPackage);
 		}
 
-		ClassBehaviour classBehaviour = classPackage.addBehaviour(method);
-//		if (method.hasScenarios()) {
-//			classBehaviour.addScenarios(method.getScenarios());
-//		}
-		return classBehaviour;
+		return classPackage.addBehaviour(method);
 	}
 
 	public List<Package> getPackages() {

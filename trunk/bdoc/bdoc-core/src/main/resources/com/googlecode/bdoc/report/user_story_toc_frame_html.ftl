@@ -31,21 +31,24 @@
 <#import "bdd_doc_macros.ftl" as bdddoc />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-
+	<head>
+		<SCRIPT language='JavaScript'> 
+			function navigateTo(location_href) {
+			 parent.frames[1].location.href=location_href;
+			 parent.frames[2].location.href="blank.html";
+			}
+		</SCRIPT>
+	</head>
 	<body>
-
 		<div class="navigation">
 			<strong><@bdddoc.text key="toc.userstories"/></strong>
 			<ul class="toc">
 				<#list toc as tocItem>
 					<li class="userstory">
-						<A HREF="${tocItem.fileName}" target="specifications">${tocItem.title}</A>
+						<A HREF="javascript:navigateTo('${tocItem.fileName}')">${tocItem.title}</A>
 					</li>
 				</#list>
 			</ul>
 		</div>
-
-
-		
 	</body>
 </html>

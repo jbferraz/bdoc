@@ -68,7 +68,7 @@
 	<#list statements as statement>
 		<li>
 			<#if statement.hasExamples()>
-				<a href="#${statement.getCamelCaseSentence()}">${bdocMacroHelper.format(statement)}</a>
+				<a href="${fileNamePrefix}_examples_frame.html#${statement.getCamelCaseSentence()}" target="examples">${bdocMacroHelper.format(statement)}</a>
 			</#if>
 			<#if !statement.hasExamples()>
 				${bdocMacroHelper.format(statement)}
@@ -82,7 +82,7 @@
 
 		<div class="classBehaviour">
 			<#if !(textKey=="") >
-				<span class="scenarioTitle"><@bdddoc.text key="${textKey}" /></span>
+				<span class="scenarioTitle"><@bdocMacroHelper.text key="${textKey}" /></span>
 			</#if>
 
 			<ul class="specifications">
@@ -129,7 +129,7 @@
 
 <#macro list_examples module>
 	<div class="examples">
-		<span class="exampleTitle"><@bdddoc.text key="examples"/></span>
+		<span class="exampleTitle"><@text key="examples"/></span>
 		
 		<#list module.getClassBehaviour() as classBehaviour>
 	
@@ -172,7 +172,7 @@
 		</#if>
 	
 		<#if statement.hasScenarios()>
-			<ul class="testTable">
+			<ul class="scenario">
 				<p>${bdocMacroHelper.format(statement)}<BR/></p>
 				<@list_scenarios scenarios=statement.getScenarios()/>
 			</ul>

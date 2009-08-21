@@ -90,11 +90,11 @@ public class TestBDocReport {
 		assertTrue(new File(reportDirectory, "story_nr_one_specifications_frame.html").exists());
 		assertTrue(new File(reportDirectory, "story_nr_two_specifications_frame.html").exists());
 	}
-	
+
 	@Test
-	public void shouldCreateUserStoriesExamplesFrameInBDocReportDirectory() {
-		assertTrue(new File(reportDirectory, "user_story_examples_frame.html").exists());
+	public void shouldCreateAUserStoryExamplesFrameForEachUserStory() {
+		assertTrue(new File(reportDirectory, "story_nr_one_examples_frame.html").exists());
+		assertTrue(new File(reportDirectory, "story_nr_two_examples_frame.html").exists());
 	}
-	
 
 }

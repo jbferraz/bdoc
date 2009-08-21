@@ -50,8 +50,9 @@ public class BDocReport {
 
 	private Map<String, Object> model = new HashMap<String, Object>();
 	private BDoc bdoc;
-	private List<UserStorySpecificationsFrame> userStorySpecificationFrameItems = new ArrayList<UserStorySpecificationsFrame>();
-	private String userStoryExamplesFrame;
+	private List<UserStorySpecificationsFrame> userStorySpecificationFrames = new ArrayList<UserStorySpecificationsFrame>();
+	private List<UserStoryExamplesFrame> userStoryExamplesFrames = new ArrayList<UserStoryExamplesFrame>();
+	
 	private BDocConfig bdocConfig;
 
 	public BDocReport(BDoc bdoc, BDocConfig bdocConfig) {
@@ -68,12 +69,12 @@ public class BDocReport {
 
 	private void makeBDocReport() throws TemplateException, IOException {
 		for (UserStory userStory : bdoc.getUserstories()) {
-			userStorySpecificationFrameItems.add(new UserStorySpecificationsFrame(userStory, bdocConfig));
+			userStorySpecificationFrames.add(new UserStorySpecificationsFrame(userStory, bdocConfig));
+			userStoryExamplesFrames.add(new UserStoryExamplesFrame( userStory, bdocConfig ));
 		}
 
 		indexFrameSet = BDocReportUtils.createContentFrom("index.ftl", model);
-		userStoryTocFrame = new UserStoryTocFrame(userStorySpecificationFrameItems, bdocConfig).html();
-		userStoryExamplesFrame = BDocReportUtils.createContentFrom("user_story_examples_frame_html.ftl", model);
+		userStoryTocFrame = new UserStoryTocFrame(userStorySpecificationFrames, bdocConfig).html();
 		projectInfoFrame = new ProjectInfoFrame( bdoc, bdocConfig );
 		blankFrame = BDocReportUtils.createContentFrom("blank.ftl", model);
 	}
@@ -83,11 +84,14 @@ public class BDocReport {
 		writeFile(reportDirectory, "index.html", indexFrameSet);
 		writeFile(reportDirectory, "user_story_toc_frame.html", userStoryTocFrame);
 
-		for (UserStorySpecificationsFrame userStorySpec : userStorySpecificationFrameItems) {
-			writeFile(reportDirectory, userStorySpec.getFileName(), userStorySpec.html());
+		for (UserStorySpecificationsFrame specificationsFrame : userStorySpecificationFrames) {
+			writeFile(reportDirectory, specificationsFrame.getFileName(), specificationsFrame.html());
+		}
+		
+		for (UserStoryExamplesFrame examplesFrame : userStoryExamplesFrames) {
+			writeFile(reportDirectory, examplesFrame.getFileName(), examplesFrame.html());
 		}
 
-		writeFile(reportDirectory, "user_story_examples_frame.html", userStoryExamplesFrame);
 		writeFile(reportDirectory, "project_info.html", projectInfoFrame.html() );
 		writeFile(reportDirectory, "blank.html", blankFrame );
 	}

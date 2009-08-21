@@ -36,7 +36,7 @@
 	
 	<FRAMESET ROWS="100%, *" COLS="20%, 80%">
 		<FRAME SRC="user_story_toc_frame.html"/>
-		<FRAMESET ROWS="50%, 50%">
+		<FRAMESET ROWS="60%, 40%">
 			<FRAME SRC="project_info.html" NAME="specifications"/>
 			<FRAME SRC="blank.html" NAME="examples"/>
 		</FRAMESET>		

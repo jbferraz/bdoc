@@ -28,9 +28,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.googlecode.bdoc.BDocConfig;
+import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TableColumn;
+import com.googlecode.bdoc.report.StatementExampleFrame;
 import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 
 /**
@@ -75,5 +77,9 @@ public class BDocMacroHelper {
 
 	public String format(String string) {
 		return CamelCaseToSentenceTranslator.translate(string);
+	}
+
+	public String hrefToStatementExampleFrame(ClassBehaviour classBehaviour, Statement statement) {
+		return StatementExampleFrame.getFileName(classBehaviour.getClassName(), statement);
 	}
 }

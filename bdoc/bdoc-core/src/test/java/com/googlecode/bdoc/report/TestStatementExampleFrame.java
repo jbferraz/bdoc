@@ -30,7 +30,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BDocConfig;
@@ -41,12 +40,12 @@ import com.googlecode.bdoc.doc.domain.TableRow;
 import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.TestTable;
 
-public class TestStatementExamplesFrame {
+public class TestStatementExampleFrame {
 
 	private String html;
 	private Statement statement;
 
-	public TestStatementExamplesFrame() {
+	public TestStatementExampleFrame() {
 		TestMethod method = new TestMethod(TestClassWithTestTable.class, "exampleStatement");
 
 		TestTable testTable = new TestTable("exampleOnSumOfTwoValues");
@@ -68,11 +67,11 @@ public class TestStatementExamplesFrame {
 		method.getScenarios().add(new Scenario("givenADynamicScenario"));
 
 		statement = new Statement(method);
-		html = new StatementExamplesFrame(statement, new BDocConfig()).html();
+		html = new StatementExampleFrame("ClassWithTestTable",statement, new BDocConfig()).html();
 	}
 
 	@Test
-	public void shouldPresentTestTablesForSpecification() {
+	public void shouldPresentTestTables() {
 		assertXPathContains("Example on sum of two values", "//ul[@class='testTable']", html);
 	}
 
@@ -90,8 +89,8 @@ public class TestStatementExamplesFrame {
 	
 	@Test
 	public void shouldHaveFileNameBuildtUpFromStatementConcatenatedWithStandardPostfix() {
-		StatementExamplesFrame statementExamplesFrame = new StatementExamplesFrame(statement, new BDocConfig());
-		assertEquals( "example_statement_examples_frame.html", statementExamplesFrame.getFileName() );
+		StatementExampleFrame statementExamplesFrame = new StatementExampleFrame("ClassWithTestTable",statement, new BDocConfig());
+		assertEquals( "classwithtesttable-examplestatement-examples_frame.html", statementExamplesFrame.getFileName() );
 	}
 
 	public class TestClassWithTestTable {

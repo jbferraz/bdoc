@@ -45,7 +45,7 @@ import com.googlecode.bdoc.report.testdata.TestClassWithRefToStoryNrTwoBehaviour
 
 public class TestBDocReport {
 
-	RuntimeBehaviourFactory behaviourFactory = new RuntimeBehaviourFactory( BConst.SRC_TEST_JAVA );	
+	RuntimeBehaviourFactory behaviourFactory = new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA);
 	File baseDir = new File("./target");
 	File reportDirectory = new File(baseDir, "bdoc");
 
@@ -55,12 +55,11 @@ public class TestBDocReport {
 		}
 		BDoc bdoc = new BDoc(BDocReportTestRef.class, new ClassBehaviourSorter());
 		bdoc.setProject(new ProjectInfo("TestBDocReport", "1.0"));
-		
+
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrOne.class), behaviourFactory);
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrTwoBehaviour.class), behaviourFactory);
 
-		BDocReport bdocReport = new BDocReport(bdoc, new BDocConfig());
-		bdocReport.writeTo(baseDir);
+		new BDocReport(bdoc, new BDocConfig()).writeTo(baseDir);
 	}
 
 	@Test
@@ -70,39 +69,49 @@ public class TestBDocReport {
 
 	@Test
 	public void shouldCreateIndexHtmlInTheBDocReportDirectory() {
-		assertTrue(new File(reportDirectory, "index.html").exists());
+		assertReportIsCreated("index.html");
 	}
 
 	@Test
 	public void shouldCreateACascadingStyleSheetInTheBDocReportDirectory() {
-		assertTrue(new File(reportDirectory, "stylesheet.css").exists());
+		assertReportIsCreated("stylesheet.css");
 	}
 
 	@Test
 	public void shouldCreateProjectInfoHtmlInTheBDocReportDirectory() {
-		assertTrue(new File(reportDirectory, "project_info.html").exists());
+		assertReportIsCreated("project_info.html");
 	}
 
 	@Test
 	public void shouldCreateABlankHtmlToBeUsedTogheterWithProjectInfo() {
-		assertTrue(new File(reportDirectory, "blank.html").exists());
+		assertReportIsCreated("blank.html");
 	}
 
 	@Test
 	public void shouldCreateUserStoriesTocFrameInBDocReportDirectory() {
-		assertTrue(new File(reportDirectory, "user_story_toc_frame.html").exists());
+		assertReportIsCreated("user_story_toc_frame.html");
 	}
 
 	@Test
 	public void shouldCreateAUserStorySpecificationFrameForEachUserStory() {
-		assertTrue(new File(reportDirectory, "story_nr_one_specifications_frame.html").exists());
-		assertTrue(new File(reportDirectory, "story_nr_two_specifications_frame.html").exists());
+		assertReportIsCreated("story_nr_one_specifications_frame.html");
+		assertReportIsCreated("story_nr_two_specifications_frame.html");
 	}
 
 	@Test
 	public void shouldCreateAUserStoryExamplesFrameForEachUserStory() {
-		assertTrue(new File(reportDirectory, "story_nr_one_examples_frame.html").exists());
-		assertTrue(new File(reportDirectory, "story_nr_two_examples_frame.html").exists());
+		assertReportIsCreated("story_nr_one_examples_frame.html");
+		assertReportIsCreated("story_nr_two_examples_frame.html");
+	}
+
+	@Test
+	public void shouldCreateAnExampleFrameForEachStatementContaingExamples() {
+		assertReportIsCreated("classwithreftostorynrtwobehaviour-specforstory2-examples_frame.html");
+		assertReportIsCreated("classwithreftostorynrtwobehaviour-specwithtable-examples_frame.html");
+	}
+
+	void assertReportIsCreated(String reportFileName) {
+		assertTrue(new File(reportDirectory, reportFileName).exists());
 	}
 
 }

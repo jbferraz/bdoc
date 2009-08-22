@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.doc.domain;
 
 import static com.googlecode.bdoc.doc.util.Select.from;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -54,24 +55,26 @@ public class TestBDocBehaviour {
 	private BDoc doc;
 	private ClassBehaviour behaviour;
 
-	private void givenAnEmptyBdoc() {
+	void givenAnEmptyBdoc() {
 		doc = new BDoc();
 	}
 
-	private void whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock() {
+	void whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock() {
 		doc.addBehaviourFrom(new TestClass(TestBDocBehaviour.class), BConst.SRC_TEST_JAVA);
 		behaviour = doc.classBehaviourInModuleBehaviour(TestBDocBehaviour.class);
 	}
 
-	private void thenEnsureThatTheScenarioIsExtracted() {
+	void thenEnsureThatTheScenarioIsExtracted() {
 
 		List<Scenario.Part> expectedScenarioParts = new ArrayList<Scenario.Part>();
 		expectedScenarioParts.add(new Scenario.Part("givenAnEmptyBdoc"));
 		expectedScenarioParts.add(new Scenario.Part("whenABehaviourTestClassIsAddedWithAScenarioDescribedInATestMethodBlock"));
 		expectedScenarioParts.add(new Scenario.Part("thenEnsureThatTheScenarioIsExtracted"));
 
-		Specification specification = from(behaviour.getSpecifications()).equalTo(new Specification( "shouldAddScenariosSpecifiedInATestMethodBlock"));
-		
+		Specification specification = from(behaviour.getSpecifications()).equalTo(
+				new Specification("shouldAddScenariosSpecifiedInATestMethodBlock"));
+
+		assertFalse(specification.getScenarios().isEmpty());
 		assertTrue(specification.getScenarios().contains(new Scenario(expectedScenarioParts)));
 	}
 }

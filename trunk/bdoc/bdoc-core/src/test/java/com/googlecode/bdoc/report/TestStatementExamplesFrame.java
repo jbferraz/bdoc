@@ -1,0 +1,103 @@
+/**
+ * The MIT License
+ * 
+ * Copyright (c) 2008, 2009 @Author(s)
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package com.googlecode.bdoc.report;
+
+import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.googlecode.bdoc.BDocConfig;
+import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.domain.Statement;
+import com.googlecode.bdoc.doc.domain.TableColumn;
+import com.googlecode.bdoc.doc.domain.TableRow;
+import com.googlecode.bdoc.doc.domain.TestMethod;
+import com.googlecode.bdoc.doc.domain.TestTable;
+
+public class TestStatementExamplesFrame {
+
+	private String html;
+	private Statement statement;
+
+	public TestStatementExamplesFrame() {
+		TestMethod method = new TestMethod(TestClassWithTestTable.class, "exampleStatement");
+
+		TestTable testTable = new TestTable("exampleOnSumOfTwoValues");
+		testTable.addHeaderColumn(new TableColumn("value1"));
+		testTable.addHeaderColumn(new TableColumn("value2"));
+		testTable.addHeaderColumn(new TableColumn("sum"));
+		TableRow tableRow = new TableRow();
+		tableRow.addColumn(new TableColumn("9912"));
+		tableRow.addColumn(new TableColumn("88"));
+		tableRow.addColumn(new TableColumn("10000"));
+		testTable.addRow(tableRow);
+
+		List<TestTable> testTables = new ArrayList<TestTable>();
+		testTables.add(testTable);
+
+		method.setTestTables(testTables);
+
+		method.setScenarios(new ArrayList<Scenario>());
+		method.getScenarios().add(new Scenario("givenADynamicScenario"));
+
+		statement = new Statement(method);
+		html = new StatementExamplesFrame(statement, new BDocConfig()).html();
+	}
+
+	@Test
+	public void shouldPresentTestTablesForSpecification() {
+		assertXPathContains("Example on sum of two values", "//ul[@class='testTable']", html);
+	}
+
+	@Test
+	public void shouldPresentDynamicScenarios() {
+		assertXPathContains("Given a dynamic scenario", "//ul[@class='scenario']", html);
+	}
+
+	@Test
+	public void shouldPresentFormatedHeaderColumnsOfTestTables() {
+		assertXPathContains("Value 1", "//ul[@class='testTable']", html);
+		assertXPathContains("Value 2", "//ul[@class='testTable']", html);
+		assertXPathContains("Sum", "//ul[@class='testTable']", html);
+	}
+	
+	@Test
+	public void shouldHaveFileNameBuildtUpFromStatementConcatenatedWithStandardPostfix() {
+		StatementExamplesFrame statementExamplesFrame = new StatementExamplesFrame(statement, new BDocConfig());
+		assertEquals( "example_statement_examples_frame.html", statementExamplesFrame.getFileName() );
+	}
+
+	public class TestClassWithTestTable {
+
+		@Test
+		public void exampleStatement() {
+		}
+	}
+}

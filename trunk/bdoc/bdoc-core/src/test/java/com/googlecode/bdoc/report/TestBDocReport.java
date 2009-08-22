@@ -38,12 +38,14 @@ import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.ClassBehaviourSorter;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.report.testdata.BDocReportTestRef;
 import com.googlecode.bdoc.report.testdata.TestClassWithRefToStoryNrOne;
 import com.googlecode.bdoc.report.testdata.TestClassWithRefToStoryNrTwoBehaviour;
 
 public class TestBDocReport {
 
+	RuntimeBehaviourFactory behaviourFactory = new RuntimeBehaviourFactory( BConst.SRC_TEST_JAVA );	
 	File baseDir = new File("./target");
 	File reportDirectory = new File(baseDir, "bdoc");
 
@@ -53,8 +55,9 @@ public class TestBDocReport {
 		}
 		BDoc bdoc = new BDoc(BDocReportTestRef.class, new ClassBehaviourSorter());
 		bdoc.setProject(new ProjectInfo("TestBDocReport", "1.0"));
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrOne.class), BConst.SRC_TEST_JAVA);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrTwoBehaviour.class), BConst.SRC_TEST_JAVA);
+		
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrOne.class), behaviourFactory);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrTwoBehaviour.class), behaviourFactory);
 
 		BDocReport bdocReport = new BDocReport(bdoc, new BDocConfig());
 		bdocReport.writeTo(baseDir);

@@ -24,17 +24,27 @@
 
 package com.googlecode.bdoc.report;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.googlecode.bdoc.BDocConfig;
-import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 
-public class ProjectInfoFrame extends AbstractBDocReportContent{
+public abstract class AbstractBDocReportContent {
 
-	public ProjectInfoFrame(BDoc bdoc, BDocConfig bdocConfig ) {
-		super( "project_info_frame.ftl", bdocConfig );
-		put("bdoc", bdoc );
-		put("project", bdoc.getProject() );
-		put("bdocMacroHelper", new BDocMacroHelper( bdocConfig  ) );
+	private Map<String, Object> model = new HashMap<String, Object>();
+	private String template;
+
+	public AbstractBDocReportContent(String template, BDocConfig bdocConfig) {
+		this.template = template;
+		model.put("bdocMacroHelper", new BDocMacroHelper(bdocConfig));
 	}
-	
+
+	protected void put(String key, Object modelItem) {
+		model.put(key, modelItem);
+	}
+
+	public String html() {
+		return BDocReportUtils.createContentFrom(template, model);
+	}
 }

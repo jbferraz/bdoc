@@ -35,4 +35,8 @@ public class MedlemAvFolketrygden {
 	public void addInntektForAar(int aar, int beloep) {
 		inntekt.add(new Inntekt(aar, beloep));
 	}
+
+	public void setInntekt(List<Inntekt> inntekt) {
+		this.inntekt = inntekt;
+	}		
 }

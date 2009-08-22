@@ -26,26 +26,50 @@
 <#--
 	@author Per Otto Bergum Christensen
 -->
-
-
+<#import "report_macros.ftl" as report_macro />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>BDoc - bridging the gap</title>				
+		<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
 	</head>
+	<body>
 	
-	<FRAMESET ROWS="9%, *" FRAMEBORDER="YES">
-		<FRAME SRC="project_info.html" NAME="header"  />
-
-		<FRAMESET ROWS="100%, *" COLS="20%, 80%" >
-			<FRAME SRC="user_story_toc_frame.html"/>
-			<FRAMESET ROWS="60%, 40%">
-				<FRAME SRC="blank.html" NAME="specifications"/>
-				<FRAME SRC="blank.html" NAME="examples"/>
-			</FRAMESET>		
-		</FRAMESET>		
+		<#if statement.hasScenarios()>
+			<ul class="scenario">
+				<p>${bdocMacroHelper.format(statement)}<BR/></p>
+				<@report_macro.list_scenarios scenarios=statement.getScenarios()/>
+			</ul>
+		</#if>
+				
+		<#if statement.hasTestTables()>
 		
-	</FRAMESET>		
-
-	
+			<#list statement.getTestTables() as testTable>
+				<ul class="testTable">
+				
+					<p>${bdocMacroHelper.format(statement)}<BR/>
+					<span class="testTableDescription">${bdocMacroHelper.format(testTable)}</span></p>
+					<table>
+						<thead>
+							<tr>
+							<#list testTable.getHeaderColumns() as headerColumn>
+								<th>${bdocMacroHelper.formatHeaderColumn(headerColumn)}</th>
+							</#list>
+							</tr>
+						</thead>
+						<tbody>
+							<#list testTable.getRows() as row>
+							<tr>
+								<#list row.getColumns() as column>
+									<td>${bdocMacroHelper.format(column)}</td>
+								</#list>
+							</tr>
+							</#list>
+						</tbody>
+					</table>
+					
+				</ul>
+			</#list>
+		</#if>
+		
+	</body>
 </html>

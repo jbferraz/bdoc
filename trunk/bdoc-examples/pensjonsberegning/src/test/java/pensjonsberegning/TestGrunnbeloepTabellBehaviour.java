@@ -15,7 +15,6 @@ import pensjonsberegning.bdoc.Story;
  * @author Per Otto Bergum Christensen
  * 
  */
-@Ref(Story.TABELL_FOR_GRUNNBELOEP)
 @RefClass(GrunnbeloepTabell.class)
 public class TestGrunnbeloepTabellBehaviour {
 

@@ -66,12 +66,17 @@ public class TestBDocReport {
 	}
 
 	@Test
-	public void shouldCreateIndexHtmlInBDocReportDirectory() {
+	public void shouldCreateIndexHtmlInTheBDocReportDirectory() {
 		assertTrue(new File(reportDirectory, "index.html").exists());
 	}
 
 	@Test
-	public void shouldCreateProjectInfoHtmlInBDocReportDirectory() {
+	public void shouldCreateACascadingStyleSheetInTheBDocReportDirectory() {
+		assertTrue(new File(reportDirectory, "stylesheet.css").exists());
+	}
+
+	@Test
+	public void shouldCreateProjectInfoHtmlInTheBDocReportDirectory() {
 		assertTrue(new File(reportDirectory, "project_info.html").exists());
 	}
 

@@ -32,23 +32,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+
 		<SCRIPT language='JavaScript'> 
 			function navigateTo(location_href) {
-			 parent.frames[1].location.href=location_href;
-			 parent.frames[2].location.href="blank.html";
+			 parent.frames[2].location.href=location_href;
+			 parent.frames[3].location.href="blank.html";
 			}
 		</SCRIPT>
 	</head>
 	<body>
-		<div class="navigation">
-			<strong><@bdddoc.text key="toc.userstories"/></strong>
-			<ul class="toc">
-				<#list toc as tocItem>
-					<li class="userstory">
-						<A HREF="javascript:navigateTo('${tocItem.fileName}')">${tocItem.title}</A>
-					</li>
-				</#list>
-			</ul>
-		</div>
+
+		<h3><@bdddoc.text key="toc.userstories"/></h3>
+		<TABLE BORDER="0" WIDTH="100%">
+			<TR>
+			<TD NOWRAP="true">
+				<#list toc as tocItem>					
+					<A HREF="javascript:navigateTo('${tocItem.fileName}')">${tocItem.title}</A>
+					<br/>
+				</#list>			
+			</TD>
+			</TR>
+		</TABLE>
 	</body>
 </html>

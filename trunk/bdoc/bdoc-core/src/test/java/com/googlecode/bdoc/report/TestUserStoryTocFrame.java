@@ -49,8 +49,8 @@ public class TestUserStoryTocFrame {
 
 	@Test
 	public void shouldPresentATableOfContentsWithAllUserStoryTitles() {
-		assertXPathContains("Story nr one", "//ul[@class='toc']", html);
-		assertXPathContains("Story nr two", "//ul[@class='toc']", html);
+		assertXPathContains("Story nr one", "//body", html);
+		assertXPathContains("Story nr two", "//body", html);
 	}
 
 }

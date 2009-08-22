@@ -41,7 +41,6 @@ public class UserStorySpecificationsFrame extends AbstractBDocReportContent {
 		put("userStory", userStory);
 		put("fileNamePrefix", fileNamePrefix());
 		put("narrative", userStory.getNarrative());
-		put("bdocMacroHelper", new BDocMacroHelper(bdocConfig));
 	}
 
 	private String fileNamePrefix() {

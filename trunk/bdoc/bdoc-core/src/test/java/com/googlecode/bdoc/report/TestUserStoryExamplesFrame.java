@@ -53,11 +53,7 @@ public class TestUserStoryExamplesFrame {
 		testTable.addHeaderColumn(new TableColumn("value1"));
 		testTable.addHeaderColumn(new TableColumn("value2"));
 		testTable.addHeaderColumn(new TableColumn("sum"));
-		TableRow tableRow = new TableRow();
-		tableRow.addColumn(new TableColumn("9912"));
-		tableRow.addColumn(new TableColumn("88"));
-		tableRow.addColumn(new TableColumn("10000"));
-		testTable.addRow(tableRow);
+		testTable.addRow(new TableRow(new TableColumn("9912"), new TableColumn("88"), new TableColumn("10000")));
 
 		List<TestTable> testTables = new ArrayList<TestTable>();
 		testTables.add(testTable);

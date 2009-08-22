@@ -28,19 +28,33 @@ import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 
-public class StatementExamplesFrame extends AbstractBDocReportContent {
+public class StatementExampleFrame extends AbstractBDocReportContent {
 
 	private Statement statement;
+	private String className;
 
-	public StatementExamplesFrame(Statement statement, BDocConfig bdocConfig) {
+	public StatementExampleFrame(String className, Statement statement, BDocConfig bdocConfig) {
 		super("statement_examples_frame.ftl", bdocConfig);
+		this.className = className;
 		this.statement = statement;
 		put("statement", statement);
 	}
 
 	public String getFileName() {
-		String prefix = CamelCaseToSentenceTranslator.translate(statement.getCamelCaseSentence()).replace(" ", "_").toLowerCase();
-		return prefix + "_examples_frame.html";
+		return getFileName(className, statement);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		return (obj instanceof StatementExampleFrame) && getFileName().equals(((StatementExampleFrame) obj).getFileName());
+	}
+	
+	public static String getFileName(String className, Statement statement) {
+		return fileNamePartOf(className) + "-" + fileNamePartOf(statement.getCamelCaseSentence()) + "-examples_frame.html";
+	}
+
+	private static String fileNamePartOf(String camelCaseSentence) {
+		return camelCaseSentence.toLowerCase();
+	}
+	
 }

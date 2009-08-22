@@ -53,7 +53,8 @@ public class BDocReport {
 	private BDoc bdoc;
 	private List<UserStorySpecificationsFrame> userStorySpecificationFrames = new ArrayList<UserStorySpecificationsFrame>();
 	private List<UserStoryExamplesFrame> userStoryExamplesFrames = new ArrayList<UserStoryExamplesFrame>();
-	
+	private SpecificationExamples specificationExamples;
+
 	private BDocConfig bdocConfig;
 
 	public BDocReport(BDoc bdoc, BDocConfig bdocConfig) {
@@ -69,15 +70,17 @@ public class BDocReport {
 	}
 
 	private void makeBDocReport() throws TemplateException, IOException {
+		specificationExamples = new SpecificationExamples(bdocConfig);
 		for (UserStory userStory : bdoc.getUserstories()) {
 			userStorySpecificationFrames.add(new UserStorySpecificationsFrame(userStory, bdocConfig));
-			userStoryExamplesFrames.add(new UserStoryExamplesFrame( userStory, bdocConfig ));
+			specificationExamples.addFrom(userStory);
+			userStoryExamplesFrames.add(new UserStoryExamplesFrame(userStory, bdocConfig));
 		}
 
 		indexFrameSet = BDocReportUtils.createContentFrom("index.ftl", model);
 		cssContent = BDocReportUtils.createContentFrom("css.ftl", model);
 		userStoryTocFrame = new UserStoryTocFrame(userStorySpecificationFrames, bdocConfig).html();
-		projectInfoFrame = new ProjectInfoFrame( bdoc, bdocConfig );
+		projectInfoFrame = new ProjectInfoFrame(bdoc, bdocConfig);
 		blankFrame = BDocReportUtils.createContentFrom("blank.ftl", model);
 	}
 
@@ -90,13 +93,17 @@ public class BDocReport {
 		for (UserStorySpecificationsFrame specificationsFrame : userStorySpecificationFrames) {
 			writeFile(reportDirectory, specificationsFrame.getFileName(), specificationsFrame.html());
 		}
-		
+
 		for (UserStoryExamplesFrame examplesFrame : userStoryExamplesFrames) {
 			writeFile(reportDirectory, examplesFrame.getFileName(), examplesFrame.html());
 		}
 
-		writeFile(reportDirectory, "project_info.html", projectInfoFrame.html() );
-		writeFile(reportDirectory, "blank.html", blankFrame );
+		for (StatementExampleFrame specificationExample : specificationExamples.list()) {
+			writeFile(reportDirectory, specificationExample.getFileName(), specificationExample.html());
+		}
+
+		writeFile(reportDirectory, "project_info.html", projectInfoFrame.html());
+		writeFile(reportDirectory, "blank.html", blankFrame);
 	}
 
 	private void writeFile(File reportDirectory, String fileName, String content) {

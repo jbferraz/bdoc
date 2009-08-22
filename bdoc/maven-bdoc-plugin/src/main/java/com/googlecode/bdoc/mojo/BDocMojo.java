@@ -47,6 +47,7 @@ import com.googlecode.bdoc.doc.report.BDocFactory;
 import com.googlecode.bdoc.doc.report.ModuleBehaviourReport;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
+import com.googlecode.bdoc.report.BDocReport;
 import com.thoughtworks.xstream.converters.ConversionException;
 
 /**
@@ -193,6 +194,9 @@ public class BDocMojo extends AbstractBDocMojo {
 		writeReport(BDOC_USERSTORY_REPORT, new UserStoryHtmlReport(bdoc, bdocConfig).html());
 		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, bdocConfig).html());
 		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog, bdocConfig).result());
+		
+		getLog().info("Writing bdoc-report to " + outputDirectory.getAbsolutePath() );
+		new BDocReport( bdoc, bdocConfig ).writeTo(outputDirectory);
 
 		makeBDocReportsHtml();
 	}

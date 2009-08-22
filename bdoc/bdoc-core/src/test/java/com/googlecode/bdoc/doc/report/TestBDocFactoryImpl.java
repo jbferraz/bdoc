@@ -31,14 +31,12 @@ import static org.junit.Assert.assertNull;
 import java.io.File;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.ClassBehaviour;
-import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestBDoc;
 import com.googlecode.bdoc.doc.domain.TestClass;

@@ -31,15 +31,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>BDoc</title>				
+		<title>BDoc - bridging the gap</title>				
 	</head>
 	
-	<FRAMESET ROWS="100%, *" COLS="20%, 80%">
-		<FRAME SRC="user_story_toc_frame.html"/>
-		<FRAMESET ROWS="60%, 40%">
-			<FRAME SRC="project_info.html" NAME="specifications"/>
-			<FRAME SRC="blank.html" NAME="examples"/>
+	<FRAMESET ROWS="9%, *" FRAMEBORDER="NO">
+		<FRAME SRC="project_info.html" NAME="header"  />
+
+		<FRAMESET ROWS="100%, *" COLS="20%, 80%" >
+			<FRAME SRC="user_story_toc_frame.html"/>
+			<FRAMESET ROWS="60%, 40%">
+				<FRAME SRC="blank.html" NAME="specifications"/>
+				<FRAME SRC="blank.html" NAME="examples"/>
+			</FRAMESET>		
 		</FRAMESET>		
+		
 	</FRAMESET>		
+
 	
 </html>

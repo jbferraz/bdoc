@@ -26,15 +26,20 @@
 <#--
 	@author Per Otto Bergum Christensen
 -->
-
-
-<#import "bdd_doc_macros.ftl" as bdddoc />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+	</head>
+
 	<body>
-		<div class="projectInfo">
-			<h1>${project.name} ${project.version}</h1>
-			<p class="dateTime">${bdoc.docTime?datetime}</p>
+		<div class="reportInfo">
+			<TABLE BORDER="0" WIDTH="100%">
+				<TR>
+					<TD><h1>${project.name} ${project.version}</h1></TD>
+					<TD ALIGN="RIGHT" VALIGN="TOP"><p class="dateTime">${bdoc.docTime?datetime}</p></TD>
+				</TR>
+			</TABLE>
 		</div>	
 	</body>
 </html>

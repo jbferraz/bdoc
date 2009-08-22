@@ -44,6 +44,7 @@ import freemarker.template.TemplateException;
 public class BDocReport {
 
 	private String indexFrameSet;
+	private String cssContent;
 	private String blankFrame;
 	private String userStoryTocFrame;
 	private ProjectInfoFrame projectInfoFrame;
@@ -74,6 +75,7 @@ public class BDocReport {
 		}
 
 		indexFrameSet = BDocReportUtils.createContentFrom("index.ftl", model);
+		cssContent = BDocReportUtils.createContentFrom("css.ftl", model);
 		userStoryTocFrame = new UserStoryTocFrame(userStorySpecificationFrames, bdocConfig).html();
 		projectInfoFrame = new ProjectInfoFrame( bdoc, bdocConfig );
 		blankFrame = BDocReportUtils.createContentFrom("blank.ftl", model);
@@ -82,6 +84,7 @@ public class BDocReport {
 	public void writeTo(File baseDir) {
 		File reportDirectory = createReportDirectory(baseDir);
 		writeFile(reportDirectory, "index.html", indexFrameSet);
+		writeFile(reportDirectory, "stylesheet.css", cssContent);
 		writeFile(reportDirectory, "user_story_toc_frame.html", userStoryTocFrame);
 
 		for (UserStorySpecificationsFrame specificationsFrame : userStorySpecificationFrames) {

@@ -44,4 +44,13 @@ public class TestClassWithRefToStoryNrTwoBehaviour {
 
 	void thenZ() {
 	}
+
+	@Test
+	public void specWithTable() {
+		exampleOnCalc(1, 1, 2);
+		exampleOnCalc(2, 2, 4);
+	}
+
+	void exampleOnCalc(int i, int j, int k) {
+	}
 }

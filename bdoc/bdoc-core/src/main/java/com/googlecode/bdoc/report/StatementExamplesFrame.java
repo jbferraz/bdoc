@@ -25,35 +25,22 @@
 package com.googlecode.bdoc.report;
 
 import com.googlecode.bdoc.BDocConfig;
-import com.googlecode.bdoc.doc.domain.UserStory;
-import com.googlecode.bdoc.doc.report.BDocMacroHelper;
+import com.googlecode.bdoc.doc.domain.Statement;
+import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 
-/**
- * @author Per Otto Bergum Christensen
- */
-public class UserStorySpecificationsFrame extends AbstractBDocReportContent {
+public class StatementExamplesFrame extends AbstractBDocReportContent {
 
-	private UserStory userStory;
+	private Statement statement;
 
-	public UserStorySpecificationsFrame(UserStory userStory, BDocConfig bdocConfig) {
-		super( "user_story_specifications_frame.ftl", bdocConfig );
-		this.userStory = userStory;
-		put("userStory", userStory);
-		put("fileNamePrefix", fileNamePrefix());
-		put("narrative", userStory.getNarrative());
-		put("bdocMacroHelper", new BDocMacroHelper(bdocConfig));
-	}
-
-	private String fileNamePrefix() {
-		return userStory.getTitle().replace(" ", "_").toLowerCase();
+	public StatementExamplesFrame(Statement statement, BDocConfig bdocConfig) {
+		super("statement_examples_frame.ftl", bdocConfig);
+		this.statement = statement;
+		put("statement", statement);
 	}
 
 	public String getFileName() {
-		return fileNamePrefix() + "_specifications_frame.html";
-	}
-
-	public String getTitle() {
-		return userStory.getTitle();
+		String prefix = CamelCaseToSentenceTranslator.translate(statement.getCamelCaseSentence()).replace(" ", "_").toLowerCase();
+		return prefix + "_examples_frame.html";
 	}
 
 }

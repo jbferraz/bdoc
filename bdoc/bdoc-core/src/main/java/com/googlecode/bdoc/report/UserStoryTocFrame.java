@@ -24,24 +24,14 @@
 
 package com.googlecode.bdoc.report;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.googlecode.bdoc.BDocConfig;
-import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 
-public class UserStoryTocFrame {
+public class UserStoryTocFrame extends AbstractBDocReportContent {
 
-	private Map<String, Object> model = new HashMap<String,Object>();
-
-	public UserStoryTocFrame(List<UserStorySpecificationsFrame> userStorySpecFrames, BDocConfig bdocConfig ) {
-		model.put("toc", userStorySpecFrames );
-		model.put("bdocMacroHelper", new BDocMacroHelper( bdocConfig  ) );
+	public UserStoryTocFrame(List<UserStorySpecificationsFrame> userStorySpecFrames, BDocConfig bdocConfig) {
+		super("user_story_toc_frame_html.ftl", bdocConfig);
+		put("toc", userStorySpecFrames);
 	}
-	
-	public String html() {
-		return BDocReportUtils.createContentFrom("user_story_toc_frame_html.ftl",model);
-	}
-
 }

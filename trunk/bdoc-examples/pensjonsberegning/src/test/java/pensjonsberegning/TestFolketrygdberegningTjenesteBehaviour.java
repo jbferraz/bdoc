@@ -15,11 +15,11 @@ import pensjonsberegning.bdoc.Story;
  * @author Per Otto Bergum Christensen
  */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
-@RefClass(FolketrygdberegningTjeneste.class)
+@RefClass(Folketrygdberegningtjeneste3.class)
 public class TestFolketrygdberegningTjenesteBehaviour {
 
 	private GrunnbeloepTabell grunnbeloepTabell = new GrunnbeloepTabell();
-	private FolketrygdberegningTjeneste folketrygdberegningTjeneste = new FolketrygdberegningTjeneste(grunnbeloepTabell);
+	private Folketrygdberegningtjeneste3 folketrygdberegningTjeneste = new Folketrygdberegningtjeneste3(grunnbeloepTabell);
 
 	private MedlemAvFolketrygden person;
 	private Alderspensjon alderspensjon;
@@ -38,26 +38,26 @@ public class TestFolketrygdberegningTjenesteBehaviour {
 		gittInntektLik( _40AarMedMaksimalOpptjening() );
 		naarAlderspensjonBlirBeregnetForAaret(2009);
 		saaSkalAarligAlderspensjonVaereLik(333823);
-		saaHvorAarligTilleggspensjonUtgjoer(261817);
-		saaOgGrunnpensjonUtgjoer(Grunnbeloep._2009.doubleValue());
-		saaOgSluttpoengtalletBleBeregnetTil(8.33);
-		saaOgPensjonsprosentenBleBeregnetTil(0.4365);
+		saaUtgjoerTilleggspensjonen(261817);
+		saaUtgjoerGrunnpensjon(Grunnbeloep._2009.doubleValue());
+		saaBeregnesSluttpoengtalletTil(8.33);
+		saaBeregnesPensjonsprosentenTil(0.4365);
 	}
 
 	void gittInntektLik(List<Inntekt> inntekt) {
 		person.setInntekt( inntekt );		
 	}
 
-	void saaOgGrunnpensjonUtgjoer(double grunnpensjon) {
+	void saaUtgjoerGrunnpensjon(double grunnpensjon) {
 		assertEquals(grunnpensjon, alderspensjon.getGrunnpensjon(), .001);
 	}
 
-	void saaOgPensjonsprosentenBleBeregnetTil(double pensjonsprosent) {
+	void saaBeregnesPensjonsprosentenTil(double pensjonsprosent) {
 		assertEquals(pensjonsprosent, alderspensjon.getTilleggspensjon().getPensjonsprosent(), .0001);
 
 	}
 
-	void saaOgSluttpoengtalletBleBeregnetTil(double sluttpoengtall) {
+	void saaBeregnesSluttpoengtalletTil(double sluttpoengtall) {
 		assertEquals(sluttpoengtall, alderspensjon.getTilleggspensjon().getSluttpoengtall(), .001);
 	}
 
@@ -73,7 +73,7 @@ public class TestFolketrygdberegningTjenesteBehaviour {
 		alderspensjon = folketrygdberegningTjeneste.beregnAlderspensjonFor(person, aar);
 	}
 
-	void saaHvorAarligTilleggspensjonUtgjoer(int aarligAlderspensjon) {
+	void saaUtgjoerTilleggspensjonen(int aarligAlderspensjon) {
 		assertEquals(aarligAlderspensjon, alderspensjon.getTilleggspensjon().beregnet(), .1);
 	}
 }

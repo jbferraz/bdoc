@@ -1,7 +1,7 @@
 package pensjonsberegning.bdoc;
 
 import pensjonsberegning.Alderspensjon;
-import pensjonsberegning.FolketrygdberegningTjeneste;
+import pensjonsberegning.Folketrygdberegningtjeneste3;
 import pensjonsberegning.Grunnpensjon;
 import pensjonsberegning.Pensjonspoeng;
 import pensjonsberegning.Pensjonsprosent;
@@ -11,7 +11,7 @@ import pensjonsberegning.Tilleggspensjon;
 public class ReportConfig {
 	Class<?>[] presentationOrder = {
 	//
-			FolketrygdberegningTjeneste.class,//
+			Folketrygdberegningtjeneste3.class,//
 			Alderspensjon.class, //
 			Grunnpensjon.class,//
 			Tilleggspensjon.class, //			

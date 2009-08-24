@@ -16,7 +16,7 @@ import pensjonsberegning.bdoc.Story;
  */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Folketrygdberegningtjeneste3.class)
-public class TestFolketrygdberegningtjenesteBehaviour2 {
+public class TestFolketrygdberegningtjenesteBehaviour {
 
 	private GrunnbeloepTabell grunnbeloepTabell = new GrunnbeloepTabell();
 	private Folketrygdberegningtjeneste3 folketrygdberegningTjeneste = new Folketrygdberegningtjeneste3(grunnbeloepTabell);

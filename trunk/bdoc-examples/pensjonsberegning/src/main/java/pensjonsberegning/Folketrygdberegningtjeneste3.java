@@ -4,12 +4,12 @@ package pensjonsberegning;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class Folketrygdberegningtjeneste {
+public class Folketrygdberegningtjeneste3 {
 
 	private GrunnbeloepTabell grunnbeloepTabell;
 	private OpptjeningsAarTjeneste opptjeningsAarTjeneste;
 
-	public Folketrygdberegningtjeneste(GrunnbeloepTabell grunnbeloepTabell) {
+	public Folketrygdberegningtjeneste3(GrunnbeloepTabell grunnbeloepTabell) {
 		this.grunnbeloepTabell = grunnbeloepTabell;
 		this.opptjeningsAarTjeneste = new OpptjeningsAarTjeneste(grunnbeloepTabell);
 	}

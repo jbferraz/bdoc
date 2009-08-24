@@ -15,11 +15,11 @@ import pensjonsberegning.bdoc.Story;
  * @author Per Otto Bergum Christensen
  */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
-@RefClass(Folketrygdberegningtjeneste.class)
-public class TestFolketrygdberegningTjenesteBehaviour {
+@RefClass(Folketrygdberegningtjeneste3.class)
+public class TestFolketrygdberegningtjenesteBehaviour2 {
 
 	private GrunnbeloepTabell grunnbeloepTabell = new GrunnbeloepTabell();
-	private Folketrygdberegningtjeneste folketrygdberegningTjeneste = new Folketrygdberegningtjeneste(grunnbeloepTabell);
+	private Folketrygdberegningtjeneste3 folketrygdberegningTjeneste = new Folketrygdberegningtjeneste3(grunnbeloepTabell);
 
 	private MedlemAvFolketrygden person;
 	private Alderspensjon alderspensjon;

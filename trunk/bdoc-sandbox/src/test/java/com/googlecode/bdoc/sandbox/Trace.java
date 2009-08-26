@@ -1,8 +1,5 @@
 package com.googlecode.bdoc.sandbox;
 
-import java.util.List;
-import java.util.Vector;
-
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -29,45 +26,19 @@ public class Trace implements MethodInterceptor {
 
 	}
 
-	/***************************************************************************************************************************************
-	 * @param args
-	 *            the command line arguments
-	 */
-	public static void main(String[] args) {
-		List list = (List) newInstance(Vector.class);
-		Object value = "TEST";
-		list.add(value);
-		list.contains(value);
-		try {
-			list.set(2, "ArrayIndexOutOfBounds");
-		} catch (ArrayIndexOutOfBoundsException ignore) {
-
-		}
-		list.add(value + "1");
-		list.add(value + "2");
-		list.toString();
-		list.equals(list);
-		list.set(0, null);
-		list.toString();
-		list.add(list);
-		list.get(1);
-		list.toArray();
-		list.remove(list);
-		list.remove("");
-		list.containsAll(list);
-		list.lastIndexOf(value);
-	}
 
 	public Object intercept(Object obj, java.lang.reflect.Method method, Object[] args, MethodProxy proxy) throws Throwable {
 		printIdent(ident);
 		System.out.println(method);
 		for (int i = 0; i < args.length; i++) {
 			printIdent(ident);
-			System.out.print("arg" + (i + 1) + ": ");
-			if (obj == args[i])
-				System.out.println("this");
-			else
-				System.out.println(args[i]);
+//			System.out.print("arg" + (i + 1) + ": ");
+			if (obj == args[i]) {
+//				System.out.println("this");
+			}
+			else {
+//				System.out.println(args[i]);
+			}
 		}
 		ident++;
 
@@ -78,21 +49,23 @@ public class Trace implements MethodInterceptor {
 		} catch (Throwable t) {
 			ident--;
 			printIdent(ident);
-			System.out.println("throw " + t);
-			System.out.println();
+//			System.out.println("throw " + t);
+//			System.out.println();
 			throw t.fillInStackTrace();
 		}
 
 		printIdent(ident);
-		System.out.print("return ");
-		if (obj == retValFromSuper)
-			System.out.println("this");
-		else
-			System.out.println(retValFromSuper);
-
-		if (ident == 1)
-			System.out.println();
-
+//		System.out.print("return ");
+		if (obj == retValFromSuper) {
+//			System.out.println("this");
+		}
+		else {
+//			System.out.println(retValFromSuper);
+		}
+		if (ident == 1) {
+//			System.out.println();
+		}
+		
 		return retValFromSuper;
 	}
 

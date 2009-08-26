@@ -32,6 +32,7 @@ import com.googlecode.bdoc.doc.domain.ClassBehaviour;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TableColumn;
+import com.googlecode.bdoc.doc.domain.TestMethodReference;
 import com.googlecode.bdoc.report.StatementExampleFrame;
 import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 
@@ -81,5 +82,16 @@ public class BDocMacroHelper {
 
 	public String hrefToStatementExampleFrame(ClassBehaviour classBehaviour, Statement statement) {
 		return StatementExampleFrame.getFileName(classBehaviour.getClassName(), statement);
+	}
+
+	public String statementXRef(Statement statement) {
+
+		TestMethodReference testMethodReference = statement.getTestMethodReference();
+		if (null == testMethodReference) {
+			return "";
+		}
+
+		return testMethodReference.getClassName().replace('.', '/') + ".html#"
+				+ testMethodReference.getLineNumberForStartOfTestMethodInClass();
 	}
 }

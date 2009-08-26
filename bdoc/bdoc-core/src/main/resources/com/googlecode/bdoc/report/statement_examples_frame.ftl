@@ -31,12 +31,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+
+		<SCRIPT language='JavaScript'> 
+			function openSource(location_href) {
+			 parent.frames[2].location.href=location_href;			 
+			}
+		</SCRIPT>		
 	</head>
 	<body>
-	
+
+		<div class="exampleStatementTitle">
+			<p><a class="notvisible" href="javascript:openSource('../xref-test/${bdocMacroHelper.statementXRef(statement)}')">${bdocMacroHelper.format(statement)}</a></p>
+		</div>	
+		
 		<#if statement.hasScenarios()>
 			<ul class="scenario">
-				<p>${bdocMacroHelper.format(statement)}<BR/></p>
 				<@report_macro.list_scenarios scenarios=statement.getScenarios()/>
 			</ul>
 		</#if>
@@ -45,9 +54,7 @@
 		
 			<#list statement.getTestTables() as testTable>
 				<ul class="testTable">
-				
-					<p>${bdocMacroHelper.format(statement)}<BR/>
-					<span class="testTableDescription">${bdocMacroHelper.format(testTable)}</span></p>
+					<span class="testTableDescription">${bdocMacroHelper.format(testTable)}</span>
 					<table>
 						<thead>
 							<tr>

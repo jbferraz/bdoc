@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -33,6 +34,8 @@ import java.util.List;
  */
 public interface BehaviourFactory {
 
+	File sourceTestDirectory();
+	
 	void analyze(TestMethod method);
 
 	List<Scenario> getCreatedScenarios();

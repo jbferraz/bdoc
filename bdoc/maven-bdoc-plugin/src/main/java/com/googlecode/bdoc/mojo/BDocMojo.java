@@ -67,7 +67,9 @@ public class BDocMojo extends AbstractBDocMojo {
 
 	static final String BDOC_REPORTS_XML = "bdoc-reports.xml";
 
-	static final String BDOC_USERSTORY_REPORT = "bdoc-userstory-report.html";
+	static final String BDOC_USERSTORY_REPORT_NOFRAMES = "bdoc-userstory-report.html";
+	
+	static final String BDOC_USERSTORY_REPORT= "bdoc/index.html";
 
 	static final String BDOC_MODULE_REPORT = "bdoc-module-report.html";
 
@@ -191,7 +193,7 @@ public class BDocMojo extends AbstractBDocMojo {
 
 		diffLog.writeToFile(getBDocChangeLogFile());
 
-		writeReport(BDOC_USERSTORY_REPORT, new UserStoryHtmlReport(bdoc, bdocConfig).html());
+		writeReport(BDOC_USERSTORY_REPORT_NOFRAMES, new UserStoryHtmlReport(bdoc, bdocConfig).html());
 		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, bdocConfig).html());
 		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog, bdocConfig).result());
 		
@@ -224,6 +226,12 @@ public class BDocMojo extends AbstractBDocMojo {
 		getSink().listItem();
 		getSink().link(BDOC_USERSTORY_REPORT);
 		getSink().text("User stories");
+		getSink().link_();
+		getSink().listItem_();
+
+		getSink().listItem();
+		getSink().link(BDOC_USERSTORY_REPORT_NOFRAMES);
+		getSink().text("User stories - noframes");
 		getSink().link_();
 		getSink().listItem_();
 

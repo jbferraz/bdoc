@@ -42,6 +42,8 @@ public class Statement {
 
 	private static final String SPACE = " ";
 
+	private TestMethodReference testMethodReference;
+	
 	protected String camelCaseSentence;
 
 	private List<Scenario> scenarios;
@@ -49,6 +51,8 @@ public class Statement {
 
 	/** Spec is referenced inside the camelCaseSentence */
 	protected String spec;
+
+	
 
 	public Statement(String camelCaseSentence) {
 		this(camelCaseSentence, null);
@@ -58,6 +62,7 @@ public class Statement {
 		this(testMethod.camelCaseSentence(), testMethod.getSpec());
 		this.scenarios = testMethod.getScenarios();
 		this.testTables = testMethod.getTestTables();
+		this.testMethodReference = testMethod.getTestMethodReference();
 	}
 
 	public Statement(String camelCaseSentence, String spec) {
@@ -113,6 +118,10 @@ public class Statement {
 	
 	public boolean hasExamples() {
 		return hasScenarios() || hasTestTables();
+	}
+
+	public TestMethodReference getTestMethodReference() {
+		return testMethodReference;
 	}
 
 }

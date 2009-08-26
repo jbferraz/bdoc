@@ -47,8 +47,10 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 	private TestTableFactory testTableFactory;
 	private List<TestTable> testTables;
 	private List<Scenario> scenarios;
+	private File sourceTestDirectory;
 
 	public RuntimeBehaviourFactory(File javaSourceDir) {
+		this.sourceTestDirectory = javaSourceDir;
 		this.testTableFactory = new TestTableFactory(javaSourceDir);
 	}
 
@@ -142,4 +144,9 @@ public class RuntimeBehaviourFactory implements BehaviourFactory {
 	public List<TestTable> getCreatedTestTables() {
 		return testTables;
 	}
+	
+	public File sourceTestDirectory() {
+		return this.sourceTestDirectory;
+	}
+	
 }

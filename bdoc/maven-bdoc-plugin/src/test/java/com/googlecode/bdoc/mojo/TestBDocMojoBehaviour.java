@@ -111,7 +111,7 @@ public class TestBDocMojoBehaviour {
 	}
 
 	private void thenEnsureABDocHtmlReportHasBeenGenerated() {
-		assertTrue(new File("target/" + BDocMojo.BDOC_USERSTORY_REPORT).exists());
+		assertTrue(new File("target/" + BDocMojo.BDOC_USERSTORY_REPORT_NOFRAMES).exists());
 	}
 
 	@Test

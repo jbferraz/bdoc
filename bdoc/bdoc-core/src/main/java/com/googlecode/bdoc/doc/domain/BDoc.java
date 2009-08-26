@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.doc.domain;
 
 import static com.googlecode.bdoc.doc.util.Select.from;
+import static com.googlecode.bdoc.doc.util.TestMethodReferenceFinder.findTestMethodReferenceFor;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -38,6 +39,8 @@ import java.util.List;
 import org.apache.commons.lang.Validate;
 
 import com.googlecode.bdoc.doc.util.ClassesDirectory;
+
+;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -87,6 +90,7 @@ public class BDoc {
 	 * @return this instance
 	 */
 	public BDoc addBehaviourFrom(TestClass testClass, BehaviourFactory behaviourFactory) {
+
 		UserStory userStory = null;
 
 		if ((null != storyRefAnnotation) && (testClass.isAnnotationPresent(storyRefAnnotation))) {
@@ -210,7 +214,9 @@ public class BDoc {
 		List<String> classes = testClassesDirectory.classes();
 		for (String className : classes) {
 			try {
-				addBehaviourFrom(new TestClass(classLoader.loadClass(className)), behaviourFactory);
+				TestClass testClass = new TestClass(classLoader.loadClass(className));
+				testClass.registerTestMethodReferences(findTestMethodReferenceFor(testClass, behaviourFactory.sourceTestDirectory()));
+				addBehaviourFrom(testClass, behaviourFactory);
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}

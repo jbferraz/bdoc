@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
@@ -61,6 +62,10 @@ public class TestBDocFactoryImpl {
 			return null;
 		}
 
+		public File sourceTestDirectory() {
+			return new File("./src/test/java");
+		}
+
 	};
 
 	@Test
@@ -80,7 +85,6 @@ public class TestBDocFactoryImpl {
 	}
 
 	@Test
-	
 	public void shouldPassOnTheClassBehaviourSorterToBDocWhenAReportConfigIsFound() {
 		BDocFactoryImpl bdocFactoryImpl = BDocFactoryImpl.createForTest("MyReportConfig");
 		bdocFactoryImpl.setTestClassDirectory(new File("target/test-classes"));

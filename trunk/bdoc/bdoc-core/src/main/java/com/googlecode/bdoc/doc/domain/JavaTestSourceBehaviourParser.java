@@ -36,32 +36,32 @@ import com.googlecode.bdoc.doc.util.JavaCodeUtil;
  */
 public class JavaTestSourceBehaviourParser implements BehaviourFactory {
 
-	private File srcTestJava;
+	private File sourceTestJava;
 	private Scenario scenario;
 
 	public JavaTestSourceBehaviourParser(File srcTestJava) {
-		this.srcTestJava = srcTestJava;
+		this.sourceTestJava = srcTestJava;
 	}
 
 	public void analyze(TestMethod method) {
 		scenario = null;
 		String testMethodName = method.getName();
-		String javaSource = method.getTestClass().getSource(srcTestJava);
-		
+		String javaSource = method.getTestClass().getSource(sourceTestJava);
+
 		String testMethodSource = JavaCodeUtil.javaBlockAfter(javaSource, testMethodName);
 		List<Part> scenarioParts = JavaCodeUtil.getGivenWhenThenMethods(testMethodSource);
 		if (!scenarioParts.isEmpty()) {
 			scenario = new Scenario(scenarioParts);
 		}
 	}
-	
+
 	public File javaSourceDir() {
-		return srcTestJava;
+		return sourceTestJava;
 	}
 
 	public List<Scenario> getCreatedScenarios() {
 		List<Scenario> scenarios = new ArrayList<Scenario>();
-		if( null != scenario) {
+		if (null != scenario) {
 			scenarios.add(scenario);
 		}
 		return scenarios;
@@ -72,6 +72,10 @@ public class JavaTestSourceBehaviourParser implements BehaviourFactory {
 	 */
 	public List<TestTable> getCreatedTestTables() {
 		return new ArrayList<TestTable>();
+	}
+
+	public File sourceTestDirectory() {
+		return sourceTestJava;
 	}
 
 }

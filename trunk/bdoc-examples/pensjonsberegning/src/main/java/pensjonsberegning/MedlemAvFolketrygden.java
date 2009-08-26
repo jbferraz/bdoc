@@ -38,5 +38,5 @@ public class MedlemAvFolketrygden {
 
 	public void setInntekt(List<Inntekt> inntekt) {
 		this.inntekt = inntekt;
-	}		
+	}
 }

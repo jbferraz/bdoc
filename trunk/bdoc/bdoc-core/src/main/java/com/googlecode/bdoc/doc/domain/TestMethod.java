@@ -39,10 +39,12 @@ public class TestMethod {
 
 	private List<Scenario> scenarios;
 	private List<TestTable> testTables;
+	private TestMethodReference testMethodReference;
 
-	public TestMethod(TestClass testClass, Method method) {
+	public TestMethod(TestClass testClass, Method method,TestMethodReference testMethodReference) {
 		this.testClass = testClass;
 		this.method = method;
+		this.testMethodReference = testMethodReference;
 	}
 
 	/**
@@ -174,5 +176,13 @@ public class TestMethod {
 
 	public boolean hasTestTables() {
 		return null != testTables && testTables.size() > 0;
+	}
+
+	public TestMethodReference getTestMethodReference() {
+		return testMethodReference;
+	}
+
+	public void setTestMethodReference(TestMethodReference testMethodReference) {
+		this.testMethodReference = testMethodReference;
 	}
 }

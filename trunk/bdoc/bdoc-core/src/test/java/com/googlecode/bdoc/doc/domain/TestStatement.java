@@ -26,6 +26,7 @@ package com.googlecode.bdoc.doc.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -81,6 +82,15 @@ public class TestStatement {
 		Statement statement = new Statement(testMethod);
 		assertTrue(statement.hasSpec());
 		assertEquals("a+b", statement.getSpec());
+	}
+
+	@Test
+	public void shouldSaveAReferenceToTheTestSourceWhenThisIsGivenWithTheTestMethod() {
+		TestMethod testMethod = new TestMethod(MyTestWithASpec.class, "shouldBehaveLike$spec$");
+		testMethod.setTestMethodReference(new TestMethodReference("TestClass", 0));
+
+		Statement statement = new Statement(testMethod);
+		assertNotNull( statement.getTestMethodReference() );
 	}
 
 	@Test

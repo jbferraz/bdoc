@@ -21,20 +21,22 @@ public class TestSluttpoengtallBehaviour {
 
 	@Test
 	public void erGjennomsnittetAvDe20HoeyestePoengtallene() {
-		List<Double> poentallRekke = new ArrayList<Double>(); 
-		poentallRekke.addAll( asList(1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d) );
-		poentallRekke.addAll( asList(1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d) );
-		
+		List<Double> poentallRekke = new ArrayList<Double>();
+		poentallRekke.addAll(asList(1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d));
+		poentallRekke.addAll(asList(1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d));
+
 		eksempelPaaSluttpoengtallberegning("Rekke med 35 poengtall", poentallRekke, 4.1);
 	}
 
-	@Test       
+	@Test
 	public void erSnittetAvPoengtalleneNaarAntallPoengtallEr20EllerMindre() {
 		eksempelPaaSluttpoengtallberegning("Rekke med et poengtall", asList(1d), 1);
 		eksempelPaaSluttpoengtallberegning("Rekke med to poengtall", asList(1d, 2d), 1.5);
 
-		List<Double> poentallRekke = asList(1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d);
-		eksempelPaaSluttpoengtallberegning("Rekke med 20 poengtall", poentallRekke, 4.1);
+		List<Double> poentallRekke = asList(5d, 5d, 5d, 5d, 5d, 
+				6d, 6d, 6d, 6d, 6d, 6d, 6d, 6d, 6d, 6d, 
+				7d, 7d, 7d, 7d, 7d);
+		eksempelPaaSluttpoengtallberegning("Rekke med 20 poengtall", poentallRekke, 6);
 	}
 
 	public void eksempelPaaSluttpoengtallberegning(String beskrivelse, List<Double> pensjonspoengtall, double sluttpoengtall) {

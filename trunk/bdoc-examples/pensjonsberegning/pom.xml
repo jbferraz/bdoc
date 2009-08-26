@@ -32,6 +32,19 @@
 				</configuration>
 			</plugin>
 
+		     <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jxr-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>jxr</goal>
+						</goals>
+					</execution>
+				</executions>
+             </plugin>
+             
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>				
@@ -50,6 +63,12 @@
 
 	<reporting>
 		<plugins>
+		
+		     <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jxr-maven-plugin</artifactId>
+            </plugin>
+		
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
@@ -57,11 +76,7 @@
 
 				<configuration>
 					<storyRefAnnotationClassName>pensjonsberegning.bdoc.Ref</storyRefAnnotationClassName>
-					<scenarioAnalyzer>dynamic</scenarioAnalyzer>
-
-					<scenarioFormatterClassName>
-						com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter
-					</scenarioFormatterClassName>
+					<scenarioAnalyzer>dynamic</scenarioAnalyzer>					
 					<locale>no</locale>
 				</configuration>
 

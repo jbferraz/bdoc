@@ -29,7 +29,9 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.Validate;
@@ -40,6 +42,7 @@ import org.apache.commons.lang.Validate;
 public class TestClass {
 
 	private Class<? extends Object> clazz;
+	private Map<String, TestMethodReference> testMethodReferences = new HashMap<String, TestMethodReference>();
 
 	public TestClass(Class<? extends Object> clazz) {
 		Validate.notNull(clazz, "clazz can't be null");
@@ -83,7 +86,7 @@ public class TestClass {
 		List<TestMethod> result = new ArrayList<TestMethod>();
 		Method[] methods = getMethods();
 		for (Method method : methods) {
-			TestMethod testMethod = new TestMethod(this, method);
+			TestMethod testMethod = new TestMethod(this, method, testMethodReferences.get(method.getName()));
 			if (testMethod.isTest()) {
 				result.add(testMethod);
 			}
@@ -105,7 +108,7 @@ public class TestClass {
 
 	public TestMethod getTestMethod(String methodName) {
 		try {
-			return new TestMethod(this, clazz.getMethod(methodName, new Class[0]));
+			return new TestMethod(this, clazz.getMethod(methodName, new Class[0]), testMethodReferences.get(methodName));
 		} catch (Exception e) {
 			throw new IllegalStateException("Error getting testmethod [" + methodName + "] from [" + clazz.getName() + "]", e);
 		}
@@ -114,6 +117,10 @@ public class TestClass {
 	@Override
 	public String toString() {
 		return clazz.getName();
+	}
+
+	public void registerTestMethodReferences(Map<String, TestMethodReference> testMethodReferences) {
+		this.testMethodReferences = testMethodReferences;
 	}
 
 }

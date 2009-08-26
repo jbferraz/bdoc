@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.report;
 
+import static com.googlecode.bdoc.doc.util.TestMethodReferenceFinder.findTestMethodReferenceFor;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -57,7 +58,10 @@ public class TestBDocReport {
 		bdoc.setProject(new ProjectInfo("TestBDocReport", "1.0"));
 
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrOne.class), behaviourFactory);
-		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrTwoBehaviour.class), behaviourFactory);
+
+		TestClass testClass = new TestClass(TestClassWithRefToStoryNrTwoBehaviour.class);
+		testClass.registerTestMethodReferences(findTestMethodReferenceFor(testClass, BConst.SRC_TEST_JAVA));
+		bdoc.addBehaviourFrom(testClass, behaviourFactory);
 
 		new BDocReport(bdoc, new BDocConfig()).writeTo(baseDir);
 	}

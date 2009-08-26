@@ -35,6 +35,16 @@
 	div.classBehaviour {
 		padding-left: 5px;
 	}
+	
+	div.exampleStatementTitle {
+		padding-left: 10px;
+		font-weight: bold;
+	}
+	
+	a.notvisible {
+		text-decoration:none;
+		color:#000000;		
+	}
 		
 	ul.scenario {
 		padding-bottom: 13px;

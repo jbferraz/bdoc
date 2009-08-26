@@ -28,6 +28,9 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -68,6 +71,18 @@ public class TestTestClass {
 	public void shouldTellIfTestClassIsMarkedWithIgnore() {
 		assertFalse(new TestClass(MyTest.class).classIsAnnotatedWithIgnore());
 		assertTrue(new TestClass(MyIgnoredTest.class).classIsAnnotatedWithIgnore());
+	}
+
+	@Test
+	public void shouldSupportRegisteringTestMethodReferencesToTestMethods() {
+		TestClass testClass = new TestClass(MyTest.class);
+
+		Map<String, TestMethodReference> testMethodReferences = new HashMap<String, TestMethodReference>();
+		testMethodReferences.put("shouldBeATest", new TestMethodReference("MyTest", 7));
+
+		testClass.registerTestMethodReferences(testMethodReferences);
+		
+		assertEquals( 7, testClass.getTestMethods().get(0).getTestMethodReference().getLineNumberForStartOfTestMethodInClass() );
 	}
 
 	@Ignore

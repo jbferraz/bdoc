@@ -166,4 +166,16 @@ public class Scenario {
 		return part.toString();
 	}
 
+	public void addPart(Part scenarioPart) {
+		part.add(scenarioPart);		
+	}
+
+	/**
+	 * Factory for easier testing
+	 */
+	public static Part part(String description) {
+		return new Part(description);
+	}
+
+
 }

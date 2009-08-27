@@ -91,6 +91,8 @@ public class BDoc {
 	 */
 	public BDoc addBehaviourFrom(TestClass testClass, BehaviourFactory behaviourFactory) {
 
+		testClass.registerTestMethodReferences(findTestMethodReferenceFor(testClass, behaviourFactory.sourceTestDirectory()));
+
 		UserStory userStory = null;
 
 		if ((null != storyRefAnnotation) && (testClass.isAnnotationPresent(storyRefAnnotation))) {
@@ -215,7 +217,6 @@ public class BDoc {
 		for (String className : classes) {
 			try {
 				TestClass testClass = new TestClass(classLoader.loadClass(className));
-				testClass.registerTestMethodReferences(findTestMethodReferenceFor(testClass, behaviourFactory.sourceTestDirectory()));
 				addBehaviourFrom(testClass, behaviourFactory);
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);

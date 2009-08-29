@@ -90,7 +90,6 @@
 	<modules>
 		<module>bdoc</module>
 		<module>bdoc-examples</module>
-		<module>bdoc-test</module>
 	</modules>
 
 

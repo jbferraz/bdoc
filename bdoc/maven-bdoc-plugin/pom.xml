@@ -65,7 +65,7 @@
 	</distributionManagement>
 
 	<properties>
-		<maven.version>2.2.0</maven.version>
+		<maven.version>2.2.1</maven.version>
 	</properties>
 
 	<build>

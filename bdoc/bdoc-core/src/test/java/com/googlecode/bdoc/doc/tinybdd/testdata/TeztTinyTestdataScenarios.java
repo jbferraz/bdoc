@@ -26,15 +26,14 @@ package com.googlecode.bdoc.doc.tinybdd.testdata;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
-public class TeztTinyTestdataScenarios {
+public class TeztTinyTestdataScenarios extends TinyScenarioSupport<TeztTinyTestdataScenarios> {
 
-	private TeztTinyTestdataScenarios given = createGiven();
-	private TeztTinyTestdataScenarios when = createWhen();
-	private TeztTinyTestdataScenarios then = createThen();
-	private TeztTinyTestdataScenarios and = createAnd();
 	private int number;
+	private TeztTinyTestdataScenarios gitt = createGiven("gitt");
 
 	@Test
 	public void simpleGivenWhenThen() {
@@ -67,33 +66,29 @@ public class TeztTinyTestdataScenarios {
 		assertEquals(i, number);
 	}
 
-	// ----------------------------------------------------------------------------------------
-
-	TeztTinyTestdataScenarios createAnd() {
-		return this;
+	@Test
+	public void scenarioWithPrimitivArgument() {
+		given.numberWithValue(10);
 	}
 
-	TeztTinyTestdataScenarios createThen() {
-		return this;
+	@Test
+	public void containsScenarioWithTable() {
+		given.listWith(randomNumbers());
 	}
 
-	TeztTinyTestdataScenarios createWhen() {
-		return this;
+	void listWith(Object randomNumbers) {
 	}
 
-	TeztTinyTestdataScenarios createGiven() {
-		return this;
+	Object randomNumbers() {
+		return Arrays.asList(1, 2, 3);
 	}
-/*
-	public Object invoke(String methodName, Object[] args) throws Exception {
-		Method[] methods = this.getClass().getMethods();
-		for (int i = 0; i < methods.length; i++) {
-			if (methods[i].getName().equals(methodName)) {
-				return methods[i].invoke(this, args);
-			}
-		}
-		throw new IllegalArgumentException("Method [" + methodName + "] not found");
+	
+	@Test
+	public void containsScenarioWithNorwegianLanguage() {
+		gitt.tilstandX();
 	}
-	*/
+
+	void tilstandX() {
+	}
 
 }

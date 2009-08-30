@@ -2,8 +2,14 @@ package pensjonsberegning;
 
 @SuppressWarnings("unchecked")
 public class ScenarioSupport<T> {
-	T gitt = (T) this;
-	T og = (T) this;
-	T naar = (T) this;
-	T saa = (T) this;
+	T gitt = createScenarioKeyword("gitt");
+	T naar = createScenarioKeyword("naar");
+	T saa = createScenarioKeyword("saa");
+	T og = createScenarioKeyword("og");
+	T hvor = createScenarioKeyword("hvor");
+	T samtidig = createScenarioKeyword("samtidig");
+
+	public T createScenarioKeyword(String name) {
+		return (T) this;
+	}
 }

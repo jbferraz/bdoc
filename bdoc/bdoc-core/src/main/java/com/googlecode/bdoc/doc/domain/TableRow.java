@@ -33,10 +33,14 @@ public class TableRow {
 	public TableRow() {
 	}
 
-	public TableRow(TableColumn ... tableColumns) {
+	public TableRow(TableColumn... tableColumns) {
 		for (TableColumn tableColumn : tableColumns) {
 			addColumn(tableColumn);
 		}
+	}
+
+	public TableRow(Object object) {
+		addColumn(new TableColumn(String.valueOf(object)));
 	}
 
 	public List<TableColumn> getColumns() {
@@ -46,6 +50,5 @@ public class TableRow {
 	public void addColumn(TableColumn tableColumn) {
 		this.columns.add(tableColumn);
 	}
-
 
 }

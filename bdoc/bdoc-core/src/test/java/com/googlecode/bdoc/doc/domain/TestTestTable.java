@@ -22,38 +22,28 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.report;
+package com.googlecode.bdoc.doc.domain;
+
+import static java.util.Arrays.asList;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
-import com.googlecode.bdoc.BDocException;
-import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.domain.Scenario.Part;
-import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
-import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
+import org.junit.Test;
 
-/**
- * @author Micael Vesterlund 
- */
-public class EachOnNewLineScenarioLinesFormatter implements ScenarioLinesFormatter {
+public class TestTestTable {
 
-	public List<String> getLines(Scenario scenario) {
-		List<String> lines = new ArrayList<String>();
-		List<Part> parts = scenario.getParts();
+	@Test
+	public void shouldAddRowsFromACollection() {
+		TestTable testTable = new TestTable("test");
 
-		Pattern pattern = Pattern.find(parts.get(0).camelCaseDescription());
-		if( null == pattern ) {
-			throw new BDocException( "Did not find scenario pattern for: " + parts.get(0).camelCaseDescription() );
-		}
-
-		for (Part part : parts) {
-
-			String partCamelCaseDescription = part.camelCaseDescription();
-
-			lines.add(CamelCaseToSentenceTranslator.translate(partCamelCaseDescription, pattern.locale()));
-		}
-
-		return lines;
+		Collection<Object> collection = new ArrayList<Object>();
+		collection.addAll(asList("one", "two", "three"));
+		testTable.addCollectionToRows(collection);
+		assertEquals(1, testTable.getRows().get(0).getColumns().size());
+		assertEquals("one", testTable.getRows().get(0).getColumns().get(0).getValue());
+		assertEquals("two", testTable.getRows().get(1).getColumns().get(0).getValue());
+		assertEquals("three", testTable.getRows().get(2).getColumns().get(0).getValue());
 	}
 }

@@ -26,7 +26,6 @@ package com.googlecode.bdoc.report;
 
 import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.Statement;
-import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 
 public class StatementExampleFrame extends AbstractBDocReportContent {
 

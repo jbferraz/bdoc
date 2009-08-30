@@ -1,6 +1,5 @@
 package com.googlecode.bdoc.sandbox.apptest;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 /**

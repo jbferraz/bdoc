@@ -26,7 +26,6 @@ package com.googlecode.bdoc.report;
 
 import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.UserStory;
-import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 
 /**
  * @author Per Otto Bergum Christensen

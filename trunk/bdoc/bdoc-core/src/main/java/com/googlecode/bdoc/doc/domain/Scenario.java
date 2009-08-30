@@ -41,6 +41,7 @@ public class Scenario {
 
 	public static class Part {
 		private String camelCaseDescription;
+		private List<TestTable> testTables = new ArrayList<TestTable>();
 
 		public Part(String camelCaseDescription) {
 			this.camelCaseDescription = camelCaseDescription;
@@ -72,6 +73,18 @@ public class Scenario {
 		public String toString() {
 			return camelCaseDescription;
 		}
+
+		public List<TestTable> getTestTables() {
+			return testTables;
+		}
+
+		public void addTestTable(TestTable testTable) {
+			testTables.add( testTable );
+		}
+
+		public void appendArgument(Object arg) {
+			camelCaseDescription = camelCaseDescription + " " + arg; 
+		}
 	}
 
 	public enum Pattern {
@@ -100,7 +113,7 @@ public class Scenario {
 		public static Pattern find(String camelCaseSentence) {
 			for (Pattern pattern : Pattern.values()) {
 				for (String keyword : pattern.keywords) {
-					if (camelCaseSentence.startsWith(keyword.toLowerCase())) {
+					if (camelCaseSentence.toLowerCase().startsWith(keyword.toLowerCase())) {
 						return pattern;
 					}
 				}

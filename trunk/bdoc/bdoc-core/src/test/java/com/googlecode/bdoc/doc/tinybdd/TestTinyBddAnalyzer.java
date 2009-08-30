@@ -36,12 +36,13 @@ import org.junit.Test;
 import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.tinybdd.testdata.TeztTinyTestdataScenarios;
 
 public class TestTinyBddAnalyzer {
 
-	private BddAnalyzer bddAnalyzer = new BddAnalyzer(BConst.SRC_TEST_JAVA);
+	private TinyBddAnalyzer bddAnalyzer = new TinyBddAnalyzer(BConst.SRC_TEST_JAVA);
 
 	@Test
 	public void shouldReturnSourceTestJava() {
@@ -62,10 +63,60 @@ public class TestTinyBddAnalyzer {
 		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("willFailIfStateIsNotHandledByBddAnalyzer"));
 	}
 	
-	//shouldRegisterTwoScenariosInTheSameTest
+	@Test
+	public void primitivtInputArgumentToScenarioPartShouldBeAddedToTheDescription() {
+		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("scenarioWithPrimitivArgument"));
+		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
+		Part part = scenario.getParts().get(0);
+		assertEquals( "given numberWithValue 10", part.camelCaseDescription() );
+	}
+
+	@Test
+	public void nameOfMethodUsedAsInputArgumentToScenarioPartShouldBeAddedToTheDescription() {
+		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithTable"));
+		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
+		Part part = scenario.getParts().get(0);
+		assertEquals( "given listWith randomNumbers", part.camelCaseDescription() );
+	}
+
+	@Test
+	public void collectionArgumentToScenarioPartShouldBeAddedAsATestTable() {
+		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithTable"));
+		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
+		Part part = scenario.getParts().get(0);
+		assertFalse(part.getTestTables().isEmpty());
+	}
+
+	@Test
+	public void testTablesCreatedWithAFunctionCallAsArgumentToAScenarioPartShouldBeNamedTheSameAsTheFunction() {
+		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithTable"));
+		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
+		Part part = scenario.getParts().get(0);
+		assertEquals("randomNumbers", part.getTestTables().get(0).getCamelCaseSentence());
+	}
 	
-	//should add table for a scenario, if used in input arg
+	@Test
+	public void testTableCreatedForAScenarioPartShouldContainOneRowForEachItemInTheCollection() {
+		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithTable"));
+		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
+		Part part = scenario.getParts().get(0);
+		TestTable testTable = part.getTestTables().get(0);
+		assertEquals( 3, testTable.getRows().size() );
+	}
 	
-	//shouldRegisterTesttable
+	@Test
+	public void shouldSupportDifferentLanguagesOnTheScenarioKeywordByUseingArgumentGivenToFactoryMethod() {
+		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithNorwegianLanguage"));
+		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
+		Part part = scenario.getParts().get(0);
+		
+		assertEquals( "gitt tilstandX", part.camelCaseDescription() );
+	}
+
+	// should add table for a scenario, if used in input arg
+
+	// shouldRegisterTesttable
+
+	// shouldRegisterTwoScenariosInTheSameTest
 
 }

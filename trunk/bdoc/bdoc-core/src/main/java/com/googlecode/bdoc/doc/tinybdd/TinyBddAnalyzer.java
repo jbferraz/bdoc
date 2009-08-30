@@ -22,43 +22,47 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.domain;
+package com.googlecode.bdoc.doc.tinybdd;
 
+import static com.googlecode.bdoc.doc.tinybdd.ProxyFactory.forClass;
+
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-/**
- * @author Per Otto Bergum Christensen
- */
-public class TestTable extends Statement {
+import com.googlecode.bdoc.doc.domain.BehaviourFactory;
+import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.domain.TestMethod;
+import com.googlecode.bdoc.doc.domain.TestTable;
 
-	ArrayList<TableColumn> headerColumns = new ArrayList<TableColumn>();
-	private List<TableRow> rows = new ArrayList<TableRow>();
+public class TinyBddAnalyzer implements BehaviourFactory {
 
-	public TestTable(String camelCaseDescription) {
-		super(camelCaseDescription);
+	private File srcTestJava;
+	private List<Scenario> scenarios = new ArrayList<Scenario>();
+
+	public TinyBddAnalyzer(File srcTestJava) {
+		this.srcTestJava = srcTestJava;
 	}
 
-	public List<TableRow> getRows() {
-		return rows;
+	public void analyze(TestMethod testMethod) {
+		TestClassProxyWrapper proxyWrapper = new TestClassProxyWrapper();
+		Object proxy = forClass(testMethod.clazz()).createProxyWith(
+				new RootMethodCallbackAnalyzer(proxyWrapper, testMethod, scenarios));
+
+		proxyWrapper.setProxy(proxy);
+		proxyWrapper.runTest(testMethod);
 	}
 
-	public void addRow(TableRow tableRow) {
-		rows.add(tableRow);
+	public List<Scenario> getCreatedScenarios() {
+		return scenarios;
 	}
 
-	public List<TableColumn> getHeaderColumns() {
-		return headerColumns;
+	public List<TestTable> getCreatedTestTables() {
+		return new ArrayList<TestTable>();
 	}
 
-	public void addHeaderColumn(TableColumn tableColumn) {
-		headerColumns.add(tableColumn);
+	public File sourceTestDirectory() {
+		return srcTestJava;
 	}
 
-	public void addCollectionToRows(Collection<Object> collection) {
-		for (Object object : collection) {
-			addRow( new TableRow( object ) );
-		}
-	}
 }

@@ -40,7 +40,7 @@ import com.googlecode.bdoc.sandbox.BConst;
  */
 public class TestSourceCodeAnalyzer {
 
-	private static File getFile(Class c) {
+	private static File getFile(Class<?> c) {
 		return new File(BConst.SRC_TEST_JAVA, c.getName().replace('.', '/') + ".java");
 	}
 

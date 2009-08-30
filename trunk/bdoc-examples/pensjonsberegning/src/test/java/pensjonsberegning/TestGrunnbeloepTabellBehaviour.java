@@ -5,9 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import pensjonsberegning.bdoc.Ref;
 import pensjonsberegning.bdoc.RefClass;
-import pensjonsberegning.bdoc.Story;
 
 /**
  * Liste over grunnbeløp: http://www.nav.no/page?id=1073744172

@@ -47,6 +47,7 @@ import com.googlecode.bdoc.doc.report.BDocFactory;
 import com.googlecode.bdoc.doc.report.ModuleBehaviourReport;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
+import com.googlecode.bdoc.doc.tinybdd.TinyBddAnalyzer;
 import com.googlecode.bdoc.report.BDocReport;
 import com.thoughtworks.xstream.converters.ConversionException;
 
@@ -173,6 +174,9 @@ public class BDocMojo extends AbstractBDocMojo {
 		BehaviourFactory behaviourFactory = new JavaTestSourceBehaviourParser(testSourceDirectory);
 		if (scenarioAnalyzer.equals("dynamic")) {
 			behaviourFactory = new RuntimeBehaviourFactory(testSourceDirectory);
+		}
+		if (scenarioAnalyzer.equals("tiny")) {
+			behaviourFactory = new TinyBddAnalyzer(testSourceDirectory);
 		}
 
 		BDoc bdoc = bdocFactory.createBDoc(behaviourFactory);

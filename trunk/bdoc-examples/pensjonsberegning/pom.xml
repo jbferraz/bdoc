@@ -76,8 +76,9 @@
 
 				<configuration>
 					<storyRefAnnotationClassName>pensjonsberegning.bdoc.Ref</storyRefAnnotationClassName>
-					<scenarioAnalyzer>dynamic</scenarioAnalyzer>					
-					<locale>no</locale>
+					<scenarioFormatterClassName>com.googlecode.bdoc.doc.report.EachOnNewLineScenarioLinesFormatter</scenarioFormatterClassName>
+					<scenarioAnalyzer>tiny</scenarioAnalyzer>					
+					<locale>no</locale>  
 				</configuration>
 
 			</plugin>

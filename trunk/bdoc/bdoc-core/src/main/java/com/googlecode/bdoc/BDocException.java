@@ -31,4 +31,8 @@ public class BDocException extends RuntimeException {
 	public BDocException( Throwable e ) {
 		super( e );
 	}
+
+	public BDocException(String msg) {
+		super( msg );
+	}
 }

@@ -24,43 +24,60 @@
 
 package com.googlecode.bdoc.doc.tinybdd;
 
+import static com.googlecode.bdoc.doc.tinybdd.ProxyFactory.forClass;
 import static java.util.Arrays.asList;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
+import com.googlecode.bdoc.BDocException;
 import com.googlecode.bdoc.doc.domain.Scenario;
-import static com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.domain.TestMethod;
+import com.googlecode.bdoc.doc.domain.TestTable;
+import com.googlecode.bdoc.doc.domain.Scenario.Part;
 
-public class TestMethodCallbackAnalyzer implements MethodInterceptor {
+public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 
 	private TestClassProxyWrapper rootTestClassProxy;
 	private TestMethod testMethod;
 	private List<Scenario> scenarios;
 
 	private Scenario currentScenario;
+	private Map<Object, String> methodCallReturnValues = new HashMap<Object, String>();
 
-	public TestMethodCallbackAnalyzer(TestClassProxyWrapper rootTestClassProxy, TestMethod testMethod, List<Scenario> scenarios) {
+	public RootMethodCallbackAnalyzer(TestClassProxyWrapper rootTestClassProxy, TestMethod testMethod, List<Scenario> scenarios) {
 		this.testMethod = testMethod;
 		this.scenarios = scenarios;
 		this.rootTestClassProxy = rootTestClassProxy;
 	}
 
 	public Object intercept(Object object, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-		if (isScenarioKeywordFactory(method)) {
-			String keyword = method.getName().replace("create", "");
-			return ProxyUtils.createProxy(testMethod.clazz(), new ScenarioKeywordAnalyzer(keyword));
-		}
 
-		return proxy.invokeSuper(object, args);
+		if (isScenarioKeywordFactory(method)) {
+			if (0 == args.length) {
+				throw new BDocException("ScenarioKeywordFactoryMethod [" + method.getName()
+						+ "] is required to have one argument with name of the scenario keyword");
+			}
+			String keyword = String.valueOf(args[0]);
+
+			return forClass(testMethod.clazz()).createProxyWith(new ScenarioKeywordAnalyzer(keyword));
+		} else {
+			System.out.println("root: " + method.getName());
+
+			Object returnValueFromSuper = proxy.invokeSuper(object, args);
+			methodCallReturnValues.put(returnValueFromSuper, method.getName());
+			return returnValueFromSuper;
+		}
 	}
 
 	private boolean isScenarioKeywordFactory(Method method) {
-		return method.getName().startsWith("create") && method.getReturnType().equals(testMethod.clazz());
+		return method.getName().startsWith("create") && method.getReturnType().isInstance(testMethod.clazz());
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------------
@@ -70,13 +87,15 @@ public class TestMethodCallbackAnalyzer implements MethodInterceptor {
 
 		public ScenarioKeywordAnalyzer(String name) {
 			this.name = name;
+			System.out.println("Created analyzer for: " + name);
 		}
 
 		public Object intercept(Object object, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-			// System.out.println("ScenarioKeywordAnalyzer [" + name + "]: " +
-			// method.getName());
+
 			if (!isScenarioKeywordFactory(method)) {
-				addPart(name, method.getName());
+				System.out.println(name + ": " + method.getName() + ", args: " + args);
+
+				addPart(name, method.getName(), asList(args));
 			}
 
 			if (rootTestClassProxy.hasProxy()) {
@@ -85,8 +104,23 @@ public class TestMethodCallbackAnalyzer implements MethodInterceptor {
 			return proxy.invokeSuper(object, args);
 		}
 
-		private void addPart(String keyword, String description) {
+		@SuppressWarnings("unchecked")
+		private void addPart(String keyword, String description, List<? extends Object> args) {
 			Part scenarioPart = new Part(keyword + " " + description);
+			for (Object arg : args) {
+				if (arg instanceof Collection) {
+					Collection collection = (Collection) arg;
+					if (methodCallReturnValues.containsKey(arg)) {
+						TestTable testTable = new TestTable(methodCallReturnValues.get(arg));
+						testTable.addCollectionToRows(collection);
+						scenarioPart.addTestTable(testTable);
+
+						scenarioPart.appendArgument(methodCallReturnValues.get(arg));
+					}
+				} else {
+					scenarioPart.appendArgument(arg);
+				}
+			}
 
 			if (null == currentScenario) {
 				currentScenario = new Scenario(asList(scenarioPart));

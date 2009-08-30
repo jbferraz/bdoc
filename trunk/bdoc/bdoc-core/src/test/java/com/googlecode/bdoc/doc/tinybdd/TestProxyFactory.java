@@ -24,19 +24,40 @@
 
 package com.googlecode.bdoc.doc.tinybdd;
 
-import net.sf.cglib.proxy.Enhancer;
+import static com.googlecode.bdoc.doc.tinybdd.ProxyFactory.forClass;
+
+import java.lang.reflect.Method;
+
+import junit.framework.Assert;
+
 import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
 
-public class ProxyUtils {
+import org.junit.Test;
 
-	private ProxyUtils() {
+public class TestProxyFactory {
+
+	@Test
+	public void shouldNotCreateProxyThatCallsBackToMethodFinalize() throws Throwable {
+
+		MethodInterceptor callback = new MethodInterceptor() {
+			public Object intercept(Object object, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+				if (method.getName().equals("finalize")) {
+					Assert.fail("finalize should not have been called");
+				}
+				return proxy.invokeSuper(object, args);
+			}
+		};
+		
+		ProxyTarget proxy = forClass( ProxyTarget.class ).createProxyWith( callback );
+		proxy.finalize();
 	}
-	
-	public static Object createProxy(Class<?> clazz, MethodInterceptor callback) {
-		Enhancer e = new Enhancer();
-		e.setSuperclass(clazz);
-		e.setCallback(callback);
-		return e.create();
-	}
 
+	public static class ProxyTarget {
+		@Override
+		public void finalize() throws Throwable {
+			super.finalize();
+		}
+
+	}
 }

@@ -22,43 +22,25 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.domain;
+package com.googlecode.bdoc.doc.tinybdd.testdata;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+@SuppressWarnings("unchecked")
+public class TinyScenarioSupport<T> {
 
-/**
- * @author Per Otto Bergum Christensen
- */
-public class TestTable extends Statement {
+	T given = createGiven("given");
+	T when = createWhen("when");
+	T then = createThen("then");
 
-	ArrayList<TableColumn> headerColumns = new ArrayList<TableColumn>();
-	private List<TableRow> rows = new ArrayList<TableRow>();
-
-	public TestTable(String camelCaseDescription) {
-		super(camelCaseDescription);
+	public T createGiven( String scenarioPart ) {
+		return (T) this;
 	}
 
-	public List<TableRow> getRows() {
-		return rows;
+	public T createWhen( String scenarioPart ) {
+		return (T) this;
 	}
 
-	public void addRow(TableRow tableRow) {
-		rows.add(tableRow);
+	public T createThen( String scenarioPart ) {
+		return (T) this;
 	}
 
-	public List<TableColumn> getHeaderColumns() {
-		return headerColumns;
-	}
-
-	public void addHeaderColumn(TableColumn tableColumn) {
-		headerColumns.add(tableColumn);
-	}
-
-	public void addCollectionToRows(Collection<Object> collection) {
-		for (Object object : collection) {
-			addRow( new TableRow( object ) );
-		}
-	}
 }

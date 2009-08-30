@@ -2,7 +2,6 @@ package pensjonsberegning;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import pensjonsberegning.bdoc.Ref;

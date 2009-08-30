@@ -13,7 +13,7 @@ public class Trace implements MethodInterceptor {
 	private Trace() {
 	}
 
-	public static Object newInstance(Class clazz) {
+	public static Object newInstance(Class<?> clazz) {
 		try {
 			Enhancer e = new Enhancer();
 			e.setSuperclass(clazz);

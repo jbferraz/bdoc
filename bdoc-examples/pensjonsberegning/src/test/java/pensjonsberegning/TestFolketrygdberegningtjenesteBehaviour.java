@@ -33,7 +33,7 @@ public class TestFolketrygdberegningtjenesteBehaviour extends ScenarioSupport<Te
 		naar.alderspensjon_blir_beregnet_for_aaret(2009);
 		saa.skal_aarlig_alderspensjon_vaere_lik(333823);
 		hvor.tilleggspensjonen_utgjoer(261817);
-		og.grunnpensjon_utgjoer(Grunnbeloep._2009.doubleValue());
+		og.grunnpensjon_utgjoer(Grunnbeloep._2009);
 		samtidig.skal_sluttpoengtallet_vaere_beregnet_til(8.33);
 		og.pensjonsprosenten_skal_vaere_beregnet_til(0.4365);
 

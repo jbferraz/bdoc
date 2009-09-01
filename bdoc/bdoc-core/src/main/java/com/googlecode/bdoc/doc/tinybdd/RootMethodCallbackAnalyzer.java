@@ -50,6 +50,7 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 
 	private Scenario currentScenario;
 	private Map<Object, String> methodCallReturnValues = new HashMap<Object, String>();
+	private boolean debugToSystemOut = true;
 
 	public RootMethodCallbackAnalyzer(TestClassProxyWrapper rootTestClassProxy, TestMethod testMethod, List<Scenario> scenarios) {
 		this.testMethod = testMethod;
@@ -60,42 +61,49 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 	public Object intercept(Object object, Method method, Object[] args, MethodProxy proxy) throws Throwable {
 
 		if (isScenarioKeywordFactory(method)) {
-			if (0 == args.length) {
+			
+			if (2 != args.length) {
 				throw new BDocException("ScenarioKeywordFactoryMethod [" + method.getName()
-						+ "] is required to have one argument with name of the scenario keyword");
+						+ "] is required to have arguments ('scenario keyword [String]', 'indented [true|false]')");
 			}
+			
 			String keyword = String.valueOf(args[0]);
+			boolean indented = Boolean.TRUE.equals(args[1]);			
 
-			return forClass(testMethod.clazz()).createProxyWith(new ScenarioKeywordAnalyzer(keyword));
+			return forClass(testMethod.clazz()).createProxyWith(new ScenarioKeywordAnalyzer(keyword, indented));
 		} else {
-			System.out.println("root: " + method.getName());
-
 			Object returnValueFromSuper = proxy.invokeSuper(object, args);
 			methodCallReturnValues.put(returnValueFromSuper, method.getName());
 			return returnValueFromSuper;
 		}
 	}
 
+	private void debug(String msg) {
+		if( debugToSystemOut ) {
+			System.out.println( msg );
+		}
+		
+	}
+
 	private boolean isScenarioKeywordFactory(Method method) {
-		return method.getName().startsWith("create") && method.getReturnType().isInstance(testMethod.clazz());
+		return method.getName().startsWith("create") && method.getReturnType().isAssignableFrom(testMethod.clazz());
 	}
 
 	// ---------------------------------------------------------------------------------------------------------------------------
 
 	public class ScenarioKeywordAnalyzer implements MethodInterceptor {
-		private String name;
+		private String keyword;
+		private boolean indented;
 
-		public ScenarioKeywordAnalyzer(String name) {
-			this.name = name;
-			System.out.println("Created analyzer for: " + name);
+		public ScenarioKeywordAnalyzer(String keyword, boolean indented) {
+			this.keyword = keyword;
+			this.indented = indented;
 		}
 
 		public Object intercept(Object object, Method method, Object[] args, MethodProxy proxy) throws Throwable {
 
 			if (!isScenarioKeywordFactory(method)) {
-				System.out.println(name + ": " + method.getName() + ", args: " + args);
-
-				addPart(name, method.getName(), asList(args));
+				addPartFrom(method.getName(), asList(args));
 			}
 
 			if (rootTestClassProxy.hasProxy()) {
@@ -105,8 +113,10 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 		}
 
 		@SuppressWarnings("unchecked")
-		private void addPart(String keyword, String description, List<? extends Object> args) {
-			Part scenarioPart = new Part(keyword + " " + description);
+		private void addPartFrom(String methodName, List<? extends Object> args) {
+			debug( keyword + "." + methodName );
+			
+			Part scenarioPart = new Part(keyword + " " + methodName);
 			for (Object arg : args) {
 				if (arg instanceof Collection) {
 					Collection collection = (Collection) arg;
@@ -126,7 +136,7 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 				currentScenario = new Scenario(asList(scenarioPart));
 				scenarios.add(currentScenario);
 			} else {
-				currentScenario.addPart(scenarioPart);
+				currentScenario.addPart(scenarioPart, indented);
 			}
 		}
 

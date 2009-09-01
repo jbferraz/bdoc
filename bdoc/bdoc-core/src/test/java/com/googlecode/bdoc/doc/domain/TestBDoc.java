@@ -41,11 +41,13 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.testdata.MyTestTablesBehaviour;
 import com.googlecode.bdoc.doc.domain.testdata.TestDomainBehaviour;
+import com.googlecode.bdoc.doc.domain.testdata.TestWithTwoSpecsWithOneScenarioEachBehaviour;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.testdata.ExReference;
 import com.googlecode.bdoc.doc.testdata.ExReference2;
 import com.googlecode.bdoc.doc.testdata.ExStory;
 import com.googlecode.bdoc.doc.testdata.TestClassWithExStory2Reference;
+import com.googlecode.bdoc.doc.tinybdd.TinyBddAnalyzer;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -288,6 +290,8 @@ public class TestBDoc {
 
 		assertNotNull(bdoc.getModuleBehaviour().classBehaviourFor(TestWithManyUserStories.class));
 	}
+	
+
 
 	public class TestWithEnglishLanguage {
 		@Test

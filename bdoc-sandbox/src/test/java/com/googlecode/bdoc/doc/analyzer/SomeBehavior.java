@@ -54,6 +54,17 @@ public class SomeBehavior extends ScenarioSupport<SomeBehavior> {
 		and.stackIsNotEmpty();
 	}
 
+	@Test
+	public void twoScenarios() {
+		given.anAccountWithInitialBalance(0);
+		when.depositAreCalledWithAmount(100);
+		then.balanceShouldEqualsTo(100);
+
+		given.anAccountWithInitialBalance(1);
+		when.depositAreCalledWithAmount(100);
+		then.balanceShouldEqualsTo(101);
+	}
+
 	// =>
 	// Eksempler på pensjonsberegning
 	// 3 pensjonspoeng for inntekt på 4*G

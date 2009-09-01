@@ -22,40 +22,41 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.report;
+package com.googlecode.bdoc.doc.domain.testdata;
 
-import java.util.HashMap;
-import java.util.Map;
+public class TestWithTwoSpecsWithOneScenarioEachBehaviour {
 
-import com.googlecode.bdoc.BDocConfig;
-import com.googlecode.bdoc.doc.domain.UserStory;
-import com.googlecode.bdoc.doc.report.BDocMacroHelper;
+	private TestWithTwoSpecsWithOneScenarioEachBehaviour given = createScenarioKeyword("given", false);
+	private TestWithTwoSpecsWithOneScenarioEachBehaviour when = createScenarioKeyword("when", false);
+	private TestWithTwoSpecsWithOneScenarioEachBehaviour then = createScenarioKeyword("then", false);
 
-public class UserStoryExamplesFrame {
-
-	private Map<String, Object> model = new HashMap<String, Object>();
-	private UserStory userStory;
-
-	public UserStoryExamplesFrame(UserStory userStory, BDocConfig bdocConfig) {
-		this.userStory = userStory;
-		model.put("module", userStory);
-		model.put("bdocMacroHelper", new BDocMacroHelper(bdocConfig));
+	@org.junit.Test
+	public void spec1() {
+		given.stateA();
+		when.action();
+		then.ensure();
 	}
 
-	public String html() {
-		return BDocReportUtils.createContentFrom("user_story_examples_frame.ftl", model);
-	}
-	
-	private String fileNamePrefix() {
-		return userStory.getTitle().replace(" ", "_").toLowerCase();
-	}
-
-	public String getFileName() {
-		return fileNamePrefix() + "_examples_frame.html";
-	}
-	
-	public String getTitle() {
-		return userStory.getTitle();
+	@org.junit.Test
+	public void spec2() {
+		given.stateB();
+		when.action();
+		then.ensure();
 	}
 
+	void stateB() {
+	}
+
+	void stateA() {
+	}
+
+	void action() {
+	}
+
+	void ensure() {
+	}
+
+	public TestWithTwoSpecsWithOneScenarioEachBehaviour createScenarioKeyword(String keyword, boolean indent) {
+		return this;
+	}
 }

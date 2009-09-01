@@ -45,12 +45,18 @@ public class TinyBddAnalyzer implements BehaviourFactory {
 	}
 
 	public void analyze(TestMethod testMethod) {
+		reset();
 		TestClassProxyWrapper proxyWrapper = new TestClassProxyWrapper();
 		Object proxy = forClass(testMethod.clazz()).createProxyWith(
 				new RootMethodCallbackAnalyzer(proxyWrapper, testMethod, scenarios));
 
 		proxyWrapper.setProxy(proxy);
 		proxyWrapper.runTest(testMethod);
+	}
+
+	private void reset() {
+		scenarios = new ArrayList<Scenario>();
+		
 	}
 
 	public List<Scenario> getCreatedScenarios() {

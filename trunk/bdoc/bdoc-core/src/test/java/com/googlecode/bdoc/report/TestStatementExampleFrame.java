@@ -25,8 +25,11 @@
 package com.googlecode.bdoc.report;
 
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
+import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,13 +42,14 @@ import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.domain.TableRow;
 import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.TestTable;
+import com.googlecode.bdoc.doc.domain.Scenario.Part;
 
 public class TestStatementExampleFrame {
 
 	private String html;
 	private Statement statement;
 
-	public TestStatementExampleFrame() {
+	public TestStatementExampleFrame() throws IOException {
 		TestMethod method = new TestMethod(TestClassWithTestTable.class, "exampleStatement");
 
 		TestTable testTable = new TestTable("exampleOnSumOfTwoValues");
@@ -64,10 +68,18 @@ public class TestStatementExampleFrame {
 		method.setTestTables(testTables);
 
 		method.setScenarios(new ArrayList<Scenario>());
-		method.getScenarios().add(new Scenario("givenADynamicScenario"));
+		method.getScenarios().add(new Scenario("givenADynamicScenarioWhenActionThenEnsure"));
+		
+		Scenario scenarioWithIndentedParts = new Scenario(Scenario.parts("givenStateA", "when", "then"));
+		scenarioWithIndentedParts.getParts().get(0).addIndentedPart(new Part("andStateB"));
+		scenarioWithIndentedParts.getParts().get(0).addIndentedPart(new Part("andStateC"));
+		method.getScenarios().add(scenarioWithIndentedParts);
 
 		statement = new Statement(method);
+		
 		html = new StatementExampleFrame("ClassWithTestTable",statement, new BDocConfig()).html();
+		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
+
 	}
 
 	@Test

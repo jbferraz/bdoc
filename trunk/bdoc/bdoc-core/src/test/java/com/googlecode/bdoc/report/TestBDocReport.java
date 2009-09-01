@@ -102,11 +102,6 @@ public class TestBDocReport {
 		assertReportIsCreated("story_nr_two_specifications_frame.html");
 	}
 
-	@Test
-	public void shouldCreateAUserStoryExamplesFrameForEachUserStory() {
-		assertReportIsCreated("story_nr_one_examples_frame.html");
-		assertReportIsCreated("story_nr_two_examples_frame.html");
-	}
 
 	@Test
 	public void shouldCreateAnExampleFrameForEachStatementContaingExamples() {

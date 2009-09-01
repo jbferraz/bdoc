@@ -42,6 +42,7 @@ public class Scenario {
 	public static class Part {
 		private String camelCaseDescription;
 		private List<TestTable> testTables = new ArrayList<TestTable>();
+		private List<Part> indentedParts = new ArrayList<Part>();
 
 		public Part(String camelCaseDescription) {
 			this.camelCaseDescription = camelCaseDescription;
@@ -79,11 +80,23 @@ public class Scenario {
 		}
 
 		public void addTestTable(TestTable testTable) {
-			testTables.add( testTable );
+			testTables.add(testTable);
 		}
 
 		public void appendArgument(Object arg) {
-			camelCaseDescription = camelCaseDescription + " " + arg; 
+			camelCaseDescription = camelCaseDescription + " " + arg;
+		}
+
+		public boolean hasIndentedParts() {
+			return !indentedParts.isEmpty();
+		}
+
+		public List<Part> getIndentedParts() {
+			return indentedParts;
+		}
+
+		public void addIndentedPart(Part scenarioPart) {
+			indentedParts.add(scenarioPart);
 		}
 	}
 
@@ -179,8 +192,12 @@ public class Scenario {
 		return part.toString();
 	}
 
-	public void addPart(Part scenarioPart) {
-		part.add(scenarioPart);		
+	public void addPart(Part scenarioPart, boolean indented) {
+		if (indented) {
+			part.get(part.size() - 1).addIndentedPart(scenarioPart);
+		} else {
+			part.add(scenarioPart);
+		}
 	}
 
 	/**
@@ -190,5 +207,14 @@ public class Scenario {
 		return new Part(description);
 	}
 
-
+	/**
+	 * Factory for easier testing
+	 */
+	public static List<Part> parts(String... sentences) {
+		List<Part> result = new ArrayList<Part>();
+		for (String sentence : sentences) {
+			result.add(new Part(sentence));
+		}
+		return result;
+	}
 }

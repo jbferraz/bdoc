@@ -46,7 +46,7 @@
 		
 		<#if statement.hasScenarios()>
 			<ul class="scenario">
-				<@report_macro.list_scenarios scenarios=statement.getScenarios()/>
+				<@list_scenarios scenarios=statement.getScenarios()/>
 			</ul>
 		</#if>
 				
@@ -80,3 +80,29 @@
 		
 	</body>
 </html>
+
+<#macro list_scenarios scenarios>
+	<#if 0 < scenarios?size >
+		<div class="classBehaviour">
+			<div class="scenarios">
+				<#list scenarios as scenario>
+					<ul class="scenario">
+						<#list scenario.getParts() as part>
+							<li>
+								${bdocMacroHelper.format(part.camelCaseDescription())}
+								<#if part.hasIndentedParts() >
+									<ul>
+										<#list part.getIndentedParts() as part>
+											<li>${bdocMacroHelper.format(part.camelCaseDescription())}</li>
+										</#list>
+									</ul>
+								</#if>						
+							</li>
+						</#list>
+						<BR/>
+					</ul>
+				</#list>
+			</div>
+		</div>
+	</#if>
+</#macro>

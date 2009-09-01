@@ -28,6 +28,7 @@ import static com.googlecode.bdoc.doc.domain.Scenario.part;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ import org.junit.Test;
 import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.tinybdd.testdata.TeztTinyTestdataScenarios;
@@ -51,37 +53,47 @@ public class TestTinyBddAnalyzer {
 
 	@Test
 	public void shouldCreateAScenarioForSimpleTinyBddSyntax() {
-		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("simpleGivenWhenThen"));
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "simpleGivenWhenThen");
+
 		assertFalse(bddAnalyzer.getCreatedScenarios().isEmpty());
 
 		List<Part> expectedParts = asList(part("Given criteriaA"), part("When actionA"), part("Then ensureA"));
 		assertEquals(new Scenario(expectedParts), bddAnalyzer.getCreatedScenarios().get(0));
 	}
 
+	private TinyBddAnalyzer analyze(Class<TeztTinyTestdataScenarios> clazz, String methodName) {
+		TinyBddAnalyzer bddAnalyzer = new TinyBddAnalyzer(BConst.SRC_TEST_JAVA);
+		bddAnalyzer.analyze(new TestClass(clazz).getTestMethod(methodName));
+		return bddAnalyzer;
+	}
+
 	@Test
 	public void shouldNotAffectInternalStateOfTheTestUnderAnalyze() {
-		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("willFailIfStateIsNotHandledByBddAnalyzer"));
+		TinyBddAnalyzer tinyBddAnalyzer = new TinyBddAnalyzer(BConst.SRC_TEST_JAVA);
+		tinyBddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class)
+				.getTestMethod("willFailIfStateIsNotHandledByBddAnalyzer"));
 	}
-	
+
 	@Test
 	public void primitivtInputArgumentToScenarioPartShouldBeAddedToTheDescription() {
-		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("scenarioWithPrimitivArgument"));
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "scenarioWithPrimitivArgument");
+
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
-		assertEquals( "given numberWithValue 10", part.camelCaseDescription() );
+		assertEquals("given numberWithValue 10", part.camelCaseDescription());
 	}
 
 	@Test
 	public void nameOfMethodUsedAsInputArgumentToScenarioPartShouldBeAddedToTheDescription() {
-		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithTable"));
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "containsScenarioWithTable");
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
-		assertEquals( "given listWith randomNumbers", part.camelCaseDescription() );
+		assertEquals("given listWith randomNumbers", part.camelCaseDescription());
 	}
 
 	@Test
 	public void collectionArgumentToScenarioPartShouldBeAddedAsATestTable() {
-		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithTable"));
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "containsScenarioWithTable");
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
 		assertFalse(part.getTestTables().isEmpty());
@@ -89,28 +101,45 @@ public class TestTinyBddAnalyzer {
 
 	@Test
 	public void testTablesCreatedWithAFunctionCallAsArgumentToAScenarioPartShouldBeNamedTheSameAsTheFunction() {
-		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithTable"));
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "containsScenarioWithTable");
+
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
 		assertEquals("randomNumbers", part.getTestTables().get(0).getCamelCaseSentence());
 	}
-	
+
 	@Test
 	public void testTableCreatedForAScenarioPartShouldContainOneRowForEachItemInTheCollection() {
-		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithTable"));
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "containsScenarioWithTable");
+
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
 		TestTable testTable = part.getTestTables().get(0);
-		assertEquals( 3, testTable.getRows().size() );
+		assertEquals(3, testTable.getRows().size());
 	}
-	
+
 	@Test
 	public void shouldSupportDifferentLanguagesOnTheScenarioKeywordByUseingArgumentGivenToFactoryMethod() {
-		bddAnalyzer.analyze(new TestClass(TeztTinyTestdataScenarios.class).getTestMethod("containsScenarioWithNorwegianLanguage"));
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "containsScenarioWithNorwegianLanguage");
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
-		
-		assertEquals( "gitt tilstandX", part.camelCaseDescription() );
+
+		assertEquals("gitt tilstandX", part.camelCaseDescription());
+	}
+
+	@Test
+	public void shouldAddScenarioKeywordMarkedWithIndentToItsParentScenarioPart() {
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "scenarioWithAnd");
+		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
+		Part firstPart = scenario.getParts().get(0);
+		assertFalse(firstPart.getIndentedParts().isEmpty());
+	}
+
+	@Test
+	public void shouldResetScenariosBetweenEachRun() {
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "simpleGivenWhenThen");
+		bddAnalyzer.analyze(new TestMethod(TeztTinyTestdataScenarios.class, "noExamples"));
+		assertTrue( bddAnalyzer.getCreatedScenarios().isEmpty() );
 	}
 
 	// should add table for a scenario, if used in input arg

@@ -33,7 +33,7 @@ import org.junit.Test;
 public class TeztTinyTestdataScenarios extends TinyScenarioSupport<TeztTinyTestdataScenarios> {
 
 	private int number;
-	private TeztTinyTestdataScenarios gitt = createGiven("gitt");
+	private TeztTinyTestdataScenarios gitt = createScenarioKeyword("gitt", false);
 
 	@Test
 	public void simpleGivenWhenThen() {
@@ -55,7 +55,6 @@ public class TeztTinyTestdataScenarios extends TinyScenarioSupport<TeztTinyTestd
 	public void willFailIfStateIsNotHandledByBddAnalyzer() {
 		given.numberWithValue(42);
 		then.ensureNumberIs(42);
-
 	}
 
 	void numberWithValue(int i) {
@@ -82,13 +81,31 @@ public class TeztTinyTestdataScenarios extends TinyScenarioSupport<TeztTinyTestd
 	Object randomNumbers() {
 		return Arrays.asList(1, 2, 3);
 	}
-	
+
 	@Test
 	public void containsScenarioWithNorwegianLanguage() {
 		gitt.tilstandX();
 	}
 
 	void tilstandX() {
+	}
+
+	@Test
+	public void scenarioWithAnd() {
+
+		given.stateA();
+		and.stateB();
+	}
+
+	void stateB() {
+	}
+
+	void stateA() {
+
+	}
+	
+	@Test
+	public void noExamples() {
 	}
 
 }

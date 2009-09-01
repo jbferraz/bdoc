@@ -52,7 +52,6 @@ public class BDocReport {
 	private Map<String, Object> model = new HashMap<String, Object>();
 	private BDoc bdoc;
 	private List<UserStorySpecificationsFrame> userStorySpecificationFrames = new ArrayList<UserStorySpecificationsFrame>();
-	private List<UserStoryExamplesFrame> userStoryExamplesFrames = new ArrayList<UserStoryExamplesFrame>();
 	private SpecificationExamples specificationExamples;
 
 	private BDocConfig bdocConfig;
@@ -73,8 +72,7 @@ public class BDocReport {
 		specificationExamples = new SpecificationExamples(bdocConfig);
 		for (UserStory userStory : bdoc.getUserstories()) {
 			userStorySpecificationFrames.add(new UserStorySpecificationsFrame(userStory, bdocConfig));
-			specificationExamples.addFrom(userStory);
-			userStoryExamplesFrames.add(new UserStoryExamplesFrame(userStory, bdocConfig));
+			specificationExamples.addFrom(userStory);			
 		}
 
 		indexFrameSet = BDocReportUtils.createContentFrom("index.ftl", model);
@@ -92,10 +90,6 @@ public class BDocReport {
 
 		for (UserStorySpecificationsFrame specificationsFrame : userStorySpecificationFrames) {
 			writeFile(reportDirectory, specificationsFrame.getFileName(), specificationsFrame.html());
-		}
-
-		for (UserStoryExamplesFrame examplesFrame : userStoryExamplesFrames) {
-			writeFile(reportDirectory, examplesFrame.getFileName(), examplesFrame.html());
 		}
 
 		for (StatementExampleFrame specificationExample : specificationExamples.list()) {

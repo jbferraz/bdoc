@@ -14,7 +14,7 @@ import pensjonsberegning.bdoc.Story;
  */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Pensjonspoeng.class)
-public class TestPensjonspoengBehaviour {
+public class TestPensjonspoengBehaviour extends ScenarioSupport<TestPensjonspoengBehaviour>{
 
 	private GrunnbeloepTabell grunnbeloepRepository = new GrunnbeloepTabell();
 	private Pensjonspoeng pensjonspoeng = new Pensjonspoeng(grunnbeloepRepository);
@@ -24,20 +24,20 @@ public class TestPensjonspoengBehaviour {
 	@Test
 	@Spec(": (Inntekt - G ) / G = Pensjonspoeng")
 	public void hovedregelVedPensjonspoengberegningEr$spec$() {
-		gittEnInntektIGrunnbelopetLik(4);
-		naarPensjonspoengBeregnes();
-		saaSkalAntallPensjonspoengVeareLik(3);
+		gitt.enInntektIGrunnbelopetLik(4);
+		naar.pensjonspoengBeregnes();
+		saa.skalAntallPensjonspoengVeareLik(3);
 	}
 
-	void gittEnInntektIGrunnbelopetLik(double inntektIGrunnbeloepet) {
+	void enInntektIGrunnbelopetLik(double inntektIGrunnbeloepet) {
 		this.inntektIGrunnbelopet = inntektIGrunnbeloepet;
 	}
 
-	void naarPensjonspoengBeregnes() {
+	void pensjonspoengBeregnes() {
 		pensjonspoengBeregnet = pensjonspoeng.beregn(2000, inntektIGrunnbelopet * Grunnbeloep._2000);
 	}
 
-	void saaSkalAntallPensjonspoengVeareLik(double i) {
+	void skalAntallPensjonspoengVeareLik(double i) {
 		assertEquals(i, pensjonspoengBeregnet, .01);
 	}
 

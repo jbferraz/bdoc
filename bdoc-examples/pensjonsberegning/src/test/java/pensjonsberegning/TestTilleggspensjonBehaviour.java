@@ -13,7 +13,7 @@ import pensjonsberegning.bdoc.Story;
  */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Tilleggspensjon.class)
-public class TestTilleggspensjonBehaviour {
+public class TestTilleggspensjonBehaviour extends ScenarioSupport<TestTilleggspensjonBehaviour> {
 
 	private int grunnbeloep;
 	private Double pensjonsprosent;
@@ -22,30 +22,30 @@ public class TestTilleggspensjonBehaviour {
 
 	@Test
 	public void tilleggspensjonErLikGrunnbeloep_x_Pensjonsprosent_x_Sluttpoengtall() {
-		gittGrunnbeloepLik(100000);
-		gittPensjonsprosentLik(0.25);
-		gittSluttpoengtallLik(5.0);
-		naarBeregningAvTilleggspensjonUtfoeres();
-		saaSkalTilleggspensjonVaereLik(125000);
+		gitt.grunnbeloepLik(100000);
+		og.pensjonsprosentLik(0.25);
+		og.sluttpoengtallLik(5.0);
+		naar.beregningAvTilleggspensjonUtfoeres();
+		saa.skalTilleggspensjonVaereLik(125000);
 	}
 
-	void gittGrunnbeloepLik(int verdi) {
+	void grunnbeloepLik(int verdi) {
 		this.grunnbeloep = verdi;
 	}
 
-	void gittPensjonsprosentLik(final Double verdi) {
+	void pensjonsprosentLik(final Double verdi) {
 		this.pensjonsprosent = verdi;
 	}
 
-	void gittSluttpoengtallLik(final Double verdi) {
+	void sluttpoengtallLik(final Double verdi) {
 		this.sluttpoengtall = verdi;
 	}
 
-	void naarBeregningAvTilleggspensjonUtfoeres() {
+	void beregningAvTilleggspensjonUtfoeres() {
 		this.tilleggspensjon = new Tilleggspensjon(grunnbeloep, pensjonsprosent, sluttpoengtall);
 	}
 
-	void saaSkalTilleggspensjonVaereLik(double verdi) {
+	void skalTilleggspensjonVaereLik(double verdi) {
 		assertEquals(verdi, tilleggspensjon.beregnet(), .001);
 	}
 }

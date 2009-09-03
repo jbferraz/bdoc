@@ -154,6 +154,13 @@ public class TestTinyBddAnalyzer {
 		assertEquals(columns("3", "2", "5"), testTable.getRows().get(1).getColumns());
 	}
 
+	@Test
+	public void shouldResetTestTablesBetweenEachRun() {
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "spexWithExample");
+		bddAnalyzer.analyze(new TestMethod(TeztTinyTestdataScenarios.class, "noExamples"));
+		assertTrue(bddAnalyzer.getCreatedTestTables().isEmpty());
+	}
+
 	// Benytte syntakt example.caculation
 	// Skille på createScenarioKeyword og createExampleMarker
 

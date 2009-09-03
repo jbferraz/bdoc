@@ -58,7 +58,7 @@ public class TestTableFactory {
 		for (MethodCall methodCall : methodCallsClone) {
 
 			if (!headerAdded) {
-				for (String argumentName : JavaCodeUtil.getArgumentNames(testMethod.getTestClass(), methodCall.getName(), srcTestJava)) {
+				for (String argumentName : JavaCodeUtil.argumentNames(testMethod.getTestClass(), methodCall.getName(), srcTestJava)) {
 					testTable.addHeaderColumn(new TableColumn(argumentName));
 				}
 				headerAdded = true;

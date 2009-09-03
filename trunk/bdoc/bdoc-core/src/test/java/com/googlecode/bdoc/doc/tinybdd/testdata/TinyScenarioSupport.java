@@ -31,9 +31,14 @@ public class TinyScenarioSupport<T> {
 	T when = createScenarioKeyword("when", false);
 	T then = createScenarioKeyword("then", false);
 	T and = createScenarioKeyword("and", true);
+	T example = createExampleKeyword("example");
 
 	public T createScenarioKeyword(String scenarioPart, boolean indent) {
 		return (T) this;
 	}
 
+	public T createExampleKeyword(String keyword) {
+		return (T) this;
+	}
+	
 }

@@ -39,6 +39,7 @@ public class TinyBddAnalyzer implements BehaviourFactory {
 
 	private File srcTestJava;
 	private List<Scenario> scenarios = new ArrayList<Scenario>();
+	private List<TestTable> testTables = new ArrayList<TestTable>();
 
 	public TinyBddAnalyzer(File srcTestJava) {
 		this.srcTestJava = srcTestJava;
@@ -48,7 +49,7 @@ public class TinyBddAnalyzer implements BehaviourFactory {
 		reset();
 		TestClassProxyWrapper proxyWrapper = new TestClassProxyWrapper();
 		Object proxy = forClass(testMethod.clazz()).createProxyWith(
-				new RootMethodCallbackAnalyzer(proxyWrapper, testMethod, scenarios));
+				new RootMethodCallbackAnalyzer(proxyWrapper, testMethod, scenarios,testTables,srcTestJava));
 
 		proxyWrapper.setProxy(proxy);
 		proxyWrapper.runTest(testMethod);
@@ -64,7 +65,7 @@ public class TinyBddAnalyzer implements BehaviourFactory {
 	}
 
 	public List<TestTable> getCreatedTestTables() {
-		return new ArrayList<TestTable>();
+		return testTables;
 	}
 
 	public File sourceTestDirectory() {

@@ -103,9 +103,18 @@ public class TeztTinyTestdataScenarios extends TinyScenarioSupport<TeztTinyTestd
 	void stateA() {
 
 	}
-	
+
 	@Test
 	public void noExamples() {
+	}
+
+	@Test
+	public void spexWithExample() {
+		example.addOperation(2, 2, 4);
+		example.addOperation(3, 2, 5);
+	}
+
+	void addOperation(int operator1, int operator2, int sum) {
 	}
 
 }

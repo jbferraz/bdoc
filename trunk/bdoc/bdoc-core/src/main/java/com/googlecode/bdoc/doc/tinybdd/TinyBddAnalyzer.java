@@ -57,7 +57,7 @@ public class TinyBddAnalyzer implements BehaviourFactory {
 
 	private void reset() {
 		scenarios = new ArrayList<Scenario>();
-		
+		testTables = new ArrayList<TestTable>();
 	}
 
 	public List<Scenario> getCreatedScenarios() {

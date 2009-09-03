@@ -17,7 +17,7 @@ import pensjonsberegning.bdoc.Story;
  */
 @Ref(Story.BEREGNING_AV_ALDERSPENSJON)
 @RefClass(Sluttpoengtall.class)
-public class TestSluttpoengtallBehaviour {
+public class TestSluttpoengtallBehaviour extends ScenarioSupport<TestSluttpoengtallBehaviour>{
 
 	@Test
 	public void erGjennomsnittetAvDe20HoeyestePoengtallene() {
@@ -25,21 +25,21 @@ public class TestSluttpoengtallBehaviour {
 		poentallRekke.addAll(asList(1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d, 5d, 6d, 7d, 8d, 1d, 2d, 3d, 4d));
 		poentallRekke.addAll(asList(1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d));
 
-		eksempelPaaSluttpoengtallberegning("Rekke med 35 poengtall", poentallRekke, 4.1);
+		eksempel.sluttpoengtallberegning("Rekke med 35 poengtall", poentallRekke, 4.1);
 	}
 
 	@Test
 	public void erSnittetAvPoengtalleneNaarAntallPoengtallEr20EllerMindre() {
-		eksempelPaaSluttpoengtallberegning("Rekke med et poengtall", asList(1d), 1);
-		eksempelPaaSluttpoengtallberegning("Rekke med to poengtall", asList(1d, 2d), 1.5);
+		eksempel.sluttpoengtallberegning("Rekke med et poengtall", asList(1d), 1);
+		eksempel.sluttpoengtallberegning("Rekke med to poengtall", asList(1d, 2d), 1.5);
 
 		List<Double> poentallRekke = asList(5d, 5d, 5d, 5d, 5d, 
 				6d, 6d, 6d, 6d, 6d, 6d, 6d, 6d, 6d, 6d, 
 				7d, 7d, 7d, 7d, 7d);
-		eksempelPaaSluttpoengtallberegning("Rekke med 20 poengtall", poentallRekke, 6);
+		eksempel.sluttpoengtallberegning("Rekke med 20 poengtall", poentallRekke, 6);
 	}
 
-	public void eksempelPaaSluttpoengtallberegning(String beskrivelse, List<Double> pensjonspoengtall, double sluttpoengtall) {
+	public void sluttpoengtallberegning(String beskrivelse, List<Double> pensjonspoengtall, double sluttpoengtall) {
 		assertEquals(beskrivelse, sluttpoengtall, Sluttpoengtall.beregn(pensjonspoengtall), .001);
 	}
 

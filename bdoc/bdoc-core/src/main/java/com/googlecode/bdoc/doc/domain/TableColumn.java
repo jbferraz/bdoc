@@ -24,6 +24,9 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TableColumn {
 
 	private String value;
@@ -40,4 +43,20 @@ public class TableColumn {
 	public String toString() {
 		return value;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return (obj instanceof TableColumn) && value.equals(((TableColumn) obj).value);
+	}
+
+	public static List<TableColumn> columns(String... header) {
+		List<TableColumn> result = new ArrayList<TableColumn>();
+
+		for (String headerCol : header) {
+			result.add(new TableColumn(headerCol));
+		}
+
+		return result;
+	}
+
 }

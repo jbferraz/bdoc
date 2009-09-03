@@ -56,9 +56,10 @@ public class TestTable extends Statement {
 		headerColumns.add(tableColumn);
 	}
 
-	public void addCollectionToRows(Collection<Object> collection) {
+	public void addCollectionToRows(Collection<? extends Object> collection) {
 		for (Object object : collection) {
-			addRow( new TableRow( object ) );
+			addRow(new TableRow(object));
 		}
 	}
+
 }

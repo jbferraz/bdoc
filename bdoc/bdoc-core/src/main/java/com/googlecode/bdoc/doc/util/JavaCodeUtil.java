@@ -188,7 +188,7 @@ public class JavaCodeUtil {
 	 *            to look for
 	 * @return name of arguments in methodName
 	 */
-	public static List<String> getArgumentNames(TestClass testClass, String methodName, File srcTestJava) {
+	public static List<String> argumentNames(TestClass testClass, String methodName, File srcTestJava) {
 		
 		String methodSignature = JavaSourceMethodSignatureFinder.getSignature(methodName, testClass.getSource(srcTestJava));
 		

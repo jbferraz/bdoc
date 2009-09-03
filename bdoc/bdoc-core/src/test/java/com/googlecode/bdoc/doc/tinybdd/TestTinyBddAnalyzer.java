@@ -25,6 +25,7 @@
 package com.googlecode.bdoc.doc.tinybdd;
 
 import static com.googlecode.bdoc.doc.domain.Scenario.part;
+import static com.googlecode.bdoc.doc.domain.TableColumn.columns;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -139,13 +140,30 @@ public class TestTinyBddAnalyzer {
 	public void shouldResetScenariosBetweenEachRun() {
 		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "simpleGivenWhenThen");
 		bddAnalyzer.analyze(new TestMethod(TeztTinyTestdataScenarios.class, "noExamples"));
-		assertTrue( bddAnalyzer.getCreatedScenarios().isEmpty() );
+		assertTrue(bddAnalyzer.getCreatedScenarios().isEmpty());
 	}
+
+	@Test
+	public void shouldCreateTestTableForTinyBddSyntax() {
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "spexWithExample");
+		assertFalse(bddAnalyzer.getCreatedTestTables().isEmpty());
+		TestTable testTable = bddAnalyzer.getCreatedTestTables().get(0);
+		assertEquals("addOperation", testTable.getSentence());
+		assertEquals(columns("operator1", "operator2", "sum"), testTable.getHeaderColumns());
+		assertEquals(columns("2", "2", "4"), testTable.getRows().get(0).getColumns());
+		assertEquals(columns("3", "2", "5"), testTable.getRows().get(1).getColumns());
+	}
+
+	// Benytte syntakt example.caculation
+	// Skille på createScenarioKeyword og createExampleMarker
 
 	// should add table for a scenario, if used in input arg
 
 	// shouldRegisterTesttable
 
 	// shouldRegisterTwoScenariosInTheSameTest
+
+	// test to testtables i samme spec
+	// test to scenarioer etterhverandre i samme spec
 
 }

@@ -37,6 +37,7 @@ import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.ExpressionStatementTree;
 import com.sun.source.tree.ExpressionTree;
 import com.sun.source.tree.IdentifierTree;
+import com.sun.source.tree.LiteralTree;
 import com.sun.source.tree.MemberSelectTree;
 import com.sun.source.tree.MethodInvocationTree;
 import com.sun.source.tree.MethodTree;
@@ -151,6 +152,8 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 				Name name = identifierTree.getName();
 				String camelCaseSentence = name.toString();
 				if (Scenario.Pattern.isScenarioKeywordOrAnd(camelCaseSentence)) {
+					String argumentString = extractArgs(methodInvocationTree);
+					camelCaseSentence = camelCaseSentence.concat(argumentString);
 					return camelCaseSentence;
 				}
 			} else if (kind.equals(Kind.MEMBER_SELECT)) {
@@ -164,12 +167,31 @@ public class CodeAnalyzerTreeVisitor extends TreePathScanner<Object, Trees> {
 					String camelCaseSentence = name2.toString();
 					if (Scenario.Pattern.isScenarioKeywordOrAnd(camelCaseSentence)) {
 						camelCaseSentence = camelCaseSentence.concat(StringUtils.capitalize(name.toString()));
+						String argumentString = extractArgs(methodInvocationTree);
+						camelCaseSentence = camelCaseSentence.concat(argumentString);
 						return camelCaseSentence;
 					}
 				}
 			}
 		}
 		return null;
+	}
+
+	private String extractArgs(MethodInvocationTree methodInvocationTree) {
+		List<? extends ExpressionTree> arguments = methodInvocationTree.getArguments();
+		String argumentString = "";
+		for (ExpressionTree argument : arguments) {
+			Kind kind = argument.getKind();
+			if (kind.equals(Kind.STRING_LITERAL)) {
+				LiteralTree literalTree = (LiteralTree) argument;
+				String value = (String) literalTree.getValue();
+				argumentString = argumentString.concat(StringUtils.capitalize(value.toString()));
+			} else {
+				argumentString = argumentString.concat(StringUtils.capitalize(argument.toString()));
+			}
+
+		}
+		return argumentString;
 	}
 
 }

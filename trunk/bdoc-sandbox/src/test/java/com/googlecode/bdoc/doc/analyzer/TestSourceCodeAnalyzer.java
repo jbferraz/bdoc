@@ -29,6 +29,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.util.List;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.googlecode.bdoc.sandbox.BConst;
@@ -40,19 +41,28 @@ import com.googlecode.bdoc.sandbox.BConst;
  */
 public class TestSourceCodeAnalyzer {
 
+	private static File file;
+
+	@BeforeClass
+	public static void beforeClass() {
+		file = getFile(SomeBehavior.class);
+		ClassInfo classInfo = SourceCodeAnalyzer.analyze(file);
+	}
+
 	private static File getFile(Class<?> c) {
 		return new File(BConst.SRC_TEST_JAVA, c.getName().replace('.', '/') + ".java");
 	}
 
 	@Test
 	public void shouldFindNameOfClassUnderTest() {
-		ClassInfo classInfo = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class));
+		ClassInfo classInfo = SourceCodeAnalyzer.analyze(file);
 		assertEquals("SomeBehavior", classInfo.getName());
 	}
 
 	@Test
 	public final void shouldOnlyFindMethodsMarkedWithTest() {
-		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+		ClassInfo classInfo = SourceCodeAnalyzer.analyze(file);
+		List<MethodInfo> methodInfos = classInfo.getMethods();
 
 		assertEquals(6, methodInfos.size());
 		assertEquals("shouldFindLocale", methodInfos.get(0).getName());
@@ -64,7 +74,8 @@ public class TestSourceCodeAnalyzer {
 
 	@Test
 	public final void shouldTellIfMethodAreMarkedWithIgnore() {
-		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+		ClassInfo classInfo = SourceCodeAnalyzer.analyze(file);
+		List<MethodInfo> methodInfos = classInfo.getMethods();
 
 		assertEquals(false, methodInfos.get(0).isIgnored());
 		assertEquals(false, methodInfos.get(1).isIgnored());
@@ -74,7 +85,8 @@ public class TestSourceCodeAnalyzer {
 
 	@Test
 	public final void shouldFindScenarios() {
-		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+		ClassInfo classInfo = SourceCodeAnalyzer.analyze(file);
+		List<MethodInfo> methodInfos = classInfo.getMethods();
 
 		assertEquals(0, methodInfos.get(0).getScenarios().size());
 		assertEquals(1, methodInfos.get(1).getScenarios().size());
@@ -84,7 +96,8 @@ public class TestSourceCodeAnalyzer {
 
 	@Test
 	public final void shouldFindScenariosParts() {
-		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+		ClassInfo classInfo = SourceCodeAnalyzer.analyze(file);
+		List<MethodInfo> methodInfos = classInfo.getMethods();
 
 		assertEquals(1, methodInfos.get(1).getScenarios().get(0).getGivens().length);
 		assertEquals(1, methodInfos.get(1).getScenarios().get(0).getWhens().length);
@@ -93,7 +106,8 @@ public class TestSourceCodeAnalyzer {
 
 	@Test
 	public final void shouldFindScenariosPartsAndHandleAnds() {
-		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+		ClassInfo classInfo = SourceCodeAnalyzer.analyze(file);
+		List<MethodInfo> methodInfos = classInfo.getMethods();
 
 		assertEquals(3, methodInfos.get(4).getScenarios().get(0).getGivens().length);
 		assertEquals(1, methodInfos.get(4).getScenarios().get(0).getWhens().length);
@@ -102,7 +116,8 @@ public class TestSourceCodeAnalyzer {
 
 	@Test
 	public final void shouldFindAllScenariosInMethod() {
-		List<MethodInfo> methodInfos = SourceCodeAnalyzer.analyze(getFile(SomeBehavior.class)).getMethods();
+		ClassInfo classInfo = SourceCodeAnalyzer.analyze(file);
+		List<MethodInfo> methodInfos = classInfo.getMethods();
 
 		assertEquals(2, methodInfos.get(5).getScenarios().size());
 
@@ -115,4 +130,13 @@ public class TestSourceCodeAnalyzer {
 		assertEquals(1, methodInfos.get(5).getScenarios().get(1).getThens().length);
 	}
 
+	@Test
+	public final void shouldFindParameters() {
+		ClassInfo classInfo = SourceCodeAnalyzer.analyze(file);
+		List<MethodInfo> methodInfos = classInfo.getMethods();
+		String given = methodInfos.get(5).getScenarios().get(0).getGivens()[0];
+		assertEquals("givenAnAccountWithInitialBalance0", given);
+		given = methodInfos.get(4).getScenarios().get(0).getGivens()[1];
+		assertEquals("andPushedIsCalledWithFoo", given);
+	}
 }

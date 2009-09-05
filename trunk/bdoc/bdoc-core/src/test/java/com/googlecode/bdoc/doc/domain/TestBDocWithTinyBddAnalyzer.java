@@ -47,7 +47,6 @@ public class TestBDocWithTinyBddAnalyzer {
 		Statement spec2= classBehaviour.getStatements().get(1);
 
 		assertEquals( Scenario.parts( "given stateA","when action","then ensure"), spec1.getScenarios().get(0).getParts() );
-		assertEquals( Scenario.parts( "given stateB","when action","then ensure"), spec2.getScenarios().get(0).getParts() );
-		
+		assertEquals( Scenario.parts( "given stateB","when action","then ensure"), spec2.getScenarios().get(0).getParts() );		
 	}	
 }

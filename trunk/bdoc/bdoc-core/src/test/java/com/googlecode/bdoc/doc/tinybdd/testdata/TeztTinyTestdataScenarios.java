@@ -26,7 +26,9 @@ package com.googlecode.bdoc.doc.tinybdd.testdata;
 
 import static org.junit.Assert.assertEquals;
 
+import static java.util.Arrays.asList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -116,7 +118,7 @@ public class TeztTinyTestdataScenarios extends TinyScenarioSupport<TeztTinyTestd
 
 	void addOperation(int operator1, int operator2, int sum) {
 	}
-	
+
 	@Test
 	public void specWithTwoScenarios() {
 		// first scenario
@@ -127,6 +129,17 @@ public class TeztTinyTestdataScenarios extends TinyScenarioSupport<TeztTinyTestd
 		given.stateA();
 		when.stateA();
 		then.stateA();
+	}
+
+	// -------------------------------------------------------------------------------------------
+
+	@Test
+	public void hasScenarioWithCollectionAsArgument() {
+		given.listWith(items());
+	}
+
+	List<String> items() {
+		return asList("item1", "item2", "item3");
 	}
 
 }

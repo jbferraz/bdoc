@@ -168,6 +168,7 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 			for (Object arg : args) {
 				if (arg instanceof Collection) {
 					Collection collection = (Collection) arg;
+								
 					if (methodCallReturnValues.containsKey(arg)) {
 						TestTable testTable = new TestTable(methodCallReturnValues.get(arg));
 						testTable.addCollectionToRows(collection);

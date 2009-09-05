@@ -28,6 +28,7 @@ import static com.googlecode.bdoc.doc.domain.BDoc.TEST_METHOD_PREFIX;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.beanutils.MethodUtils;
@@ -37,8 +38,8 @@ public class TestMethod {
 	private Method method;
 	private TestClass testClass;
 
-	private List<Scenario> scenarios;
-	private List<TestTable> testTables;
+	private List<Scenario> scenarios = new ArrayList<Scenario>();
+	private List<TestTable> testTables = new ArrayList<TestTable>();
 	private TestMethodReference testMethodReference;
 
 	public TestMethod(TestClass testClass, Method method,TestMethodReference testMethodReference) {
@@ -184,5 +185,14 @@ public class TestMethod {
 
 	public void setTestMethodReference(TestMethodReference testMethodReference) {
 		this.testMethodReference = testMethodReference;
+	}
+
+	public void addScenario(Scenario scenario) {
+		this.scenarios.add(scenario);
+		
+	}
+
+	public void addTestTable(TestTable testTable) {
+		this.testTables.add( testTable );
 	}
 }

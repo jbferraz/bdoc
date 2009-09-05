@@ -158,7 +158,7 @@ public class Scenario {
 		}
 	}
 
-	private final List<Part> part = new ArrayList<Part>();
+	private final List<Part> part = new ArrayList<Part>();	
 
 	public Scenario(String camelCaseSentence) {
 		Pattern pattern = Pattern.find(camelCaseSentence);
@@ -217,4 +217,5 @@ public class Scenario {
 		}
 		return result;
 	}
+
 }

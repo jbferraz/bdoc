@@ -6,6 +6,7 @@ public class ScenarioSupport<T> {
 	T naar = createScenarioKeywordWhen("naar");
 	T saa = createScenarioKeywordThen("saa");
 	T og = createScenarioKeywordGeneric("og");
+	T med = createScenarioKeywordGeneric("med");
 	T hvor = createScenarioKeywordGeneric("hvor");
 	T samtidig = createScenarioKeywordGeneric("samtidig");
 

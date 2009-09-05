@@ -23,39 +23,29 @@ public class TestFolketrygdberegningtjenesteBehaviour extends ScenarioSupport<Te
 
 	private MedlemAvFolketrygden person;
 	private Alderspensjon alderspensjon;
-	private List<Inntekt> opptjening;
 
 	@Test
 	public void skal_beregne_alderspensjon_for_et_medlem_av_folketrygden() {
-
 		gitt.et_medlem_av_folketrygden_med_silvitstatus_enslig();
-		og._40_aar_med_maksimal_opptjening();
+		og.inntekt_lik(_40_aar_med_maksimal_opptjening());
 		naar.alderspensjon_blir_beregnet_for_aaret(2009);
 		saa.skal_aarlig_alderspensjon_vaere_lik(333823);
 		hvor.tilleggspensjonen_utgjoer(261817);
 		og.grunnpensjon_utgjoer(Grunnbeloep._2009);
 		samtidig.skal_sluttpoengtallet_vaere_beregnet_til(8.33);
 		og.pensjonsprosenten_skal_vaere_beregnet_til(0.4365);
-
-		for (Inntekt inntekt : opptjening) {
-			_40AarMedMaksimalOpptjening(inntekt.aar(), inntekt.beloep());
-		}
+	}
+	
+	void inntekt_lik(List<Inntekt> inntekt) {
+		person.setInntekt(inntekt);
 	}
 
-	/**
-	 * Forellpig BDoc-triks for å kunne dokumentere tabell med inntekt. Her er
-	 * det rom for forbedring.
-	 */
-	void _40AarMedMaksimalOpptjening(int aar, double beloep) {
-	}
-
-	void _40_aar_med_maksimal_opptjening() {
+	List<Inntekt> _40_aar_med_maksimal_opptjening() {
 		List<Inntekt> inntekt = new ArrayList<Inntekt>();
 		for (int aar = 1970; aar < 2010; aar++) {
 			inntekt.add(new Inntekt(aar, (grunnbeloepTabell.gjennomsnittligGrunnbeloepFor(aar) * 12)));
 		}
-		opptjening = inntekt;
-		person.setInntekt(opptjening);
+		return inntekt;
 	}
 
 	void gittInntektLik(List<Inntekt> inntekt) {

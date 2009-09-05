@@ -33,11 +33,16 @@ import java.util.List;
  */
 public class TestTable extends Statement {
 
-	ArrayList<TableColumn> headerColumns = new ArrayList<TableColumn>();
+	private List<TableColumn> headerColumns = new ArrayList<TableColumn>();
 	private List<TableRow> rows = new ArrayList<TableRow>();
 
 	public TestTable(String camelCaseDescription) {
 		super(camelCaseDescription);
+	}
+
+	public TestTable(String camelCaseDescription, List<TableColumn> headerColumns) {
+		super(camelCaseDescription);
+		this.headerColumns = headerColumns;
 	}
 
 	public List<TableRow> getRows() {
@@ -60,6 +65,11 @@ public class TestTable extends Statement {
 		for (Object object : collection) {
 			addRow(new TableRow(object));
 		}
+	}
+
+	public void setHeaderColumns(List<TableColumn> columns) {
+		this.headerColumns = columns;
+		
 	}
 
 }

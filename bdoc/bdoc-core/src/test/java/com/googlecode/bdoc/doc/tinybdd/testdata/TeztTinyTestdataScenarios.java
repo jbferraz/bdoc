@@ -116,5 +116,17 @@ public class TeztTinyTestdataScenarios extends TinyScenarioSupport<TeztTinyTestd
 
 	void addOperation(int operator1, int operator2, int sum) {
 	}
+	
+	@Test
+	public void specWithTwoScenarios() {
+		// first scenario
+		given.stateA();
+		when.stateA();
+		then.stateA();
+		// second scenario
+		given.stateA();
+		when.stateA();
+		then.stateA();
+	}
 
 }

@@ -33,6 +33,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -159,6 +160,13 @@ public class TestTinyBddAnalyzer {
 		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "spexWithExample");
 		bddAnalyzer.analyze(new TestMethod(TeztTinyTestdataScenarios.class, "noExamples"));
 		assertTrue(bddAnalyzer.getCreatedTestTables().isEmpty());
+	}
+	
+	@Test
+	@Ignore
+	public void shouldRecognizeTwoScenariosSplittedByThenFollowingGiven() {
+		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "specWithTwoScenarios");
+		assertEquals( 2, bddAnalyzer.getCreatedScenarios().size() );
 	}
 
 	// Benytte syntakt example.caculation

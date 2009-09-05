@@ -81,10 +81,10 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 						+ args.length + "]");
 			}
 
-			String keyword = String.valueOf(args[0]);
-			boolean indented = method.getName().equals( "createScenarioKeywordGeneric" );
+			String keyword = method.getName().replace(CREATE_SCENARIO_KEYWORD, "");
+			String localizedKeyword = String.valueOf(args[0]);
 
-			return forClass(testMethod.clazz()).createProxyWith(new ScenarioKeywordAnalyzer(keyword, indented));
+			return forClass(testMethod.clazz()).createProxyWith(new ScenarioKeywordAnalyzer(keyword, localizedKeyword));
 		} else if (isExampleKeywordFactory(method)) {
 
 			if (1 != args.length) {
@@ -110,7 +110,7 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 	}
 
 	private boolean isScenarioKeywordFactory(Method method) {
-		boolean startsWithScenarioKeyword = method.getName().startsWith("createScenarioKeyword");
+		boolean startsWithScenarioKeyword = method.getName().startsWith(CREATE_SCENARIO_KEYWORD);
 
 		return startsWithScenarioKeyword && method.getReturnType().isAssignableFrom(testMethod.clazz());
 	}
@@ -150,18 +150,21 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 
 	public class ScenarioKeywordAnalyzer extends AbstractKeywordAnalyzer {
 		boolean indented;
+		String keyword;
 
-		public ScenarioKeywordAnalyzer(String keyword, boolean indented) {
-			super(keyword);
-			this.indented = indented;
+		public ScenarioKeywordAnalyzer(String keyword, String localizedKeyword) {
+			super(localizedKeyword);
+			this.keyword = keyword;
+			this.indented = !asList("Given", "When", "Then").contains(keyword);
+			debug("Analyzer: [keyword = " + keyword + "] [ localizedKeyword = " + localizedKeyword + "] [indented = " + indented + "]");
 		}
 
 		@Override
 		@SuppressWarnings("unchecked")
 		void addPartFrom(String methodName, List<? extends Object> args) {
-			debug(keyword + "." + methodName);
+			debug(localizedKeyword + "." + methodName);
 
-			Part scenarioPart = new Part(keyword + " " + methodName);
+			Part scenarioPart = new Part(localizedKeyword + " " + methodName);
 			for (Object arg : args) {
 				if (arg instanceof Collection) {
 					Collection collection = (Collection) arg;
@@ -181,18 +184,22 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 				currentScenario = new Scenario(asList(scenarioPart));
 				scenarios.add(currentScenario);
 			} else {
-				currentScenario.addPart(scenarioPart, indented);
+				if (keyword.equals("Given")) {
+					currentScenario = new Scenario(asList(scenarioPart));
+					scenarios.add(currentScenario);
+				} else {
+					currentScenario.addPart(scenarioPart, indented);
+				}
 			}
 		}
-
 	}
 
 	// --------------------------------------------------------------------------------------
 	public abstract class AbstractKeywordAnalyzer implements MethodInterceptor {
-		protected String keyword;
+		protected String localizedKeyword;
 
-		public AbstractKeywordAnalyzer(String keyword) {
-			this.keyword = keyword;
+		public AbstractKeywordAnalyzer(String localizedKeyword) {
+			this.localizedKeyword = localizedKeyword;
 		}
 
 		public Object intercept(Object object, Method method, Object[] args, MethodProxy proxy) throws Throwable {

@@ -43,31 +43,31 @@ public class TestPensjonspoengBehaviour extends ScenarioSupport<TestPensjonspoen
 
 	@Test
 	public void forAarene1967Til1970BleInntektInntilAatteGangerGrunnbeloepetMedregnet() {
-		eksempelPaaPensjonspoengberegning("Inntekt på 4G skal gi 3 pensjonspoeng", 1967, 4 * Grunnbeloep._1967, 3);
-		eksempelPaaPensjonspoengberegning("Inntekt på 8G skal gi maksgrensen på 7 pensjonspoeng", 1967, 8 * Grunnbeloep._1967, 7);
-		eksempelPaaPensjonspoengberegning("Inntekt på 12G skal begrensens til maksgrensen på 7 pensjonspoeng", 1967,
+		eksempel.pensjonspoengberegning("Inntekt på 4G skal gi 3 pensjonspoeng", 1967, 4 * Grunnbeloep._1967, 3);
+		eksempel.pensjonspoengberegning("Inntekt på 8G skal gi maksgrensen på 7 pensjonspoeng", 1967, 8 * Grunnbeloep._1967, 7);
+		eksempel.pensjonspoengberegning("Inntekt på 12G skal begrensens til maksgrensen på 7 pensjonspoeng", 1967,
 				12 * Grunnbeloep._1967, 7);
 	}
 
 	@Test
 	public void forAarene1971Til1991BleInntektBegrensetTil12_G_HvorDenDelenAvInntektenSomOversteg8_G_kunBleMedregnetMedEnTredjedel() {
-		eksempelPaaPensjonspoengberegning("Inntekt på 8G skal gi 7 pensjonspoeng", 1971, 8 * Grunnbeloep._1971, 7);
-		eksempelPaaPensjonspoengberegning("Inntekt på 10G skal gi 7.67 pensjonspoeng", 1971, 10 * Grunnbeloep._1971, 7.67);
-		eksempelPaaPensjonspoengberegning("Inntekt på 12G skal gi maksgrensen på 8.33 pensjonspoeng", 1971, 12 * Grunnbeloep._1971,
+		eksempel.pensjonspoengberegning("Inntekt på 8G skal gi 7 pensjonspoeng", 1971, 8 * Grunnbeloep._1971, 7);
+		eksempel.pensjonspoengberegning("Inntekt på 10G skal gi 7.67 pensjonspoeng", 1971, 10 * Grunnbeloep._1971, 7.67);
+		eksempel.pensjonspoengberegning("Inntekt på 12G skal gi maksgrensen på 8.33 pensjonspoeng", 1971, 12 * Grunnbeloep._1971,
 				8.33);
-		eksempelPaaPensjonspoengberegning("Inntekt på 14G skal begrenses til maksgrensen på 8.33 pensjonspoeng", 1971,
+		eksempel.pensjonspoengberegning("Inntekt på 14G skal begrenses til maksgrensen på 8.33 pensjonspoeng", 1971,
 				14 * Grunnbeloep._1971, 8.33);
 	}
 
 	@Test
 	public void fra1992MedregnesBareEnTredjedelAvInntektenSomLiggerMellom6Og12_G() {
-		eksempelPaaPensjonspoengberegning("Inntekt på 4G skal gi 3 pensjonspoeng", 1992, 4 * Grunnbeloep._1992, 3);
-		eksempelPaaPensjonspoengberegning("Inntekt på 6G skal gi 5 pensjonspoeng", 1992, 6 * Grunnbeloep._1992, 5);
-		eksempelPaaPensjonspoengberegning("Inntekt på 8G skal gi 5.67 pensjonspoeng", 1992, 8 * Grunnbeloep._1992, 5.67);
-		eksempelPaaPensjonspoengberegning("Inntekt på 12G skal gi maksgrensen på 7 pensjonspoeng", 1992, 12 * Grunnbeloep._1992, 7);
+		eksempel.pensjonspoengberegning("Inntekt på 4G skal gi 3 pensjonspoeng", 1992, 4 * Grunnbeloep._1992, 3);
+		eksempel.pensjonspoengberegning("Inntekt på 6G skal gi 5 pensjonspoeng", 1992, 6 * Grunnbeloep._1992, 5);
+		eksempel.pensjonspoengberegning("Inntekt på 8G skal gi 5.67 pensjonspoeng", 1992, 8 * Grunnbeloep._1992, 5.67);
+		eksempel.pensjonspoengberegning("Inntekt på 12G skal gi maksgrensen på 7 pensjonspoeng", 1992, 12 * Grunnbeloep._1992, 7);
 	}
 
-	public void eksempelPaaPensjonspoengberegning(String beskrivelse, int inntektsaar, int inntekt, double pensjonspoeng) {
+	public void pensjonspoengberegning(String beskrivelse, int inntektsaar, int inntekt, double pensjonspoeng) {
 		assertEquals(beskrivelse, pensjonspoeng, this.pensjonspoeng.beregn(inntektsaar, inntekt), .001);
 	}
 

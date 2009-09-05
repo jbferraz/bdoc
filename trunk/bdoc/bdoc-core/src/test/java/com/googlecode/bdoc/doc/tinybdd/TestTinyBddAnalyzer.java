@@ -59,7 +59,7 @@ public class TestTinyBddAnalyzer {
 
 		assertFalse(bddAnalyzer.getCreatedScenarios().isEmpty());
 
-		List<Part> expectedParts = asList(part("Given criteriaA"), part("When actionA"), part("Then ensureA"));
+		List<Part> expectedParts = asList(part("given criteriaA"), part("when actionA"), part("then ensureA"));
 		assertEquals(new Scenario(expectedParts), bddAnalyzer.getCreatedScenarios().get(0));
 	}
 
@@ -163,7 +163,6 @@ public class TestTinyBddAnalyzer {
 	}
 	
 	@Test
-	@Ignore
 	public void shouldRecognizeTwoScenariosSplittedByThenFollowingGiven() {
 		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "specWithTwoScenarios");
 		assertEquals( 2, bddAnalyzer.getCreatedScenarios().size() );

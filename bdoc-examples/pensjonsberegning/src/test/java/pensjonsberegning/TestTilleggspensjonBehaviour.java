@@ -22,6 +22,14 @@ public class TestTilleggspensjonBehaviour extends ScenarioSupport<TestTilleggspe
 
 	@Test
 	public void tilleggspensjonErLikGrunnbeloep_x_Pensjonsprosent_x_Sluttpoengtall() {
+/* 
+    Forslag til ny syntax:
+
+  		gitt( grunnbeloep = 10000 );
+		og( pensjonsprosent = 0.25 );
+		naar( "tillegspensjon beregnes", tilleggspensjon = new Tilleggspensjon(grunnbeloep, pensjonsprosent, sluttpoengtall) );
+		saa.skal( tilleggspensjon.beregnet() ).vaere_lik( 125000 ) );
+*/		
 		gitt.grunnbeloepLik(100000);
 		og.pensjonsprosentLik(0.25);
 		og.sluttpoengtallLik(5.0);

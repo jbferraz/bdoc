@@ -14,18 +14,18 @@ import pensjonsberegning.bdoc.RefClass;
  * 
  */
 @RefClass(GrunnbeloepTabell.class)
-public class TestGrunnbeloepTabellBehaviour {
+public class TestGrunnbeloepTabellBehaviour extends ScenarioSupport<TestGrunnbeloepTabellBehaviour>{
 
 	private GrunnbeloepTabell grunnbeloepRepository = new GrunnbeloepTabell();
 
 	@Test
 	public void inneholderGjennomsnittligGrunnbelopForAarene1967Til2008() {
 		for (int aar = 1967; aar < 2009; aar++) {
-			eksempelPaaGrunnbelopForEtGittAar(aar, grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(aar));
+			eksempel.grunnbelopForEtGittAar(aar, grunnbeloepRepository.gjennomsnittligGrunnbeloepFor(aar));
 		}
 	}
 
-	void eksempelPaaGrunnbelopForEtGittAar(Integer aar, Integer grunnbeloep) {
+	void grunnbelopForEtGittAar(Integer aar, Integer grunnbeloep) {
 		assertNotNull("Skal inneholde grunnbelop for " + aar, grunnbeloep);
 	}
 

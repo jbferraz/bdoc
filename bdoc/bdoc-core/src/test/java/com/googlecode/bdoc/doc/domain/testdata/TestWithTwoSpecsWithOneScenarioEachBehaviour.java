@@ -26,9 +26,9 @@ package com.googlecode.bdoc.doc.domain.testdata;
 
 public class TestWithTwoSpecsWithOneScenarioEachBehaviour {
 
-	private TestWithTwoSpecsWithOneScenarioEachBehaviour given = createScenarioKeyword("given", false);
-	private TestWithTwoSpecsWithOneScenarioEachBehaviour when = createScenarioKeyword("when", false);
-	private TestWithTwoSpecsWithOneScenarioEachBehaviour then = createScenarioKeyword("then", false);
+	private TestWithTwoSpecsWithOneScenarioEachBehaviour given = createScenarioKeywordGiven("given");
+	private TestWithTwoSpecsWithOneScenarioEachBehaviour when = createScenarioKeywordWhen("when");
+	private TestWithTwoSpecsWithOneScenarioEachBehaviour then = createScenarioKeywordThen("then");
 
 	@org.junit.Test
 	public void spec1() {
@@ -56,7 +56,15 @@ public class TestWithTwoSpecsWithOneScenarioEachBehaviour {
 	void ensure() {
 	}
 
-	public TestWithTwoSpecsWithOneScenarioEachBehaviour createScenarioKeyword(String keyword, boolean indent) {
+	public TestWithTwoSpecsWithOneScenarioEachBehaviour createScenarioKeywordGiven(String keyword) {
+		return this;
+	}
+
+	public TestWithTwoSpecsWithOneScenarioEachBehaviour createScenarioKeywordWhen(String keyword) {
+		return this;
+	}
+
+	public TestWithTwoSpecsWithOneScenarioEachBehaviour createScenarioKeywordThen(String keyword) {
 		return this;
 	}
 }

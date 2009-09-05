@@ -2,16 +2,28 @@ package pensjonsberegning;
 
 @SuppressWarnings("unchecked")
 public class ScenarioSupport<T> {
-	T gitt = createScenarioKeyword("gitt", false);
-	T naar = createScenarioKeyword("naar", false);
-	T saa = createScenarioKeyword("saa", false);
-	T og = createScenarioKeyword("og", true);
-	T hvor = createScenarioKeyword("hvor", true);
-	T samtidig = createScenarioKeyword("samtidig", true);
+	T gitt = createScenarioKeywordGiven("gitt");
+	T naar = createScenarioKeywordWhen("naar");
+	T saa = createScenarioKeywordThen("saa");
+	T og = createScenarioKeywordGeneric("og");
+	T hvor = createScenarioKeywordGeneric("hvor");
+	T samtidig = createScenarioKeywordGeneric("samtidig");
 
 	T eksempel = createExampleKeyword("eksempel");
 
-	public T createScenarioKeyword(String name, boolean indent) {
+	public T createScenarioKeywordGiven(String localizedGiven) {
+		return (T) this;
+	}
+
+	public T createScenarioKeywordWhen(String localizedWhen) {
+		return (T) this;
+	}
+
+	public T createScenarioKeywordThen(String localizedThen) {
+		return (T) this;
+	}
+
+	public T createScenarioKeywordGeneric(String localizedGeneric) {
 		return (T) this;
 	}
 

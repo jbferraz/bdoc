@@ -27,18 +27,34 @@ package com.googlecode.bdoc.doc.tinybdd.testdata;
 @SuppressWarnings("unchecked")
 public class TinyScenarioSupport<T> {
 
-	T given = createScenarioKeyword("given", false);
-	T when = createScenarioKeyword("when", false);
-	T then = createScenarioKeyword("then", false);
-	T and = createScenarioKeyword("and", true);
+	T given = createScenarioKeywordGiven("given");
+	T when = createScenarioKeywordWhen("when");
+	T then = createScenarioKeywordThen("then" );
+	T and = createScenarioKeywordGeneric("and");
 	T example = createExampleKeyword("example");
 
 	public T createScenarioKeyword(String scenarioPart, boolean indent) {
 		return (T) this;
 	}
 
+	public T createScenarioKeywordGiven(String localizedGiven) {
+		return (T) this;
+	}
+
+	public T createScenarioKeywordWhen(String localizedGiven) {
+		return (T) this;
+	}
+
+	public T createScenarioKeywordThen(String localizedGiven) {
+		return (T) this;
+	}
+
+	public T createScenarioKeywordGeneric(String localizedGiven) {
+		return (T) this;
+	}
+
 	public T createExampleKeyword(String keyword) {
 		return (T) this;
 	}
-	
+
 }

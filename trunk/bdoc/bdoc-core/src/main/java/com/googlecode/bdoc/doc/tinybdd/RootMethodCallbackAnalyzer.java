@@ -49,6 +49,7 @@ import com.googlecode.bdoc.doc.domain.Scenario.Part;
 
 public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 
+	private static final String CREATE_SCENARIO_KEYWORD = "createScenarioKeyword";
 	private TestClassProxyWrapper rootTestClassProxy;
 	private TestMethod testMethod;
 	private List<Scenario> scenarios;
@@ -74,13 +75,14 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 
 		if (isScenarioKeywordFactory(method)) {
 
-			if (2 != args.length) {
+			if (0 == args.length) {
 				throw new BDocException("Scenario keyword factory method [" + method.getName()
-						+ "] is required to have arguments ('scenario keyword [String]', 'indented [true|false]')");
+						+ "] is required to have one argument ('localized keyword [String]' ), number of arguments was ["
+						+ args.length + "]");
 			}
 
 			String keyword = String.valueOf(args[0]);
-			boolean indented = Boolean.TRUE.equals(args[1]);
+			boolean indented = method.getName().equals( "createScenarioKeywordGeneric" );
 
 			return forClass(testMethod.clazz()).createProxyWith(new ScenarioKeywordAnalyzer(keyword, indented));
 		} else if (isExampleKeywordFactory(method)) {
@@ -108,7 +110,9 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 	}
 
 	private boolean isScenarioKeywordFactory(Method method) {
-		return method.getName().startsWith("createScenarioKeyword") && method.getReturnType().isAssignableFrom(testMethod.clazz());
+		boolean startsWithScenarioKeyword = method.getName().startsWith("createScenarioKeyword");
+
+		return startsWithScenarioKeyword && method.getReturnType().isAssignableFrom(testMethod.clazz());
 	}
 
 	private boolean isExampleKeywordFactory(Method method) {

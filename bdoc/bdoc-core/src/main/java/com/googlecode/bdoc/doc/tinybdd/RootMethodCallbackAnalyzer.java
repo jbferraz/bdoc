@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.doc.tinybdd;
 
+import static com.googlecode.bdoc.doc.domain.TestTable.createTestTableFromObjectList;
 import static com.googlecode.bdoc.doc.tinybdd.ProxyFactory.forClass;
 import static com.googlecode.bdoc.doc.util.JavaCodeUtil.argumentNames;
 import static java.util.Arrays.asList;
@@ -168,13 +169,13 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 			for (Object arg : args) {
 				if (arg instanceof Collection) {
 					Collection collection = (Collection) arg;
-								
-					if (methodCallReturnValues.containsKey(arg)) {
-						TestTable testTable = new TestTable(methodCallReturnValues.get(arg));
-						testTable.addCollectionToRows(collection);
-						scenarioPart.addTestTable(testTable);
 
-						scenarioPart.appendArgument(methodCallReturnValues.get(arg));
+					if (methodCallReturnValues.containsKey(arg)) {
+						String tableDescription = methodCallReturnValues.get(arg);
+
+						scenarioPart.addArgumentTable( createTestTableFromObjectList(tableDescription, collection));
+
+						scenarioPart.appendArgument(tableDescription);
 					}
 				} else {
 					scenarioPart.appendArgument(arg);

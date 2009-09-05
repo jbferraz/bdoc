@@ -16,8 +16,8 @@ public class OpptjeningsAarTjeneste {
 
 		OpptjeningsAarListe result = new OpptjeningsAarListe();
 		for (Inntekt inntekt : medlem.getInntekt()) {
-			if (grunnbeloepTabell.gjennomsnittligGrunnbeloepFor(inntekt.aar()) < inntekt.beloep()) {
-				result.add(new OpptjeningsAar( inntekt.aar(), Pensjonspoeng.beregn(inntekt, grunnbeloepTabell) ) );
+			if (grunnbeloepTabell.gjennomsnittligGrunnbeloepFor(inntekt.getAar()) < inntekt.getBeloep()) {
+				result.add(new OpptjeningsAar( inntekt.getAar(), Pensjonspoeng.beregn(inntekt, grunnbeloepTabell) ) );
 			}
 		}
 

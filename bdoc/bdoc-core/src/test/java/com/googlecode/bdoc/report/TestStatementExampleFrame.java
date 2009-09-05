@@ -26,20 +26,20 @@ package com.googlecode.bdoc.report;
 
 import static com.googlecode.bdoc.doc.domain.TableColumn.columns;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
+import static java.util.Arrays.asList;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
 import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Statement;
-import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.domain.TableRow;
 import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.TestTable;
@@ -67,16 +67,30 @@ public class TestStatementExampleFrame {
 		scenarioWithIndentedParts.getParts().get(0).addIndentedPart(new Part("andStateC"));
 		method.getScenarios().add(scenarioWithIndentedParts);
 
-		//# Putting the examples from the method   
+		//# Adding scenario with testtables as argument in 
+		Part partWithTestTableAsArgument = new Part( "given listArgument");
+		
+		TestTable listArgument = new TestTable("Income", columns("year", "amount" ));
+		listArgument.addRow(new TableRow( columns("2000", "90000" ) ));
+		listArgument.addRow(new TableRow( columns("2001", "110000" ) ));
+		partWithTestTableAsArgument.addArgumentTable(listArgument);
+		
+		Scenario scenarioArgumentsAsTestTable = new Scenario(asList( partWithTestTableAsArgument ));
+		method.getScenarios().add(scenarioArgumentsAsTestTable);
+		
+		//# Creating statement with a lot of examples put on the method   
 		statement = new Statement(method);
 
 		html = new StatementExampleFrame("ClassWithTestTable", statement, new BDocConfig()).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
+		
+		//need css to see what's going on
+		writeStringToFile(new File("target/stylesheet.css"), BDocReportUtils.createContentFrom("css.ftl", new HashMap<String, Object>()) );		
 	}
 
 	@Test
 	public void shouldPresentTestTables() {
-		assertXPathContains("Example on sum of two values", "//ul[@class='testTable']", html);
+		assertXPathContains("Example on sum of two values", "//body", html);
 	}
 
 	@Test
@@ -86,9 +100,15 @@ public class TestStatementExampleFrame {
 
 	@Test
 	public void shouldPresentFormatedHeaderColumnsOfTestTables() {
-		assertXPathContains("Value 1", "//ul[@class='testTable']", html);
-		assertXPathContains("Value 2", "//ul[@class='testTable']", html);
-		assertXPathContains("Sum", "//ul[@class='testTable']", html);
+		assertXPathContains("Value 1", "//body", html);
+		assertXPathContains("Value 2", "//body", html);
+		assertXPathContains("Sum", "//body", html);
+	}
+	
+	@Test
+	public void shouldPresentListArgumentForScenarioParts() {
+		assertXPathContains("Income", "//body", html);
+		assertXPathContains("110000", "//body", html);
 	}
 
 	@Test

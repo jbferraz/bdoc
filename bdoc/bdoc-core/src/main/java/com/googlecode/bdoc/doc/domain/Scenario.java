@@ -41,7 +41,7 @@ public class Scenario {
 
 	public static class Part {
 		private String camelCaseDescription;
-		private List<TestTable> testTables = new ArrayList<TestTable>();
+		private List<TestTable> argumentTables = new ArrayList<TestTable>();
 		private List<Part> indentedParts = new ArrayList<Part>();
 
 		public Part(String camelCaseDescription) {
@@ -75,12 +75,12 @@ public class Scenario {
 			return camelCaseDescription;
 		}
 
-		public List<TestTable> getTestTables() {
-			return testTables;
+		public List<TestTable> getArgumentTables() {
+			return argumentTables;
 		}
 
-		public void addTestTable(TestTable testTable) {
-			testTables.add(testTable);
+		public void addArgumentTable(TestTable testTable) {
+			argumentTables.add(testTable);
 		}
 
 		public void appendArgument(Object arg) {
@@ -158,20 +158,20 @@ public class Scenario {
 		}
 	}
 
-	private final List<Part> part = new ArrayList<Part>();	
+	private final List<Part> parts = new ArrayList<Part>();	
 
 	public Scenario(String camelCaseSentence) {
 		Pattern pattern = Pattern.find(camelCaseSentence);
 		Validate.notNull(pattern, "pattern not found for " + camelCaseSentence);
 
 		for (String ln : SentenceToLineSplit.split(camelCaseSentence, pattern.keywords[1], pattern.keywords[2])) {
-			part.add(new Part(ln));
+			parts.add(new Part(ln));
 		}
 	}
 
 	public Scenario(List<Part> parts) {
 		Validate.isTrue(!parts.isEmpty(), "Can't create scenario with no parts");
-		part.addAll(parts);
+		this.parts.addAll(parts);
 	}
 
 	public Scenario(TestMethod testMethod) {
@@ -180,24 +180,40 @@ public class Scenario {
 
 	@Override
 	public boolean equals(Object obj) {
-		return (obj instanceof Scenario) && ((Scenario) obj).part.equals(part);
+		return (obj instanceof Scenario) && ((Scenario) obj).parts.equals(parts);
 	}
 
 	public List<Part> getParts() {
-		return part;
+		return parts;
 	}
 
 	@Override
 	public String toString() {
-		return part.toString();
+		return parts.toString();
 	}
 
 	public void addPart(Part scenarioPart, boolean indented) {
 		if (indented) {
-			part.get(part.size() - 1).addIndentedPart(scenarioPart);
+			parts.get(parts.size() - 1).addIndentedPart(scenarioPart);
 		} else {
-			part.add(scenarioPart);
+			parts.add(scenarioPart);
 		}
+	}
+	
+	public List<TestTable> getArgumentTables() {
+		List<TestTable> result = new ArrayList<TestTable>();
+		for (Part part : parts )  {
+			result.addAll(part.getArgumentTables());
+			
+			for (Part indentedPart : part.getIndentedParts()) {
+				result.addAll(indentedPart.getArgumentTables());
+			}
+		}
+		return result;
+	}
+	
+	public boolean hasArgumentTables() {
+		return !getArgumentTables().isEmpty();
 	}
 
 	/**

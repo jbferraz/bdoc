@@ -46,63 +46,67 @@
 		
 		<#if statement.hasScenarios()>
 			<ul class="scenario">
-				<@list_scenarios scenarios=statement.getScenarios()/>
+				<#list statement.getScenarios() as scenario>
+					<@render_scenario scenario/>
+				</#list>
 			</ul>
 		</#if>
 				
 		<#if statement.hasTestTables()>
-		
 			<#list statement.getTestTables() as testTable>
-				<ul class="testTable">
-					<span class="testTableDescription">${bdocMacroHelper.format(testTable)}</span>
-					<table>
-						<thead>
-							<tr>
-							<#list testTable.getHeaderColumns() as headerColumn>
-								<th>${bdocMacroHelper.formatHeaderColumn(headerColumn)}</th>
-							</#list>
-							</tr>
-						</thead>
-						<tbody>
-							<#list testTable.getRows() as row>
-							<tr>
-								<#list row.getColumns() as column>
-									<td>${bdocMacroHelper.format(column)}</td>
-								</#list>
-							</tr>
-							</#list>
-						</tbody>
-					</table>
-					
-				</ul>
+				<@render_test_table testTable/>
 			</#list>
 		</#if>
 		
 	</body>
 </html>
 
-<#macro list_scenarios scenarios>
-	<#if 0 < scenarios?size >
-		<div class="classBehaviour">
-			<div class="scenarios">
-				<#list scenarios as scenario>
-					<ul class="scenario">
-						<#list scenario.getParts() as part>
-							<li>
-								${bdocMacroHelper.format(part.camelCaseDescription())}
-								<#if part.hasIndentedParts() >
-									<ul>
-										<#list part.getIndentedParts() as part>
-											<li>${bdocMacroHelper.format(part.camelCaseDescription())}</li>
-										</#list>
-									</ul>
-								</#if>						
-							</li>
-						</#list>
-						<BR/>
-					</ul>
+<#macro render_test_table testTable>
+	<ul class="testTable">
+		<span class="testTableDescription">${bdocMacroHelper.format(testTable)}</span>
+		<table>
+			<thead>
+				<tr>
+				<#list testTable.getHeaderColumns() as headerColumn>
+					<th>${bdocMacroHelper.formatHeaderColumn(headerColumn)}</th>
 				</#list>
-			</div>
-		</div>
-	</#if>
+				</tr>
+			</thead>
+			<tbody>
+				<#list testTable.getRows() as row>
+				<tr>
+					<#list row.getColumns() as column>
+						<td>${bdocMacroHelper.format(column)}</td>
+					</#list>
+				</tr>
+				</#list>
+			</tbody>
+		</table>					
+	</ul>
+</#macro>
+
+<#macro render_scenario scenario>	
+	<ul class="scenario">
+		<#list scenario.getParts() as part>
+			<li>
+				${bdocMacroHelper.format(part.camelCaseDescription())}
+				<#if part.hasIndentedParts() >
+					<ul>
+						<#list part.getIndentedParts() as part>
+							<li>${bdocMacroHelper.format(part.camelCaseDescription())}</li>
+						</#list>
+					</ul>
+				</#if>						
+			</li>
+		</#list>
+		<BR/>
+		
+		<#if scenario.hasArgumentTables()>
+			<#list scenario.getArgumentTables() as argumentTable>
+				<@render_test_table argumentTable/>
+				<BR/>
+			</#list>
+					
+		</#if>
+	</ul>
 </#macro>

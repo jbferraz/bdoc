@@ -97,7 +97,7 @@ public class TestTinyBddAnalyzer {
 		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "containsScenarioWithTable");
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
-		assertFalse(part.getTestTables().isEmpty());
+		assertFalse(part.getArgumentTables().isEmpty());
 	}
 
 	@Test
@@ -106,7 +106,7 @@ public class TestTinyBddAnalyzer {
 
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
-		assertEquals("randomNumbers", part.getTestTables().get(0).getCamelCaseSentence());
+		assertEquals("randomNumbers", part.getArgumentTables().get(0).getCamelCaseSentence());
 	}
 
 	@Test
@@ -115,7 +115,7 @@ public class TestTinyBddAnalyzer {
 
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
-		TestTable testTable = part.getTestTables().get(0);
+		TestTable testTable = part.getArgumentTables().get(0);
 		assertEquals(3, testTable.getRows().size());
 	}
 

@@ -13,11 +13,11 @@ public class Inntekt {
 		this.beloep = verdi;
 	}
 
-	public double beloep() {
+	public double getBeloep() {
 		return beloep;
 	}
 
-	public int aar() {
+	public int getAar() {
 		return aar;
 	}
 

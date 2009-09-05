@@ -12,7 +12,7 @@ public class Pensjonspoeng {
 	}
 
 	public static double beregn(Inntekt inntekt, GrunnbeloepTabell grunnbeloepTabell) {
-		return new Pensjonspoeng(grunnbeloepTabell).beregn(inntekt.aar(), inntekt.beloep());
+		return new Pensjonspoeng(grunnbeloepTabell).beregn(inntekt.getAar(), inntekt.getBeloep());
 	}
 
 	public double beregn(int inntektsaar, double inntekt) {

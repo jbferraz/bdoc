@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.domain.Scenario.Pattern;
 
 /**
@@ -119,8 +121,22 @@ public class TestScenario {
 		assertTrue(Pattern.EN.keywordMatch("GIVEN"));
 		assertTrue(Pattern.EN.keywordMatch("when"));
 		assertTrue(Pattern.EN.keywordMatch("Then"));
-		
+
 		assertFalse(Pattern.EN.keywordMatch("asdf"));
 		assertFalse(Pattern.EN.keywordMatch("1111"));
+	}
+
+	@Test
+	public void shouldListAllArgumentTablesDefinedByScenarioParts() {
+
+		Part givenPart = new Part("given");
+		givenPart.addArgumentTable(new TestTable("argumentList1"));
+		
+		Part indentedPart = new Part("and");
+		indentedPart.addArgumentTable(new TestTable("argumentList1"));
+		
+		givenPart.addIndentedPart(indentedPart);
+		Scenario scenario = new Scenario(asList( givenPart ) );
+		assertEquals( 2, scenario.getArgumentTables().size() );
 	}
 }

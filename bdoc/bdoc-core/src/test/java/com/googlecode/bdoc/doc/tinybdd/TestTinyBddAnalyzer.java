@@ -33,7 +33,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
@@ -161,15 +160,12 @@ public class TestTinyBddAnalyzer {
 		bddAnalyzer.analyze(new TestMethod(TeztTinyTestdataScenarios.class, "noExamples"));
 		assertTrue(bddAnalyzer.getCreatedTestTables().isEmpty());
 	}
-	
+
 	@Test
 	public void shouldRecognizeTwoScenariosSplittedByThenFollowingGiven() {
 		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "specWithTwoScenarios");
-		assertEquals( 2, bddAnalyzer.getCreatedScenarios().size() );
+		assertEquals(2, bddAnalyzer.getCreatedScenarios().size());
 	}
-
-	// Benytte syntakt example.caculation
-	// Skille på createScenarioKeyword og createExampleMarker
 
 	// should add table for a scenario, if used in input arg
 

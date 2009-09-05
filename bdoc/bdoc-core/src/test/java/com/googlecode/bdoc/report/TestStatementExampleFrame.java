@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.report;
 
+import static com.googlecode.bdoc.doc.domain.TableColumn.columns;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
 import static org.junit.Assert.assertEquals;
@@ -52,34 +53,25 @@ public class TestStatementExampleFrame {
 	public TestStatementExampleFrame() throws IOException {
 		TestMethod method = new TestMethod(TestClassWithTestTable.class, "exampleStatement");
 
-		TestTable testTable = new TestTable("exampleOnSumOfTwoValues");
-		testTable.addHeaderColumn(new TableColumn("value1"));
-		testTable.addHeaderColumn(new TableColumn("value2"));
-		testTable.addHeaderColumn(new TableColumn("sum"));
-		TableRow tableRow = new TableRow();
-		tableRow.addColumn(new TableColumn("9912"));
-		tableRow.addColumn(new TableColumn("88"));
-		tableRow.addColumn(new TableColumn("10000"));
-		testTable.addRow(tableRow);
-
-		List<TestTable> testTables = new ArrayList<TestTable>();
-		testTables.add(testTable);
-
-		method.setTestTables(testTables);
-
-		method.setScenarios(new ArrayList<Scenario>());
-		method.getScenarios().add(new Scenario("givenADynamicScenarioWhenActionThenEnsure"));
+		//# Adding testtable
+		TestTable testTable = new TestTable("exampleOnSumOfTwoValues", columns("value1", "value2", "sum"));
+		testTable.addRow(new TableRow( columns("9912", "88", "10000") ));		
+		method.addTestTable(  testTable ) ;
 		
+		//# Adding simple scenario
+		method.addScenario(new Scenario("givenADynamicScenarioWhenActionThenEnsure"));
+
+		//# Adding scenario with indented parts
 		Scenario scenarioWithIndentedParts = new Scenario(Scenario.parts("givenStateA", "when", "then"));
 		scenarioWithIndentedParts.getParts().get(0).addIndentedPart(new Part("andStateB"));
 		scenarioWithIndentedParts.getParts().get(0).addIndentedPart(new Part("andStateC"));
 		method.getScenarios().add(scenarioWithIndentedParts);
 
+		//# Putting the examples from the method   
 		statement = new Statement(method);
-		
-		html = new StatementExampleFrame("ClassWithTestTable",statement, new BDocConfig()).html();
-		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 
+		html = new StatementExampleFrame("ClassWithTestTable", statement, new BDocConfig()).html();
+		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
 	}
 
 	@Test
@@ -98,11 +90,11 @@ public class TestStatementExampleFrame {
 		assertXPathContains("Value 2", "//ul[@class='testTable']", html);
 		assertXPathContains("Sum", "//ul[@class='testTable']", html);
 	}
-	
+
 	@Test
 	public void shouldHaveFileNameBuildtUpFromStatementConcatenatedWithStandardPostfix() {
-		StatementExampleFrame statementExamplesFrame = new StatementExampleFrame("ClassWithTestTable",statement, new BDocConfig());
-		assertEquals( "classwithtesttable-examplestatement-examples_frame.html", statementExamplesFrame.getFileName() );
+		StatementExampleFrame statementExamplesFrame = new StatementExampleFrame("ClassWithTestTable", statement, new BDocConfig());
+		assertEquals("classwithtesttable-examplestatement-examples_frame.html", statementExamplesFrame.getFileName());
 	}
 
 	public class TestClassWithTestTable {

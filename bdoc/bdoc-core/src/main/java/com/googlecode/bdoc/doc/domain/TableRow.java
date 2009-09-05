@@ -51,4 +51,8 @@ public class TableRow {
 		this.columns.add(tableColumn);
 	}
 
+	public void setColumns(List<TableColumn> columns) {
+		this.columns = columns;
+	}
+
 }

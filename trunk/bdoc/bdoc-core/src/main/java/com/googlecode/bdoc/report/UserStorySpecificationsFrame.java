@@ -40,6 +40,7 @@ public class UserStorySpecificationsFrame extends AbstractBDocReportContent {
 		put("userStory", userStory);
 		put("fileNamePrefix", fileNamePrefix());
 		put("narrative", userStory.getNarrative());
+		put("this", this);
 	}
 
 	private String fileNamePrefix() {

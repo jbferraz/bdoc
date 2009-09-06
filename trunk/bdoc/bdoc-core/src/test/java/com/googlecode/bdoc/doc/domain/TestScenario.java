@@ -130,10 +130,10 @@ public class TestScenario {
 	public void shouldListAllArgumentTablesDefinedByScenarioParts() {
 
 		Part givenPart = new Part("given");
-		givenPart.addArgumentTable(new TestTable("argumentList1"));
+		givenPart.appendListArgument("values", asList( "value1", "value2 "));
 		
 		Part indentedPart = new Part("and");
-		indentedPart.addArgumentTable(new TestTable("argumentList1"));
+		indentedPart.appendListArgument("values", asList( "value1", "value2 "));
 		
 		givenPart.addIndentedPart(indentedPart);
 		Scenario scenario = new Scenario(asList( givenPart ) );

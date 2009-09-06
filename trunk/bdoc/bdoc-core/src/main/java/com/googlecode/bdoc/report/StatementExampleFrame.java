@@ -37,6 +37,7 @@ public class StatementExampleFrame extends AbstractBDocReportContent {
 		this.className = className;
 		this.statement = statement;
 		put("statement", statement);
+		put("this", this);
 	}
 
 	public String getFileName() {

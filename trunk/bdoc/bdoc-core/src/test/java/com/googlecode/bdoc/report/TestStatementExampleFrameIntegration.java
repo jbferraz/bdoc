@@ -74,6 +74,7 @@ public class TestStatementExampleFrameIntegration {
 		assertXPathContains("ItemC", "//body", html);
 	}
 
+	@Test
 	public void aListWithObjectsAsArgumentToAScenarioPartShouldBePresented() {
 
 	}

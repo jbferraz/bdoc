@@ -29,10 +29,9 @@ import java.util.List;
 
 public class TaskList {
 
-	private List<Task> tasks;
+	private List<Task> tasks = new ArrayList<Task>();;
 
 	public TaskList() {
-		this.tasks = new ArrayList<Task>();
 	}
 
 	public List<Task> getList() {
@@ -46,7 +45,7 @@ public class TaskList {
 
 	public boolean hasTasksInProgress() {
 		for (Task newTask : tasks) {
-			if (newTask.isInProgress()) {
+			if (newTask.getInProgress()) {
 				return true;
 			}
 		}
@@ -55,5 +54,21 @@ public class TaskList {
 
 	public boolean contains(Task task) {
 		return tasks.contains(task);
+	}
+	
+	@Override
+	public String toString() {
+		if( tasks.isEmpty() ) {
+			return "[empty]";
+		}
+		return "[" + tasks.toString() + "]";
+	}
+
+	public int getEtc() {
+		int etc = 0;
+		for (Task task : tasks) {
+			etc = etc + task.getEtc();
+		}
+		return etc;
 	}
 }

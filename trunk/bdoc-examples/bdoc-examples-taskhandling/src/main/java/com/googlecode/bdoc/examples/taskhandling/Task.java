@@ -26,11 +26,16 @@ package com.googlecode.bdoc.examples.taskhandling;
 
 public class Task {
 
-	boolean inProgress;
 	private String description;
+	private boolean inProgress = false;
+	private int etc;
+
+	public Task( String description, int etc) {
+		this.description = description;
+		this.etc = etc;
+	}
 
 	public Task(String description, TaskList taskList) {
-		this.inProgress = false;
 		this.description = description;
 		taskList.addTask(this);
 	}
@@ -39,11 +44,20 @@ public class Task {
 		inProgress = true;
 	}
 
-	public boolean isInProgress() {
+	public String getDescription() {
+		return description;
+	}
+
+	public boolean getInProgress() {
 		return inProgress;
 	}
 
-	public String getDescription() {
-		return description;
+	public int getEtc() {
+		return etc;
+	}
+	
+	@Override
+	public String toString() {
+		return "[" + description +  ", inProgress: " + inProgress + "]"; 
 	}
 }

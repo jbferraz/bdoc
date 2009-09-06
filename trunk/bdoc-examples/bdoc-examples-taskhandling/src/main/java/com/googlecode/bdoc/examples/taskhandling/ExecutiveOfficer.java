@@ -24,6 +24,8 @@
 
 package com.googlecode.bdoc.examples.taskhandling;
 
+import java.util.List;
+
 public class ExecutiveOfficer {
 
 	public String name;
@@ -61,5 +63,16 @@ public class ExecutiveOfficer {
 
 	public void close(Task task) {
 		taskList.getList().remove(task);
+	}
+
+	@Override
+	public String toString() {
+		return "[" + name + ", with tasklist: " + taskList + "]";
+	}
+
+	public void assign(List<Task> tasks) {
+		for (Task task : tasks) {
+			taskList.addTask(task);
+		}		
 	}
 }

@@ -32,8 +32,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -68,12 +69,13 @@ public class TestStatementExampleFrame {
 		method.getScenarios().add(scenarioWithIndentedParts);
 
 		//# Adding scenario with testtables as argument in 
-		Part partWithTestTableAsArgument = new Part( "given listArgument");
+		Part partWithTestTableAsArgument = new Part( "given an");
 		
-		TestTable listArgument = new TestTable("Income", columns("year", "amount" ));
-		listArgument.addRow(new TableRow( columns("2000", "90000" ) ));
-		listArgument.addRow(new TableRow( columns("2001", "110000" ) ));
-		partWithTestTableAsArgument.addArgumentTable(listArgument);
+		List<Income> income = new ArrayList<Income>();
+		income.add(new Income( 2000, 9000 ));
+		income.add(new Income( 2001, 11000 ));
+		
+		partWithTestTableAsArgument.appendListArgument("income", income);
 		
 		Scenario scenarioArgumentsAsTestTable = new Scenario(asList( partWithTestTableAsArgument ));
 		method.getScenarios().add(scenarioArgumentsAsTestTable);
@@ -106,9 +108,9 @@ public class TestStatementExampleFrame {
 	}
 	
 	@Test
-	public void shouldPresentListArgumentForScenarioParts() {
+	public void shouldPresentListArgumentForAScenarioPart() {
 		assertXPathContains("Income", "//body", html);
-		assertXPathContains("110000", "//body", html);
+		assertXPathContains("11000", "//body", html);
 	}
 
 	@Test
@@ -123,4 +125,23 @@ public class TestStatementExampleFrame {
 		public void exampleStatement() {
 		}
 	}
+	
+	public static class Income {
+		private int year, amount;
+		
+		public Income(int year, int amount) {
+			super();
+			this.year = year;
+			this.amount = amount;
+		}
+
+		public int getYear() {
+			return year;
+		}
+
+		public int getAmount() {
+			return amount;
+		}
+	}
+
 }

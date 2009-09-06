@@ -33,6 +33,7 @@ import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.domain.TestMethodReference;
+import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.report.StatementExampleFrame;
 import com.googlecode.bdoc.utils.CamelCaseToSentenceTranslator;
 
@@ -55,6 +56,10 @@ public class BDocMacroHelper {
 
 	public String format(Statement statement) {
 		return CamelCaseToSentenceTranslator.translate(statement.getSentence());
+	}
+
+	public String format(Part part) {
+		return CamelCaseToSentenceTranslator.translate(part.camelCaseDescription());
 	}
 
 	public String formatHeaderColumn(TableColumn column) {

@@ -85,11 +85,11 @@ public class TestTinyBddAnalyzer {
 	}
 
 	@Test
-	public void nameOfMethodUsedAsInputArgumentToScenarioPartShouldBeAddedToTheDescription() {
+	public void scenarioPartWithAListArgumentShouldBeAddedAsAnArgumentTableToTheScenarioPart() {
 		TinyBddAnalyzer bddAnalyzer = analyze(TeztTinyTestdataScenarios.class, "containsScenarioWithTable");
 		Scenario scenario = bddAnalyzer.getCreatedScenarios().get(0);
 		Part part = scenario.getParts().get(0);
-		assertEquals("given listWith randomNumbers", part.camelCaseDescription());
+		assertTrue(part.hasArgumentTables());
 	}
 
 	@Test

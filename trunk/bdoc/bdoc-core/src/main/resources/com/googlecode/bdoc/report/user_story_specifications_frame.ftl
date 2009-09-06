@@ -34,11 +34,13 @@
 		<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
 	</head>
 	<body>
-		<h2>${userStory.title}</h2>
+		<h2><a class="notvisible" target="_top" href="${this.getFileName()}">${userStory.title}</a></h2>
 		<div class="narrative">
+			<i>
 			${narrative.role},<br/>
 			${narrative.action},<br/>
 			${narrative.benefit}
+			</i>
 		</div>
 
 		<div class="classBehaviour">

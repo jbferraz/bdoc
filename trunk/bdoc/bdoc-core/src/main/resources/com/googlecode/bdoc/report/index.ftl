@@ -35,8 +35,8 @@
 		<title>BDoc - bridging the gap</title>				
 	</head>
 	
-	<FRAMESET ROWS="9%, *" FRAMEBORDER="YES">
-		<FRAME SRC="project_info.html" NAME="header"  />
+	<FRAMESET ROWS="7%, *" FRAMEBORDER="YES">
+		<FRAME SRC="project_info.html" NAME="header" SCROLLING="NO"/>
 
 		<FRAMESET ROWS="100%, *" COLS="20%, 80%" >
 			<FRAME SRC="user_story_toc_frame.html"/>

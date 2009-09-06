@@ -24,7 +24,10 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import static com.googlecode.bdoc.doc.domain.TestTable.createTestTableFromObjectList;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,8 +86,12 @@ public class Scenario {
 			argumentTables.add(testTable);
 		}
 
-		public void appendArgument(Object arg) {
+		public void appendArgument(Object arg ) {
 			camelCaseDescription = camelCaseDescription + " " + arg;
+		}
+		public void appendListArgument(String tableDescription, Collection<? extends Object> collection) {
+			camelCaseDescription = camelCaseDescription + " " + tableDescription;
+			addArgumentTable(createTestTableFromObjectList(tableDescription, collection) );			
 		}
 
 		public boolean hasIndentedParts() {

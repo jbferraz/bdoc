@@ -24,7 +24,6 @@
 
 package com.googlecode.bdoc.doc.tinybdd;
 
-import static com.googlecode.bdoc.doc.domain.TestTable.createTestTableFromObjectList;
 import static com.googlecode.bdoc.doc.tinybdd.ProxyFactory.forClass;
 import static com.googlecode.bdoc.doc.util.JavaCodeUtil.argumentNames;
 import static java.util.Arrays.asList;
@@ -58,10 +57,10 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 
 	private Scenario currentScenario;
 	private TestTable currentTestTable;
-	private Map<Object, String> methodCallReturnValues = new HashMap<Object, String>();
+	private Map<Object, String> methodCalls = new HashMap<Object, String>();
 	private File srcTestJava;
 
-	private boolean debugToSystemOut = true;
+	private boolean debugToSystemOut = false;
 
 	public RootMethodCallbackAnalyzer(TestClassProxyWrapper rootTestClassProxy, TestMethod testMethod, List<Scenario> scenarios,
 			List<TestTable> testTables, File javaTestSourceDir) {
@@ -98,7 +97,7 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 			return forClass(testMethod.clazz()).createProxyWith(new ExampleKeywordAnalyzer(keyword));
 		} else {
 			Object returnValueFromSuper = proxy.invokeSuper(object, args);
-			methodCallReturnValues.put(returnValueFromSuper, method.getName());
+			methodCalls.put(returnValueFromSuper, method.getName());
 			return returnValueFromSuper;
 		}
 	}
@@ -149,6 +148,8 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 		}
 	}
 
+	//------------------------------------------------------------------------------------------------------
+	
 	public class ScenarioKeywordAnalyzer extends AbstractKeywordAnalyzer {
 		boolean indented;
 		String keyword;
@@ -170,12 +171,8 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 				if (arg instanceof Collection) {
 					Collection collection = (Collection) arg;
 
-					if (methodCallReturnValues.containsKey(arg)) {
-						String tableDescription = methodCallReturnValues.get(arg);
-
-						scenarioPart.addArgumentTable( createTestTableFromObjectList(tableDescription, collection));
-
-						scenarioPart.appendArgument(tableDescription);
+					if (methodCalls.containsKey(arg)) {
+						scenarioPart.appendListArgument(methodCalls.get(arg), collection );
 					}
 				} else {
 					scenarioPart.appendArgument(arg);

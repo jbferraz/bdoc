@@ -82,16 +82,16 @@ public class Scenario {
 			return argumentTables;
 		}
 
-		public void addArgumentTable(TestTable testTable) {
-			argumentTables.add(testTable);
+		public boolean hasArgumentTables() {
+			return !argumentTables.isEmpty();
 		}
 
 		public void appendArgument(Object arg ) {
 			camelCaseDescription = camelCaseDescription + " " + arg;
 		}
 		public void appendListArgument(String tableDescription, Collection<? extends Object> collection) {
-			camelCaseDescription = camelCaseDescription + " " + tableDescription;
-			addArgumentTable(createTestTableFromObjectList(tableDescription, collection) );			
+			//camelCaseDescription = camelCaseDescription;// + " " + tableDescription;
+			argumentTables.add(createTestTableFromObjectList(tableDescription, collection) );			
 		}
 
 		public boolean hasIndentedParts() {

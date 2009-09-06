@@ -62,6 +62,7 @@
 </html>
 
 <#macro render_test_table testTable>
+	<a name="${testTable.camelCaseSentence}"/>
 	<ul class="testTable">
 		<span class="testTableDescription">${bdocMacroHelper.format(testTable)}</span>
 		<table>
@@ -89,11 +90,11 @@
 	<ul class="scenario">
 		<#list scenario.getParts() as part>
 			<li>
-				${bdocMacroHelper.format(part.camelCaseDescription())}
+				<@render_part part/>		
 				<#if part.hasIndentedParts() >
 					<ul>
 						<#list part.getIndentedParts() as part>
-							<li>${bdocMacroHelper.format(part.camelCaseDescription())}</li>
+							<li><@render_part part/></li>
 						</#list>
 					</ul>
 				</#if>						
@@ -102,11 +103,19 @@
 		<BR/>
 		
 		<#if scenario.hasArgumentTables()>
-			<#list scenario.getArgumentTables() as argumentTable>
+			<#list scenario.getArgumentTables() as argumentTable>				
 				<@render_test_table argumentTable/>
 				<BR/>
 			</#list>
-					
 		</#if>
 	</ul>
+</#macro>
+
+<#macro render_part part>
+	<a class="notvisible" href="${this.getFileName()}" target="_top">${bdocMacroHelper.format(part)}</a>
+	<#if part.hasArgumentTables()>
+		<#list part.getArgumentTables() as argumentTable>
+			<a href="#${argumentTable.camelCaseSentence}">${bdocMacroHelper.format(argumentTable)}</a>		
+		</#list>
+	</#if>
 </#macro>

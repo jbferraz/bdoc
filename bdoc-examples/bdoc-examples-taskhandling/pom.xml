@@ -2,12 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
+<!--
+					  <parent>
 		<artifactId>bdoc-examples</artifactId>
 		<groupId>com.googlecode.bdoc</groupId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
+-->	
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-examples-taskhandling</artifactId>
 	<name>BDoc Examples - Task handling</name>
 	<version>1.0-SNAPSHOT</version>
@@ -26,25 +29,6 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>${maven.bdoc.plugin.version}</version>
-				<configuration>
-					<storyRefAnnotationClassName>
-						com.googlecode.bdoc.examples.taskhandling.Ref
-					</storyRefAnnotationClassName>
-					<logDirectory>bddlog</logDirectory>
-
-					<excludes>
-						<exclude>
-							com/googlecode/bdoc/examples/excluded/**
-						</exclude>
-					</excludes>
-
-					<includes>
-						<include>
-							com/googlecode/bdoc/examples/taskhandling/**
-						</include>
-					</includes>
-				</configuration>
 				<executions>
 					<execution>
 						<phase>install</phase>
@@ -54,6 +38,19 @@
 					</execution>
 				</executions>
 			</plugin>
+
+		     <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jxr-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>jxr</goal>
+						</goals>
+					</execution>
+				</executions>
+             </plugin>
 
 			<plugin>
 				<groupId>com.google.code.maven-license-plugin</groupId>
@@ -77,4 +74,38 @@
 
 		</plugins>
 	</build>
+	
+	<reporting>
+		<plugins>
+		
+		     <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jxr-maven-plugin</artifactId>
+            </plugin>
+		
+			<plugin>
+				<groupId>com.googlecode.bdoc</groupId>
+				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>0.8.15-SNAPSHOT</version>
+				<configuration>
+					<storyRefAnnotationClassName>com.googlecode.bdoc.examples.taskhandling.Ref</storyRefAnnotationClassName>
+					<scenarioAnalyzer>tiny</scenarioAnalyzer>					
+					<locale>en</locale>  
+
+					<excludes>
+						<exclude>
+							com/googlecode/bdoc/examples/excluded/**
+						</exclude>
+					</excludes>
+
+					<includes>
+						<include>
+							com/googlecode/bdoc/examples/taskhandling/**
+						</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+	
 </project>

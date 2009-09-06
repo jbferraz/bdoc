@@ -27,13 +27,15 @@ public class TestFolketrygdberegningtjenesteBehaviour extends ScenarioSupport<Te
 	@Test
 	public void skal_beregne_alderspensjon_for_et_medlem_av_folketrygden() {
 		gitt.et_medlem_av_folketrygden_med_silvitstatus_enslig();
-		og.inntekt_lik(_40_aar_med_maksimal_opptjening());
+			og.inntekt_lik(_40_aar_med_maksimal_opptjening());
+			
 		naar.alderspensjon_blir_beregnet_for_aaret(2009);
+		
 		saa.skal_aarlig_alderspensjon_vaere_lik(333823);
-		hvor.tilleggspensjonen_utgjoer(261817);
-		og.grunnpensjon_utgjoer(Grunnbeloep._2009);
-		samtidig.skal_sluttpoengtallet_vaere_beregnet_til(8.33);
-		og.pensjonsprosenten_skal_vaere_beregnet_til(0.4365);
+			hvor.tilleggspensjonen_utgjoer(261817);
+			og.grunnpensjon_utgjoer(Grunnbeloep._2009);
+			samtidig.skal_sluttpoengtallet_vaere_beregnet_til(8.33);
+			og.pensjonsprosenten_skal_vaere_beregnet_til(0.4365);
 	}
 	
 	void inntekt_lik(List<Inntekt> inntekt) {

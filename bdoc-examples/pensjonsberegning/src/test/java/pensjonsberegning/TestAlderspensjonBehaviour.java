@@ -21,17 +21,17 @@ public class TestAlderspensjonBehaviour extends ScenarioSupport<TestAlderspensjo
 
 	@Test
 	public void alderspensjonErLikGrunnpensjonPlussTilleggspensjon() {
-		gitt.enGrunnpensjonLik(50000d);
-		og.enTilleggspensjonLik(100000d);
+		gitt.enGrunnpensjonLik(50000);
+		og.enTilleggspensjonLik(100000);
 		naar.alderspensjonBeregnes();
 		saa.skalAlderspensjonPrAarVaereLik(150000);
 	}
 
-	void enGrunnpensjonLik(Double manueltBeregnet) {
+	void enGrunnpensjonLik(double manueltBeregnet) {
 		grunnpensjon = new Grunnpensjon(manueltBeregnet);
 	}
 
-	void enTilleggspensjonLik(Double manueltBeregnet) {
+	void enTilleggspensjonLik(double manueltBeregnet) {
 		tilleggspensjon = new Tilleggspensjon(manueltBeregnet);
 	}
 

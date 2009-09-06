@@ -2,15 +2,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>maven-bdoc-plugin</artifactId>
-	<version>0.8.15</version>
+	<version>0.8.16-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 	<name>Behaviour Documentation - Maven plugin</name>
 	<url>http://bdoc.googlecode.com</url>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/tags/maven-bdoc-plugin-0.8.15</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/tags/maven-bdoc-plugin-0.8.15</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/tags/maven-bdoc-plugin-0.8.15</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/maven-bdoc-plugin</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/maven-bdoc-plugin</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk/bdoc/maven-bdoc-plugin</url>
 	</scm>
 
 	<organization>

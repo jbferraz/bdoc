@@ -55,7 +55,7 @@
 	</developers>
 
 	<properties>
-		<maven.bdoc.plugin.version>0.8.14</maven.bdoc.plugin.version>
+		<maven.bdoc.plugin.version>0.8.15</maven.bdoc.plugin.version>
 	</properties>
 
 	<build>

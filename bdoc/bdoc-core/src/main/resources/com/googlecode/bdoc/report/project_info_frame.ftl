@@ -33,13 +33,11 @@
 	</head>
 
 	<body>
-		<div class="reportInfo">
-			<TABLE BORDER="0" WIDTH="100%">
-				<TR>
-					<TD><h1>${project.name} ${project.version}</h1></TD>
-					<TD ALIGN="RIGHT" VALIGN="TOP"><p class="dateTime">${bdoc.docTime?datetime}</p></TD>
-				</TR>
-			</TABLE>
-		</div>	
+		<TABLE BORDER="0" WIDTH="100%">
+			<TR>
+				<TD><h1>${project.name} ${project.version}</h1></TD>
+				<TD ALIGN="RIGHT" VALIGN="TOP"><p class="dateTime">${bdoc.docTime?datetime}</p></TD>
+			</TR>
+		</TABLE>			
 	</body>
 </html>

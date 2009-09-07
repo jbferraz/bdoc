@@ -33,10 +33,6 @@ public class ExampleSupport<T> {
 	protected T and = createScenarioKeywordGeneric("and");	
 	protected T example = createExampleKeyword("example");
 
-	public T createScenarioKeyword(String scenarioPart, boolean indent) {
-		return (T) this;
-	}
-
 	public T createScenarioKeywordGiven(String localizedGiven) {
 		return (T) this;
 	}

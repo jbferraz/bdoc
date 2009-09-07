@@ -1,3 +1,6 @@
+_07 September 2009 - Release 0.8.15_
+ Version 0.8.15 is released and will be presented on [JavaZone http://javazone.no/incogito09/events/JavaZone%202009/sessions/Effektiv%20testing] - day 1. More info will be presentete here later on. 
+
 _17 August 2009 - Release 0.8.13_
  Version 0.8.13 is released with all the functionality announced in the 0.8.12 version:-)
 

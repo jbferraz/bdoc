@@ -9,7 +9,7 @@
 
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-pom</artifactId>
-	<version>0.8.14-SNAPSHOT</version>
+	<version>0.8.15</version>
 	<packaging>pom</packaging>
 
 	<licenses>

@@ -28,10 +28,12 @@ import java.util.List;
 
 import com.googlecode.bdoc.BDocConfig;
 
-public class UserStoryTocFrame extends AbstractBDocReportContent {
+public class TocFrame extends AbstractBDocReportContent {
 
-	public UserStoryTocFrame(List<UserStorySpecificationsFrame> userStorySpecFrames, BDocConfig bdocConfig) {
-		super("user_story_toc_frame_html.ftl", bdocConfig);
-		put("toc", userStorySpecFrames);
+	public TocFrame(String headerTextKey, List<SpecificationsFrame> specFrames, BDocConfig bdocConfig) {
+		super("toc_frame_html.ftl", bdocConfig);
+
+		put("headerTextKey", headerTextKey);
+		put("toc", specFrames);
 	}
 }

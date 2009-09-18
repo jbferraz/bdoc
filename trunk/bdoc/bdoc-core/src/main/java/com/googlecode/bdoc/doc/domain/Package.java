@@ -39,6 +39,10 @@ public class Package {
 
 	private List<ClassBehaviour> classBehaviourList = new ArrayList<ClassBehaviour>();
 
+	public Package(String name) {
+		this.name = name;
+	}
+
 	public Package(java.lang.Package javaPackage) {
 		name = javaPackage.getName();
 	}

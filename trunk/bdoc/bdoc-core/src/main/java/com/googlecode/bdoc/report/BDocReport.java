@@ -36,6 +36,7 @@ import org.apache.commons.io.FileUtils;
 import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.BDocException;
 import com.googlecode.bdoc.doc.domain.BDoc;
+import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper;
 
@@ -47,11 +48,14 @@ public class BDocReport {
 	private String cssContent;
 	private String blankFrame;
 	private String userStoryTocFrame;
+	private String moduleTocFrame;
 	private ProjectInfoFrame projectInfoFrame;
 
 	private Map<String, Object> model = new HashMap<String, Object>();
 	private BDoc bdoc;
-	private List<UserStorySpecificationsFrame> userStorySpecificationFrames = new ArrayList<UserStorySpecificationsFrame>();
+	private List<SpecificationsFrame> userStorySpecificationFrames = new ArrayList<SpecificationsFrame>();
+	private List<SpecificationsFrame> moduleSpecificationFrames = new ArrayList<SpecificationsFrame>();
+	
 	private SpecificationExamples specificationExamples;
 
 	private BDocConfig bdocConfig;
@@ -71,13 +75,18 @@ public class BDocReport {
 	private void makeBDocReport() throws TemplateException, IOException {
 		specificationExamples = new SpecificationExamples(bdocConfig);
 		for (UserStory userStory : bdoc.getUserstories()) {
-			userStorySpecificationFrames.add(new UserStorySpecificationsFrame(userStory, bdocConfig));
+			userStorySpecificationFrames.add(new SpecificationsFrame(userStory, bdocConfig));
 			specificationExamples.addFrom(userStory);			
+		}
+		
+		for (Package _package : bdoc.getModuleBehaviour().getPackages()) {
+			moduleSpecificationFrames.add(new SpecificationsFrame(_package, bdocConfig));
 		}
 
 		indexFrameSet = BDocReportUtils.createContentFrom("index.ftl", model);
 		cssContent = BDocReportUtils.createContentFrom("css.ftl", model);
-		userStoryTocFrame = new UserStoryTocFrame(userStorySpecificationFrames, bdocConfig).html();
+		userStoryTocFrame = new TocFrame("toc.userstories",userStorySpecificationFrames, bdocConfig).html();
+		moduleTocFrame = new TocFrame("toc.packages",moduleSpecificationFrames, bdocConfig).html();
 		projectInfoFrame = new ProjectInfoFrame(bdoc, bdocConfig);
 		blankFrame = BDocReportUtils.createContentFrom("blank.ftl", model);
 	}
@@ -87,8 +96,9 @@ public class BDocReport {
 		writeFile(reportDirectory, "index.html", indexFrameSet);
 		writeFile(reportDirectory, "stylesheet.css", cssContent);
 		writeFile(reportDirectory, "user_story_toc_frame.html", userStoryTocFrame);
+		writeFile(reportDirectory, "module_toc_frame.html", moduleTocFrame);
 
-		for (UserStorySpecificationsFrame specificationsFrame : userStorySpecificationFrames) {
+		for (SpecificationsFrame specificationsFrame : userStorySpecificationFrames) {
 			writeFile(reportDirectory, specificationsFrame.getFileName(), specificationsFrame.html());
 		}
 

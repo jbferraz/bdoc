@@ -32,25 +32,42 @@ import java.util.List;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BDocConfig;
+import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.report.testdata.BDocReportTestStory;
 
-public class TestUserStoryTocFrame {
-
-	List<UserStorySpecificationsFrame> userStorySpecFrames = new ArrayList<UserStorySpecificationsFrame>();
-	private String html;
-
-	public TestUserStoryTocFrame() {
-		userStorySpecFrames.add(new UserStorySpecificationsFrame(new UserStory(BDocReportTestStory.STORY_NR_ONE), new BDocConfig()));
-		userStorySpecFrames.add(new UserStorySpecificationsFrame(new UserStory(BDocReportTestStory.STORY_NR_TWO), new BDocConfig()));
-
-		html = new UserStoryTocFrame(userStorySpecFrames, new BDocConfig()).html();
-	}
+public class TestTocFrame {
 
 	@Test
 	public void shouldPresentATableOfContentsWithAllUserStoryTitles() {
+		List<SpecificationsFrame> userStorySpecFrames = new ArrayList<SpecificationsFrame>();
+
+		userStorySpecFrames.add(new SpecificationsFrame(new UserStory(BDocReportTestStory.STORY_NR_ONE), new BDocConfig()));
+		userStorySpecFrames.add(new SpecificationsFrame(new UserStory(BDocReportTestStory.STORY_NR_TWO), new BDocConfig()));
+
+		String html = new TocFrame("toc.userstories", userStorySpecFrames, new BDocConfig()).html();
+
 		assertXPathContains("Story nr one", "//body", html);
 		assertXPathContains("Story nr two", "//body", html);
+	}
+
+	@Test
+	public void shouldPresentATableOfContentsWithAllPackages() {
+		List<SpecificationsFrame> specFrames = new ArrayList<SpecificationsFrame>();
+
+		specFrames.add(new SpecificationsFrame(new Package("my.package.one"), new BDocConfig()));
+		specFrames.add(new SpecificationsFrame(new Package("my.package.two"), new BDocConfig()));
+
+		String html = new TocFrame("toc.packages", specFrames, new BDocConfig()).html();
+
+		assertXPathContains("my.package.one", "//body", html);
+		assertXPathContains("my.package.two", "//body", html);
+	}
+
+	@Test
+	public void headerShouldBeSetByHeaderKey() {
+		String html = new TocFrame("toc.packages", new ArrayList<SpecificationsFrame>(), new BDocConfig()).html();
+		assertXPathContains("Modules", "//body", html);
 	}
 
 }

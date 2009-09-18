@@ -40,19 +40,21 @@ import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.UserStory;
 import com.googlecode.bdoc.doc.domain.UserStoryDescription.Narrative;
 import com.googlecode.bdoc.doc.report.BDocMacroHelper;
+import com.googlecode.bdoc.doc.testdata.RefClass;
 import com.googlecode.bdoc.report.testdata.BDocReportTestRef;
 import com.googlecode.bdoc.report.testdata.BDocReportTestStory;
 
-public class TestUserStorySpecificationsFrame {
+@RefClass( SpecificationsFrame.class )
+public class TestSpecificationsFrameWithUserstory {
 
 	private String html;
 	private UserStory userStory = new UserStory(BDocReportTestStory.STORY_NR_ONE);
 
-	public TestUserStorySpecificationsFrame() {
+	public TestSpecificationsFrameWithUserstory() {
 		userStory.addBehaviour(new TestMethod(TestClassWithThatSpecifiesAStory.class, "isTestData"));
 		userStory.addBehaviour(new TestMethod(TestClassWithThatSpecifiesAStory.class, "shouldBeSpecified"));
 		userStory.addBehaviour(new TestMethod(TestClassWithThatSpecifiesAStory.class, "givenXWhenYThenZ"));
-		html = new UserStorySpecificationsFrame(userStory, new BDocConfig()).html();
+		html = new SpecificationsFrame(userStory, new BDocConfig()).html();
 	}
 
 	@Test
@@ -89,7 +91,7 @@ public class TestUserStorySpecificationsFrame {
 	
 	@Test
 	public void shouldHaveFileNameBuildtUpFromUserStoryTitleConcatenatedWithStandardPostfix() {
-		UserStorySpecificationsFrame userStorySpec = new UserStorySpecificationsFrame(userStory, new BDocConfig());
+		SpecificationsFrame userStorySpec = new SpecificationsFrame(userStory, new BDocConfig());
 		assertEquals( "story_nr_one_specifications_frame.html", userStorySpec.getFileName() );
 	}
 

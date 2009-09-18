@@ -27,32 +27,49 @@
 	@author Per Otto Bergum Christensen
 -->
 
-
-<#import "bdd_doc_macros.ftl" as bdddoc />
+<#import "report_macros.ftl" as report_macro />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<link rel="stylesheet" type="text/css" href="stylesheet.css"/>
-
-		<SCRIPT language='JavaScript'> 
-			function navigateTo(location_href) {
-			 parent.frames[2].location.href=location_href;
-			 parent.frames[3].location.href="blank.html";
-			}
-		</SCRIPT>
 	</head>
 	<body>
-
-		<h3><@bdddoc.text key="toc.userstories"/></h3>
-		<TABLE BORDER="0" WIDTH="100%">
-			<TR>
-			<TD NOWRAP="true">
-				<#list toc as tocItem>					
-					<A HREF="javascript:navigateTo('${tocItem.fileName}')">${tocItem.title}</A>
-					<br/>
-				</#list>			
-			</TD>
-			</TR>
-		</TABLE>
+		<h2><a class="notvisible" target="_top" href="${this.getFileName()}">${this.getTitle()}</a></h2>
+		
+		<#if this.hasNarrative()  >
+			<div class="narrative">
+				<i>
+				${this.narrative.role},<br/>
+				${this.narrative.action},<br/>
+				${this.narrative.benefit}
+				</i>
+			</div>
+		</#if>
+	
+		<div class="classBehaviour">
+			<#list this.getClassBehaviour() as classBehaviour>		
+				<span>${bdocMacroHelper.format(classBehaviour.className)}</span>
+				<ul class="specifications">
+					<@li_statements classBehaviour=classBehaviour statements=classBehaviour.statements/>
+					<@li_statements classBehaviour=classBehaviour statements=classBehaviour.specifications/>				
+				</ul>
+			</#list>
+		</div>
+				
 	</body>
 </html>
+
+<#macro li_statements classBehaviour statements>
+	<#list statements as statement>
+		<li>
+			<#if statement.hasExamples()>
+				<a href="${bdocMacroHelper.hrefToStatementExampleFrame(classBehaviour,statement)}" target="examples">
+					${bdocMacroHelper.format(statement)}
+				</a>
+			</#if>
+			<#if !statement.hasExamples()>
+				${bdocMacroHelper.format(statement)}
+			</#if>
+		</li>
+	</#list>
+</#macro>

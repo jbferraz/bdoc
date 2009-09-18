@@ -110,17 +110,6 @@ public class TestBDocMojoBehaviour {
 		bdocInChangeLogShouldNotContain(testClass);
 	}
 
-	private void thenEnsureABDocHtmlReportHasBeenGenerated() {
-		assertTrue(new File("target/" + BDocMojo.BDOC_USERSTORY_REPORT_NOFRAMES).exists());
-	}
-
-	@Test
-	public void shouldRunBDocOnTheProjectTestCode() throws MavenReportException {
-		givenMavenInjectedValuesForSourceDirectoryAndTestClassDirectoryAndOutputDirectory();
-		whenTheBDocReportsMojoHasRun();
-		thenEnsureABDocHtmlReportHasBeenGenerated();
-	}
-
 	@Test
 	public void shouldIncludeTestsThatAreSpecified() throws MavenReportException {
 		givenMavenInjectedValuesForSourceDirectoryAndTestClassDirectoryAndOutputDirectory();

@@ -42,11 +42,9 @@ import com.googlecode.bdoc.doc.domain.BehaviourFactory;
 import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
-import com.googlecode.bdoc.doc.report.BDocFactoryImpl;
 import com.googlecode.bdoc.doc.report.BDocFactory;
-import com.googlecode.bdoc.doc.report.ModuleBehaviourReport;
+import com.googlecode.bdoc.doc.report.BDocFactoryImpl;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
-import com.googlecode.bdoc.doc.report.UserStoryHtmlReport;
 import com.googlecode.bdoc.doc.tinybdd.TinyBddAnalyzer;
 import com.googlecode.bdoc.report.BDocReport;
 import com.thoughtworks.xstream.converters.ConversionException;
@@ -197,8 +195,8 @@ public class BDocMojo extends AbstractBDocMojo {
 
 		diffLog.writeToFile(getBDocChangeLogFile());
 
-		writeReport(BDOC_USERSTORY_REPORT_NOFRAMES, new UserStoryHtmlReport(bdoc, bdocConfig).html());
-		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, bdocConfig).html());
+//		writeReport(BDOC_USERSTORY_REPORT_NOFRAMES, new UserStoryHtmlReport(bdoc, bdocConfig).html());
+//		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, bdocConfig).html());
 		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog, bdocConfig).result());
 		
 		getLog().info("Writing bdoc-report to " + outputDirectory.getAbsolutePath() );
@@ -230,18 +228,6 @@ public class BDocMojo extends AbstractBDocMojo {
 		getSink().listItem();
 		getSink().link(BDOC_USERSTORY_REPORT);
 		getSink().text("User stories");
-		getSink().link_();
-		getSink().listItem_();
-
-		getSink().listItem();
-		getSink().link(BDOC_USERSTORY_REPORT_NOFRAMES);
-		getSink().text("User stories - noframes");
-		getSink().link_();
-		getSink().listItem_();
-
-		getSink().listItem();
-		getSink().link(BDOC_MODULE_REPORT);
-		getSink().text("Modules");
 		getSink().link_();
 		getSink().listItem_();
 

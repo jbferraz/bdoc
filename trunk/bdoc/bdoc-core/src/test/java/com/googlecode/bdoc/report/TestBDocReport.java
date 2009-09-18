@@ -107,6 +107,10 @@ public class TestBDocReport {
 		assertReportIsCreated("story_nr_two_specifications_frame.html");
 	}
 
+	@Test
+	public void shouldCreateAPackageSpecificationFrameForEachPackage() {
+		assertReportIsCreated("com_googlecode_bdoc_report_testdata_specifications_frame.html");
+	}
 
 	@Test
 	public void shouldCreateAnExampleFrameForEachStatementContaingExamples() {
@@ -115,7 +119,7 @@ public class TestBDocReport {
 	}
 
 	void assertReportIsCreated(String reportFileName) {
-		assertTrue(new File(reportDirectory, reportFileName).exists());
+		assertTrue("Expected to find [" + reportFileName + "]", new File(reportDirectory, reportFileName).exists());
 	}
 
 }

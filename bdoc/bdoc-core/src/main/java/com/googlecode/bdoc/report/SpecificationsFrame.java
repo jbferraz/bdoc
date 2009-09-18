@@ -24,27 +24,47 @@
 
 package com.googlecode.bdoc.report;
 
+import java.util.List;
+
 import com.googlecode.bdoc.BDocConfig;
+import com.googlecode.bdoc.doc.domain.ClassBehaviour;
+import com.googlecode.bdoc.doc.domain.Package;
 import com.googlecode.bdoc.doc.domain.UserStory;
+import com.googlecode.bdoc.doc.domain.UserStoryDescription.Narrative;
 
 /**
  * @author Per Otto Bergum Christensen
  */
-public class UserStorySpecificationsFrame extends AbstractBDocReportContent {
+public class SpecificationsFrame extends AbstractBDocReportContent {
 
-	private UserStory userStory;
+	private String title;
+	private Narrative narrative;
+	private List<ClassBehaviour> classBehaviour;
+	private String fileNamePrefix;
 
-	public UserStorySpecificationsFrame(UserStory userStory, BDocConfig bdocConfig) {
-		super( "user_story_specifications_frame.ftl", bdocConfig );
-		this.userStory = userStory;
-		put("userStory", userStory);
-		put("fileNamePrefix", fileNamePrefix());
-		put("narrative", userStory.getNarrative());
+	public SpecificationsFrame(Package _package, BDocConfig bdocConfig) {
+		super("specifications_frame.ftl", bdocConfig);
+
+		this.fileNamePrefix = _package.getName().replace('.', '_');
+		this.classBehaviour = _package.getClassBehaviour();
+		this.title = _package.getName();
+
+		put("this", this);
+	}
+
+	public SpecificationsFrame(UserStory userStory, BDocConfig bdocConfig) {
+		super("specifications_frame.ftl", bdocConfig);
+
+		this.fileNamePrefix = userStory.getTitle().replace(" ", "_").toLowerCase();
+		this.classBehaviour = userStory.getClassBehaviour();
+		this.title = userStory.getTitle();
+		this.narrative = userStory.getNarrative();
+
 		put("this", this);
 	}
 
 	private String fileNamePrefix() {
-		return userStory.getTitle().replace(" ", "_").toLowerCase();
+		return fileNamePrefix;
 	}
 
 	public String getFileName() {
@@ -52,7 +72,19 @@ public class UserStorySpecificationsFrame extends AbstractBDocReportContent {
 	}
 
 	public String getTitle() {
-		return userStory.getTitle();
+		return title;
+	}
+
+	public List<ClassBehaviour> getClassBehaviour() {
+		return classBehaviour;
+	}
+
+	public boolean hasNarrative() {
+		return (null != narrative);
+	}
+
+	public Narrative getNarrative() {
+		return narrative;
 	}
 
 }

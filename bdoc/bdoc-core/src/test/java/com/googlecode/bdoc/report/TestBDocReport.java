@@ -97,6 +97,11 @@ public class TestBDocReport {
 	}
 
 	@Test
+	public void shouldCreateModuleTocFrameInBDocReportDirectory() {
+		assertReportIsCreated("module_toc_frame.html");
+	}
+
+	@Test
 	public void shouldCreateAUserStorySpecificationFrameForEachUserStory() {
 		assertReportIsCreated("story_nr_one_specifications_frame.html");
 		assertReportIsCreated("story_nr_two_specifications_frame.html");

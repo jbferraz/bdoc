@@ -42,17 +42,17 @@ public class TestSynchronizedTextKeys {
 
 	@Test
 	public void englishTextPropertyFileShouldContainKeyForTocUserstories() {
-		assertEquals("User stories:", enText.getString("toc.userstories"));
+		assertEquals("User stories", enText.getString("toc.userstories"));
 	}
 
 	@Test
 	public void norwegianTextPropertyFileShouldContainKeyForTocUserstories() {
-		assertEquals("Brukerhistorier:", noText.getString("toc.userstories"));
+		assertEquals("Brukerhistorier", noText.getString("toc.userstories"));
 	}
 
 	@Test
 	public void swedishTextPropertyFileShouldContainKeyForTocUserstories() {
-		assertEquals("Användarberättelse:", svText.getString("toc.userstories"));
+		assertEquals("Användarberättelse", svText.getString("toc.userstories"));
 	}
 
 	@Test

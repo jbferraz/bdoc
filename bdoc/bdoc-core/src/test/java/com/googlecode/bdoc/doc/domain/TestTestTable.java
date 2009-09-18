@@ -33,8 +33,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.googlecode.bdoc.doc.util.testdata.MyObject;
-
 public class TestTestTable {
 
 	@Test

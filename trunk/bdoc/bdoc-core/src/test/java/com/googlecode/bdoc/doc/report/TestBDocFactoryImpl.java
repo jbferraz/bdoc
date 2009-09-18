@@ -70,7 +70,7 @@ public class TestBDocFactoryImpl {
 	@Test
 	public void shouldCreateAClassBehaviourSorterWhenAReportConfigIsFound() {
 		BDocFactoryImpl bdocFactoryImpl = BDocFactoryImpl.createForTest("MyReportConfig");
-		bdocFactoryImpl.setTestClassDirectory(new File("target/test-classes"));
+		bdocFactoryImpl.setTestClassDirectory(new File("./target/test-classes"));
 		bdocFactoryImpl.setClassLoader(getClass().getClassLoader());
 		assertNotNull(bdocFactoryImpl.createClassBehaviourSorter());
 	}
@@ -78,7 +78,7 @@ public class TestBDocFactoryImpl {
 	@Test
 	public void shouldNotReturnAnyReportConfigClassNameWhenNoReportConfigIsFound() {
 		BDocFactoryImpl bdocFactoryImpl = BDocFactoryImpl.createForTest("MyReportConfig");
-		bdocFactoryImpl.setTestClassDirectory(new File("target/classes"));
+		bdocFactoryImpl.setTestClassDirectory(new File("./target/classes"));
 		bdocFactoryImpl.setClassLoader(getClass().getClassLoader());
 		assertNull(bdocFactoryImpl.createClassBehaviourSorter());
 	}
@@ -86,7 +86,7 @@ public class TestBDocFactoryImpl {
 	@Test
 	public void shouldPassOnTheClassBehaviourSorterToBDocWhenAReportConfigIsFound() {
 		BDocFactoryImpl bdocFactoryImpl = BDocFactoryImpl.createForTest("MyReportConfig");
-		bdocFactoryImpl.setTestClassDirectory(new File("target/test-classes"));
+		bdocFactoryImpl.setTestClassDirectory(new File("./target/test-classes"));
 		bdocFactoryImpl.setStoryRefAnnotation(Ref.class);
 		bdocFactoryImpl.setClassLoader(getClass().getClassLoader());
 

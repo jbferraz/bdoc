@@ -101,6 +101,10 @@ public class BDocReport {
 		for (SpecificationsFrame specificationsFrame : userStorySpecificationFrames) {
 			writeFile(reportDirectory, specificationsFrame.getFileName(), specificationsFrame.html());
 		}
+		
+		for (SpecificationsFrame specificationsFrame : moduleSpecificationFrames) {
+			writeFile(reportDirectory, specificationsFrame.getFileName(), specificationsFrame.html());
+		}
 
 		for (StatementExampleFrame specificationExample : specificationExamples.list()) {
 			writeFile(reportDirectory, specificationExample.getFileName(), specificationExample.html());

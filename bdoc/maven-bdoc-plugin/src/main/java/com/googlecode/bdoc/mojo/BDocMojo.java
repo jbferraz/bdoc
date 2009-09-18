@@ -227,7 +227,7 @@ public class BDocMojo extends AbstractBDocMojo {
 
 		getSink().listItem();
 		getSink().link(BDOC_USERSTORY_REPORT);
-		getSink().text("User stories");
+		getSink().text("BDoc reports");
 		getSink().link_();
 		getSink().listItem_();
 

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>maven-bdoc-plugin</artifactId>
@@ -68,7 +69,13 @@
 		<maven.version>2.2.1</maven.version>
 	</properties>
 
-	<build>
+	<build>		
+		<resources>
+			<resource>
+				<directory>${project.build.directory}/generated-resources</directory>
+			</resource>
+		</resources>
+ 
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
@@ -111,6 +118,25 @@
 					<tagBase>https://bdoc.googlecode.com/svn/tags</tagBase>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<configuration>
+					<tasks>
+						<mkdir dir="${project.build.directory}/generated-resources" />
+						<echo file="${project.build.directory}/generated-resources/${project.artifactId}.properties" message="version=${project.version}" />
+					</tasks>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>

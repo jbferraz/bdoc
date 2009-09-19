@@ -146,9 +146,9 @@ public class BDocMojo extends AbstractBDocMojo {
 					+ "Currently there are two solutions: 1. Don't upgrade, 2. Run bdoc:reset and try again. Detailed message: "
 					+ e.getMessage();
 
-			getLog().error(msg, e);
+			getLog().error(MojoVersion.version() + msg, e);
 		} catch (Exception e) {
-			getLog().error("BDoc error:" + e, e);
+			getLog().error(MojoVersion.version() + "BDoc error:" + e, e);
 		}
 	}
 

@@ -76,14 +76,6 @@ public class TestBDocFactoryImpl {
 	}
 
 	@Test
-	public void shouldNotReturnAnyReportConfigClassNameWhenNoReportConfigIsFound() {
-		BDocFactoryImpl bdocFactoryImpl = BDocFactoryImpl.createForTest("MyReportConfig");
-		bdocFactoryImpl.setTestClassDirectory(new File("./target/classes"));
-		bdocFactoryImpl.setClassLoader(getClass().getClassLoader());
-		assertNull(bdocFactoryImpl.createClassBehaviourSorter());
-	}
-
-	@Test
 	public void shouldPassOnTheClassBehaviourSorterToBDocWhenAReportConfigIsFound() {
 		BDocFactoryImpl bdocFactoryImpl = BDocFactoryImpl.createForTest("MyReportConfig");
 		bdocFactoryImpl.setTestClassDirectory(new File("./target/test-classes"));

@@ -24,21 +24,18 @@
 
 package com.googlecode.bdoc.doc.domain;
 
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.googlecode.bdoc.doc.domain.Package;
-import com.googlecode.bdoc.doc.domain.Scenario;
-import com.googlecode.bdoc.doc.domain.Specification;
-import com.googlecode.bdoc.doc.domain.Statement;
 import com.googlecode.bdoc.doc.domain.TestModuleBehaviour.TestExample;
 
-
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 public class TestPackage {
 
@@ -65,14 +62,14 @@ public class TestPackage {
 
 	@Test
 	public void shouldReturnSpecificationsAddedToThePackage() {
-		javaPackage.addBehaviour(new TestMethod( TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF));
+		javaPackage.addBehaviour(new TestMethod(TestExample.class, SHOULD_VERIFY_THE_IMPORTANT_STUFF));
 		assertTrue(javaPackage.getClassSpecifications().get(0).getSpecifications().contains(
 				new Specification(SHOULD_VERIFY_THE_IMPORTANT_STUFF)));
 	}
 
 	@Test
 	public void shouldReturnStatementsAddedToThePackage() {
-		javaPackage.addBehaviour(new TestMethod( TestExample.class, ITS_ALL_ABOUT_BEHAVIOUR));
+		javaPackage.addBehaviour(new TestMethod(TestExample.class, ITS_ALL_ABOUT_BEHAVIOUR));
 		assertTrue(javaPackage.hasClassStatements());
 		assertTrue(javaPackage.getClassStatements().get(0).getStatements().contains(new Statement(ITS_ALL_ABOUT_BEHAVIOUR)));
 	}
@@ -80,8 +77,34 @@ public class TestPackage {
 	@Test
 	public void shouldReturnScenariosAddedToThePackage() {
 		Package javaPackage = Package.forClass(TestExample.class);
-		javaPackage.addBehaviour(new TestMethod( TestExample.class, GIVEN_WHEN_THEN));
+		javaPackage.addBehaviour(new TestMethod(TestExample.class, GIVEN_WHEN_THEN));
 		assertTrue(javaPackage.getScenarios().contains(new Scenario(GIVEN_WHEN_THEN)));
+	}
+
+	@Test
+	public void shouldSortClassBehaviourAfterSpecification() {
+		ClassBehaviourSorter classBehaviourSorter = new ClassBehaviourSorter(TestMyFirstClass.class, TestMySecondClass.class);
+
+		Package javaPackage = new Package(TestMySecondClass.class.getPackage(), classBehaviourSorter);
+		javaPackage.addBehaviour(new TestMethod(TestMySecondClass.class, "testMe"));
+		javaPackage.addBehaviour(new TestMethod(TestMyFirstClass.class, "testMe"));
+
+		assertEquals("MyFirstClass", javaPackage.getClassBehaviour().get(0).getClassName());
+		assertEquals("MySecondClass", javaPackage.getClassBehaviour().get(1).getClassName());
+	}
+
+	public class TestMySecondClass {
+		@Test
+		public void testMe() {
+
+		}
+	}
+
+	public class TestMyFirstClass {
+		@Test
+		public void testMe() {
+
+		}
 	}
 
 }

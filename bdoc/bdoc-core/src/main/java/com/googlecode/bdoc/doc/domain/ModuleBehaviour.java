@@ -29,12 +29,15 @@ import static com.googlecode.bdoc.doc.util.Select.from;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * @author Per Otto Bergum Christensen
  */
 public class ModuleBehaviour {
 
 	private final List<Package> packages = new ArrayList<Package>();
+	private ClassBehaviourSorter classBehaviourSorter = new ClassBehaviourSorter();
 
 	public ClassBehaviour classBehaviourFor(Class<? extends Object> testClass) {
 		return from(packages).equalTo(Package.forClass(testClass)).getBehaviourFor(testClass);
@@ -42,7 +45,7 @@ public class ModuleBehaviour {
 
 	public ClassBehaviour addBehaviour(TestMethod method) {
 
-		Package classPackage = Package.forClass(method.clazz());
+		Package classPackage = new Package(method.clazz().getPackage(), classBehaviourSorter);
 		if (packages.contains(classPackage)) {
 			classPackage = from(packages).equalTo(classPackage);
 		} else {
@@ -95,6 +98,11 @@ public class ModuleBehaviour {
 			result.addAll(javaPackage.getScenarios());
 		}
 		return result;
+	}
+
+	public void setClassBehaviourSorter(ClassBehaviourSorter classBehaviourSorter) {
+		Validate.notNull(classBehaviourSorter, "classBehaviourSorter");
+		this.classBehaviourSorter = classBehaviourSorter;
 	}
 
 }

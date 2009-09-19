@@ -27,8 +27,9 @@ package com.googlecode.bdoc.doc.domain;
 import static com.googlecode.bdoc.doc.util.Select.from;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.lang.Validate;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -39,19 +40,32 @@ public class Package {
 
 	private List<ClassBehaviour> classBehaviourList = new ArrayList<ClassBehaviour>();
 
-	public Package(String name) {
+	private final ClassBehaviourSorter classBehaviourSorter;
+
+	public Package(String name, ClassBehaviourSorter classBehaviourSorter) {
+		Validate.notNull(name, "name");
+		Validate.notNull(classBehaviourSorter, "classBehaviourSorter");
 		this.name = name;
+		this.classBehaviourSorter = classBehaviourSorter;
+	}
+
+	public Package(java.lang.Package javaPackage, ClassBehaviourSorter classBehaviourSorter) {
+		this( javaPackage.getName(),classBehaviourSorter );
+	}
+
+	public Package(String name) {
+		this(name, new ClassBehaviourSorter());
 	}
 
 	public Package(java.lang.Package javaPackage) {
-		name = javaPackage.getName();
+		this( javaPackage.getName(), new ClassBehaviourSorter() );
 	}
 
 	public ClassBehaviour getBehaviourFor(Class<? extends Object> testClass) {
 		return from(classBehaviourList).equalTo(new ClassBehaviour(testClass));
 	}
 
-	public ClassBehaviour addBehaviour(TestMethod testMethod ) {
+	public ClassBehaviour addBehaviour(TestMethod testMethod) {
 		ClassBehaviour classBehaviour = new ClassBehaviour(testMethod.clazz());
 		if (classBehaviourList.contains(classBehaviour)) {
 			classBehaviour = from(classBehaviourList).equalTo(classBehaviour);
@@ -61,14 +75,14 @@ public class Package {
 		classBehaviour.addBehaviour(testMethod);
 		return classBehaviour;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		return (obj instanceof Package) && ((Package) obj).name.equals(name);
 	}
 
-	public List<ClassBehaviour> getClassBehaviour() {
-		return Collections.unmodifiableList(classBehaviourList);
+	public List<ClassBehaviour> getClassBehaviour() {		
+		return classBehaviourSorter.sort(classBehaviourList);
 	}
 
 	/**
@@ -97,7 +111,6 @@ public class Package {
 	public boolean hasScenarios() {
 		return !getScenarios().isEmpty();
 	}
-
 
 	public List<Scenario> getScenarios() {
 		List<Scenario> result = new ArrayList<Scenario>();

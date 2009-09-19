@@ -84,7 +84,7 @@ public class BDocFactoryImpl implements BDocFactory {
 		if (null != reportConfigClassName) {
 			return createClassBehaviourSorterFromClassName(reportConfigClassName);
 		}
-		return null;
+		return new ClassBehaviourSorter();
 	}
 
 	protected String findReportConfigClassName() {

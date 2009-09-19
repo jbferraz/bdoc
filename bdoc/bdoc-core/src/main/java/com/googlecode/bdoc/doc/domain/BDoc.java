@@ -83,6 +83,7 @@ public class BDoc {
 	public BDoc(Class<? extends Annotation> storyRefAnnotation, ClassBehaviourSorter classBehaviourSorter) {
 		this.storyRefAnnotation = storyRefAnnotation;
 		this.classBehaviourSorter = classBehaviourSorter;
+		this.moduleBehaviour.setClassBehaviourSorter( classBehaviourSorter );
 	}
 
 	/**

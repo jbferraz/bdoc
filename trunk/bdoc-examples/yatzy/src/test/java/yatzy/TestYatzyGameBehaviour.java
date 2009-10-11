@@ -8,8 +8,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import bdoc.Ref;
 import bdoc.RefClass;
 import bdoc.ScenarioSupport;
+import bdoc.Story;
 
 /**
  * http://ellnestam.wordpress.com/2007/07/13/first-crack-at-bdding-a-yatzy-game/
@@ -18,11 +20,8 @@ import bdoc.ScenarioSupport;
  * 
  * @author Per Otto
  * 
- * 1. Tiny er default
- * 2. Before/after må kjøres
- * 3. Må lage eksempel for module-report-spesifikasjoner som ikke har kjørt som del av story 
+ * 1. Before/after må kjøres 
  */
-
 @RefClass( Game.class )
 public class TestYatzyGameBehaviour extends ScenarioSupport<TestYatzyGameBehaviour>{
 

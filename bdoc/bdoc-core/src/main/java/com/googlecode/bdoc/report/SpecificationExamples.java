@@ -24,42 +24,47 @@
 
 package com.googlecode.bdoc.report;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.ClassSpecifications;
 import com.googlecode.bdoc.doc.domain.ClassStatements;
+import com.googlecode.bdoc.doc.domain.Specifications;
 import com.googlecode.bdoc.doc.domain.Statement;
-import com.googlecode.bdoc.doc.domain.UserStory;
 
 public class SpecificationExamples {
 
 	private BDocConfig bdocConfig;
-	private List<StatementExampleFrame> list = new ArrayList<StatementExampleFrame>();
+	private Set<StatementExampleFrame> exampleFrameSet = new TreeSet<StatementExampleFrame>();
 
 	public SpecificationExamples(BDocConfig bdocConfig) {
 		this.bdocConfig = bdocConfig;
 	}
 
-	public void addFrom(UserStory userStory) {
-		for (ClassStatements classStatements : userStory.getClassStatements()) {
+	public void addFrom(Specifications specifications) {
+		for (ClassStatements classStatements : specifications.getClassStatements()) {
 			addStatementsWithExamples(classStatements.getClassName(), classStatements.getStatements());
 		}
-		for (ClassSpecifications classStatements : userStory.getClassSpecifications()) {
+		for (ClassSpecifications classStatements : specifications.getClassSpecifications()) {
 			addStatementsWithExamples(classStatements.getClassName(), classStatements.getSpecifications());
 		}
 	}
 
-	private void addStatementsWithExamples(String className, List<? extends Statement> statements) {
+	void addStatementsWithExamples(String className, List<? extends Statement> statements) {
 		for (Statement statement : statements) {
 			if (statement.hasExamples()) {
-				list.add(new StatementExampleFrame(className, statement, bdocConfig));
+				addStatementExampleFrame(new StatementExampleFrame(className, statement, bdocConfig));
 			}
 		}
 	}
 
-	public List<StatementExampleFrame> list() {
-		return list;
+	boolean addStatementExampleFrame(StatementExampleFrame statementExampleFrame) {
+		return exampleFrameSet.add(statementExampleFrame);
+	}
+
+	public Set<StatementExampleFrame> list() {
+		return exampleFrameSet;
 	}
 }

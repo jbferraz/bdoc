@@ -24,7 +24,6 @@
 
 package com.googlecode.bdoc.report;
 
-import static com.googlecode.bdoc.doc.util.TestMethodReferenceFinder.findTestMethodReferenceFor;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -41,9 +40,13 @@ import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.report.testdata.BDocReportTestRef;
+import com.googlecode.bdoc.report.testdata.TestClassWithModuleBehaviour;
 import com.googlecode.bdoc.report.testdata.TestClassWithRefToStoryNrOne;
 import com.googlecode.bdoc.report.testdata.TestClassWithRefToStoryNrTwoBehaviour;
 
+/**
+ * @author Per Otto Bergum Christensen
+ */
 public class TestBDocReport {
 
 	RuntimeBehaviourFactory behaviourFactory = new RuntimeBehaviourFactory(BConst.SRC_TEST_JAVA);
@@ -58,10 +61,8 @@ public class TestBDocReport {
 		bdoc.setProject(new ProjectInfo("TestBDocReport", "1.0"));
 
 		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrOne.class), behaviourFactory);
-
-		TestClass testClass = new TestClass(TestClassWithRefToStoryNrTwoBehaviour.class);
-		testClass.registerTestMethodReferences(findTestMethodReferenceFor(testClass, BConst.SRC_TEST_JAVA));
-		bdoc.addBehaviourFrom(testClass, behaviourFactory);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithRefToStoryNrTwoBehaviour.class), behaviourFactory);
+		bdoc.addBehaviourFrom(new TestClass(TestClassWithModuleBehaviour.class), behaviourFactory);		
 
 		new BDocReport(bdoc, new BDocConfig()).writeTo(baseDir);
 	}
@@ -113,9 +114,15 @@ public class TestBDocReport {
 	}
 
 	@Test
-	public void shouldCreateAnExampleFrameForEachStatementContaingExamples() {
+	public void shouldCreateAnExampleFrameForEachStatementContaingUserstoryExamples() {
 		assertReportIsCreated("classwithreftostorynrtwobehaviour-specforstory2-examples_frame.html");
 		assertReportIsCreated("classwithreftostorynrtwobehaviour-specwithtable-examples_frame.html");
+	}
+
+	@Test
+	public void shouldCreateAnExampleFrameForEachStatementContaingModuleExamples() {
+		assertReportIsCreated("classwithmodulebehaviour-specformodule-examples_frame.html");
+		assertReportIsCreated("classwithmodulebehaviour-specfortablewithtable-examples_frame.html");
 	}
 
 	void assertReportIsCreated(String reportFileName) {

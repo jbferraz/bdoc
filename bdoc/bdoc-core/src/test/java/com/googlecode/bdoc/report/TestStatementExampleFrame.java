@@ -28,6 +28,7 @@ import static com.googlecode.bdoc.doc.domain.TableColumn.columns;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 import static java.util.Arrays.asList;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -50,44 +51,46 @@ public class TestStatementExampleFrame {
 
 	private String html;
 	private Statement statement;
+	private BDocConfig bdocConfig = new BDocConfig();
 
 	public TestStatementExampleFrame() throws IOException {
 		TestMethod method = new TestMethod(TestClassWithTestTable.class, "exampleStatement");
 
-		//# Adding testtable
+		// # Adding testtable
 		TestTable testTable = new TestTable("exampleOnSumOfTwoValues", columns("value1", "value2", "sum"));
-		testTable.addRow(new TableRow( columns("9912", "88", "10000") ));		
-		method.addTestTable(  testTable ) ;
-		
-		//# Adding simple scenario
+		testTable.addRow(new TableRow(columns("9912", "88", "10000")));
+		method.addTestTable(testTable);
+
+		// # Adding simple scenario
 		method.addScenario(new Scenario("givenADynamicScenarioWhenActionThenEnsure"));
 
-		//# Adding scenario with indented parts
+		// # Adding scenario with indented parts
 		Scenario scenarioWithIndentedParts = new Scenario(Scenario.parts("givenStateA", "when", "then"));
 		scenarioWithIndentedParts.getParts().get(0).addIndentedPart(new Part("andStateB"));
 		scenarioWithIndentedParts.getParts().get(0).addIndentedPart(new Part("andStateC"));
 		method.getScenarios().add(scenarioWithIndentedParts);
 
-		//# Adding scenario with testtables as argument in 
-		Part partWithTestTableAsArgument = new Part( "given an");
-		
+		// # Adding scenario with testtables as argument in
+		Part partWithTestTableAsArgument = new Part("given an");
+
 		List<Income> income = new ArrayList<Income>();
-		income.add(new Income( 2000, 9000 ));
-		income.add(new Income( 2001, 11000 ));
-		
+		income.add(new Income(2000, 9000));
+		income.add(new Income(2001, 11000));
+
 		partWithTestTableAsArgument.appendListArgument("income", income);
-		
-		Scenario scenarioArgumentsAsTestTable = new Scenario(asList( partWithTestTableAsArgument ));
+
+		Scenario scenarioArgumentsAsTestTable = new Scenario(asList(partWithTestTableAsArgument));
 		method.getScenarios().add(scenarioArgumentsAsTestTable);
-		
-		//# Creating statement with a lot of examples put on the method   
+
+		// # Creating statement with a lot of examples put on the method
 		statement = new Statement(method);
 
 		html = new StatementExampleFrame("ClassWithTestTable", statement, new BDocConfig()).html();
 		writeStringToFile(new File("target/" + getClass().getName() + ".html"), html);
-		
-		//need css to see what's going on
-		writeStringToFile(new File("target/stylesheet.css"), BDocReportUtils.createContentFrom("css.ftl", new HashMap<String, Object>()) );		
+
+		// need css to see what's going on
+		writeStringToFile(new File("target/stylesheet.css"), BDocReportUtils.createContentFrom("css.ftl",
+				new HashMap<String, Object>()));
 	}
 
 	@Test
@@ -106,7 +109,7 @@ public class TestStatementExampleFrame {
 		assertXPathContains("Value 2", "//body", html);
 		assertXPathContains("Sum", "//body", html);
 	}
-	
+
 	@Test
 	public void shouldPresentListArgumentForAScenarioPart() {
 		assertXPathContains("Income", "//body", html);
@@ -115,8 +118,21 @@ public class TestStatementExampleFrame {
 
 	@Test
 	public void shouldHaveFileNameBuildtUpFromStatementConcatenatedWithStandardPostfix() {
-		StatementExampleFrame statementExamplesFrame = new StatementExampleFrame("ClassWithTestTable", statement, new BDocConfig());
+
+		StatementExampleFrame statementExamplesFrame = new StatementExampleFrame("ClassWithTestTable", statement, bdocConfig);
 		assertEquals("classwithtesttable-examplestatement-examples_frame.html", statementExamplesFrame.getFileName());
+	}
+
+	@Test
+	public void shouldTellIfTwoInstancesIsEqual() {
+		StatementExampleFrame exampleA1 = new StatementExampleFrame("classA", new Statement("blabla"), bdocConfig);
+		StatementExampleFrame exampleA2 = new StatementExampleFrame("classA", new Statement("blabla"), bdocConfig);
+		StatementExampleFrame exampleB = new StatementExampleFrame("classB", new Statement("blabla"), bdocConfig);
+		StatementExampleFrame exampleC = new StatementExampleFrame("classB", new Statement("blablabla"), bdocConfig);
+
+		assertEquals(exampleA1, exampleA2);
+		assertFalse(exampleA1.equals(exampleB));
+		assertFalse(exampleB.equals(exampleC));
 	}
 
 	public class TestClassWithTestTable {
@@ -125,10 +141,10 @@ public class TestStatementExampleFrame {
 		public void exampleStatement() {
 		}
 	}
-	
+
 	public static class Income {
 		private int year, amount;
-		
+
 		public Income(int year, int amount) {
 			super();
 			this.year = year;

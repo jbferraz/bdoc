@@ -27,7 +27,7 @@ package com.googlecode.bdoc.report;
 import com.googlecode.bdoc.BDocConfig;
 import com.googlecode.bdoc.doc.domain.Statement;
 
-public class StatementExampleFrame extends AbstractBDocReportContent {
+public class StatementExampleFrame extends AbstractBDocReportContent implements Comparable<StatementExampleFrame> {
 
 	private Statement statement;
 	private String className;
@@ -48,7 +48,7 @@ public class StatementExampleFrame extends AbstractBDocReportContent {
 	public boolean equals(Object obj) {
 		return (obj instanceof StatementExampleFrame) && getFileName().equals(((StatementExampleFrame) obj).getFileName());
 	}
-	
+
 	public static String getFileName(String className, Statement statement) {
 		return fileNamePartOf(className) + "-" + fileNamePartOf(statement.getCamelCaseSentence()) + "-examples_frame.html";
 	}
@@ -56,5 +56,11 @@ public class StatementExampleFrame extends AbstractBDocReportContent {
 	private static String fileNamePartOf(String camelCaseSentence) {
 		return camelCaseSentence.toLowerCase();
 	}
-	
+
+	public int compareTo(StatementExampleFrame other) {
+		if (this.equals(other)) {
+			return 0;
+		}
+		return 1;
+	}
 }

@@ -34,7 +34,7 @@ import org.apache.commons.lang.Validate;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class Package {
+public class Package implements Specifications {
 
 	private String name;
 

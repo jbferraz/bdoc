@@ -33,7 +33,7 @@ import org.apache.commons.lang.Validate;
 /**
  * @author Per Otto Bergum Christensen
  */
-public class UserStory extends ModuleBehaviour implements UserStoryDescription, Comparable<UserStory> {
+public class UserStory extends ModuleBehaviour implements UserStoryDescription, Specifications, Comparable<UserStory> {
 
 	private final Integer id;
 	private final String title;

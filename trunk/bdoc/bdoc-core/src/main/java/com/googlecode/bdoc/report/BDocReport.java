@@ -81,6 +81,7 @@ public class BDocReport {
 		
 		for (Package _package : bdoc.getModuleBehaviour().getPackages()) {
 			moduleSpecificationFrames.add(new SpecificationsFrame(_package, bdocConfig));
+			specificationExamples.addFrom(_package);
 		}
 
 		indexFrameSet = BDocReportUtils.createContentFrom("index.ftl", model);

@@ -67,8 +67,8 @@ public class BDocMojo extends AbstractBDocMojo {
 	static final String BDOC_REPORTS_XML = "bdoc-reports.xml";
 
 	static final String BDOC_USERSTORY_REPORT_NOFRAMES = "bdoc-userstory-report.html";
-	
-	static final String BDOC_USERSTORY_REPORT= "bdoc/index.html";
+
+	static final String BDOC_USERSTORY_REPORT = "bdoc/index.html";
 
 	static final String BDOC_MODULE_REPORT = "bdoc-module-report.html";
 
@@ -120,7 +120,7 @@ public class BDocMojo extends AbstractBDocMojo {
 	String storyRefAnnotationClassName;
 
 	/**
-	 * @parameter default-value= "static"
+	 * @parameter default-value= "tiny"
 	 * @required
 	 */
 	String scenarioAnalyzer;
@@ -169,7 +169,10 @@ public class BDocMojo extends AbstractBDocMojo {
 		}
 
 		getLog().info("scenarioAnalyzer: " + scenarioAnalyzer);
-		BehaviourFactory behaviourFactory = new JavaTestSourceBehaviourParser(testSourceDirectory);
+		BehaviourFactory behaviourFactory = null;
+		if (scenarioAnalyzer.equals("static")) {
+			behaviourFactory = new JavaTestSourceBehaviourParser(testSourceDirectory);
+		}
 		if (scenarioAnalyzer.equals("dynamic")) {
 			behaviourFactory = new RuntimeBehaviourFactory(testSourceDirectory);
 		}
@@ -195,12 +198,10 @@ public class BDocMojo extends AbstractBDocMojo {
 
 		diffLog.writeToFile(getBDocChangeLogFile());
 
-//		writeReport(BDOC_USERSTORY_REPORT_NOFRAMES, new UserStoryHtmlReport(bdoc, bdocConfig).html());
-//		writeReport(BDOC_MODULE_REPORT, new ModuleBehaviourReport(bdoc, bdocConfig).html());
 		writeReport(BDOC_DIFF_LOG_HTML, new DiffLogReport().run(diffLog, bdocConfig).result());
-		
-		getLog().info("Writing bdoc-report to " + outputDirectory.getAbsolutePath() );
-		new BDocReport( bdoc, bdocConfig ).writeTo(outputDirectory);
+
+		getLog().info("Writing bdoc-report to " + outputDirectory.getAbsolutePath());
+		new BDocReport(bdoc, bdocConfig).writeTo(outputDirectory);
 
 		makeBDocReportsHtml();
 	}

@@ -89,6 +89,9 @@ public class TestMethod {
 	 */
 	public String camelCaseSentence() {
 		String camelCaseSentence = getName();
+		if( camelCaseSentence.equalsIgnoreCase( "test")) {
+			return camelCaseSentence;
+		}
 		if (camelCaseSentence.startsWith(TEST_METHOD_PREFIX)) {
 			camelCaseSentence = camelCaseSentence.substring(TEST_METHOD_PREFIX.length());
 			camelCaseSentence = camelCaseSentence.substring(0, 1).toLowerCase()

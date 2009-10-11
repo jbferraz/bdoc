@@ -43,7 +43,6 @@
 				<version>0.8.16-SNAPSHOT</version>
 				<configuration>
 					<storyRefAnnotationClassName>bdoc.Ref</storyRefAnnotationClassName>
-					<scenarioAnalyzer>tiny</scenarioAnalyzer>
 				</configuration>
 				<executions>
 					<execution>

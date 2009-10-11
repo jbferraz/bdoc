@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.doc.tinybdd;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import org.apache.commons.beanutils.MethodUtils;
@@ -41,9 +42,25 @@ public class TestClassProxyWrapper {
 
 	public void runTest(TestMethod testMethod) {
 		try {
-			MethodUtils.invokeExactMethod(proxy, testMethod.getName(), null);
+			internalRunTest(testMethod);
 		} catch (Exception e) {
 			throw new BDocException(e);
+		}
+	}
+
+	private void internalRunTest(TestMethod testMethod) throws Exception {
+		invokeAnnotatedMethodOnClass("Before", testMethod.clazz());
+		MethodUtils.invokeExactMethod(proxy, testMethod.getName(), null);
+		invokeAnnotatedMethodOnClass("After", testMethod.clazz());
+	}
+
+	private void invokeAnnotatedMethodOnClass(String annotationNameSuffix, Class<?> clazz) throws Exception {
+		for (Method method : clazz.getMethods()) {
+			for (Annotation annotation : method.getAnnotations()) {
+				if (annotation.annotationType().getName().endsWith(annotationNameSuffix)) {
+					method.invoke(proxy, new Object[0]);
+				}
+			}
 		}
 	}
 
@@ -52,7 +69,7 @@ public class TestClassProxyWrapper {
 	}
 
 	public Object invoke(Method method, Object[] args) {
-		try {			
+		try {
 			method.setAccessible(true);
 			return method.invoke(proxy, args);
 		} catch (Exception e) {

@@ -27,6 +27,7 @@ package com.googlecode.bdoc.doc.tinybdd;
 import static com.googlecode.bdoc.doc.domain.Scenario.part;
 import static com.googlecode.bdoc.doc.domain.TableColumn.columns;
 import static java.util.Arrays.asList;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -41,6 +42,7 @@ import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
+import com.googlecode.bdoc.doc.tinybdd.testdata.TestWithBeforeAndAfter;
 import com.googlecode.bdoc.doc.tinybdd.testdata.TeztTinyTestdataScenarios;
 
 public class TestTinyBddAnalyzer {
@@ -62,7 +64,7 @@ public class TestTinyBddAnalyzer {
 		assertEquals(new Scenario(expectedParts), bddAnalyzer.getCreatedScenarios().get(0));
 	}
 
-	private TinyBddAnalyzer analyze(Class<TeztTinyTestdataScenarios> clazz, String methodName) {
+	private TinyBddAnalyzer analyze(Class<?> clazz, String methodName) {
 		TinyBddAnalyzer bddAnalyzer = new TinyBddAnalyzer(BConst.SRC_TEST_JAVA);
 		bddAnalyzer.analyze(new TestClass(clazz).getTestMethod(methodName));
 		return bddAnalyzer;
@@ -167,13 +169,11 @@ public class TestTinyBddAnalyzer {
 		assertEquals(2, bddAnalyzer.getCreatedScenarios().size());
 	}
 
-	// should add table for a scenario, if used in input arg
-
-	// shouldRegisterTesttable
-
-	// shouldRegisterTwoScenariosInTheSameTest
-
-	// test to testtables i samme spec
-	// test to scenarioer etterhverandre i samme spec
+	@Test
+	public void shouldCallMethodAnnotatedWithAtBeforeRunningATest() {
+		TestWithBeforeAndAfter.beforeObject = null;
+		analyze(TestWithBeforeAndAfter.class, "test");
+		assertNotNull(TestWithBeforeAndAfter.beforeObject);
+	}
 
 }

@@ -22,7 +22,7 @@ import bdoc.ScenarioSupport;
  * 
  */
 @RefClass(Game.class)
-public class TestYatzyGameBehaviour extends ScenarioSupport<TestYatzyGameBehaviour> {
+public class TestGameBehaviour extends ScenarioSupport<TestGameBehaviour> {
 
 	private Game game;
 

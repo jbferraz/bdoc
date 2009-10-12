@@ -15,12 +15,14 @@ public class Game {
 		return playerScore.get(player);
 	}
 
-	public void addRoll(String player, List<Integer> roll) {
+	public void addRoll(String player, List<Integer> roll, Rule rule) {
 		int score = score(player);
-		for (Integer dice : roll) {
-			score = score + dice;
-		}
+		score = score + rule.compute(roll);
 		playerScore.put(player, score);
+	}
+
+	public Object computeScoreFor(Rule rule, int[] roll) {
+		return null;
 	}
 
 }

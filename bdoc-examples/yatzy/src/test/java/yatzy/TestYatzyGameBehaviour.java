@@ -55,8 +55,8 @@ public class TestYatzyGameBehaviour extends ScenarioSupport<TestYatzyGameBehavio
 		given.player(action("perotto", "has added", asList(1, 1, 1, 1, 1), Rule.ONES));
 		and.player(action("bob", "has added", asList(2, 2, 2, 2, 2), Rule.TWOS));
 		when.player(action("perotto", "adds", asList(6, 6, 6, 1, 1), Rule.THREE_OF_A_KIND));
-		then.ensureResult(new Result("perotto", 23));
-		and.ensureResult(new Result("bob", 10));
+		then.ensure(new Result("perotto", 23));
+		and.ensure(new Result("bob", 10));
 	}
 
 	void player(Action score) {
@@ -67,7 +67,7 @@ public class TestYatzyGameBehaviour extends ScenarioSupport<TestYatzyGameBehavio
 		assertEquals(score, game.score(player));
 	}
 
-	void ensureResult(Result score) {
+	void ensure(Result score) {
 		assertEquals(score.score, game.score(score.player));
 	}
 

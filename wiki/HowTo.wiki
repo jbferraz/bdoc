@@ -119,6 +119,6 @@ public class TestStack {
 		assertFalse(stack.isEmpty());
 	}
 }}} 
-=== doc - download example ===
-Download the maven example project for a yatzy game: 
+ === doc - download example ===
+ Download the maven example project for a yatzy game: 
 http://bdoc.googlecode.com/files/yatzy-demo.zip

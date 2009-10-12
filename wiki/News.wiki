@@ -1,5 +1,5 @@
 _12 October 2009 - Release 0.8.16_
- Version 0.8.16 is released with support for @Before and @After in tests, together with tiny-bdd-support as default. A new example is under development, together with more documentation, for a peak look at [http://bdoc.googlecode.com/svn/trunk/bdoc-examples/yatzy/src/test/java/yatzy/TestYatzyGameBehaviour.java YatzyBehaviour]
+ Version 0.8.16 is released with support for @Before and @After in tests, together with tiny-bdd-support as default. A new example is under development, together with more documentation, for a peak look at [http://bdoc.googlecode.com/svn/trunk/bdoc-examples/yatzy/src/test/java/yatzy/TestYatzyGameBehaviour.java YatzyBehaviour] or just [prebuildt download] it.
 
 _07 September 2009 - Release 0.8.15_
  Version 0.8.15 is released and will be presented at [http://javazone.no/incogito09/events/JavaZone%202009/sessions/Effektiv%20testing JavaZone] - day 1. More info will be presentete here later on. 

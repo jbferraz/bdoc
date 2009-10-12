@@ -6,7 +6,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.8.11</version>
+				<version>0.8.16</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -119,3 +119,6 @@ public class TestStack {
 		assertFalse(stack.isEmpty());
 	}
 }}} 
+=== doc - download example ===
+Download the maven example project for a yatzy game: 
+http://bdoc.googlecode.com/files/yatzy-demo.zip

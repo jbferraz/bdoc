@@ -193,7 +193,7 @@
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-core</artifactId>
-			<version>0.8.16</version>
+			<version>0.8.17</version>
 		</dependency>
 
 	</dependencies>

@@ -2,6 +2,9 @@ package yatzy;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.collections.bag.TreeBag;
 
 public enum Rule {
 
@@ -44,25 +47,13 @@ public enum Rule {
 
 	static class ThreeOfAKind implements Computation {
 		public int execute(Integer[] roll) {
-			Arrays.sort(roll);
-			for (int index = 0; index < 3; index++) {
-				if ((roll[index] == roll[index + 1]) && (roll[index + 1] == roll[index + 2])) {
-					return roll[index] + roll[index + 1] + roll[index + 2];
-				}
-			}
-			return 0;
+			return sumOfNumberOfKinds(roll, 3);
 		}
 	}
 
 	static class FourOfAKind implements Computation {
 		public int execute(Integer[] roll) {
-			Arrays.sort(roll);
-			for (int index = 0; index < 2; index++) {
-				if ((roll[index] == roll[index + 1]) && (roll[index + 1] == roll[index + 2]) && (roll[index + 2] == roll[index + 3])) {
-					return roll[index] + roll[index + 1] + roll[index + 2] + roll[index + 3];
-				}
-			}
-			return 0;
+			return sumOfNumberOfKinds(roll, 4);
 		}
 	}
 
@@ -78,5 +69,17 @@ public enum Rule {
 
 	public int compute(List<Integer> roll) {
 		return compute(roll.toArray(new Integer[5]));
+	}
+
+	protected static int sumOfNumberOfKinds(Integer[] roll, int numberOfKinds) {
+		TreeBag treeBag = new TreeBag(Arrays.asList(roll));
+		Set<Integer> uniqueSet = treeBag.uniqueSet();
+		for (Integer eyes : uniqueSet) {
+			int count = treeBag.getCount(eyes);
+			if (count == numberOfKinds) {
+				return numberOfKinds * eyes;
+			}
+		}
+		return 0;
 	}
 }

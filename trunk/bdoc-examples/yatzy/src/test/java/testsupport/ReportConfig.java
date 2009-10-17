@@ -1,4 +1,4 @@
-package bdoc;
+package testsupport;
 
 import yatzy.Game;
 import yatzy.Rule;

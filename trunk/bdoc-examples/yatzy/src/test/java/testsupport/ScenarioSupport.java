@@ -1,4 +1,4 @@
-package bdoc;
+package testsupport;
 
 @SuppressWarnings("unchecked")
 public class ScenarioSupport<T> {

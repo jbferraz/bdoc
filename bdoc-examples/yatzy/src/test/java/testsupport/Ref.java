@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package bdoc;
+package testsupport;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

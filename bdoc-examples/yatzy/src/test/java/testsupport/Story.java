@@ -22,14 +22,14 @@
  * THE SOFTWARE.
  */
 
-package bdoc;
+package testsupport;
 
 /**
  * Example generated
  */
 public enum Story {
 
-	YATZY(1, "As a scandinavian", "I want to play yatzey", "so that I can kill time"); 
+	YATZY_GAME(1, "As a scandinavian", "I want to play yatzey", "so that I can kill time"); 
 
 	private Integer id;
 	private String[] narrative;

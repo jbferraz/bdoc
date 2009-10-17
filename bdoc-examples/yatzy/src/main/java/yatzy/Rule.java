@@ -19,7 +19,22 @@ public enum Rule {
 	FOUR_OF_A_KIND(new FourOfAKind()), //
 	SMALL_STRAIGHT(null), //
 	LARGE_STRAIGHT(null), //
-	FULL_HOUSE(null), //
+	FULL_HOUSE(new Computation() {
+		public int execute(Integer[] roll) {
+			Arrays.sort(roll);
+			if (roll[0] != roll[1]) {
+				return 0;
+			}
+			if (roll[3] != roll[4]) {
+				return 0;
+			}
+			int sum = 0;
+			for (Integer dice : roll) {
+				sum += dice;
+			}
+			return sum;
+		}
+	}), //
 	CHANCE(null), //
 	YATZY(null);
 

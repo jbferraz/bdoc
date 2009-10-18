@@ -1,3 +1,5 @@
+_18 October 2009 - Blog post about [http://blog.perottobergumchristensen.com/?p=168 BDoc, so far]
+
 _13 October 2009 - Release 0.8.17_
   [http://open.bekk.no/2009/10/08/friprog-hackfest-hos-bekk Friprog hackfest hos BEKK]. Bugfix.
 

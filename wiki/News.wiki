@@ -1,5 +1,5 @@
 _13 October 2009 - Release 0.8.17_
-  Programming at BEKK. Bugfix.
+  [http://open.bekk.no/2009/10/08/friprog-hackfest-hos-bekk Friprog hackfest hos BEKK]. Bugfix.
 
 _12 October 2009 - Release 0.8.16_
  Version 0.8.16 is released with support for @Before and @After in tests, together with tiny-bdd-support as default. A new example is under development, together with more documentation, for a peak look at Yatzy[http://bdoc.googlecode.com/svn/trunk/bdoc-examples/yatzy/src/test/java/yatzy/TestGameBehaviour.java GameBehaviour] or just [http://bdoc.googlecode.com/files/yatzy-demo.zip download] the example project.

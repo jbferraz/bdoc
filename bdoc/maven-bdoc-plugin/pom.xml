@@ -198,7 +198,7 @@
 		<dependency>
 			<groupId>com.googlecode.bdoc</groupId>
 			<artifactId>bdoc-core</artifactId>
-			<version>0.8.17</version>
+			<version>${project.version}</version>
 		</dependency>
 
 	</dependencies>

@@ -28,7 +28,7 @@ package testsupport;
  * Example generated
  */
 public enum Story {
-s
+
 	YATZY_GAME(1, "As a scandinavian", "I want to play yatzy", "so that I can kill time"); 
 
 	private Integer id;

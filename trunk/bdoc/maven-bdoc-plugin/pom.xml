@@ -2,7 +2,7 @@
 	<parent>
 		<groupId>com.googlecode.bdoc</groupId>
 		<artifactId>bdoc-pom</artifactId>
-		<version>0.8.18</version>
+		<version>0.8.19-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -13,9 +13,9 @@
 	<url>http://bdoc.googlecode.com</url>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-pom-0.8.18/maven-bdoc-plugin</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-pom-0.8.18/maven-bdoc-plugin</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/tags/bdoc-pom-0.8.18/maven-bdoc-plugin</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/maven-bdoc-plugin</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/maven-bdoc-plugin</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk/bdoc/maven-bdoc-plugin</url>
 	</scm>
 
 	<organization>

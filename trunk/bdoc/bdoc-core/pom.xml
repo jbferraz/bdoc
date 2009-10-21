@@ -84,6 +84,13 @@
 
 	<dependencies>
 	
+		<!--  internal -->
+		<dependency>
+			<groupId>com.googlecode.bdoc</groupId>
+			<artifactId>bdoc-utils</artifactId>
+		</dependency>
+
+		<!-- external -->
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -123,14 +130,8 @@
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 		</dependency>
-
-		<!--  internal dependecies -->
-		<dependency>
-			<groupId>com.googlecode.bdoc</groupId>
-			<artifactId>bdoc-utils</artifactId>
-		</dependency>
 		
-		<!--  Test scope -->
+		<!--  test -->
 		<dependency>
 			<groupId>xmlunit</groupId>
 			<artifactId>xmlunit</artifactId>

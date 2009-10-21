@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
 	<modelVersion>4.0.0</modelVersion>
-	<name>BDoc - Super POM</name>
+	<name>BDoc - Build POM</name>
 	<description>Framework for extracting documentation from the
 		code and acceptance test support, based on JUnit and BDD</description>
 	<url>http://bdoc.googlecode.com</url>
@@ -9,7 +9,7 @@
 
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-pom</artifactId>
-	<version>0.8.15</version>
+	<version>0.8.18-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<licenses>
@@ -23,7 +23,7 @@
 
 	<organization>
 		<name>Per Otto Bergum Christensen</name>
-		<url>http://blog.perottobc.com</url>
+		<url>http://blog.perottobergumchristensen.com</url>
 	</organization>
 
 	<developers>
@@ -32,8 +32,7 @@
 			<name>Per Otto Bergum Christensen</name>
 			<email>perottobc@gmail.com</email>
 			<organization>Per Otto Bergum Christensen</organization>
-			<organizationUrl>http://blog.perottobc.com
-			</organizationUrl>
+			<organizationUrl>http://blog.perottobergumchristensen.com</organizationUrl>
 			<timezone>-5</timezone>
 			<roles>
 				<role>project administrator</role>
@@ -60,11 +59,43 @@
 		</developer>
 	</developers>
 
+	<scm>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk/bdoc-core/</url>
+	</scm>
+
 	<properties>
 		<maven.bdoc.plugin.version>0.8.13</maven.bdoc.plugin.version>
 	</properties>
 
+	<distributionManagement>
+		<repository>
+			<id>perottobc-release</id>
+			<name>Local Maven repository of releases</name>
+			<url>
+				dav:https://perottobc-repository.googlecode.com/svn/maven2/releases
+			</url>
+		</repository>
+		<snapshotRepository>
+			<id>perottobc-snapshot</id>
+			<name>Local Maven repository of snapshots</name>
+			<url>
+				dav:https://perottobc-repository.googlecode.com/svn/maven2/snapshots
+			</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+	
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -74,6 +105,19 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.0-beta-9</version>
+				<configuration>
+					<tagBase>
+						https://bdoc.googlecode.com/svn/tags
+					</tagBase>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 

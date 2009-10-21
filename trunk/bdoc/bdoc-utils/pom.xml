@@ -1,11 +1,20 @@
-<?xml version="1.0"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.googlecode.bdoc</groupId>
-  <artifactId>bdoc-utils</artifactId>
-  <version>0.8.17-SNAPSHOT</version>
-  <name>Behaviour Documentation - Utils</name>
-  <description>Util code shared for the differnt bdoc projects</description>
-  <url>http://bdoc.googlecode.com</url>
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>com.googlecode.bdoc</groupId>
+		<artifactId>bdoc-pom</artifactId>
+		<version>0.8.18-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.googlecode.bdoc</groupId>
+	<artifactId>bdoc-utils</artifactId>
+	
+	<name>BDoc - Utils</name>
+	<description>BDoc shared library</description>
+	<url>http://bdoc.googlecode.com</url>
 
 	<scm>
 		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc/bdoc-utils</connection>
@@ -126,5 +135,5 @@
 			<scope>test</scope>
 		</dependency>
 
-  </dependencies>
+	</dependencies>
 </project>

@@ -1,11 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>com.googlecode.bdoc</groupId>
+		<artifactId>bdoc-pom</artifactId>
+		<version>0.8.18-SNAPSHOT</version>
+	</parent>
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-core</artifactId>
-	<version>0.8.18-SNAPSHOT</version>
+	
 	<packaging>jar</packaging>
-	<name>Behaviour Documentation - Core</name>
-	<description>The Core of BDoc</description>
+	<name>BDoc - Core</name>
+	<description>The Core of BDoc, no dependencies to maven</description>
 	<url>http://bdoc.googlecode.com</url>
 
 	<scm>
@@ -101,11 +108,11 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
-
+<!-- 
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
-				<version>0.8.15</version>
+				<version>0.8.17</version>
 				<configuration>
 					<storyRefAnnotationClassName>
 						com.googlecode.bdoc.Ref
@@ -143,7 +150,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
+ -->
 			<plugin>
 				<groupId>com.google.code.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>

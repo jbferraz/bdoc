@@ -15,32 +15,13 @@
 	<description>BDoc shared library</description>
 	<url>http://bdoc.googlecode.com</url>
 
-
 	<build>
-
 		<plugins>
 			<plugin>
 				<groupId>com.google.code.maven-license-plugin</groupId>
 				<artifactId>maven-license-plugin</artifactId>
-				<version>1.2.5</version>
-				<configuration>
-					<header>src/main/etc/header.txt</header>
-					<excludes>
-						<exclude>target/**</exclude>
-						<exclude>**/*.xls</exclude>
-					</excludes>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
-
 		</plugins>
-
 	</build>
 
 	<dependencies>

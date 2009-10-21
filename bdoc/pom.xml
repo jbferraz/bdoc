@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<name>BDoc - Build POM</name>
 	<description>Framework for extracting documentation from the
@@ -9,7 +9,7 @@
 
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-pom</artifactId>
-	<version>0.8.18-SNAPSHOT</version>
+	<version>0.8.18</version>
 	<packaging>pom</packaging>
 
 	<licenses>
@@ -60,9 +60,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/trunk/bdoc-core/</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-pom-0.8.18</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-pom-0.8.18</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/tags-core/bdoc-pom-0.8.18</url>
 	</scm>
 
 	<properties>

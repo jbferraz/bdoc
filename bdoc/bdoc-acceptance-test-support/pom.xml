@@ -37,6 +37,13 @@
 
 	<dependencies>
 
+		<!-- internal -->
+		<dependency>
+			<groupId>com.googlecode.bdoc</groupId>
+			<artifactId>bdoc-utils</artifactId>
+		</dependency>
+
+		<!-- external -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>			
@@ -45,11 +52,6 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.googlecode.bdoc</groupId>
-			<artifactId>bdoc-utils</artifactId>
 		</dependency>
 
 	</dependencies>

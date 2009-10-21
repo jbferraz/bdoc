@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<name>Behaviour Documentation - Super POM</name>
+	<name>BDoc - Build POM</name>
 	<description>Framework for extracting documentation from the
-		code, based on JUnit and BDD</description>
+		code and acceptance test support, based on JUnit and BDD</description>
 	<url>http://bdoc.googlecode.com</url>
 	<inceptionYear>2008</inceptionYear>
 
 	<groupId>com.googlecode.bdoc</groupId>
-	<artifactId>bdoc-base</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<artifactId>bdoc-pom</artifactId>
+	<version>0.8.18</version>
 	<packaging>pom</packaging>
 
 	<licenses>
@@ -26,7 +23,7 @@
 
 	<organization>
 		<name>Per Otto Bergum Christensen</name>
-		<url>http://blog.perottobc.com</url>
+		<url>http://blog.perottobergumchristensen.com</url>
 	</organization>
 
 	<developers>
@@ -35,8 +32,7 @@
 			<name>Per Otto Bergum Christensen</name>
 			<email>perottobc@gmail.com</email>
 			<organization>Per Otto Bergum Christensen</organization>
-			<organizationUrl>http://blog.perottobc.com
-			</organizationUrl>
+			<organizationUrl>http://blog.perottobergumchristensen.com</organizationUrl>
 			<timezone>-5</timezone>
 			<roles>
 				<role>project administrator</role>
@@ -52,13 +48,54 @@
 				<role>developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<id>leftie.friele</id>
+			<name>Espen Dall�kken</name>
+			<email>leftie.friele@gmail.com</email>
+			<timezone>-5</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
 	</developers>
 
+	<scm>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-pom-0.8.18</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-pom-0.8.18</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/tags-core/bdoc-pom-0.8.18</url>
+	</scm>
+
 	<properties>
-		<maven.bdoc.plugin.version>0.8.15</maven.bdoc.plugin.version>
+		<maven.bdoc.plugin.version>0.8.13</maven.bdoc.plugin.version>
 	</properties>
 
+	<distributionManagement>
+		<repository>
+			<id>perottobc-release</id>
+			<name>Local Maven repository of releases</name>
+			<url>
+				dav:https://perottobc-repository.googlecode.com/svn/maven2/releases
+			</url>
+		</repository>
+		<snapshotRepository>
+			<id>perottobc-snapshot</id>
+			<name>Local Maven repository of snapshots</name>
+			<url>
+				dav:https://perottobc-repository.googlecode.com/svn/maven2/snapshots
+			</url>
+			<uniqueVersion>false</uniqueVersion>
+		</snapshotRepository>
+	</distributionManagement>
+	
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -68,33 +105,39 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.0-beta-9</version>
+				<configuration>
+					<tagBase>
+						https://bdoc.googlecode.com/svn/tags
+					</tagBase>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>perottobc-release</id>
-			<url>http://perottobc-repository.googlecode.com/svn/maven2/releases
-			</url>
-		</repository>
-	</repositories>
-
 	<pluginRepositories>
 		<pluginRepository>
-			<id>perottobc-release-plugin</id>
+			<id>perottobc-release</id>
 			<url>http://perottobc-repository.googlecode.com/svn/maven2/releases
 			</url>
 		</pluginRepository>
 	</pluginRepositories>
 
 	<modules>
-		<module>bdoc</module>
-		<module>bdoc-examples</module>
+		<module>bdoc-utils</module>
+		<module>bdoc-core</module>
+		<module>maven-bdoc-plugin</module>
+		<module>bdoc-acceptance-test-support
+		</module>
 	</modules>
 
-
 	<dependencies>
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

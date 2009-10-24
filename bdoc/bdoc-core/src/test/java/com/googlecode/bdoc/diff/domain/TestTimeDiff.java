@@ -28,6 +28,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.assertEquals;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
@@ -35,14 +36,13 @@ import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.diff.domain.TimeDiff;
 
-
 /**
- *  @author Per Otto Bergum Christensen
+ * @author Per Otto Bergum Christensen
  */
 @Ref(Story.DIFF_OF_BDOCS)
 public class TestTimeDiff {
 
-	private Calendar time1 = Calendar.getInstance();
+	private Calendar time1 = new GregorianCalendar(2009, 10, 20);
 
 	@Test
 	public void shouldReportTimeDiffLessThanOneHour() {

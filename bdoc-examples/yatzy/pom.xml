@@ -8,6 +8,43 @@
 	<name>yatzy</name>
 	<url>http://maven.apache.org</url>
 
+	<organization>
+		<name>Per Otto Bergum Christensen</name>
+		<url>http://blog.perottobergumchristensen.com</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>perottobc</id>
+			<name>Per Otto Bergum Christensen</name>
+			<email>perottobc@gmail.com</email>
+			<organization>Per Otto Bergum Christensen</organization>
+			<organizationUrl>http://blog.perottobergumchristensen.com/</organizationUrl>
+			<timezone>-5</timezone>
+			<roles>
+				<role>project administrator</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>micael.vesterlund</id>
+			<name>Micael Vesterlund</name>
+			<email>micael.vesterlund@gmail.com</email>
+			<timezone>-5</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -35,6 +72,7 @@
 			<plugin>
 				<groupId>com.googlecode.bdoc</groupId>
 				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>0.8.18</version>
 				<executions>
 					<execution>
 						<phase>install</phase>
@@ -72,7 +110,6 @@
 			</plugin>
 		</plugins>
 	</reporting>
-	
 
 	<dependencies>
 		<dependency>

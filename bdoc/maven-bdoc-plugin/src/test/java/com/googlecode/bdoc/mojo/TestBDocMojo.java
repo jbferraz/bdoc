@@ -41,10 +41,10 @@ import org.junit.Test;
 
 import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.doc.domain.BDoc;
-import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.report.AndInBetweenScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.report.BDocFactory;
+import com.googlecode.bdoc.doc.ztatic.JavaTestSourceBehaviourParser;
 
 /**
  * @author Per Otto Bergum Christensen

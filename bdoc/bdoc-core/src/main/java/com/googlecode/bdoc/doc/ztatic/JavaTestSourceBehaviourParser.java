@@ -22,12 +22,16 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.domain;
+package com.googlecode.bdoc.doc.ztatic;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.googlecode.bdoc.doc.domain.BehaviourFactory;
+import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.domain.TestMethod;
+import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
 import com.googlecode.bdoc.doc.util.JavaCodeUtil;
 

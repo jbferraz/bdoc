@@ -39,6 +39,7 @@ import java.util.List;
 import org.apache.commons.lang.Validate;
 
 import com.googlecode.bdoc.doc.util.ClassesDirectory;
+import com.googlecode.bdoc.doc.ztatic.JavaTestSourceBehaviourParser;
 
 ;
 

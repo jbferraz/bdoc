@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.googlecode.bdoc.doc.domain;
+package com.googlecode.bdoc.doc.ztatic;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -40,6 +40,10 @@ import org.junit.Test;
 import com.googlecode.bdoc.BConst;
 import com.googlecode.bdoc.Ref;
 import com.googlecode.bdoc.Story;
+import com.googlecode.bdoc.doc.domain.Scenario;
+import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.domain.TestMethod;
+import com.googlecode.bdoc.doc.domain.Scenario.Part;
 
 /**
  * @author Per Otto Bergum Christensen

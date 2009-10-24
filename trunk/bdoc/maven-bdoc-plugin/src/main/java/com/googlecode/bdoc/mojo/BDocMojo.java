@@ -39,13 +39,13 @@ import com.googlecode.bdoc.difflog.DiffLog;
 import com.googlecode.bdoc.difflog.DiffLogReport;
 import com.googlecode.bdoc.doc.domain.BDoc;
 import com.googlecode.bdoc.doc.domain.BehaviourFactory;
-import com.googlecode.bdoc.doc.domain.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.doc.domain.ProjectInfo;
 import com.googlecode.bdoc.doc.dynamic.RuntimeBehaviourFactory;
 import com.googlecode.bdoc.doc.report.BDocFactory;
 import com.googlecode.bdoc.doc.report.BDocFactoryImpl;
 import com.googlecode.bdoc.doc.report.ScenarioLinesFormatter;
 import com.googlecode.bdoc.doc.tinybdd.TinyBddAnalyzer;
+import com.googlecode.bdoc.doc.ztatic.JavaTestSourceBehaviourParser;
 import com.googlecode.bdoc.report.BDocReport;
 import com.thoughtworks.xstream.converters.ConversionException;
 

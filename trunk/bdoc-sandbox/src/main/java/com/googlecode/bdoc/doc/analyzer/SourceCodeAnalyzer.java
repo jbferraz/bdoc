@@ -66,14 +66,16 @@ public class SourceCodeAnalyzer {
 	}
 
 	private static ClassInfo callCompiler(List<File> files, JavaCompiler compiler, StandardJavaFileManager fileManager) {
-		CompilationTask compilationTask = getCompilationTask(files, compiler, fileManager);
-
+		
+		Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(files);
+		CompilationTask task = compiler.getTask(null, fileManager, null, null, null, compilationUnits);
+		
 		LinkedList<AbstractProcessor> processors = new LinkedList<AbstractProcessor>();
 		CodeAnalyzerProcessor processor = new CodeAnalyzerProcessor();
 		processors.add(processor);
 
-		compilationTask.setProcessors(processors);
-		compilationTask.call();
+		task.setProcessors(processors);
+		task.call();
 		return processor.getClassInfo();
 	}
 

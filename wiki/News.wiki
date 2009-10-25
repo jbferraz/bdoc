@@ -1,5 +1,5 @@
 _25 October 2009 - Release 0.8.19_
- Internal java-parsing-implementation for getting variable names from methods is changed with an apt implementation, making it more robust. 
+ Internal java-parsing-implementation for getting variable names from methods is replace with an apt-implementation, making it more robust. 
 
 _18 October 2009 - Blog post about [http://blog.perottobergumchristensen.com/?p=168 BDoc, so far]
 

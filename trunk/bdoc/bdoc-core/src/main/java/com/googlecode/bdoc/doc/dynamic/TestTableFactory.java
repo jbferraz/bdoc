@@ -24,6 +24,8 @@
 
 package com.googlecode.bdoc.doc.dynamic;
 
+import static com.googlecode.bdoc.doc.util.apt.MethodMetadataFactory.source;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,7 @@ import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.domain.TableRow;
 import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.TestTable;
-import com.googlecode.bdoc.doc.util.JavaCodeUtil;
+import com.googlecode.bdoc.doc.util.apt.MethodMetadataFactory;
 
 /**
  * @author Per Otto Bergum Christensen
@@ -55,10 +57,12 @@ public class TestTableFactory {
 		TestTable testTable = new TestTable(methodCalls.get(0).getName());
 
 		boolean headerAdded = false;
+		MethodMetadataFactory methodMetadataFactory = new MethodMetadataFactory(source(testMethod.clazz(), srcTestJava));
+
 		for (MethodCall methodCall : methodCallsClone) {
 
 			if (!headerAdded) {
-				for (String argumentName : JavaCodeUtil.argumentNames(testMethod.getTestClass(), methodCall.getName(), srcTestJava)) {
+				for (String argumentName : methodMetadataFactory.get(methodCall.getName()).getArgumentNames()) {
 					testTable.addHeaderColumn(new TableColumn(argumentName));
 				}
 				headerAdded = true;

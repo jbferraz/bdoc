@@ -24,6 +24,8 @@
 
 package com.googlecode.bdoc.doc.util.apt;
 
+import static javax.lang.model.element.ElementKind.METHOD;
+
 import java.util.List;
 import java.util.Set;
 
@@ -52,6 +54,7 @@ public class MethodMetadataProcessor extends AbstractProcessor {
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 		if (!roundEnv.processingOver()) {
+
 			for (Element element : roundEnv.getRootElements()) {
 				methodMetadataScanner.scan(element);
 			}
@@ -77,13 +80,15 @@ public class MethodMetadataProcessor extends AbstractProcessor {
 
 		@Override
 		public Void visitExecutable(ExecutableElement e, Void p) {
-			MethodMetadata methodMetadata = new MethodMetadata(e.getSimpleName().toString());
 
-			for (VariableElement variableElement : e.getParameters()) {
-				methodMetadata.addArgumentMetadata(new ArgumentMetadata(variableElement.getSimpleName().toString()));
+			if (e.getKind() == METHOD) {
+				MethodMetadata methodMetadata = new MethodMetadata(e.getSimpleName().toString());
+				for (VariableElement variableElement : e.getParameters()) {
+					methodMetadata.addArgumentMetadata(new ArgumentMetadata(variableElement.getSimpleName().toString()));
+				}
+
+				methodMetadataList.add(methodMetadata);
 			}
-
-			methodMetadataList.add(methodMetadata);
 			return null;
 		}
 	}

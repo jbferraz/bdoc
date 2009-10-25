@@ -24,13 +24,32 @@
 
 package com.googlecode.bdoc.doc.util.apt;
 
+import static junit.framework.Assert.assertEquals;
 
-public class TargetClass {
+import java.util.ArrayList;
+import java.util.List;
 
-	public void tableExample( String msg, int input, int expected ) {
+import com.googlecode.bdoc.doc.domain.Specification;
+
+public class TargetClass  {
+
+	public void tableExample(String msg, int input, int expected) {
 	}
 
-	public void varArgExample( String ... args ) {
-		
+	public void varArgExample(String... args) {
+		exampleWithOtherClassAsArgumentVariable(MyEnum.VAL1);
+		examleWithSourceInAnotherDirectory(new Specification("shouldDoThat"));
+		exampleWithJavaLang(new ArrayList<String>());
+	}
+
+	public void exampleWithOtherClassAsArgumentVariable(MyEnum enum1) {
+
+	}
+
+	public void examleWithSourceInAnotherDirectory(Specification spec) {
+	}
+
+	public void exampleWithJavaLang(List<String> list) {
+		assertEquals(list, list);
 	}
 }

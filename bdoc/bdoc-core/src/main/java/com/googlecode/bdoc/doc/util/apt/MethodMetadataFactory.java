@@ -28,6 +28,7 @@ import static java.util.Arrays.asList;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,11 @@ import org.apache.maven.shared.model.fileset.util.FileSetManager;
 
 import com.googlecode.bdoc.BDocException;
 
+/**
+ * Help: http://java.sun.com/mailers/techtips/corejava/2007/tt0307.html
+ *  
+ * @author Per Otto Bergum Christensen
+ */
 public class MethodMetadataFactory {
 
 	final private List<MethodMetadata> methodMetadata = new ArrayList<MethodMetadata>();
@@ -53,15 +59,34 @@ public class MethodMetadataFactory {
 	}
 
 	private void compile() {
+		
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+		
 		StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 
 		Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(asList(javaFile));
-		CompilationTask compilationTask = compiler.getTask(null, fileManager, null, null, null, compilationUnits);
-
+		CompilationTask compilationTask = compiler.getTask(devnull(), fileManager, null, null, null, compilationUnits);
+		
 		compilationTask.setProcessors(asList(new MethodMetadataProcessor(methodMetadata)));
 		compilationTask.call();
 		deleteClasses(javaFile);
+	}
+
+	private Writer devnull() {
+		Writer out = new Writer() {
+			@Override
+			public void close() throws IOException {
+			}
+
+			@Override
+			public void flush() throws IOException {
+			}
+
+			@Override
+			public void write(char[] cbuf, int off, int len) throws IOException {
+			}			
+		};
+		return out;
 	}
 
 	private static void deleteClasses(File file) {

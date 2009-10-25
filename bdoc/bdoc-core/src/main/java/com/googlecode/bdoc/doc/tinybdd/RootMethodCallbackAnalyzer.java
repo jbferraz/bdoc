@@ -25,7 +25,7 @@
 package com.googlecode.bdoc.doc.tinybdd;
 
 import static com.googlecode.bdoc.doc.tinybdd.ProxyFactory.forClass;
-import static com.googlecode.bdoc.doc.util.JavaCodeUtil.argumentNames;
+import static com.googlecode.bdoc.doc.util.apt.MethodMetadataFactory.source;
 import static java.util.Arrays.asList;
 
 import java.io.File;
@@ -42,10 +42,10 @@ import com.googlecode.bdoc.BDocException;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TableColumn;
 import com.googlecode.bdoc.doc.domain.TableRow;
-import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestMethod;
 import com.googlecode.bdoc.doc.domain.TestTable;
 import com.googlecode.bdoc.doc.domain.Scenario.Part;
+import com.googlecode.bdoc.doc.util.apt.MethodMetadataFactory;
 
 public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 
@@ -129,10 +129,13 @@ public class RootMethodCallbackAnalyzer implements MethodInterceptor {
 
 		@Override
 		void addPartFrom(String methodName, List<? extends Object> args) {
+			MethodMetadataFactory methodMetadataFactory = new MethodMetadataFactory(source(testMethod.clazz(), srcTestJava));
+			
 			if (null == currentTestTable) {
 				currentTestTable = new TestTable(methodName);
 				testTables.add(currentTestTable);
-				for (String argName : argumentNames(new TestClass(testMethod.clazz()), methodName, srcTestJava)) {
+	
+				for (String argName : methodMetadataFactory.get(methodName).getArgumentNames()) {
 					currentTestTable.addHeaderColumn(new TableColumn(argName));
 				}
 			}

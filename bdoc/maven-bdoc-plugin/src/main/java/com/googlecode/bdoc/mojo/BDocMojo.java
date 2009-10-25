@@ -130,6 +130,7 @@ public class BDocMojo extends AbstractBDocMojo {
 
 	@Override
 	protected void executeReport(Locale mvnReportLocale) throws MavenReportException {
+		getLog().info("Running: " + MojoVersion.version() );
 		try {
 			if (null != locale) {
 				bdocConfig.setLocale(new Locale(locale));

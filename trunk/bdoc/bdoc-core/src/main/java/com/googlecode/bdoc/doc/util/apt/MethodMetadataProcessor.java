@@ -43,17 +43,17 @@ import javax.lang.model.util.ElementScanner6;
 @SupportedAnnotationTypes("*")
 public class MethodMetadataProcessor extends AbstractProcessor {
 
-	private MethodMetadataScanner methodMetadataScannerScanner;
+	private MethodMetadataScanner methodMetadataScanner;
 
 	public MethodMetadataProcessor(List<MethodMetadata> methodMetadata) {
-		this.methodMetadataScannerScanner = new MethodMetadataScanner(methodMetadata);
+		this.methodMetadataScanner = new MethodMetadataScanner(methodMetadata);
 	}
 
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 		if (!roundEnv.processingOver()) {
 			for (Element element : roundEnv.getRootElements()) {
-				methodMetadataScannerScanner.scan(element);
+				methodMetadataScanner.scan(element);
 			}
 		}
 		return false;

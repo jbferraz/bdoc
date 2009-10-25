@@ -43,7 +43,6 @@ import com.googlecode.bdoc.Story;
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
 import com.googlecode.bdoc.doc.domain.TestMethod;
-import com.googlecode.bdoc.doc.domain.Scenario.Part;
 
 /**
  * @author Per Otto Bergum Christensen

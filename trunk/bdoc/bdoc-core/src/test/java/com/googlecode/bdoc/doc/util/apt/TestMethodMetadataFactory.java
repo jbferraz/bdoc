@@ -24,6 +24,7 @@
 
 package com.googlecode.bdoc.doc.util.apt;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -31,6 +32,7 @@ import java.io.File;
 import org.junit.Test;
 
 import com.googlecode.bdoc.BConst;
+import com.googlecode.bdoc.BDocException;
 
 /**
  * @author Per Otto Bergum Chrisensen
@@ -42,15 +44,29 @@ public class TestMethodMetadataFactory {
 		MethodMetadata methodMetadata = new MethodMetadataFactory(source(TargetClass.class)).get("tableExample");
 		assertEquals("msg", methodMetadata.getArgumentMetadata().get(0).getName());
 	}
-	
+
 	@Test
 	public void shouldRetreiveMethodVariableNameForMethodWithVarArg() {
 		MethodMetadata methodMetadata = new MethodMetadataFactory(source(TargetClass.class)).get("varArgExample");
-		assertEquals("args", methodMetadata.getArgumentMetadata().get(0).getName());		
+		assertEquals("args", methodMetadata.getArgumentMetadata().get(0).getName());
 	}
 
-	private static File source(Class<?> c) {
-		return new File(BConst.SRC_TEST_JAVA, c.getName().replace('.', '/') + ".java");
+	@Test(expected = BDocException.class)
+	public void shouldThrowBDocExeptionIfMethodIsNotFound() {
+		new MethodMetadataFactory(source(TargetClass.class)).get("noneExistent");
+	}
+
+	@Test
+	public void shouldNotCreateACompiledJavaClass() {
+		File javaSourceFile = source(TargetClass.class);
+		new MethodMetadataFactory(javaSourceFile);
+		String targetClassNameWithoutPackage = TargetClass.class.getName().replace(TargetClass.class.getPackage().getName() + ".", "");
+		
+		assertFalse(new File(javaSourceFile.getParent(), targetClassNameWithoutPackage + ".class").exists());
+	}
+
+	public static File source(Class<?> c) {
+		return MethodMetadataFactory.source(c, BConst.SRC_TEST_JAVA);
 	}
 
 }

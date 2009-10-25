@@ -27,6 +27,7 @@ package com.googlecode.bdoc.doc.util.apt;
 import static java.util.Arrays.asList;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,15 +37,22 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 import javax.tools.JavaCompiler.CompilationTask;
 
+import org.apache.maven.shared.model.fileset.FileSet;
+import org.apache.maven.shared.model.fileset.util.FileSetManager;
+
+import com.googlecode.bdoc.BDocException;
+
 public class MethodMetadataFactory {
 
 	final private List<MethodMetadata> methodMetadata = new ArrayList<MethodMetadata>();
+	final private File javaFile;
 
 	public MethodMetadataFactory(File javaFile) {
-		compile(javaFile);
+		this.javaFile = javaFile;
+		compile();
 	}
 
-	private void compile(File javaFile) {
+	private void compile() {
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
 
@@ -53,10 +61,34 @@ public class MethodMetadataFactory {
 
 		compilationTask.setProcessors(asList(new MethodMetadataProcessor(methodMetadata)));
 		compilationTask.call();
+		deleteClasses(javaFile);
 	}
 
+	private static void deleteClasses(File file) {
+		File dir = file.getParentFile();
+		FileSetManager fileSetManager = new FileSetManager();
+		FileSet fileSet = new FileSet();
+		fileSet.setDirectory(dir.getPath());
+		fileSet.addInclude("*.class");
+
+		try {
+			fileSetManager.delete(fileSet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public MethodMetadata get(String methodName) {
-		return methodMetadata.get(methodMetadata.indexOf(new MethodMetadata(methodName)));
+		int index = methodMetadata.indexOf(new MethodMetadata(methodName));
+		if( index < 0 ) {
+			throw new BDocException( "Method not found: " + methodName + ", for file: " + javaFile );
+		}
+		return methodMetadata.get(index);
+	}
+
+	public static File source(Class<?> c, File srcTestJava) {
+		return new File(srcTestJava, c.getName().replace('.', '/') + ".java");
 	}
 
 }

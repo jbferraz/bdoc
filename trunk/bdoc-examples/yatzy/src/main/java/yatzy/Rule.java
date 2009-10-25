@@ -86,6 +86,7 @@ public enum Rule {
 		return compute(roll.toArray(new Integer[5]));
 	}
 
+	@SuppressWarnings("unchecked")
 	protected static int sumOfNumberOfKinds(Integer[] roll, int numberOfKinds) {
 		TreeBag treeBag = new TreeBag(Arrays.asList(roll));
 		Set<Integer> uniqueSet = treeBag.uniqueSet();

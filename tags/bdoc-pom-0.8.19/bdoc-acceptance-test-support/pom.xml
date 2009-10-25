@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>com.googlecode.bdoc</groupId>
+		<artifactId>bdoc-pom</artifactId>
+		<version>0.8.19</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.googlecode.bdoc</groupId>
+	<artifactId>bdoc-acceptance-test-support</artifactId>	
+	<name>BDoc - Acceptance test support</name>
+	<url>http://bdoc.googlecode.com</url>
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>com.google.code.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+			</plugin>
+		</plugins>
+		
+	</build>
+
+	<dependencies>
+
+		<!-- internal -->
+		<dependency>
+			<groupId>com.googlecode.bdoc</groupId>
+			<artifactId>bdoc-utils</artifactId>
+		</dependency>
+
+		<!-- external -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>			
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+
+	</dependencies>
+
+</project>

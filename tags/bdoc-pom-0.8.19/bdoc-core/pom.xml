@@ -1,0 +1,132 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<parent>
+		<groupId>com.googlecode.bdoc</groupId>
+		<artifactId>bdoc-pom</artifactId>
+		<version>0.8.19</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.googlecode.bdoc</groupId>
+	<artifactId>bdoc-core</artifactId>
+	
+	<packaging>jar</packaging>
+	<name>BDoc - Core</name>
+	<description>The Core of BDoc, no dependencies to maven</description>
+	<url>http://bdoc.googlecode.com</url>
+
+	<build>
+		<plugins>
+<!-- 
+			<plugin>
+				<groupId>com.googlecode.bdoc</groupId>
+				<artifactId>maven-bdoc-plugin</artifactId>
+				<version>0.8.17</version>
+				<configuration>
+					<storyRefAnnotationClassName>
+						com.googlecode.bdoc.Ref
+					</storyRefAnnotationClassName>
+					<scenarioAnalyzer>dynamic</scenarioAnalyzer>
+					<excludes>
+						<exclude>
+							com/googlecode/bdoc/diff/domain/testpackageremoved/**
+						</exclude>
+						<exclude>
+							com/googlecode/bdoc/diff/domain/subpackage/**
+						</exclude>
+						<exclude>
+							com/googlecode/bdoc/diff/domain/added/**
+						</exclude>
+						<exclude>
+							com/googlecode/bdoc/testdataclasses/**
+						</exclude>
+						<exclude>
+							com/googlecode/bdoc/diff/report/moduletestdata/**
+						</exclude>
+
+						<exclude>integrationtestclasses/**</exclude>
+						<exclude>**/testdata/**</exclude>
+						<exclude>**/*$*.class</exclude>
+					</excludes>
+
+				</configuration>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>doc</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+ -->
+			<plugin>
+				<groupId>com.google.code.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<dependencies>
+	
+		<!--  internal -->
+		<dependency>
+			<groupId>com.googlecode.bdoc</groupId>
+			<artifactId>bdoc-utils</artifactId>
+		</dependency>
+
+		<!-- external -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.maven.shared</groupId>
+			<artifactId>file-management</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+		</dependency>
+		
+		<!--  test -->
+		<dependency>
+			<groupId>xmlunit</groupId>
+			<artifactId>xmlunit</artifactId>
+		</dependency>
+				
+	</dependencies>
+</project>

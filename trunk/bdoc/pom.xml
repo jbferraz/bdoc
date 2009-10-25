@@ -9,7 +9,7 @@
 
 	<groupId>com.googlecode.bdoc</groupId>
 	<artifactId>bdoc-pom</artifactId>
-	<version>0.8.19</version>
+	<version>0.8.20-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<licenses>
@@ -60,9 +60,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-pom-0.8.19</connection>
-		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/tags/bdoc-pom-0.8.19</developerConnection>
-		<url>https://bdoc.googlecode.com/svn/tags-core/bdoc-pom-0.8.19</url>
+		<connection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc</connection>
+		<developerConnection>scm:svn:https://bdoc.googlecode.com/svn/trunk/bdoc</developerConnection>
+		<url>https://bdoc.googlecode.com/svn/trunk/bdoc-core/</url>
 	</scm>
 
 	<distributionManagement>

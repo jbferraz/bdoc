@@ -82,4 +82,5 @@ public class TestRuleBehaviour extends ScenarioSupport<TestRuleBehaviour> {
 	void singleRollComputation(Rule rule, List<Integer> roll, int score) {
 		assertEquals("Computation with rule " + rule, score, rule.compute(roll));
 	}
+
 }

@@ -24,6 +24,8 @@
 
 package com.googlecode.bdoc.doc.util;
 
+import static com.googlecode.bdoc.doc.util.apt.MethodMetadataFactory.source;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.googlecode.bdoc.doc.domain.Scenario;
 import com.googlecode.bdoc.doc.domain.TestClass;
+import com.googlecode.bdoc.doc.util.apt.MethodMetadataFactory;
 
 /**
  * Util-methods for getting data from java source code.
@@ -180,26 +183,34 @@ public class JavaCodeUtil {
 	}
 
 	/**
-	 * Gets the argument names for the specified methode
-	 * Uses regular expression: http://java.sun.com/docs/books/tutorial/essential/regex/intro.html
+	 * Gets the argument names for the specified methode Uses regular
+	 * expression:
+	 * http://java.sun.com/docs/books/tutorial/essential/regex/intro.html
+	 * 
 	 * @param testClass
 	 *            specifies source
 	 * @param methodName
 	 *            to look for
 	 * @return name of arguments in methodName
+	 * @deprecated Use MethodMetadataFactory
 	 */
 	public static List<String> argumentNames(TestClass testClass, String methodName, File srcTestJava) {
-		
-		String methodSignature = JavaSourceMethodSignatureFinder.getSignature(methodName, testClass.getSource(srcTestJava));
-		
-		String[] arguments = StringUtils.substringBetween(methodSignature, "(", ")").split(",");
 
-		List<String> result = new ArrayList<String>();
-		for (String rawArgumentDeclaration : arguments) {
-			String arg = rawArgumentDeclaration.trim();
-			result.add(arg.substring(arg.lastIndexOf(' ') + 1, arg.length()));
-		}
-
-		return result;
+		/*
+		 * String methodSignature =
+		 * JavaSourceMethodSignatureFinder.getSignature(methodName,
+		 * testClass.getSource(srcTestJava));
+		 * 
+		 * String[] arguments = StringUtils.substringBetween(methodSignature,
+		 * "(", ")").split(",");
+		 * 
+		 * List<String> result = new ArrayList<String>(); for (String
+		 * rawArgumentDeclaration : arguments) { String arg =
+		 * rawArgumentDeclaration.trim();
+		 * result.add(arg.substring(arg.lastIndexOf(' ') + 1, arg.length())); }
+		 * 
+		 * return result;
+		 */
+		return new MethodMetadataFactory(source(testClass.clazz(), srcTestJava)).get(methodName).getArgumentNames();
 	}
 }

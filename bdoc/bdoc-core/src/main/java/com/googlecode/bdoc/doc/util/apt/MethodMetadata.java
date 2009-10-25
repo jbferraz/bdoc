@@ -53,10 +53,19 @@ public class MethodMetadata {
 
 		return name.equals(((MethodMetadata) obj).name);
 	}
-	
+
 	@Override
 	public String toString() {
 		return name + ": " + argumentMetadataList;
+	}
+
+	public List<String> getArgumentNames() {
+		List<String> result = new ArrayList<String>();
+		for (ArgumentMetadata argumentMetadata : argumentMetadataList) {
+			result.add(argumentMetadata.getName());
+		}
+
+		return result;
 	}
 
 }

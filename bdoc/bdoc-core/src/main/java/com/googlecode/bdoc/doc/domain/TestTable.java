@@ -73,7 +73,7 @@ public class TestTable extends Statement {
 			}
 
 			for (Method method : methods) {
-				tableColums.add(new TableColumn(method.invoke(object, null)));
+				tableColums.add(new TableColumn(method.invoke(object, new Object[0])));
 			}
 			addRow(new TableRow(tableColums));
 		}

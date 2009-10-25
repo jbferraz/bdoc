@@ -28,8 +28,8 @@ import static com.googlecode.bdoc.doc.domain.TableColumn.columns;
 import static com.googlecode.bdoc.testutil.HtmlAssert.assertXPathContains;
 import static java.util.Arrays.asList;
 import static org.apache.commons.io.FileUtils.writeStringToFile;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.io.IOException;

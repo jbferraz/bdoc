@@ -54,7 +54,7 @@ public class TestSynchronizedTextKeys {
 	public void swedishTextPropertyFileShouldContainKeyForTocUserstories() {
 		assertEquals("Användarberättelse", svText.getString("toc.userstories"));
 	}
-
+	
 	@Test
 	public void norwegianTextPropertyFileShouldBeInSyncWithTheEnglishVersion() {
 		assertResourceBundleEquals(Locale.ENGLISH, new Locale("no"));

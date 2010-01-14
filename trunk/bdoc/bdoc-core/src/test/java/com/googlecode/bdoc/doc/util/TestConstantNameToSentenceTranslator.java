@@ -48,6 +48,6 @@ public class TestConstantNameToSentenceTranslator {
 	
 	@Test
 	public void shouldTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacter() {
-		assertEquals("Grunnbeløp", ConstantNameToSentenceTranslator.translate("GRUNNBELOEP"));
+		assertEquals("GrunnbelÃ¸p", ConstantNameToSentenceTranslator.translate("GRUNNBELOEP"));
 	}
 }

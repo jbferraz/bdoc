@@ -127,12 +127,9 @@ public class TestCamelCaseToSentenceTranslator {
 	
 	@Test
 	public void shouldTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacter() {
-		exampleOnFormattingOfNorwegianText("naarASaaB", "Når a så b");
-		exampleOnFormattingOfNorwegianText("aa", "Å");
-		exampleOnFormattingOfNorwegianText("skalVaere", "Skal være");
-		exampleOnFormattingOfNorwegianText("ae", "Æ");
-		exampleOnFormattingOfNorwegianText("skalAngiOevreGrense", "Skal angi øvre grense");
-		exampleOnFormattingOfNorwegianText("oe", "Ø");
+		exampleOnFormattingOfNorwegianText("naarASaaB", "NÃ¥r a sÃ¥ b");
+		exampleOnFormattingOfNorwegianText("skalVaere", "Skal vÃ¦re");
+		exampleOnFormattingOfNorwegianText("skalAngiOevreGrense", "Skal angi Ã¸vre grense");
 	}
 	
 	@Test

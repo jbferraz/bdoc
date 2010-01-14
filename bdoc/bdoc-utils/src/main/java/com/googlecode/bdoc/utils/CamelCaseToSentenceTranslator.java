@@ -94,16 +94,16 @@ public class CamelCaseToSentenceTranslator {
 	}
 
 	public static String formatTwoLetterCodeToNorwegianSpecialCharacters(String result) {
-		result = result.replace("aa", "å");
-		result = result.replace("Aa", "Å");
-		result = result.replace("ae", "æ");
-		result = result.replace("Ae", "Æ");
-		result = result.replace("oe", "ø");
-		result = result.replace("Oe", "Ø");
+		result = result.replace("aa", "Ã¥");
+		result = result.replace("Aa", "Ã…");
+		result = result.replace("ae", "Ã¦");
+		result = result.replace("Ae", "Ã†");
+		result = result.replace("oe", "Ã¸");
+		result = result.replace("Oe", "Ã˜");
 
-		result = result.replace("øng", "oeng");
-		result = result.replace("ambør", "amboer");
-		result = result.replace("døs", "does");
+		result = result.replace("Ã¸ng", "oeng");
+		result = result.replace("ambÃ¸r", "amboer");
+		result = result.replace("dÃ¸s", "does");
 		return result;
 	}
 }

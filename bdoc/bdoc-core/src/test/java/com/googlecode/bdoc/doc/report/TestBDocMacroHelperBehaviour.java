@@ -56,7 +56,7 @@ public class TestBDocMacroHelperBehaviour {
 	public void swedishLocaleShouldBeSupported() {
 		BDocConfig bdocConfig = new BDocConfig();
 		bdocConfig.setLocale(new Locale("SV"));
-		assertEquals("Nya användarberättelser", new BDocMacroHelper(bdocConfig).text("new.user.stories"));
+		assertEquals("Nya anv‰ndarber‰ttelser", new BDocMacroHelper(bdocConfig).text("new.user.stories"));
 	}
 
 	@Test

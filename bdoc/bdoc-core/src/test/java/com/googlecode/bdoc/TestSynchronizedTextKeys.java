@@ -52,7 +52,7 @@ public class TestSynchronizedTextKeys {
 
 	@Test
 	public void swedishTextPropertyFileShouldContainKeyForTocUserstories() {
-		assertEquals("Anv‰ndarber‰ttelse", svText.getString("toc.userstories"));
+		assertEquals("Anv√§ndarber√§ttelse", svText.getString("toc.userstories"));
 	}
 
 	@Test

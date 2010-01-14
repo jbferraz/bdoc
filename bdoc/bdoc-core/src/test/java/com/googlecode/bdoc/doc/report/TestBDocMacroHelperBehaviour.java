@@ -56,13 +56,13 @@ public class TestBDocMacroHelperBehaviour {
 	public void swedishLocaleShouldBeSupported() {
 		BDocConfig bdocConfig = new BDocConfig();
 		bdocConfig.setLocale(new Locale("SV"));
-		assertEquals("Nya användarberättelser", new BDocMacroHelper(bdocConfig).text("new.user.stories"));
+		assertEquals("Nya anvÃ¤ndarberÃ¤ttelser", new BDocMacroHelper(bdocConfig).text("new.user.stories"));
 	}
 
 	@Test
 	public void shouldTransformNorwegianTwoLetterCodeToNorwegianSpecialCharacterWhenFormattingScenarios() {
 		String scenarioLines = new BDocMacroHelper(new BDocConfig()).scenarioLines(new Scenario("gittAtOevreGrenseErNaarSaa"));
 		assertFalse(scenarioLines.contains("oe"));
-		assertTrue(scenarioLines.contains("ø"));
+		assertTrue(scenarioLines.contains("ï¿½"));
 	}
 }
